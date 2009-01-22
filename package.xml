@@ -9,8 +9,8 @@
                       http://pear.php.net/dtd/package-2.0.xsd">
  <name>phploc</name>
  <channel>pear.phpunit.de</channel>
- <summary>Counts LOC/CLOC/NCLOC in a PHP project.</summary>
- <description>Counts LOC/CLOC/NCLOC in a PHP project.</description>
+ <summary>A tool for quickly measuring the size of a PHP project.</summary>
+ <description>A tool for quickly measuring the size of a PHP project.</description>
  <lead>
   <name>Sebastian Bergmann</name>
   <user>sb</user>
