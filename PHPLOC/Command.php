@@ -154,10 +154,11 @@ class PHPLOC_Command
      */
     protected static function countFile($file)
     {
-        $loc  = count(file($file));
-        $cloc = 0;
+        $buffer = file_get_contents($file);
+        $loc    = substr_count($buffer, "\n");
+        $cloc   = 0;
 
-        foreach (token_get_all(file_get_contents($file)) as $token) {
+        foreach (token_get_all($buffer) as $token) {
             if (is_string($token)) {
                 continue;
             }
