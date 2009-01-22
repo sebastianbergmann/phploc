@@ -127,6 +127,7 @@ class PHPLOC_Command
           'loc'         => 0,
           'cloc'        => 0,
           'ncloc'       => 0,
+          'interfaces'  => 0,
           'classes'     => 0,
           'functions'   => 0
         );
@@ -151,6 +152,7 @@ class PHPLOC_Command
           "Lines of Code (LOC):               %10d\n" .
           "Comment Lines of Code (CLOC):      %10d\n" .
           "Non-Comment Lines of Code (NCLOC): %10d\n" .
+          "Interfaces:                        %10d\n" .
           "Classes:                           %10d\n" .
           "Functions/Methods:                 %10d\n",
 
@@ -159,6 +161,7 @@ class PHPLOC_Command
           $count['loc'],
           $count['cloc'],
           $count['ncloc'],
+          $count['interfaces'],
           $count['classes'],
           $count['functions']
         );
@@ -185,6 +188,10 @@ class PHPLOC_Command
 
             if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
                 $cloc += substr_count($value, "\n") + 1;
+            }
+
+            else if ($token == T_INTERFACE) {
+                $count['interfaces']++;
             }
 
             else if ($token == T_CLASS) {

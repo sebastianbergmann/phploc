@@ -13,6 +13,7 @@ Usage Example
     Lines of Code (LOC):                      555
     Comment Lines of Code (CLOC):             220
     Non-Comment Lines of Code (NCLOC):        335
+    Interfaces:                                 0
     Classes:                                    3
     Functions/Methods:                         11
 
