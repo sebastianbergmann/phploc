@@ -5,7 +5,7 @@ phploc
 
 Usage Example
 
-    sb@ubuntu phploc % ./phploc.php .                              
+    sb@ubuntu phploc % ./phploc.php .
     phploc 1.0.0 by Sebastian Bergmann.
 
     Directories:                                2
