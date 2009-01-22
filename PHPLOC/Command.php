@@ -41,6 +41,7 @@
  * @since     File available since Release 1.0.0
  */
 
+require 'PHPLOC/Analyser.php';
 require 'PHPLOC/Getopt.php';
 require 'PHPLOC/FilterIterator.php';
 
@@ -144,7 +145,7 @@ class PHPLOC_Command
                 $directories[$directory] = TRUE;
             }
 
-            self::countFile($file->getPathName(), $count);
+            PHPLOC_Analyser::countFile($file->getPathName(), $count);
         }
 
         self::printVersionString();
@@ -177,90 +178,6 @@ class PHPLOC_Command
                    "Functions/Methods:                 %10d\n";
 
         vprintf($format, $args);
-    }
-
-    /**
-     * Counts LOC, ELOC, CLOC, and NCLOC as well as interfaces, classes, and
-     * functions/methods for a file.
-     *
-     * @param  string $file
-     * @param  array  $count
-     */
-    protected static function countFile($file, array &$count)
-    {
-        $buffer = file_get_contents($file);
-        $loc    = substr_count($buffer, "\n");
-        $cloc   = 0;
-
-        foreach (token_get_all($buffer) as $token) {
-            if (is_string($token)) {
-                continue;
-            }
-
-            list ($token, $value) = $token;
-
-            if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
-                $cloc += substr_count($value, "\n") + 1;
-            }
-
-            else if ($token == T_INTERFACE) {
-                $count['interfaces']++;
-            }
-
-            else if ($token == T_CLASS) {
-                $count['classes']++;
-            }
-
-            else if ($token == T_FUNCTION) {
-                $count['functions']++;
-            }
-        }
-
-        $count['loc']   += $loc;
-        $count['cloc']  += $cloc;
-        $count['ncloc'] += $loc - $cloc;
-        $count['files']++;
-
-        if (function_exists('parsekit_compile_file')) {
-            $count['eloc'] += self::countOpArray(parsekit_compile_file($file));
-        }
-    }
-
-    /**
-     * Counts ELOC from a given op-array.
-     *
-     * @param  array $opArray
-     * @return integer
-     */
-    protected static function countOpArray(array $opArray)
-    {
-        $eloc  = 0;
-        $lines = array();
-
-        if (isset($opArray['class_table'])) {
-            foreach ($opArray['class_table'] as $_class) {
-                if (isset($_class['function_table'])) {
-                    foreach ($_class['function_table'] as $_opArray) {
-                        $eloc += self::countOpArray($_opArray);
-                    }
-                }
-            }
-        }
-
-        if (isset($opArray['function_table'])) {
-            foreach ($opArray['function_table'] as $_opArray) {
-                $eloc += self::countOpArray($_opArray);
-            }
-        }
-
-        foreach ($opArray['opcodes'] as $opcode) {
-            if (!isset($eloc[$opcode['lineno']]) &&
-                !in_array($opcode['opcode_name'], self::$opcodeBlacklist)) {
-                $lines[$opcode['lineno']] = TRUE;
-            }
-        }
-
-        return $eloc + count($lines);
     }
 
     /**

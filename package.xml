@@ -31,6 +31,9 @@
  <contents>
   <dir name="/">
    <dir name="PHPLOC">
+    <file baseinstalldir="/" name="Analyser.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
     <file baseinstalldir="/" name="Command.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
