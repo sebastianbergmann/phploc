@@ -46,6 +46,6 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 }
 
-require 'PHPLOC/Command.php';
+require 'PHPLOC/TextUI/Command.php';
 
-PHPLOC_Command::main();
+PHPLOC_TextUI_Command::main();

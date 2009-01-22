@@ -51,7 +51,7 @@
  * @link      
  * @since     Class available since Release 1.0.0
  */
-class PHPLOC_FilterIterator extends FilterIterator
+class PHPLOC_Util_FilterIterator extends FilterIterator
 {
     /**
      * @var array

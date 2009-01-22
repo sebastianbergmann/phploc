@@ -42,8 +42,8 @@
  */
 
 require 'PHPLOC/Analyser.php';
-require 'PHPLOC/Getopt.php';
-require 'PHPLOC/FilterIterator.php';
+require 'PHPLOC/TextUI/Getopt.php';
+require 'PHPLOC/Util/FilterIterator.php';
 
 /**
  *
@@ -55,14 +55,14 @@ require 'PHPLOC/FilterIterator.php';
  * @link      
  * @since     Class available since Release 1.0.0
  */
-class PHPLOC_Command
+class PHPLOC_TextUI_Command
 {
     private static $opcodeBlacklist = array('ZEND_NOP');
 
     public static function main()
     {
         try {
-            $options = PHPLOC_Getopt::getopt(
+            $options = PHPLOC_TextUI_Getopt::getopt(
               $_SERVER['argv'],
               '',
               array(
@@ -103,7 +103,7 @@ class PHPLOC_Command
 
         if (isset($options[1][0])) {
             if (is_dir($options[1][0])) {
-                $files = new PHPLOC_FilterIterator(
+                $files = new PHPLOC_Util_FilterIterator(
                   new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($options[1][0])
                   ),
