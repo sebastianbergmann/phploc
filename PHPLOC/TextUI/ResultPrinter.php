@@ -63,7 +63,7 @@ class PHPLOC_TextUI_ResultPrinter
             $args[]  = $count['files'];
 
             $format .= "Directories:                       %10d\n" .
-                       "Files:                             %10d\n";
+                       "Files:                             %10d\n\n";
         }
 
         $args[]  = $count['loc'];
@@ -81,7 +81,7 @@ class PHPLOC_TextUI_ResultPrinter
         $args[] = $count['functions'];
 
         $format .= "Comment Lines of Code (CLOC):      %10d\n" .
-                   "Non-Comment Lines of Code (NCLOC): %10d\n" .
+                   "Non-Comment Lines of Code (NCLOC): %10d\n\n" .
                    "Interfaces:                        %10d\n" .
                    "Classes:                           %10d\n" .
                    "Functions/Methods:                 %10d\n";
