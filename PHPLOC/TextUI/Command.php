@@ -153,7 +153,7 @@ class PHPLOC_TextUI_Command
             unset($count['eloc']);
         }
 
-        $count['directories'] = count($directories);
+        $count['directories'] = count($directories) - 1;
 
         self::printVersionString();
 
