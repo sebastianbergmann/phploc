@@ -55,15 +55,19 @@ class PHPLOC_TextUI_ResultPrinter
 {
     public function printResult(array $count)
     {
-        $args = array(
-          $count['directories'],
-          $count['files'],
-          $count['loc']
-        );
+        $args   = array();
+        $format = '';
 
-        $format  = "Directories:                       %10d\n" .
-                   "Files:                             %10d\n" .
-                   "Lines of Code (LOC):               %10d\n";
+        if ($count['directories'] > 0) {
+            $args[]  = $count['directories'];
+            $args[]  = $count['files'];
+
+            $format .= "Directories:                       %10d\n" .
+                       "Files:                             %10d\n";
+        }
+
+        $args[]  = $count['loc'];
+        $format .= "Lines of Code (LOC):               %10d\n";
 
         if (isset($count['eloc'])) {
             $args[]  = $count['eloc'];
