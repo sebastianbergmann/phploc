@@ -172,9 +172,9 @@ class PHPLOC_Command
      */
     protected static function countFile($file, array &$count)
     {
-        $buffer    = file_get_contents($file);
-        $loc       = substr_count($buffer, "\n");
-        $cloc      = 0;
+        $buffer = file_get_contents($file);
+        $loc    = substr_count($buffer, "\n");
+        $cloc   = 0;
 
         foreach (token_get_all($buffer) as $token) {
             if (is_string($token)) {
@@ -184,7 +184,7 @@ class PHPLOC_Command
             list ($token, $value) = $token;
 
             if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
-                $cloc += count(explode("\n", $value));
+                $cloc += substr_count($value, "\n") + 1;
             }
 
             else if ($token == T_CLASS) {
