@@ -48,7 +48,7 @@
  * @copyright 2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      
+ * @link      http://github.com/sebastianbergmann/phploc/tree
  * @since     Class available since Release 1.0.0
  */
 class PHPLOC_Analyser
