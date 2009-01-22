@@ -38,6 +38,9 @@
      <file baseinstalldir="/" name="Getopt.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
+     <file baseinstalldir="/" name="ResultPrinter.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
     </dir>
     <dir name="Util">
      <file baseinstalldir="/" name="FilterIterator.php" role="php">

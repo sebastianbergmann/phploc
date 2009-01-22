@@ -43,6 +43,7 @@
 
 require 'PHPLOC/Analyser.php';
 require 'PHPLOC/TextUI/Getopt.php';
+require 'PHPLOC/TextUI/ResultPrinter.php';
 require 'PHPLOC/Util/FilterIterator.php';
 
 /**
@@ -148,36 +149,16 @@ class PHPLOC_TextUI_Command
             PHPLOC_Analyser::countFile($file->getPathName(), $count);
         }
 
-        self::printVersionString();
-
-        $args = array(
-          count($directories),
-          $count['files'],
-          $count['loc']
-        );
-
-        $format  = "Directories:                       %10d\n" .
-                   "Files:                             %10d\n" .
-                   "Lines of Code (LOC):               %10d\n";
-
-        if (function_exists('parsekit_compile_file')) {
-            $args[]  = $count['eloc'];
-            $format .= "Executable Lines of Code (ELOC):   %10d\n";
+        if (!function_exists('parsekit_compile_file')) {
+            unset($count['eloc']);
         }
 
-        $args[] = $count['cloc'];
-        $args[] = $count['ncloc'];
-        $args[] = $count['interfaces'];
-        $args[] = $count['classes'];
-        $args[] = $count['functions'];
+        $count['directories'] = count($directories);
 
-        $format .= "Comment Lines of Code (CLOC):      %10d\n" .
-                   "Non-Comment Lines of Code (NCLOC): %10d\n" .
-                   "Interfaces:                        %10d\n" .
-                   "Classes:                           %10d\n" .
-                   "Functions/Methods:                 %10d\n";
+        self::printVersionString();
 
-        vprintf($format, $args);
+        $printer = new PHPLOC_TextUI_ResultPrinter;
+        $printer->printResult($count);
     }
 
     /**
