@@ -62,7 +62,7 @@ class PHPLOC_FilterIterator extends FilterIterator
      * @param  Iterator $iterator
      * @param  array    $suffixes
      */
-    public function __construct(Iterator $iterator, array $suffixes = array('.php'))
+    public function __construct(Iterator $iterator, array $suffixes = array('php'))
     {
         parent::__construct($iterator);
         $this->suffixes = $suffixes;

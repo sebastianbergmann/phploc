@@ -64,6 +64,7 @@ class PHPLOC_Command
               '',
               array(
                 'help',
+                'suffixes=',
                 'version'
               )
             );
@@ -73,8 +74,16 @@ class PHPLOC_Command
             self::showError($e->getMessage());
         }
 
+        $suffixes = array('php');
+
         foreach ($options[0] as $option) {
             switch ($option[0]) {
+                case '--suffixes': {
+                    $suffixes = explode(',', $option[1]);
+                    array_map('trim', $suffixes);
+                }
+                break;
+
                 case '--help': {
                     self::showHelp();
                     exit(0);
@@ -94,7 +103,8 @@ class PHPLOC_Command
                 $files = new PHPLOC_FilterIterator(
                   new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($options[1][0])
-                  )
+                  ),
+                  $suffixes
                 );
             }
 
@@ -186,6 +196,8 @@ class PHPLOC_Command
         print <<<EOT
 Usage: phploc [switches] <directory>
        phploc [switches] <file>
+
+  --suffixes <suffix,...>  A comma-separated list of file suffixes to check.
 
   --help                   Prints this usage information.
   --version                Prints the version and exits.
