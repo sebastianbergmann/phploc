@@ -5,15 +5,16 @@ phploc
 
 Usage Example
 
-    sb@ubuntu phploc % ./phploc.php .
+    sb@ubuntu phploc % ./phploc.php /usr/local/src/phpunit/trunk
     phploc 1.0.0 by Sebastian Bergmann.
 
-    Directories:                                2
-    Files:                                      4
-    Lines of Code (LOC):                      555
-    Comment Lines of Code (CLOC):             220
-    Non-Comment Lines of Code (NCLOC):        335
-    Interfaces:                                 0
-    Classes:                                    3
-    Functions/Methods:                         11
+    Directories:                               52
+    Files:                                    334
+    Lines of Code (LOC):                    60724
+    Executable Lines of Code (ELOC):        21024
+    Comment Lines of Code (CLOC):           25820
+    Non-Comment Lines of Code (NCLOC):      34904
+    Interfaces:                                31
+    Classes:                                  302
+    Functions/Methods:                       2062
 

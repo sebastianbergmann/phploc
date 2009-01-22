@@ -65,6 +65,11 @@
     <name>tokenizer</name>
    </extension>
   </required>
+  <optional>
+   <extension>
+    <name>parsekit</name>
+   </extension>
+  </optional>
  </dependencies>
  <phprelease>
   <installconditions>

@@ -56,6 +56,8 @@ require 'PHPLOC/FilterIterator.php';
  */
 class PHPLOC_Command
 {
+    private static $opcodeBlacklist = array('ZEND_NOP');
+
     public static function main()
     {
         try {
@@ -127,6 +129,7 @@ class PHPLOC_Command
           'loc'         => 0,
           'cloc'        => 0,
           'ncloc'       => 0,
+          'eloc'        => 0,
           'interfaces'  => 0,
           'classes'     => 0,
           'functions'   => 0
@@ -146,29 +149,39 @@ class PHPLOC_Command
 
         self::printVersionString();
 
-        printf(
-          "Directories:                       %10d\n" .
-          "Files:                             %10d\n" .
-          "Lines of Code (LOC):               %10d\n" .
-          "Comment Lines of Code (CLOC):      %10d\n" .
-          "Non-Comment Lines of Code (NCLOC): %10d\n" .
-          "Interfaces:                        %10d\n" .
-          "Classes:                           %10d\n" .
-          "Functions/Methods:                 %10d\n",
-
+        $args = array(
           count($directories),
           $count['files'],
-          $count['loc'],
-          $count['cloc'],
-          $count['ncloc'],
-          $count['interfaces'],
-          $count['classes'],
-          $count['functions']
+          $count['loc']
         );
+
+        $format  = "Directories:                       %10d\n" .
+                   "Files:                             %10d\n" .
+                   "Lines of Code (LOC):               %10d\n";
+
+        if (function_exists('parsekit_compile_file')) {
+            $args[]  = $count['eloc'];
+            $format .= "Executable Lines of Code (ELOC):   %10d\n";
+        }
+
+        $args[] = $count['cloc'];
+        $args[] = $count['ncloc'];
+        $args[] = $count['interfaces'];
+        $args[] = $count['classes'];
+        $args[] = $count['functions'];
+
+        $format .= "Comment Lines of Code (CLOC):      %10d\n" .
+                   "Non-Comment Lines of Code (NCLOC): %10d\n" .
+                   "Interfaces:                        %10d\n" .
+                   "Classes:                           %10d\n" .
+                   "Functions/Methods:                 %10d\n";
+
+        vprintf($format, $args);
     }
 
     /**
-     * Counts LOC, CLOC, and NCLOC for a file.
+     * Counts LOC, ELOC, CLOC, and NCLOC as well as interfaces, classes, and
+     * functions/methods for a file.
      *
      * @param  string $file
      * @param  array  $count
@@ -207,6 +220,47 @@ class PHPLOC_Command
         $count['cloc']  += $cloc;
         $count['ncloc'] += $loc - $cloc;
         $count['files']++;
+
+        if (function_exists('parsekit_compile_file')) {
+            $count['eloc'] += self::countOpArray(parsekit_compile_file($file));
+        }
+    }
+
+    /**
+     * Counts ELOC from a given op-array.
+     *
+     * @param  array $opArray
+     * @return integer
+     */
+    protected static function countOpArray(array $opArray)
+    {
+        $eloc  = 0;
+        $lines = array();
+
+        if (isset($opArray['class_table'])) {
+            foreach ($opArray['class_table'] as $_class) {
+                if (isset($_class['function_table'])) {
+                    foreach ($_class['function_table'] as $_opArray) {
+                        $eloc += self::countOpArray($_opArray);
+                    }
+                }
+            }
+        }
+
+        if (isset($opArray['function_table'])) {
+            foreach ($opArray['function_table'] as $_opArray) {
+                $eloc += self::countOpArray($_opArray);
+            }
+        }
+
+        foreach ($opArray['opcodes'] as $opcode) {
+            if (!isset($eloc[$opcode['lineno']]) &&
+                !in_array($opcode['opcode_name'], self::$opcodeBlacklist)) {
+                $lines[$opcode['lineno']] = TRUE;
+            }
+        }
+
+        return $eloc + count($lines);
     }
 
     /**
