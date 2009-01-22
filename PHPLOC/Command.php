@@ -123,26 +123,44 @@ class PHPLOC_Command
     protected static function countFiles($files)
     {
         $count = array(
-          'files' => 0, 'loc' => 0, 'cloc' => 0, 'ncloc' => 0
+          'files'       => 0,
+          'loc'         => 0,
+          'cloc'        => 0,
+          'ncloc'       => 0,
+          'classes'     => 0,
+          'functions'   => 0
         );
 
-        foreach ($files as $file) {
-            $_count = self::countFile($file->getPathName());
+        $directories = array();
 
-            $count['loc']   += $_count['loc'];
-            $count['cloc']  += $_count['cloc'];
-            $count['ncloc'] += $_count['ncloc'];
-            $count['files']++;
+        foreach ($files as $file) {
+            $directory = $file->getPath();
+
+            if (!isset($directories[$directory])) {
+                $directories[$directory] = TRUE;
+            }
+
+            self::countFile($file->getPathName(), $count);
         }
 
         self::printVersionString();
 
         printf(
-          "Files: %d, LOC: %d, CLOC: %d, NCLOC: %d.\n",
+          "Directories:                       %10d\n" .
+          "Files:                             %10d\n" .
+          "Lines of Code (LOC):               %10d\n" .
+          "Comment Lines of Code (CLOC):      %10d\n" .
+          "Non-Comment Lines of Code (NCLOC): %10d\n" .
+          "Classes:                           %10d\n" .
+          "Functions/Methods:                 %10d\n",
+
+          count($directories),
           $count['files'],
           $count['loc'],
           $count['cloc'],
-          $count['ncloc']
+          $count['ncloc'],
+          $count['classes'],
+          $count['functions']
         );
     }
 
@@ -150,13 +168,13 @@ class PHPLOC_Command
      * Counts LOC, CLOC, and NCLOC for a file.
      *
      * @param  string $file
-     * @return array
+     * @param  array  $count
      */
-    protected static function countFile($file)
+    protected static function countFile($file, array &$count)
     {
-        $buffer = file_get_contents($file);
-        $loc    = substr_count($buffer, "\n");
-        $cloc   = 0;
+        $buffer    = file_get_contents($file);
+        $loc       = substr_count($buffer, "\n");
+        $cloc      = 0;
 
         foreach (token_get_all($buffer) as $token) {
             if (is_string($token)) {
@@ -168,11 +186,20 @@ class PHPLOC_Command
             if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
                 $cloc += count(explode("\n", $value));
             }
+
+            else if ($token == T_CLASS) {
+                $count['classes']++;
+            }
+
+            else if ($token == T_FUNCTION) {
+                $count['functions']++;
+            }
         }
 
-        return array(
-          'loc' => $loc, 'cloc' => $cloc, 'ncloc' => $loc - $cloc
-        );
+        $count['loc']   += $loc;
+        $count['cloc']  += $cloc;
+        $count['ncloc'] += $loc - $cloc;
+        $count['files']++;
     }
 
     /**
