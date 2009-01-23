@@ -10,10 +10,12 @@ Usage Example
 
     Directories:                               52
     Files:                                    334
+
     Lines of Code (LOC):                    60724
     Executable Lines of Code (ELOC):        21024
     Comment Lines of Code (CLOC):           25820
     Non-Comment Lines of Code (NCLOC):      34904
+
     Interfaces:                                31
     Classes:                                  302
     Functions/Methods:                       2062
