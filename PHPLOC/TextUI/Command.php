@@ -58,8 +58,6 @@ require 'PHPLOC/Util/FilterIterator.php';
  */
 class PHPLOC_TextUI_Command
 {
-    private static $opcodeBlacklist = array('ZEND_NOP');
-
     public static function main()
     {
         try {
