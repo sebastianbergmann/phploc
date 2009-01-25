@@ -115,11 +115,12 @@ class PHPLOC_TextUI_Command
             }
         }
 
-        if (isset($files)) {
-            self::countFiles($files);
-        } else {
+        if (!isset($files)) {
             self::showHelp();
+            exit(1);
         }
+
+        self::countFiles($files);
     }
 
     protected static function countFiles($files)
