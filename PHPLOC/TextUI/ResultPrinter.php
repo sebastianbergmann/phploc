@@ -42,7 +42,7 @@
  */
 
 /**
- *
+ * A ResultPrinter for the TextUI.
  *
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
@@ -53,6 +53,11 @@
  */
 class PHPLOC_TextUI_ResultPrinter
 {
+    /**
+     * Prints a result set from PHPLOC_TextUI_Command::countFiles().
+     *
+     * @param array $count
+     */
     public function printResult(array $count)
     {
         $args   = array();

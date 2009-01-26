@@ -42,7 +42,7 @@
  */
 
 /**
- *
+ * PHPLOC code analyser.
  *
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009 Sebastian Bergmann <sb@sebastian-bergmann.de>

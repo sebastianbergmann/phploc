@@ -47,7 +47,7 @@ require 'PHPLOC/TextUI/ResultPrinter.php';
 require 'PHPLOC/Util/FilterIterator.php';
 
 /**
- *
+ * TextUI frontend for PHPLOC.
  *
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
@@ -58,6 +58,9 @@ require 'PHPLOC/Util/FilterIterator.php';
  */
 class PHPLOC_TextUI_Command
 {
+    /**
+     * Main method.
+     */
     public static function main()
     {
         try {
@@ -123,6 +126,11 @@ class PHPLOC_TextUI_Command
         self::countFiles($files);
     }
 
+    /**
+     * Processes a set of files.
+     *
+     * @param Traversable $files
+     */
     protected static function countFiles($files)
     {
         $count = array(
@@ -162,6 +170,8 @@ class PHPLOC_TextUI_Command
 
     /**
      * Shows an error.
+     *
+     * @param string $message
      */
     protected static function showError($message)
     {

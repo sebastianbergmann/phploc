@@ -42,7 +42,7 @@
  */
 
 /**
- *
+ * FilterIterator implementation that filters files based on a list of suffixes.
  *
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
