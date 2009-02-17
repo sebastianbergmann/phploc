@@ -58,10 +58,14 @@ class PHPLOC_TextUI_ResultPrinter
      *
      * @param array $count
      */
-    public function printResult(array $count)
+    public function printResult(array $count, $title = '')
     {
         $args   = array();
         $format = '';
+
+        if (!empty($title)) {
+            print $title . "\n---------------------------------------------\n";
+        }
 
         if ($count['directories'] > 0) {
             $args[]  = $count['directories'];

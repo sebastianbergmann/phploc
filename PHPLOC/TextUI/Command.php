@@ -70,6 +70,8 @@ class PHPLOC_TextUI_Command
               array(
                 'help',
                 'suffixes=',
+                'sut=',
+                'tests=',
                 'version'
               )
             );
@@ -83,15 +85,25 @@ class PHPLOC_TextUI_Command
 
         foreach ($options[0] as $option) {
             switch ($option[0]) {
+                case '--help': {
+                    self::showHelp();
+                    exit(0);
+                }
+                break;
+
                 case '--suffixes': {
                     $suffixes = explode(',', $option[1]);
                     array_map('trim', $suffixes);
                 }
                 break;
 
-                case '--help': {
-                    self::showHelp();
-                    exit(0);
+                case '--sut': {
+                    $sut = $option[1];
+                }
+                break;
+
+                case '--tests': {
+                    $tests = $option[1];
                 }
                 break;
 
@@ -103,33 +115,58 @@ class PHPLOC_TextUI_Command
             }
         }
 
-        if (isset($options[1][0])) {
-            if (is_dir($options[1][0])) {
-                $files = new PHPLOC_Util_FilterIterator(
-                  new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($options[1][0])
-                  ),
-                  $suffixes
-                );
-            }
-
-            else if (is_file($options[1][0])) {
-                $files = array(new SPLFileInfo($options[1][0]));
-            }
+        if (!isset($sut) && isset($options[1][0])) {
+            $sut = $options[1][0];
         }
 
-        if (!isset($files)) {
+        if (isset($sut)) {
+            $sut = self::getFiles($sut, $suffixes);
+        }
+
+        if (isset($tests)) {
+            $tests = self::getFiles($tests, $suffixes);
+            $title = 'System Under Test';
+        } else {
+            $title = '';
+        }
+
+        if (!isset($sut)) {
             self::showHelp();
             exit(1);
         }
 
-        self::countFiles($files);
+        self::printVersionString();
+        $printer = new PHPLOC_TextUI_ResultPrinter;
+
+        $printer->printResult(self::countFiles($sut), $title);
+
+        if (isset($tests)) {
+            print "\n\n";
+            $printer->printResult(self::countFiles($tests), 'Tests');
+        }
+    }
+
+    protected static function getFiles($path, array $suffixes)
+    {
+        if (is_dir($path)) {
+            return new PHPLOC_Util_FilterIterator(
+              new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path)
+              ),
+              $suffixes
+            );
+        }
+
+        else if (is_file($path)) {
+            return array(new SPLFileInfo($path));
+        }
     }
 
     /**
      * Processes a set of files.
      *
-     * @param Traversable $files
+     * @param  Traversable $files
+     * @return array
      */
     protected static function countFiles($files)
     {
@@ -162,10 +199,7 @@ class PHPLOC_TextUI_Command
 
         $count['directories'] = count($directories) - 1;
 
-        self::printVersionString();
-
-        $printer = new PHPLOC_TextUI_ResultPrinter;
-        $printer->printResult($count);
+        return $count;
     }
 
     /**
@@ -190,8 +224,10 @@ class PHPLOC_TextUI_Command
         self::printVersionString();
 
         print <<<EOT
-Usage: phploc [switches] <directory>
-       phploc [switches] <file>
+Usage: phploc [switches] <directory|file>
+
+  --sut <directory|file>   The System Under Test.
+  --tests <directory|file> The test code.
 
   --suffixes <suffix,...>  A comma-separated list of file suffixes to check.
 

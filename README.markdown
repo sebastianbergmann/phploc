@@ -32,21 +32,55 @@ This has to be done only once. Now the PEAR Installer can be used to install pac
 
 After the installation you can find the phploc source files inside your local PEAR directory; the path is usually `/usr/lib/php/PHPLOC`.
 
-Usage Example
--------------
+Usage Examples
+--------------
 
-    sb@ubuntu ~ % phploc /usr/local/src/phpunit/trunk 
-    phploc 1.0.0 by Sebastian Bergmann.
+    sb@ubuntu ~ % phploc /usr/local/src/ezcomponents/trunk/Workflow
+    phploc 1.1.0 by Sebastian Bergmann.
 
-    Directories:                               51
-    Files:                                    335
+    Directories:                               13
+    Files:                                    102
 
-    Lines of Code (LOC):                    60733
-    Executable Lines of Code (ELOC):        22378
-    Comment Lines of Code (CLOC):           25820
-    Non-Comment Lines of Code (NCLOC):      34913
+    Lines of Code (LOC):                    14066
+    Executable Lines of Code (ELOC):         5710
+    Comment Lines of Code (CLOC):            5228
+    Non-Comment Lines of Code (NCLOC):       8838
 
-    Interfaces:                                31
-    Classes:                                  303
-    Functions/Methods:                       2062
+    Interfaces:                                 7
+    Classes:                                   90
+    Functions/Methods:                        566
+
+You can use the `--sut` and `--tests` switches to tell `phploc` which directory
+contains your tested code (system under test) and which directory contains your
+test code.
+
+    sb@ubuntu ~ % phploc --sut   /usr/local/src/ezcomponents/trunk/Workflow/src \
+                         --tests /usr/local/src/ezcomponents/trunk/Workflow/tests
+    phploc 1.1.0 by Sebastian Bergmann.
+
+    System Under Test
+    ---------------------------------------------
+    Directories:                               11
+    Files:                                     82
+
+    Lines of Code (LOC):                     9533
+    Executable Lines of Code (ELOC):         2925
+    Comment Lines of Code (CLOC):            4910
+    Non-Comment Lines of Code (NCLOC):       4623
+
+    Interfaces:                                 7
+    Classes:                                   74
+    Functions/Methods:                        294
+
+
+    Tests
+    ---------------------------------------------
+    Lines of Code (LOC):                     4428
+    Executable Lines of Code (ELOC):         2734
+    Comment Lines of Code (CLOC):             260
+    Non-Comment Lines of Code (NCLOC):       4168
+
+    Interfaces:                                 0
+    Classes:                                   15
+    Functions/Methods:                        269
 
