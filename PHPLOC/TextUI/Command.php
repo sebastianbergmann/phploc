@@ -147,6 +147,13 @@ class PHPLOC_TextUI_Command
         $printer->printResult($countSut, $countTests);
     }
 
+    /**
+     * Returns a set of files.
+     *
+     * @param  string $path
+     * @param  array  $suffixes
+     * @return Traversable
+     */
     protected static function getFiles($path, array $suffixes)
     {
         if (is_dir($path)) {
