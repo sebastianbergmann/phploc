@@ -125,9 +125,7 @@ class PHPLOC_TextUI_Command
 
         if (isset($tests)) {
             $tests = self::getFiles($tests, $suffixes);
-            $title = 'System Under Test';
         } else {
-            $title = '';
         }
 
         if (!isset($sut)) {
@@ -136,14 +134,17 @@ class PHPLOC_TextUI_Command
         }
 
         self::printVersionString();
-        $printer = new PHPLOC_TextUI_ResultPrinter;
 
-        $printer->printResult(self::countFiles($sut), $title);
+        $countSut = self::countFiles($sut);
 
         if (isset($tests)) {
-            print "\n\n";
-            $printer->printResult(self::countFiles($tests), 'Tests');
+            $countTests = self::countFiles($tests);
+        } else {
+            $countTests = array();
         }
+
+        $printer = new PHPLOC_TextUI_ResultPrinter;
+        $printer->printResult($countSut, $countTests);
     }
 
     protected static function getFiles($path, array $suffixes)
