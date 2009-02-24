@@ -43,7 +43,8 @@
 
 require 'PHPLOC/Analyser.php';
 require 'PHPLOC/TextUI/Getopt.php';
-require 'PHPLOC/TextUI/ResultPrinter.php';
+require 'PHPLOC/TextUI/ResultPrinter/Text.php';
+require 'PHPLOC/TextUI/ResultPrinter/XML.php';
 require 'PHPLOC/Util/FilterIterator.php';
 
 /**
@@ -69,6 +70,7 @@ class PHPLOC_TextUI_Command
               '',
               array(
                 'help',
+                'log-xml=',
                 'suffixes=',
                 'sut=',
                 'tests=',
@@ -88,6 +90,11 @@ class PHPLOC_TextUI_Command
                 case '--help': {
                     self::showHelp();
                     exit(0);
+                }
+                break;
+
+                case '--log-xml': {
+                    $logXml = $option[1];
                 }
                 break;
 
@@ -143,8 +150,13 @@ class PHPLOC_TextUI_Command
             $countTests = array();
         }
 
-        $printer = new PHPLOC_TextUI_ResultPrinter;
+        $printer = new PHPLOC_TextUI_ResultPrinter_Text;
         $printer->printResult($countSut, $countTests);
+
+        if (isset($logXml)) {
+            $printer = new PHPLOC_TextUI_ResultPrinter_XML;
+            $printer->printResult($logXml, $countSut, $countTests);
+        }
     }
 
     /**
@@ -233,6 +245,8 @@ class PHPLOC_TextUI_Command
 
         print <<<EOT
 Usage: phploc [switches] <directory|file>
+
+  --log-xml <file>         Write result in XML format to file.
 
   --sut <directory|file>   The System Under Test.
   --tests <directory|file> The test code.

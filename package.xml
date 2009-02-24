@@ -32,13 +32,18 @@
   <dir name="/">
    <dir name="PHPLOC">
     <dir name="TextUI">
+     <dir name="ResultPrinter">
+      <file baseinstalldir="/" name="Text.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="XML.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
      <file baseinstalldir="/" name="Command.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="/" name="Getopt.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="/" name="ResultPrinter.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
