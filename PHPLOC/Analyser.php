@@ -53,6 +53,7 @@
  */
 class PHPLOC_Analyser
 {
+    private static $classes = array();
     private static $opcodeBlacklist = array('ZEND_NOP');
 
     /**
@@ -64,16 +65,18 @@ class PHPLOC_Analyser
      */
     public static function countFile($file, array &$count)
     {
-        $buffer = file_get_contents($file);
-        $loc    = substr_count($buffer, "\n");
-        $cloc   = 0;
+        $buffer    = file_get_contents($file);
+        $tokens    = token_get_all($buffer);
+        $numTokens = count($tokens);
+        $loc       = substr_count($buffer, "\n");
+        $cloc      = 0;
 
-        foreach (token_get_all($buffer) as $token) {
-            if (is_string($token)) {
+        for ($i = 0; $i < $numTokens; $i++) {
+            if (is_string($tokens[$i])) {
                 continue;
             }
 
-            list ($token, $value) = $token;
+            list ($token, $value) = $tokens[$i];
 
             if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
                 $cloc += substr_count($value, "\n") + 1;
@@ -85,6 +88,14 @@ class PHPLOC_Analyser
 
             else if ($token == T_CLASS) {
                 $count['classes']++;
+
+                if ($tokens[$i+4][0] == T_EXTENDS) {
+                    $parent = $tokens[$i+6][1];
+                } else {
+                    $parent = NULL;
+                }
+
+                self::$classes[$tokens[$i+2][1]] = $parent;
             }
 
             else if ($token == T_FUNCTION) {
