@@ -190,17 +190,7 @@ class PHPLOC_TextUI_Command
      */
     protected static function countFiles($files)
     {
-        $count = array(
-          'files'       => 0,
-          'loc'         => 0,
-          'cloc'        => 0,
-          'ncloc'       => 0,
-          'eloc'        => 0,
-          'interfaces'  => 0,
-          'classes'     => 0,
-          'functions'   => 0
-        );
-
+        $analyser    = new PHPLOC_Analyser;
         $directories = array();
 
         foreach ($files as $file) {
@@ -210,8 +200,10 @@ class PHPLOC_TextUI_Command
                 $directories[$directory] = TRUE;
             }
 
-            PHPLOC_Analyser::countFile($file->getPathName(), $count);
+            $analyser->countFile($file->getPathName());
         }
+
+        $count = $analyser->getCount();
 
         if (!function_exists('parsekit_compile_file')) {
             unset($count['eloc']);

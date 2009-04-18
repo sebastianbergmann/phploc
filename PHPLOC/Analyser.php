@@ -53,17 +53,28 @@
  */
 class PHPLOC_Analyser
 {
-    private static $classes = array();
-    private static $opcodeBlacklist = array('ZEND_NOP');
+    protected $classes = array();
+
+    protected $count = array(
+      'files'       => 0,
+      'loc'         => 0,
+      'cloc'        => 0,
+      'ncloc'       => 0,
+      'eloc'        => 0,
+      'interfaces'  => 0,
+      'classes'     => 0,
+      'functions'   => 0
+    );
+
+    protected $opcodeBlacklist = array('ZEND_NOP');
 
     /**
      * Counts LOC, ELOC, CLOC, and NCLOC as well as interfaces, classes, and
      * functions/methods for a file.
      *
      * @param string $file
-     * @param array  $count
      */
-    public static function countFile($file, array &$count)
+    public function countFile($file)
     {
         $buffer    = file_get_contents($file);
         $tokens    = token_get_all($buffer);
@@ -83,11 +94,11 @@ class PHPLOC_Analyser
             }
 
             else if ($token == T_INTERFACE) {
-                $count['interfaces']++;
+                $this->count['interfaces']++;
             }
 
             else if ($token == T_CLASS) {
-                $count['classes']++;
+                $this->count['classes']++;
 
                 if ($tokens[$i+4][0] == T_EXTENDS) {
                     $parent = $tokens[$i+6][1];
@@ -95,22 +106,31 @@ class PHPLOC_Analyser
                     $parent = NULL;
                 }
 
-                self::$classes[$tokens[$i+2][1]] = $parent;
+                $this->classes[$tokens[$i+2][1]] = $parent;
             }
 
             else if ($token == T_FUNCTION) {
-                $count['functions']++;
+                $this->count['functions']++;
             }
         }
 
-        $count['loc']   += $loc;
-        $count['cloc']  += $cloc;
-        $count['ncloc'] += $loc - $cloc;
-        $count['files']++;
+        $this->count['loc']   += $loc;
+        $this->count['cloc']  += $cloc;
+        $this->count['ncloc'] += $loc - $cloc;
+        $this->count['files']++;
 
         if (function_exists('parsekit_compile_file')) {
-            $count['eloc'] += self::countOpArray(parsekit_compile_file($file));
+            $this->count['eloc'] += $this->countOpArray(parsekit_compile_file($file));
         }
+    }
+
+    /**
+     * @return array
+     * @since  Method available since Release 1.1.0
+     */
+    public function getCount()
+    {
+        return $this->count;
     }
 
     /**
@@ -119,7 +139,7 @@ class PHPLOC_Analyser
      * @param  array $opArray
      * @return integer
      */
-    protected static function countOpArray(array $opArray)
+    protected function countOpArray(array $opArray)
     {
         $eloc  = 0;
         $lines = array();
@@ -128,7 +148,7 @@ class PHPLOC_Analyser
             foreach ($opArray['class_table'] as $_class) {
                 if (isset($_class['function_table'])) {
                     foreach ($_class['function_table'] as $_opArray) {
-                        $eloc += self::countOpArray($_opArray);
+                        $eloc += $this->countOpArray($_opArray);
                     }
                 }
             }
@@ -136,13 +156,13 @@ class PHPLOC_Analyser
 
         if (isset($opArray['function_table'])) {
             foreach ($opArray['function_table'] as $_opArray) {
-                $eloc += self::countOpArray($_opArray);
+                $eloc += $this->countOpArray($_opArray);
             }
         }
 
         foreach ($opArray['opcodes'] as $opcode) {
             if (!isset($eloc[$opcode['lineno']]) &&
-                !in_array($opcode['opcode_name'], self::$opcodeBlacklist)) {
+                !in_array($opcode['opcode_name'], $this->opcodeBlacklist)) {
                 $lines[$opcode['lineno']] = TRUE;
             }
         }
