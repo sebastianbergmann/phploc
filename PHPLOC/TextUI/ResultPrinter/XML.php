@@ -123,7 +123,15 @@ class PHPLOC_TextUI_ResultPrinter_XML
         );
 
         $element->appendChild(
-          $document->createElement('functionsAndMethods', $count['functions'])
+          $document->createElement('methods', $count['methods'])
+        );
+
+        $element->appendChild(
+          $document->createElement('staticMethods', $count['staticMethods'])
+        );
+
+        $element->appendChild(
+          $document->createElement('functions', $count['functions'])
         );
 
         return $element;

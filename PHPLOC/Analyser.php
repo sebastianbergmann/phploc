@@ -56,14 +56,16 @@ class PHPLOC_Analyser
     protected $classes = array();
 
     protected $count = array(
-      'files'       => 0,
-      'loc'         => 0,
-      'cloc'        => 0,
-      'ncloc'       => 0,
-      'eloc'        => 0,
-      'interfaces'  => 0,
-      'classes'     => 0,
-      'functions'   => 0
+      'files'         => 0,
+      'loc'           => 0,
+      'cloc'          => 0,
+      'ncloc'         => 0,
+      'eloc'          => 0,
+      'interfaces'    => 0,
+      'classes'       => 0,
+      'functions'     => 0,
+      'methods'       => 0,
+      'staticMethods' => 0
     );
 
     protected $opcodeBlacklist = array('ZEND_NOP');
@@ -81,9 +83,25 @@ class PHPLOC_Analyser
         $numTokens = count($tokens);
         $loc       = substr_count($buffer, "\n");
         $cloc      = 0;
+        $braces    = 0;
+        $class     = NULL;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
+                if ($class !== NULL) {
+                    if ($tokens[$i] == '{') {
+                        $braces++;
+                    }
+
+                    if ($tokens[$i] == '}') {
+                        $braces--;
+
+                        if ($braces == 0) {
+                            $class = NULL;
+                        }
+                    }
+                }
+
                 continue;
             }
 
@@ -94,10 +112,14 @@ class PHPLOC_Analyser
             }
 
             else if ($token == T_INTERFACE) {
+                $braces = 0;
+                $class  = $tokens[$i+2][1];
                 $this->count['interfaces']++;
             }
 
             else if ($token == T_CLASS) {
+                $braces = 0;
+                $class  = $tokens[$i+2][1];
                 $this->count['classes']++;
 
                 if ($tokens[$i+4][0] == T_EXTENDS) {
@@ -106,11 +128,35 @@ class PHPLOC_Analyser
                     $parent = NULL;
                 }
 
-                $this->classes[$tokens[$i+2][1]] = $parent;
+                $this->classes[$class] = $parent;
             }
 
             else if ($token == T_FUNCTION) {
-                $this->count['functions']++;
+                if ($class === NULL) {
+                    $this->count['functions']++;
+                } else {
+                    $static = FALSE;
+
+                    for ($j = $i; $j > 0; $j--) {
+                        if (is_string($tokens[$j])) {
+                            if ($tokens[$j] == '{' || $tokens[$j] == '}') {
+                                break;
+                            }
+
+                            continue;
+                        }
+
+                        if ($tokens[$j][0] == T_STATIC) {
+                            $static = TRUE;
+                        }
+                    }
+
+                    if ($static) {
+                        $this->count['staticMethods']++;
+                    } else {
+                        $this->count['methods']++;
+                    }
+                }
             }
         }
 
