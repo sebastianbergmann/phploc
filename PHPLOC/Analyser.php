@@ -111,24 +111,23 @@ class PHPLOC_Analyser
                 $cloc += substr_count($value, "\n") + 1;
             }
 
-            else if ($token == T_INTERFACE) {
+            else if ($token == T_CLASS || $token == T_INTERFACE) {
                 $braces = 0;
                 $class  = $tokens[$i+2][1];
-                $this->count['interfaces']++;
-            }
 
-            else if ($token == T_CLASS) {
-                $braces = 0;
-                $class  = $tokens[$i+2][1];
-                $this->count['classes']++;
-
-                if ($tokens[$i+4][0] == T_EXTENDS) {
-                    $parent = $tokens[$i+6][1];
+                if ($token == T_INTERFACE) {
+                    $this->count['interfaces']++;
                 } else {
-                    $parent = NULL;
-                }
+                    $this->count['classes']++;
 
-                $this->classes[$class] = $parent;
+                    if ($tokens[$i+4][0] == T_EXTENDS) {
+                        $parent = $tokens[$i+6][1];
+                    } else {
+                        $parent = NULL;
+                    }
+
+                    $this->classes[$class] = $parent;
+                }
             }
 
             else if ($token == T_FUNCTION) {
