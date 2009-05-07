@@ -41,14 +41,16 @@ Usage Examples
     Directories:                               13
     Files:                                    102
 
-    Lines of Code (LOC):                    14066
-    Executable Lines of Code (ELOC):         5710
-    Comment Lines of Code (CLOC):            5228
-    Non-Comment Lines of Code (NCLOC):       8838
+    Lines of Code (LOC):                    14138
+    Executable Lines of Code (ELOC):         5748
+    Comment Lines of Code (CLOC):            5244
+    Non-Comment Lines of Code (NCLOC):       8894
 
     Interfaces:                                 7
     Classes:                                   90
-    Functions/Methods:                        566
+    Non-Static Methods:                       536
+    Static Methods:                            33
+    Functions:                                  0
 
 You can use the `--sut` and `--tests` switches to tell `phploc` which directory
 contains your tested code (system under test) and which directory contains your
@@ -63,24 +65,28 @@ test code.
     Directories:                               11
     Files:                                     82
 
-    Lines of Code (LOC):                     9533
-    Executable Lines of Code (ELOC):         2925
-    Comment Lines of Code (CLOC):            4910
-    Non-Comment Lines of Code (NCLOC):       4623
+    Lines of Code (LOC):                     9576
+    Executable Lines of Code (ELOC):         2944
+    Comment Lines of Code (CLOC):            4923
+    Non-Comment Lines of Code (NCLOC):       4653
 
     Interfaces:                                 7
     Classes:                                   74
-    Functions/Methods:                        294
+    Non-Static Methods:                       274
+    Static Methods:                            22
+    Functions:                                  0
 
 
     Tests
     ---------------------------------------------
-    Lines of Code (LOC):                     4428
-    Executable Lines of Code (ELOC):         2734
-    Comment Lines of Code (CLOC):             260
-    Non-Comment Lines of Code (NCLOC):       4168
+    Lines of Code (LOC):                     4457
+    Executable Lines of Code (ELOC):         2753
+    Comment Lines of Code (CLOC):             263
+    Non-Comment Lines of Code (NCLOC):       4194
 
     Interfaces:                                 0
     Classes:                                   15
-    Functions/Methods:                        269
+    Non-Static Methods:                       259
+    Static Methods:                            11
+    Functions:                                  0
 
