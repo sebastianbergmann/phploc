@@ -205,7 +205,7 @@ class PHPLOC_TextUI_Command
 
         $count = $analyser->getCount();
 
-        if (!function_exists('parsekit_compile_file')) {
+        if (!function_exists('bytekit_disassemble_file')) {
             unset($count['eloc']);
         }
 

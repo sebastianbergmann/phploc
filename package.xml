@@ -82,7 +82,7 @@
   </required>
   <optional>
    <extension>
-    <name>parsekit</name>
+    <name>bytekit</name>
    </extension>
   </optional>
  </dependencies>

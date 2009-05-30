@@ -9,7 +9,7 @@ Requirements
 ------------
 
 * The [tokenizer](http://www.php.net/tokenizer) extension is required to count the Comment Lines of Code (CLOC) and Non-Comment Lines of Code (NCLOC) as well as the number of interfaces, classes, methods, and functions of a project.
-* The [parsekit](http://pecl.php.net/package/parsekit) extension is an optional requirement and is used to count the Executable Lines of Code (ELOC) of a project.
+* The [bytekit](http://www.bytekit.org/) extension is an optional requirement and is used to count the Executable Lines of Code (ELOC) of a project.
 
 Installation
 ------------

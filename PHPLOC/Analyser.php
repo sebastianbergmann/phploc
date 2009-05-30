@@ -164,8 +164,8 @@ class PHPLOC_Analyser
         $this->count['ncloc'] += $loc - $cloc;
         $this->count['files']++;
 
-        if (function_exists('parsekit_compile_file')) {
-            $this->count['eloc'] += $this->countOpArray(parsekit_compile_file($file));
+        if (function_exists('bytekit_disassemble_file')) {
+            $this->count['eloc'] += $this->countEloc($file);
         }
     }
 
@@ -179,40 +179,26 @@ class PHPLOC_Analyser
     }
 
     /**
-     * Counts ELOC from a given op-array.
+     * Counts the Executable Lines of Code (ELOC) using Bytekit.
      *
-     * @param  array $opArray
+     * @param  string $filename
      * @return integer
+     * @since  Method available since Release 1.1.0
      */
-    protected function countOpArray(array $opArray)
+    protected function countEloc($filename)
     {
-        $eloc  = 0;
-        $lines = array();
+        $bytecode = bytekit_disassemble_file($filename);
+        $lines    = array();
 
-        if (isset($opArray['class_table'])) {
-            foreach ($opArray['class_table'] as $_class) {
-                if (isset($_class['function_table'])) {
-                    foreach ($_class['function_table'] as $_opArray) {
-                        $eloc += $this->countOpArray($_opArray);
-                    }
+        foreach ($bytecode['functions'] as $function) {
+            foreach ($function['raw']['opcodes'] as $opcode) {
+                if (!isset($lines[$opcode['lineno']])) {
+                    $lines[$opcode['lineno']] = TRUE;
                 }
             }
         }
 
-        if (isset($opArray['function_table'])) {
-            foreach ($opArray['function_table'] as $_opArray) {
-                $eloc += $this->countOpArray($_opArray);
-            }
-        }
-
-        foreach ($opArray['opcodes'] as $opcode) {
-            if (!isset($eloc[$opcode['lineno']]) &&
-                !in_array($opcode['opcode_name'], $this->opcodeBlacklist)) {
-                $lines[$opcode['lineno']] = TRUE;
-            }
-        }
-
-        return $eloc + count($lines);
+        return count($lines);
     }
 }
 ?>
