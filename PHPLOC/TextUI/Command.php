@@ -72,8 +72,6 @@ class PHPLOC_TextUI_Command
                 'help',
                 'log-xml=',
                 'suffixes=',
-                'sut=',
-                'tests=',
                 'version'
               )
             );
@@ -104,16 +102,6 @@ class PHPLOC_TextUI_Command
                 }
                 break;
 
-                case '--sut': {
-                    $sut = $option[1];
-                }
-                break;
-
-                case '--tests': {
-                    $tests = $option[1];
-                }
-                break;
-
                 case '--version': {
                     self::printVersionString();
                     exit(0);
@@ -122,40 +110,23 @@ class PHPLOC_TextUI_Command
             }
         }
 
-        if (!isset($sut) && isset($options[1][0])) {
-            $sut = $options[1][0];
-        }
-
-        if (isset($sut)) {
-            $sut = self::getFiles($sut, $suffixes);
-        }
-
-        if (isset($tests)) {
-            $tests = self::getFiles($tests, $suffixes);
+        if (isset($options[1][0])) {
+            $files = self::getFiles($options[1][0], $suffixes);
         } else {
-        }
-
-        if (!isset($sut)) {
             self::showHelp();
             exit(1);
         }
 
         self::printVersionString();
 
-        $countSut = self::countFiles($sut);
-
-        if (isset($tests)) {
-            $countTests = self::countFiles($tests);
-        } else {
-            $countTests = array();
-        }
+        $count = self::countFiles($files);
 
         $printer = new PHPLOC_TextUI_ResultPrinter_Text;
-        $printer->printResult($countSut, $countTests);
+        $printer->printResult($count);
 
         if (isset($logXml)) {
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
-            $printer->printResult($logXml, $countSut, $countTests);
+            $printer->printResult($logXml, $count);
         }
     }
 
@@ -239,9 +210,6 @@ class PHPLOC_TextUI_Command
 Usage: phploc [switches] <directory|file>
 
   --log-xml <file>         Write result in XML format to file.
-
-  --sut <directory|file>   The System Under Test.
-  --tests <directory|file> The test code.
 
   --suffixes <suffix,...>  A comma-separated list of file suffixes to check.
 
