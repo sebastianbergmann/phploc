@@ -36,7 +36,7 @@ Usage Examples
 --------------
 
     sb@ubuntu ~ % phploc /usr/local/src/ezcomponents/trunk/Workflow
-    phploc 1.1.0 by Sebastian Bergmann.
+    phploc 1.2.0-dev by Sebastian Bergmann.
 
     Directories:                               13
     Files:                                    102
@@ -58,7 +58,7 @@ test code.
 
     sb@ubuntu ~ % phploc --sut   /usr/local/src/ezcomponents/trunk/Workflow/src \
                          --tests /usr/local/src/ezcomponents/trunk/Workflow/tests
-    phploc 1.1.0 by Sebastian Bergmann.
+    phploc 1.2.0-dev by Sebastian Bergmann.
 
     System Under Test
     ---------------------------------------------
@@ -89,4 +89,3 @@ test code.
     Non-Static Methods:                       259
     Static Methods:                            11
     Functions:                                  0
-
