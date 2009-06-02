@@ -74,7 +74,7 @@
     <min>5.2.0</min>
    </php>
    <pearinstaller>
-    <min>1.7.1</min>
+    <min>1.8.1</min>
    </pearinstaller>
    <extension>
     <name>tokenizer</name>
