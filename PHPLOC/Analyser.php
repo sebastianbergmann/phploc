@@ -68,7 +68,9 @@ class PHPLOC_Analyser
       'staticMethods' => 0
     );
 
-    protected $opcodeBlacklist = array('ZEND_NOP');
+    protected $opcodeBlacklist = array(
+      'BYTEKIT_NOP' => TRUE
+    );
 
     /**
      * Counts LOC, ELOC, CLOC, and NCLOC as well as interfaces, classes, and
@@ -191,9 +193,10 @@ class PHPLOC_Analyser
         $lines    = array();
 
         foreach ($bytecode['functions'] as $function) {
-            foreach ($function['raw']['opcodes'] as $opcode) {
-                if (!isset($lines[$opcode['lineno']])) {
-                    $lines[$opcode['lineno']] = TRUE;
+            foreach ($function['raw']['opcodes'] as $opline) {
+                if (!isset($this->opcodeBlacklist[$opline['opcode']]) &&
+                    !isset($lines[$opline['lineno']])) {
+                    $lines[$opline['lineno']] = TRUE;
                 }
             }
         }
