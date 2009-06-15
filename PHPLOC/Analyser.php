@@ -189,7 +189,7 @@ class PHPLOC_Analyser
      */
     protected function countEloc($filename)
     {
-        $bytecode = bytekit_disassemble_file($filename);
+        $bytecode = @bytekit_disassemble_file($filename);
         $lines    = array();
 
         foreach ($bytecode['functions'] as $function) {
