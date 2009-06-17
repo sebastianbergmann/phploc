@@ -57,10 +57,9 @@ class PHPLOC_TextUI_ResultPrinter_XML
      * Prints a result set.
      *
      * @param string $filename
-     * @param array  $countSut
-     * @param array  $countTests
+     * @param array  $count
      */
-    public function printResult($filename, array $countSut, array $countTests)
+    public function printResult($filename, array $count)
     {
         $document = new DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = TRUE;
@@ -68,18 +67,7 @@ class PHPLOC_TextUI_ResultPrinter_XML
         $root = $document->createElement('phploc');
         $document->appendChild($root);
 
-        if (empty($countTests)) {
-            $this->processArray($document, $root, $countSut);
-        } else {
-            $sutElement = $document->createElement('sut');
-            $root->appendChild($sutElement);
-
-            $testsElement = $document->createElement('tests');
-            $root->appendChild($testsElement);
-
-            $this->processArray($document, $sutElement, $countSut);
-            $this->processArray($document, $testsElement, $countTests);
-        }
+        $this->processArray($document, $root, $count);
 
         file_put_contents($filename, $document->saveXML());
     }

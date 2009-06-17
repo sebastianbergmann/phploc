@@ -56,36 +56,12 @@ class PHPLOC_TextUI_ResultPrinter_Text
     /**
      * Prints a result set.
      *
-     * @param array $countSut
-     * @param array $countTests
+     * @param array $count
      */
-    public function printResult(array $countSut, array $countTests)
-    {
-        if (empty($countTests)) {
-            $this->printArray($countSut, '');
-        } else {
-            $this->printArray($countSut, 'System Under Test');
-
-            print "\n\n";
-
-            $this->printArray($countTests, 'Tests');
-        }
-    }
-
-    /**
-     * Prints a result array from PHPLOC_TextUI_Command::countFiles().
-     *
-     * @param array  $countSut
-     * @param string $title
-     */
-    protected function printArray(array $count, $title)
+    public function printResult(array $count)
     {
         $args   = array();
         $format = '';
-
-        if (!empty($title)) {
-            print $title . "\n---------------------------------------------\n";
-        }
 
         if ($count['directories'] > 0) {
             $args[]  = $count['directories'];

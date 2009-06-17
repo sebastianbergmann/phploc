@@ -53,8 +53,6 @@
  */
 class PHPLOC_Analyser
 {
-    protected $classes = array();
-
     protected $count = array(
       'files'         => 0,
       'loc'           => 0,
@@ -121,14 +119,6 @@ class PHPLOC_Analyser
                     $this->count['interfaces']++;
                 } else {
                     $this->count['classes']++;
-
-                    if ($tokens[$i+4][0] == T_EXTENDS) {
-                        $parent = $tokens[$i+6][1];
-                    } else {
-                        $parent = NULL;
-                    }
-
-                    $this->classes[$class] = $parent;
                 }
             }
 
