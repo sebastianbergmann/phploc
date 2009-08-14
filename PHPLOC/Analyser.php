@@ -54,16 +54,18 @@
 class PHPLOC_Analyser
 {
     protected $count = array(
-      'files'         => 0,
-      'loc'           => 0,
-      'cloc'          => 0,
-      'ncloc'         => 0,
-      'eloc'          => 0,
-      'interfaces'    => 0,
-      'classes'       => 0,
-      'functions'     => 0,
-      'methods'       => 0,
-      'staticMethods' => 0
+      'files'          => 0,
+      'loc'            => 0,
+      'cloc'           => 0,
+      'ncloc'          => 0,
+      'eloc'           => 0,
+      'interfaces'     => 0,
+      'classes'        => 0,
+      'functions'      => 0,
+      'methods'        => 0,
+      'staticMethods'  => 0,
+      'constants'      => 0,
+      'classConstants' => 0,
     );
 
     protected $opcodeBlacklist = array(
@@ -109,6 +111,14 @@ class PHPLOC_Analyser
 
             if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
                 $cloc += substr_count($value, "\n") + 1;
+            }
+
+            else if ($token == T_STRING && $value === 'define') {
+                $this->count['constants']++;
+            }
+
+            else if ($token == T_CONST) {
+                $this->count['classConstants']++;
             }
 
             else if ($token == T_CLASS || $token == T_INTERFACE) {

@@ -86,6 +86,8 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['methods'];
         $args[] = $count['staticMethods'];
         $args[] = $count['functions'];
+        $args[] = $count['constants'];
+        $args[] = $count['classConstants'];
 
         $format .= "Comment Lines of Code (CLOC):      %10d\n" .
                    "Non-Comment Lines of Code (NCLOC): %10d\n\n" .
@@ -93,7 +95,9 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "Classes:                           %10d\n" .
                    "Non-Static Methods:                %10d\n" .
                    "Static Methods:                    %10d\n" .
-                   "Functions:                         %10d\n";
+                   "Functions:                         %10d\n" .
+                   "Constants:                         %10d\n" .
+                   "Class constants:                   %10d\n";
 
         vprintf($format, $args);
     }

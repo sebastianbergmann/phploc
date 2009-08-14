@@ -122,6 +122,14 @@ class PHPLOC_TextUI_ResultPrinter_XML
           $document->createElement('functions', $count['functions'])
         );
 
+        $element->appendChild(
+          $document->createElement('constants', $count['constants'])
+        );
+
+        $element->appendChild(
+          $document->createElement('classConstants', $count['classConstants'])
+        );
+
         return $element;
     }
 }
