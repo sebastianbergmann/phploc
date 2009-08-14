@@ -113,7 +113,7 @@ class PHPLOC_Analyser
                 $cloc += substr_count($value, "\n") + 1;
             }
 
-            else if ($token == T_STRING && $value === 'define') {
+            else if ($token == T_STRING && $value == 'define') {
                 $this->count['constants']++;
             }
 
