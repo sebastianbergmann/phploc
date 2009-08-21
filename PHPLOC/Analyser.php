@@ -129,7 +129,7 @@ class PHPLOC_Analyser
                 if ($token == T_INTERFACE) {
                     $this->count['interfaces']++;
                 } else {
-                    if (is_array($tokens[$i-2]) &&
+                    if (isset($tokens[$i-2]) && is_array($tokens[$i-2]) &&
                         $tokens[$i-2][0] == T_ABSTRACT) {
                         $this->count['abstractClasses']++;
                     } else {
