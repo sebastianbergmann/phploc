@@ -107,6 +107,10 @@ class PHPLOC_TextUI_ResultPrinter_XML
         );
 
         $element->appendChild(
+          $document->createElement('abstractClasses', $count['abstractClasses'])
+        );
+
+        $element->appendChild(
           $document->createElement('classes', $count['classes'])
         );
 

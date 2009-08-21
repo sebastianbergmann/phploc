@@ -54,18 +54,19 @@
 class PHPLOC_Analyser
 {
     protected $count = array(
-      'files'          => 0,
-      'loc'            => 0,
-      'cloc'           => 0,
-      'ncloc'          => 0,
-      'eloc'           => 0,
-      'interfaces'     => 0,
-      'classes'        => 0,
-      'functions'      => 0,
-      'methods'        => 0,
-      'staticMethods'  => 0,
-      'constants'      => 0,
-      'classConstants' => 0,
+      'files'           => 0,
+      'loc'             => 0,
+      'cloc'            => 0,
+      'ncloc'           => 0,
+      'eloc'            => 0,
+      'interfaces'      => 0,
+      'abstractClasses' => 0,
+      'classes'         => 0,
+      'functions'       => 0,
+      'methods'         => 0,
+      'staticMethods'   => 0,
+      'constants'       => 0,
+      'classConstants'  => 0,
     );
 
     protected $opcodeBlacklist = array(
@@ -128,7 +129,12 @@ class PHPLOC_Analyser
                 if ($token == T_INTERFACE) {
                     $this->count['interfaces']++;
                 } else {
-                    $this->count['classes']++;
+                    if (is_array($tokens[$i-2]) &&
+                        $tokens[$i-2][0] == T_ABSTRACT) {
+                        $this->count['abstractClasses']++;
+                    } else {
+                        $this->count['classes']++;
+                    }
                 }
             }
 
