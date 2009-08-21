@@ -67,74 +67,26 @@ class PHPLOC_TextUI_ResultPrinter_XML
         $root = $document->createElement('phploc');
         $document->appendChild($root);
 
-        $this->processArray($document, $root, $count);
-
-        file_put_contents($filename, $document->saveXML());
-    }
-
-    protected function processArray(DOMDocument $document, DOMElement $element, array $count)
-    {
         if ($count['directories'] > 0) {
-            $element->appendChild(
+            $root->appendChild(
               $document->createElement('directories', $count['directories'])
             );
 
-            $element->appendChild(
+            $root->appendChild(
               $document->createElement('files', $count['files'])
             );
         }
 
-        $element->appendChild(
-          $document->createElement('loc', $count['loc'])
-        );
+        unset($count['directories']);
+        unset($count['files']);
 
-        if (isset($count['eloc'])) {
-            $element->appendChild(
-              $document->createElement('eloc', $count['eloc'])
+        foreach ($count as $k => $v) {
+            $root->appendChild(
+              $document->createElement($k, $v)
             );
         }
 
-        $element->appendChild(
-          $document->createElement('cloc', $count['cloc'])
-        );
-
-        $element->appendChild(
-          $document->createElement('ncloc', $count['ncloc'])
-        );
-
-        $element->appendChild(
-          $document->createElement('interfaces', $count['interfaces'])
-        );
-
-        $element->appendChild(
-          $document->createElement('abstractClasses', $count['abstractClasses'])
-        );
-
-        $element->appendChild(
-          $document->createElement('classes', $count['classes'])
-        );
-
-        $element->appendChild(
-          $document->createElement('methods', $count['methods'])
-        );
-
-        $element->appendChild(
-          $document->createElement('staticMethods', $count['staticMethods'])
-        );
-
-        $element->appendChild(
-          $document->createElement('functions', $count['functions'])
-        );
-
-        $element->appendChild(
-          $document->createElement('constants', $count['constants'])
-        );
-
-        $element->appendChild(
-          $document->createElement('classConstants', $count['classConstants'])
-        );
-
-        return $element;
+        file_put_contents($filename, $document->saveXML());
     }
 }
 ?>
