@@ -47,7 +47,10 @@ Usage Examples
     Non-Comment Lines of Code (NCLOC):       4653
 
     Interfaces:                                 7
-    Classes:                                   74
+    Abstract Classes:                          12
+    Classes:                                   62
     Non-Static Methods:                       274
     Static Methods:                            22
     Functions:                                  0
+    Constants:                                  0
+    Class constants:                           10
