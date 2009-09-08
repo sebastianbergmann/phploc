@@ -35,22 +35,25 @@ After the installation you can find the phploc source files inside your local PE
 Usage Examples
 --------------
 
-    sb@ubuntu ~ % phploc /usr/local/src/ezcomponents/trunk/Workflow/src
+    sb@ubuntu ~ % phploc /usr/local/src/ezcomponents/trunk/Workflow
     phploc 1.2.0 by Sebastian Bergmann.
 
-    Directories:                               11
-    Files:                                     82
+    Directories:                               13
+    Files:                                    100
 
-    Lines of Code (LOC):                     9576
-    Executable Lines of Code (ELOC):         2962
-    Comment Lines of Code (CLOC):            4923
-    Non-Comment Lines of Code (NCLOC):       4653
+    Lines of Code (LOC):                    14065
+    Executable Lines of Code (ELOC):         5797
+    Comment Lines of Code (CLOC):            5213
+    Non-Comment Lines of Code (NCLOC):       8852
 
-    Interfaces:                                 7
+    Interfaces:                                 6
     Abstract Classes:                          12
-    Classes:                                   62
-    Non-Static Methods:                       274
-    Static Methods:                            22
+    Classes:                                   67
+    Non-Static Methods:                       287
+    Static Methods:                            33
     Functions:                                  0
     Constants:                                  0
     Class constants:                           10
+
+    Test classes:                              10
+    Test methods:                             247
