@@ -168,12 +168,12 @@ class PHPLOC_Analyser
         $loc       = substr_count($this->files[$file]['raw'], "\n");
         $cloc      = 0;
         $braces    = 0;
-        $class     = NULL;
+        $className = NULL;
         $testClass = FALSE;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
-                if ($class !== NULL) {
+                if ($className !== NULL) {
                     if ($tokens[$i] == '{') {
                         $braces++;
                     }
@@ -182,7 +182,7 @@ class PHPLOC_Analyser
                         $braces--;
 
                         if ($braces == 0) {
-                            $class     = NULL;
+                            $className = NULL;
                             $testClass = FALSE;
                         }
                     }
