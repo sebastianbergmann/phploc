@@ -73,6 +73,8 @@ class PHPLOC_Analyser
       'testMethods'     => 0
     );
 
+    protected $files = array();
+
     protected $opcodeBlacklist = array(
       'BYTEKIT_NOP' => TRUE
     );
@@ -86,6 +88,12 @@ class PHPLOC_Analyser
      */
     public function countFiles($files)
     {
+        // Phase 1
+        foreach ($files as $file) {
+            $this->preProcessFile($file->getPathName());
+        }
+
+        // Phase 2
         $directories = array();
 
         foreach ($files as $file) {
@@ -110,16 +118,30 @@ class PHPLOC_Analyser
     }
 
     /**
+     * Pre-processes a single file.
+     *
+     * @param string $file
+     * @since  Method available since Release 1.2.0
+     */
+    public function preProcessFile($file)
+    {
+        $this->files[$file]           = array();
+        $this->files[$file]['raw']    = file_get_contents($file);
+        $this->files[$file]['tokens'] = token_get_all(
+                                          $this->files[$file]['raw']
+                                        );
+    }
+
+    /**
      * Processes a single file.
      *
      * @param string $file
      */
     public function countFile($file)
     {
-        $buffer    = file_get_contents($file);
-        $tokens    = token_get_all($buffer);
+        $tokens    = $this->files[$file]['tokens'];
         $numTokens = count($tokens);
-        $loc       = substr_count($buffer, "\n");
+        $loc       = substr_count($this->files[$file]['raw'], "\n");
         $cloc      = 0;
         $braces    = 0;
         $class     = NULL;
@@ -230,6 +252,8 @@ class PHPLOC_Analyser
         if (function_exists('bytekit_disassemble_file')) {
             $this->count['eloc'] += $this->countEloc($file);
         }
+
+        unset($this->files[$file]);
     }
 
     /**
