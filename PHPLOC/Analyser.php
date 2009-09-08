@@ -284,7 +284,12 @@ class PHPLOC_Analyser
     protected function countEloc($filename)
     {
         $bytecode = @bytekit_disassemble_file($filename);
-        $lines    = array();
+
+        if (!is_array($bytecode)) {
+            return 0;
+        }
+
+        $lines = array();
 
         foreach ($bytecode['functions'] as $function) {
             foreach ($function['raw']['opcodes'] as $opline) {
