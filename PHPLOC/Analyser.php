@@ -53,6 +53,8 @@
  */
 class PHPLOC_Analyser
 {
+    protected $classes = array();
+
     protected $count = array(
       'files'           => 0,
       'loc'             => 0,
@@ -67,6 +69,8 @@ class PHPLOC_Analyser
       'staticMethods'   => 0,
       'constants'       => 0,
       'classConstants'  => 0,
+      'testClasses'     => 0,
+      'testMethods'     => 0
     );
 
     protected $opcodeBlacklist = array(
@@ -88,6 +92,7 @@ class PHPLOC_Analyser
         $cloc      = 0;
         $braces    = 0;
         $class     = NULL;
+        $testClass = FALSE;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
@@ -100,7 +105,8 @@ class PHPLOC_Analyser
                         $braces--;
 
                         if ($braces == 0) {
-                            $class = NULL;
+                            $class     = NULL;
+                            $testClass = FALSE;
                         }
                     }
                 }
@@ -123,23 +129,37 @@ class PHPLOC_Analyser
             }
 
             else if ($token == T_CLASS || $token == T_INTERFACE) {
-                $braces = 0;
-                $class  = $tokens[$i+2][1];
+                $braces    = 0;
+                $className = $tokens[$i+2][1];
 
                 if ($token == T_INTERFACE) {
                     $this->count['interfaces']++;
                 } else {
-                    if (isset($tokens[$i-2]) && is_array($tokens[$i-2]) &&
-                        $tokens[$i-2][0] == T_ABSTRACT) {
-                        $this->count['abstractClasses']++;
+                    if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
+                        $tokens[$i+4][0] == T_EXTENDS) {
+                        $parent = $tokens[$i+6][1];
                     } else {
-                        $this->count['classes']++;
+                        $parent = NULL;
+                    }
+
+                    $this->classes[$className] = $parent;
+
+                    if ($this->isTestClass($className)) {
+                        $testClass = TRUE;
+                        $this->count['testClasses']++;
+                    } else {
+                        if (isset($tokens[$i-2]) && is_array($tokens[$i-2]) &&
+                            $tokens[$i-2][0] == T_ABSTRACT) {
+                            $this->count['abstractClasses']++;
+                        } else {
+                            $this->count['classes']++;
+                        }
                     }
                 }
             }
 
             else if ($token == T_FUNCTION) {
-                if ($class === NULL) {
+                if ($className === NULL) {
                     $this->count['functions']++;
                 } else {
                     $static = FALSE;
@@ -161,7 +181,11 @@ class PHPLOC_Analyser
                     if ($static) {
                         $this->count['staticMethods']++;
                     } else {
-                        $this->count['methods']++;
+                        if ($testClass) {
+                            $this->count['testMethods']++;
+                        } else {
+                            $this->count['methods']++;
+                        }
                     }
                 }
             }
@@ -208,6 +232,16 @@ class PHPLOC_Analyser
         }
 
         return count($lines);
+    }
+
+    /**
+     * @param  string $className
+     * @return boolean
+     * @since  Method available since Release 1.2.0
+     */
+    protected function isTestClass($className)
+    {
+        return $this->classes[$className] == 'PHPUnit_Framework_TestCase';
     }
 }
 ?>
