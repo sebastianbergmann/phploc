@@ -119,9 +119,9 @@ class PHPLOC_TextUI_Command
 
         self::printVersionString();
 
-        $count = self::countFiles($files);
-
-        $printer = new PHPLOC_TextUI_ResultPrinter_Text;
+        $analyser = new PHPLOC_Analyser;
+        $count    = $analyser->countFiles($files);
+        $printer  = new PHPLOC_TextUI_ResultPrinter_Text;
         $printer->printResult($count);
 
         if (isset($logXml)) {
@@ -151,38 +151,6 @@ class PHPLOC_TextUI_Command
         else if (is_file($path)) {
             return array(new SPLFileInfo($path));
         }
-    }
-
-    /**
-     * Processes a set of files.
-     *
-     * @param  Traversable $files
-     * @return array
-     */
-    protected static function countFiles($files)
-    {
-        $analyser    = new PHPLOC_Analyser;
-        $directories = array();
-
-        foreach ($files as $file) {
-            $directory = $file->getPath();
-
-            if (!isset($directories[$directory])) {
-                $directories[$directory] = TRUE;
-            }
-
-            $analyser->countFile($file->getPathName());
-        }
-
-        $count = $analyser->getCount();
-
-        if (!function_exists('bytekit_disassemble_file')) {
-            unset($count['eloc']);
-        }
-
-        $count['directories'] = count($directories) - 1;
-
-        return $count;
     }
 
     /**

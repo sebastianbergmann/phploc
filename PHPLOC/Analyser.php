@@ -78,8 +78,39 @@ class PHPLOC_Analyser
     );
 
     /**
-     * Counts LOC, ELOC, CLOC, and NCLOC as well as interfaces, classes, and
-     * functions/methods for a file.
+     * Processes a set of files.
+     *
+     * @param  Traversable $files
+     * @return array
+     * @since  Method available since Release 1.2.0
+     */
+    public function countFiles($files)
+    {
+        $directories = array();
+
+        foreach ($files as $file) {
+            $directory = $file->getPath();
+
+            if (!isset($directories[$directory])) {
+                $directories[$directory] = TRUE;
+            }
+
+            $this->countFile($file->getPathName());
+        }
+
+        $count = $this->count;
+
+        if (!function_exists('bytekit_disassemble_file')) {
+            unset($count['eloc']);
+        }
+
+        $count['directories'] = count($directories) - 1;
+
+        return $count;
+    }
+
+    /**
+     * Processes a single file.
      *
      * @param string $file
      */
