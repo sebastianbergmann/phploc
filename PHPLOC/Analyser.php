@@ -130,6 +130,30 @@ class PHPLOC_Analyser
         $this->files[$file]['tokens'] = token_get_all(
                                           $this->files[$file]['raw']
                                         );
+
+        $tokens    = $this->files[$file]['tokens'];
+        $numTokens = count($tokens);
+
+        for ($i = 0; $i < $numTokens; $i++) {
+            if (is_string($tokens[$i])) {
+                continue;
+            }
+
+            list ($token, $value) = $tokens[$i];
+
+            if ($token == T_CLASS) {
+                $className = $tokens[$i+2][1];
+
+                if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
+                    $tokens[$i+4][0] == T_EXTENDS) {
+                    $parent = $tokens[$i+6][1];
+                } else {
+                    $parent = NULL;
+                }
+
+                $this->classes[$className] = $parent;
+            }
+        }
     }
 
     /**
@@ -188,15 +212,6 @@ class PHPLOC_Analyser
                 if ($token == T_INTERFACE) {
                     $this->count['interfaces']++;
                 } else {
-                    if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
-                        $tokens[$i+4][0] == T_EXTENDS) {
-                        $parent = $tokens[$i+6][1];
-                    } else {
-                        $parent = NULL;
-                    }
-
-                    $this->classes[$className] = $parent;
-
                     if ($this->isTestClass($className)) {
                         $testClass = TRUE;
                         $this->count['testClasses']++;
@@ -296,7 +311,36 @@ class PHPLOC_Analyser
      */
     protected function isTestClass($className)
     {
-        return $this->classes[$className] == 'PHPUnit_Framework_TestCase';
+        $parent = $this->classes[$className];
+        $result = FALSE;
+
+        // Check ancestry for PHPUnit_Framework_TestCase.
+        while ($parent !== NULL) {
+            if ($parent == 'PHPUnit_Framework_TestCase') {
+                $result = TRUE;
+                break;
+            }
+
+            if (isset($this->classes[$parent])) {
+                $parent = $this->classes[$parent];
+            }
+
+            // Class has a parent that is declared in a file
+            // that was not pre-processed.
+            else {
+                break;
+            }
+        }
+
+        // Fallback: Treat the class as a test case class if the name
+        // of the parent class ends with "TestCase".
+        if (!$result) {
+            if (substr($this->classes[$className], -8) == 'TestCase') {
+                $result = TRUE;
+            }
+        }
+
+        return $result;
     }
 }
 ?>
