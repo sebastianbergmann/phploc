@@ -70,6 +70,7 @@ class PHPLOC_TextUI_Command
               '',
               array(
                 'help',
+                'exclude=',
                 'log-xml=',
                 'suffixes=',
                 'version'
@@ -81,10 +82,16 @@ class PHPLOC_TextUI_Command
             self::showError($e->getMessage());
         }
 
+        $exclude  = array();
         $suffixes = array('php');
 
         foreach ($options[0] as $option) {
             switch ($option[0]) {
+                case '--exclude': {
+                    $exclude[] = $option[1];
+                }
+                break;
+
                 case '--help': {
                     self::showHelp();
                     exit(0);
@@ -111,7 +118,7 @@ class PHPLOC_TextUI_Command
         }
 
         if (isset($options[1][0])) {
-            $files = self::getFiles($options[1][0], $suffixes);
+            $files = self::getFiles($options[1], $suffixes, $exclude);
         } else {
             self::showHelp();
             exit(1);
@@ -133,24 +140,42 @@ class PHPLOC_TextUI_Command
     /**
      * Returns a set of files.
      *
-     * @param  string $path
-     * @param  array  $suffixes
-     * @return Traversable
+     * @param  array $paths
+     * @param  array $suffixes
+     * @param  array $exclude
+     * @return array
      */
-    protected static function getFiles($path, array $suffixes)
+    protected static function getFiles(array $paths, array $suffixes, array $exclude)
     {
-        if (is_dir($path)) {
-            return new PHPLOC_Util_FilterIterator(
-              new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path)
-              ),
-              $suffixes
-            );
+        $exclude = array_map('realpath', $exclude);
+        $files   = array();
+
+        foreach ($paths as $path) {
+            if (is_dir($path)) {
+                $iterator = new PHPLOC_Util_FilterIterator(
+                  new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($path)
+                  ),
+                  $suffixes
+                );
+
+                foreach ($iterator as $item) {
+                    foreach ($exclude as $_exclude) {
+                        if (strpos($item->getRealPath(), $_exclude) === 0) {
+                            continue 2;
+                        }
+                    }
+
+                    $files[] = $item;
+                }
+            }
+
+            else if (is_file($path)) {
+                $files[] = new SPLFileInfo($path);
+            }
         }
 
-        else if (is_file($path)) {
-            return array(new SPLFileInfo($path));
-        }
+        return $files;
     }
 
     /**
@@ -179,6 +204,7 @@ Usage: phploc [switches] <directory|file>
 
   --log-xml <file>         Write result in XML format to file.
 
+  --exclude <directory>    Exclude <directory> from code analysis.
   --suffixes <suffix,...>  A comma-separated list of file suffixes to check.
 
   --help                   Prints this usage information.
