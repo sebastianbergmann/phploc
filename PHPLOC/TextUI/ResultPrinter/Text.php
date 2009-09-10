@@ -79,6 +79,17 @@ class PHPLOC_TextUI_ResultPrinter_Text
             $format .= "Executable Lines of Code (ELOC):   %10d\n";
         }
 
+        $format .= "Comment Lines of Code (CLOC):      %10d\n" .
+                   "Non-Comment Lines of Code (NCLOC): %10d\n\n" .
+                   "Interfaces:                        %10d\n" .
+                   "Abstract Classes:                  %10d\n" .
+                   "Classes:                           %10d\n" .
+                   "Non-Static Methods:                %10d\n" .
+                   "Static Methods:                    %10d\n" .
+                   "Functions:                         %10d\n" .
+                   "Constants:                         %10d\n" .
+                   "Class constants:                   %10d\n";
+
         $args[] = $count['cloc'];
         $args[] = $count['ncloc'];
         $args[] = $count['interfaces'];
@@ -89,21 +100,14 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['functions'];
         $args[] = $count['constants'];
         $args[] = $count['classConstants'];
-        $args[] = $count['testClasses'];
-        $args[] = $count['testMethods'];
 
-        $format .= "Comment Lines of Code (CLOC):      %10d\n" .
-                   "Non-Comment Lines of Code (NCLOC): %10d\n\n" .
-                   "Interfaces:                        %10d\n" .
-                   "Abstract Classes:                  %10d\n" .
-                   "Classes:                           %10d\n" .
-                   "Non-Static Methods:                %10d\n" .
-                   "Static Methods:                    %10d\n" .
-                   "Functions:                         %10d\n" .
-                   "Constants:                         %10d\n" .
-                   "Class constants:                   %10d\n\n" .
-                   "Test classes:                      %10d\n" .
-                   "Test methods:                      %10d\n";
+        if (isset($count['testClasses'])) {
+            $args[] = $count['testClasses'];
+            $args[] = $count['testMethods'];
+
+            $format .= "\nTest classes:                      %10d\n" .
+                       "Test methods:                      %10d\n";
+        }
 
         vprintf($format, $args);
     }

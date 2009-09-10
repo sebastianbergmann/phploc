@@ -80,18 +80,19 @@ class PHPLOC_Analyser
     /**
      * Processes a set of files.
      *
-     * @param  array $files
+     * @param  array   $files
+     * @param  boolean $countTests
      * @return array
      * @since  Method available since Release 1.2.0
      */
-    public function countFiles(array $files)
+    public function countFiles(array $files, $countTests)
     {
-        // Phase 1
-        foreach ($files as $file) {
-            $this->preProcessFile($file->getPathName());
+        if ($countTests) {
+            foreach ($files as $file) {
+                $this->preProcessFile($file->getPathName());
+            }
         }
 
-        // Phase 2
         $directories = array();
 
         foreach ($files as $file) {
@@ -101,13 +102,17 @@ class PHPLOC_Analyser
                 $directories[$directory] = TRUE;
             }
 
-            $this->countFile($file->getPathName());
+            $this->countFile($file->getPathName(), $countTests);
         }
 
         $count = $this->count;
 
         if (!function_exists('bytekit_disassemble_file')) {
             unset($count['eloc']);
+        }
+
+        if ($count['testClasses'] == 0) {
+            unset($count['testClasses'], $count['testMethods']);
         }
 
         $count['directories'] = count($directories) - 1;
@@ -151,9 +156,10 @@ class PHPLOC_Analyser
     /**
      * Processes a single file.
      *
-     * @param string $file
+     * @param string  $file
+     * @param boolean $countTests
      */
-    public function countFile($file)
+    public function countFile($file, $countTests)
     {
         $buffer    = file_get_contents($file);
         $tokens    = token_get_all($buffer);
@@ -208,7 +214,7 @@ class PHPLOC_Analyser
                 if ($token == T_INTERFACE) {
                     $this->count['interfaces']++;
                 } else {
-                    if ($this->isTestClass($className)) {
+                    if ($countTests && $this->isTestClass($className)) {
                         $testClass = TRUE;
                         $this->count['testClasses']++;
                     } else {

@@ -35,7 +35,7 @@ After the installation you can find the phploc source files inside your local PE
 Usage Examples
 --------------
 
-    sb@ubuntu ~ % phploc /usr/local/src/ezcomponents/trunk/Workflow
+    sb@ubuntu ~ % phploc --count-tests /usr/local/src/ezcomponents/trunk/Workflow
     phploc 1.2.0 by Sebastian Bergmann.
 
     Directories:                               13

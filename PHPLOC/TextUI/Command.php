@@ -69,8 +69,9 @@ class PHPLOC_TextUI_Command
               $_SERVER['argv'],
               '',
               array(
-                'help',
+                'count-tests',
                 'exclude=',
+                'help',
                 'log-xml=',
                 'suffixes=',
                 'version'
@@ -82,11 +83,17 @@ class PHPLOC_TextUI_Command
             self::showError($e->getMessage());
         }
 
-        $exclude  = array();
-        $suffixes = array('php');
+        $countTests = FALSE;
+        $exclude    = array();
+        $suffixes   = array('php');
 
         foreach ($options[0] as $option) {
             switch ($option[0]) {
+                case '--count-tests': {
+                    $countTests = TRUE;
+                }
+                break;
+
                 case '--exclude': {
                     $exclude[] = $option[1];
                 }
@@ -127,7 +134,7 @@ class PHPLOC_TextUI_Command
         self::printVersionString();
 
         $analyser = new PHPLOC_Analyser;
-        $count    = $analyser->countFiles($files);
+        $count    = $analyser->countFiles($files, $countTests);
         $printer  = new PHPLOC_TextUI_ResultPrinter_Text;
         $printer->printResult($count);
 
@@ -201,6 +208,8 @@ class PHPLOC_TextUI_Command
 
         print <<<EOT
 Usage: phploc [switches] <directory|file>
+
+  --count-tests            Count PHPUnit test case classes and test methods.
 
   --log-xml <file>         Write result in XML format to file.
 
