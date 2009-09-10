@@ -80,11 +80,11 @@ class PHPLOC_Analyser
     /**
      * Processes a set of files.
      *
-     * @param  Traversable $files
+     * @param  array $files
      * @return array
      * @since  Method available since Release 1.2.0
      */
-    public function countFiles($files)
+    public function countFiles(array $files)
     {
         // Phase 1
         foreach ($files as $file) {
