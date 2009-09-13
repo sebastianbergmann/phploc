@@ -26,8 +26,8 @@ This has to be done only once. Now the PEAR Installer can be used to install pac
 
     sb@ubuntu ~ % pear install phpunit/phploc
     downloading phploc-1.2.0.tgz ...
-    Starting to download phploc-1.2.0.tgz (6,591 bytes)
-    .....done: 6,591 bytes
+    Starting to download phploc-1.2.0.tgz (7,393 bytes)
+    .....done: 7,393 bytes
     install ok: channel://pear.phpunit.de/phploc-1.2.0
 
 After the installation you can find the phploc source files inside your local PEAR directory; the path is usually `/usr/lib/php/PHPLOC`.
