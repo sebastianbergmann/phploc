@@ -61,6 +61,7 @@ class PHPLOC_Analyser
       'cloc'             => 0,
       'ncloc'            => 0,
       'eloc'             => 0,
+      'ccn'              => 0,
       'interfaces'       => 0,
       'classes'          => 0,
       'abstractClasses'  => 0,
@@ -73,6 +74,8 @@ class PHPLOC_Analyser
       'classConstants'   => 0,
       'testClasses'      => 0,
       'testMethods'      => 0,
+      'ccnByLoc'         => 0,
+      'ccnByNom'         => 0,
       'locByNoc'         => 0,
       'locByNom'         => 0,
     );
@@ -120,16 +123,22 @@ class PHPLOC_Analyser
         }
 
         $count['directories'] = count($directories) - 1;
+        $count['classes']     = $count['abstractClasses'] +
+                                $count['concreteClasses'];
+        $count['methods']     = $count['staticMethods'] +
+                                $count['nonStaticMethods'];
 
-        $count['classes'] = $count['abstractClasses'] +
-                            $count['concreteClasses'];
+        if ($count['loc'] > 0) {
+            $count['ccnByLoc'] = $count['ccn'] / $count['loc'];
+        }
+
+        if ($count['methods'] > 0) {
+            $count['ccnByNom'] = $count['ccn'] / $count['methods'];
+        }
 
         if ($count['classes'] > 0) {
             $count['locByNoc'] = $count['loc'] / $count['classes'];
         }
-
-        $count['methods'] = $count['staticMethods'] +
-                            $count['nonStaticMethods'];
 
         if ($count['methods'] > 0) {
             $count['locByNom'] = $count['loc'] / $count['methods'];
@@ -193,6 +202,10 @@ class PHPLOC_Analyser
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
+                if (trim($token) == '?') {
+                    $this->count['ccn']++;
+                }
+
                 if ($className !== NULL) {
                     if ($tokens[$i] == '{') {
                         $braces++;
@@ -212,6 +225,23 @@ class PHPLOC_Analyser
             }
 
             list ($token, $value) = $tokens[$i];
+
+            switch ($token) {
+                case T_IF:
+                case T_ELSEIF:
+                case T_FOR:
+                case T_FOREACH:
+                case T_WHILE:
+                case T_CASE:
+                case T_CATCH:
+                case T_BOOLEAN_AND:
+                case T_LOGICAL_AND:
+                case T_BOOLEAN_OR:
+                case T_LOGICAL_OR: {
+                    $this->count['ccn']++;
+                }
+                break;
+            }
 
             if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
                 $cloc += substr_count($value, "\n") + 1;
