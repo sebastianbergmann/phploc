@@ -97,16 +97,14 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['cloc'];
         $args[] = $count['ncloc'];
         $args[] = $count['interfaces'];
-        $args[] = $count['abstractClasses'] + $count['classes'];
-        $args[] = $count['abstractClasses'];
         $args[] = $count['classes'];
-        $args[] = $count['loc'] /
-                  ($count['abstractClasses'] + $count['classes']);
-        $args[] = $count['methods'] + $count['staticMethods'];
+        $args[] = $count['abstractClasses'];
+        $args[] = $count['concreteClasses'];
+        $args[] = $count['locByNoc'];
         $args[] = $count['methods'];
+        $args[] = $count['nonStaticMethods'];
         $args[] = $count['staticMethods'];
-        $args[] = $count['loc'] /
-                  ($count['methods'] + $count['staticMethods']);
+        $args[] = $count['locByNom'];
         $args[] = $count['functions'];
         $args[] = $count['constants'];
         $args[] = $count['classConstants'];

@@ -56,21 +56,25 @@ class PHPLOC_Analyser
     protected $classes = array();
 
     protected $count = array(
-      'files'           => 0,
-      'loc'             => 0,
-      'cloc'            => 0,
-      'ncloc'           => 0,
-      'eloc'            => 0,
-      'interfaces'      => 0,
-      'abstractClasses' => 0,
-      'classes'         => 0,
-      'functions'       => 0,
-      'methods'         => 0,
-      'staticMethods'   => 0,
-      'constants'       => 0,
-      'classConstants'  => 0,
-      'testClasses'     => 0,
-      'testMethods'     => 0
+      'files'            => 0,
+      'loc'              => 0,
+      'cloc'             => 0,
+      'ncloc'            => 0,
+      'eloc'             => 0,
+      'interfaces'       => 0,
+      'classes'          => 0,
+      'abstractClasses'  => 0,
+      'concreteClasses'  => 0,
+      'functions'        => 0,
+      'methods'          => 0,
+      'nonStaticMethods' => 0,
+      'staticMethods'    => 0,
+      'constants'        => 0,
+      'classConstants'   => 0,
+      'testClasses'      => 0,
+      'testMethods'      => 0,
+      'locByNoc'         => 0,
+      'locByNom'         => 0,
     );
 
     protected $opcodeBlacklist = array(
@@ -116,6 +120,20 @@ class PHPLOC_Analyser
         }
 
         $count['directories'] = count($directories) - 1;
+
+        $count['classes'] = $count['abstractClasses'] +
+                            $count['concreteClasses'];
+
+        if ($count['classes'] > 0) {
+            $count['locByNoc'] = $count['loc'] / $count['classes'];
+        }
+
+        $count['methods'] = $count['staticMethods'] +
+                            $count['nonStaticMethods'];
+
+        if ($count['methods'] > 0) {
+            $count['locByNom'] = $count['loc'] / $count['methods'];
+        }
 
         return $count;
     }
@@ -222,7 +240,7 @@ class PHPLOC_Analyser
                             $tokens[$i-2][0] == T_ABSTRACT) {
                             $this->count['abstractClasses']++;
                         } else {
-                            $this->count['classes']++;
+                            $this->count['concreteClasses']++;
                         }
                     }
                 }
@@ -254,7 +272,7 @@ class PHPLOC_Analyser
                         if ($testClass) {
                             $this->count['testMethods']++;
                         } else {
-                            $this->count['methods']++;
+                            $this->count['nonStaticMethods']++;
                         }
                     }
                 }
