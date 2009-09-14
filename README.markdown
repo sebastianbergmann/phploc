@@ -38,26 +38,28 @@ Usage Examples
     sb@ubuntu ~ % phploc --count-tests /usr/local/src/ezcomponents/trunk/Workflow
     phploc 1.2.0 by Sebastian Bergmann.
 
-    Directories:                                 13
-    Files:                                      100
+    Directories:                                         13
+    Files:                                              100
 
-    Lines of Code (LOC):                      14065
-    Executable Lines of Code (ELOC):           5797
-    Comment Lines of Code (CLOC):              5213
-    Non-Comment Lines of Code (NCLOC):         8852
+    Lines of Code (LOC):                              14065
+      Cyclomatic Complexity / Lines of Code:           0.03
+    Executable Lines of Code (ELOC):                   5797
+    Comment Lines of Code (CLOC):                      5213
+    Non-Comment Lines of Code (NCLOC):                 8852
 
-    Interfaces:                                   6
-    Classes:                                     79
-      Abstract Classes:                          12
-      Concrete Classes:                          67
-      Lines of Code / Number of Classes:        178
-    Methods:                                    320
-      Non-Static Methods:                       287
-      Static Methods:                            33
-      Lines of Code / Number of Methods:         43
-    Functions:                                    0
-    Constants:                                    0
-    Class constants:                             10
+    Interfaces:                                           6
+    Classes:                                             79
+      Abstract Classes:                                  12
+      Concrete Classes:                                  67
+      Lines of Code / Number of Classes:                178
+    Methods:                                            320
+      Non-Static Methods:                               287
+      Static Methods:                                    33
+      Lines of Code / Number of Methods:                 43
+      Cyclomatic Complexity / Number of Methods:       1.49
+    Functions:                                            0
+    Constants:                                            0
+    Class constants:                                     10
 
-    Test classes:                                10
-    Test methods:                               247
+    Test classes:                                        10
+    Test methods:                                       247
