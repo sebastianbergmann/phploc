@@ -67,36 +67,46 @@ class PHPLOC_TextUI_ResultPrinter_Text
             $args[]  = $count['directories'];
             $args[]  = $count['files'];
 
-            $format .= "Directories:                       %10d\n" .
-                       "Files:                             %10d\n\n";
+            $format .= "Directories:                         %10d\n" .
+                       "Files:                               %10d\n\n";
         }
 
         $args[]  = $count['loc'];
-        $format .= "Lines of Code (LOC):               %10d\n";
+        $format .= "Lines of Code (LOC):                 %10d\n";
 
         if (isset($count['eloc'])) {
             $args[]  = $count['eloc'];
-            $format .= "Executable Lines of Code (ELOC):   %10d\n";
+            $format .= "Executable Lines of Code (ELOC):     %10d\n";
         }
 
-        $format .= "Comment Lines of Code (CLOC):      %10d\n" .
-                   "Non-Comment Lines of Code (NCLOC): %10d\n\n" .
-                   "Interfaces:                        %10d\n" .
-                   "Abstract Classes:                  %10d\n" .
-                   "Classes:                           %10d\n" .
-                   "Non-Static Methods:                %10d\n" .
-                   "Static Methods:                    %10d\n" .
-                   "Functions:                         %10d\n" .
-                   "Constants:                         %10d\n" .
-                   "Class constants:                   %10d\n";
+        $format .= "Comment Lines of Code (CLOC):        %10d\n" .
+                   "Non-Comment Lines of Code (NCLOC):   %10d\n\n" .
+                   "Interfaces:                          %10d\n" .
+                   "Classes:                             %10d\n" .
+                   "  Abstract Classes:                  %10d\n" .
+                   "  Concrete Classes:                  %10d\n" .
+                   "  Lines of Code / Number of Classes: %10d\n" .
+                   "Methods:                             %10d\n" .
+                   "  Non-Static Methods:                %10d\n" .
+                   "  Static Methods:                    %10d\n" .
+                   "  Lines of Code / Number of Methods: %10d\n" .
+                   "Functions:                           %10d\n" .
+                   "Constants:                           %10d\n" .
+                   "Class constants:                     %10d\n";
 
         $args[] = $count['cloc'];
         $args[] = $count['ncloc'];
         $args[] = $count['interfaces'];
+        $args[] = $count['abstractClasses'] + $count['classes'];
         $args[] = $count['abstractClasses'];
         $args[] = $count['classes'];
+        $args[] = $count['loc'] /
+                  ($count['abstractClasses'] + $count['classes']);
+        $args[] = $count['methods'] + $count['staticMethods'];
         $args[] = $count['methods'];
         $args[] = $count['staticMethods'];
+        $args[] = $count['loc'] /
+                  ($count['methods'] + $count['staticMethods']);
         $args[] = $count['functions'];
         $args[] = $count['constants'];
         $args[] = $count['classConstants'];
@@ -105,8 +115,8 @@ class PHPLOC_TextUI_ResultPrinter_Text
             $args[] = $count['testClasses'];
             $args[] = $count['testMethods'];
 
-            $format .= "\nTest classes:                      %10d\n" .
-                       "Test methods:                      %10d\n";
+            $format .= "\nTest classes:                        %10d\n" .
+                       "Test methods:                        %10d\n";
         }
 
         vprintf($format, $args);
