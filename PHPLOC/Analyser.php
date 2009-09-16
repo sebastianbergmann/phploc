@@ -280,6 +280,12 @@ class PHPLOC_Analyser
                 if ($className === NULL) {
                     $this->count['functions']++;
                 } else {
+                    if (is_array($tokens[$i+2])) {
+                        $methodName = $tokens[$i+2][1];
+                    } else {
+                        $methodName = $tokens[$i+3][1];
+                    }
+
                     $static = FALSE;
 
                     for ($j = $i; $j > 0; $j--) {
@@ -299,7 +305,7 @@ class PHPLOC_Analyser
                     if ($static) {
                         $this->count['staticMethods']++;
                     } else {
-                        if ($testClass) {
+                        if ($testClass && strpos($methodName, 'test') === 0) {
                             $this->count['testMethods']++;
                         } else {
                             $this->count['nonStaticMethods']++;
