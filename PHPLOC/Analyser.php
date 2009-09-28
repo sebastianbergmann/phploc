@@ -62,6 +62,7 @@ class PHPLOC_Analyser
       'ncloc'            => 0,
       'eloc'             => 0,
       'ccn'              => 0,
+      'ccnMethods'       => 0,
       'interfaces'       => 0,
       'classes'          => 0,
       'abstractClasses'  => 0,
@@ -133,7 +134,7 @@ class PHPLOC_Analyser
         }
 
         if ($count['methods'] > 0) {
-            $count['ccnByNom'] = $count['ccn'] / $count['methods'];
+            $count['ccnByNom'] = $count['ccnMethods'] / $count['methods'];
         }
 
         if ($count['classes'] > 0) {
@@ -203,6 +204,10 @@ class PHPLOC_Analyser
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
                 if (trim($token) == '?') {
+                    if ($className !== NULL) {
+                        $this->count['ccnMethods']++;
+                    }
+
                     $this->count['ccn']++;
                 }
 
@@ -238,6 +243,10 @@ class PHPLOC_Analyser
                 case T_LOGICAL_AND:
                 case T_BOOLEAN_OR:
                 case T_LOGICAL_OR: {
+                    if ($className !== NULL) {
+                        $this->count['ccnMethods']++;
+                    }
+
                     $this->count['ccn']++;
                 }
                 break;
