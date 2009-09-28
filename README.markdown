@@ -36,7 +36,7 @@ Usage Examples
 --------------
 
     sb@ubuntu ~ % phploc --count-tests /usr/local/src/ezcomponents/trunk/Workflow
-    phploc 1.2.0 by Sebastian Bergmann.
+    phploc 1.3.0 by Sebastian Bergmann.
 
     Directories:                                         13
     Files:                                              100
