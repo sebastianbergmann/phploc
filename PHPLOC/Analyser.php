@@ -129,8 +129,12 @@ class PHPLOC_Analyser
         $count['methods']     = $count['staticMethods'] +
                                 $count['nonStaticMethods'];
 
-        if ($count['loc'] > 0) {
-            $count['ccnByLoc'] = $count['ccn'] / $count['loc'];
+        if ($count['eloc'] > 0) {
+            $count['ccnByLoc'] = $count['ccn'] / $count['eloc'];
+        }
+
+        else if ($count['ncloc'] > 0) {
+            $count['ccnByLoc'] = $count['ccn'] / $count['ncloc'];
         }
 
         if ($count['methods'] > 0) {
