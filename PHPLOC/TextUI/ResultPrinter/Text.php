@@ -56,9 +56,10 @@ class PHPLOC_TextUI_ResultPrinter_Text
     /**
      * Prints a result set.
      *
-     * @param array $count
+     * @param array   $count
+     * @param boolean $printTests
      */
-    public function printResult(array $count)
+    public function printResult(array $count, $printTests)
     {
         $args   = array();
         $format = '';
@@ -112,12 +113,11 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['constants'];
         $args[] = $count['classConstants'];
 
-        if (isset($count['testClasses'])) {
-            $args[] = $count['testClasses'];
-            $args[] = $count['testMethods'];
-
+        if ($printTests) {
             $format .= "\nTest classes:                                %10d\n" .
                        "Test methods:                                %10d\n";
+            $args[]  = $count['testClasses'];
+            $args[]  = $count['testMethods'];
         }
 
         vprintf($format, $args);

@@ -119,10 +119,6 @@ class PHPLOC_Analyser
             unset($count['eloc']);
         }
 
-        if ($count['testClasses'] == 0) {
-            unset($count['testClasses'], $count['testMethods']);
-        }
-
         $count['directories'] = count($directories) - 1;
         $count['classes']     = $count['abstractClasses'] +
                                 $count['concreteClasses'];

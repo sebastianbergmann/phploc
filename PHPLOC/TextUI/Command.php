@@ -136,7 +136,7 @@ class PHPLOC_TextUI_Command
         $analyser = new PHPLOC_Analyser;
         $count    = $analyser->countFiles($files, $countTests);
         $printer  = new PHPLOC_TextUI_ResultPrinter_Text;
-        $printer->printResult($count);
+        $printer->printResult($count, $countTests);
 
         if (isset($logXml)) {
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
