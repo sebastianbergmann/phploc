@@ -42,7 +42,7 @@ Usage Examples
     Files:                                              100
 
     Lines of Code (LOC):                              14065
-      Cyclomatic Complexity / Lines of Code:           0.03
+      Cyclomatic Complexity / Lines of Code:           0.09
     Executable Lines of Code (ELOC):                   5349
     Comment Lines of Code (CLOC):                      5213
     Non-Comment Lines of Code (NCLOC):                 8852
@@ -56,7 +56,7 @@ Usage Examples
       Non-Static Methods:                               335
       Static Methods:                                    33
       Lines of Code / Number of Methods:                 38
-      Cyclomatic Complexity / Number of Methods:       1.30
+      Cyclomatic Complexity / Number of Methods:       2.30
     Functions:                                            0
     Constants:                                            0
     Class constants:                                     10
