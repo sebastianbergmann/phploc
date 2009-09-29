@@ -236,7 +236,8 @@ class PHPLOC_Analyser
             list ($token, $value) = $tokens[$i];
 
             switch ($token) {
-                case T_CURLY_OPEN: {
+                case T_CURLY_OPEN:
+                case T_DOLLAR_OPEN_CURLY_BRACES: {
                     $braces++;
                 }
                 break;
