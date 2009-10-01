@@ -58,8 +58,10 @@ Usage Examples
       Lines of Code / Number of Methods:                 38
       Cyclomatic Complexity / Number of Methods:       2.30
     Functions:                                            0
-    Constants:                                            0
-    Class constants:                                     10
+
+    Constants:                                           10
+      Global constants:                                   0
+      Class constants:                                   10
 
     Test classes:                                        10
     Test methods:                                       199

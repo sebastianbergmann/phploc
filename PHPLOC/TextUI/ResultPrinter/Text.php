@@ -93,9 +93,10 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "  Static Methods:                            %10d\n" .
                    "  Lines of Code / Number of Methods:         %10d\n" .
                    "  Cyclomatic Complexity / Number of Methods: %10.2f\n" .
-                   "Functions:                                   %10d\n" .
+                   "Functions:                                   %10d\n\n" .
                    "Constants:                                   %10d\n" .
-                   "Class constants:                             %10d\n";
+                   "  Global constants:                          %10d\n" .
+                   "  Class constants:                           %10d\n";
 
         $args[] = $count['cloc'];
         $args[] = $count['ncloc'];
@@ -110,6 +111,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['locByNom'];
         $args[] = $count['ccnByNom'];
         $args[] = $count['functions'];
+        $args[] = $count['constants'] + $count['classConstants'];
         $args[] = $count['constants'];
         $args[] = $count['classConstants'];
 
