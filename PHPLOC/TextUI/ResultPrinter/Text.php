@@ -116,8 +116,8 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['classConstants'];
 
         if ($printTests) {
-            $format .= "\nTest classes:                                %10d\n" .
-                       "Test methods:                                %10d\n";
+            $format .= "\nTests:\n  Classes:                                   %10d\n" .
+                       "  Methods:                                   %10d\n";
             $args[]  = $count['testClasses'];
             $args[]  = $count['testMethods'];
         }
