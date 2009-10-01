@@ -63,5 +63,6 @@ Usage Examples
       Global constants:                                   0
       Class constants:                                   10
 
-    Test classes:                                        10
-    Test methods:                                       199
+    Tests:
+      Classes:                                           10
+      Methods:                                          199
