@@ -73,6 +73,7 @@ class PHPLOC_Analyser
       'staticMethods'    => 0,
       'constants'        => 0,
       'classConstants'   => 0,
+      'globalConstants'  => 0,
       'testClasses'      => 0,
       'testMethods'      => 0,
       'ccnByLoc'         => 0,
@@ -124,6 +125,8 @@ class PHPLOC_Analyser
                                 $count['concreteClasses'];
         $count['methods']     = $count['staticMethods'] +
                                 $count['nonStaticMethods'];
+        $count['constants']   = $count['classConstants'] +
+                                $count['globalConstants'];
 
         if ($count['eloc'] > 0) {
             $count['ccnByLoc'] = $count['ccn'] / $count['eloc'];
@@ -263,7 +266,7 @@ class PHPLOC_Analyser
             }
 
             else if ($token == T_STRING && $value == 'define') {
-                $this->count['constants']++;
+                $this->count['globalConstants']++;
             }
 
             else if ($token == T_CONST) {

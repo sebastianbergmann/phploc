@@ -111,8 +111,8 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['locByNom'];
         $args[] = $count['ccnByNom'];
         $args[] = $count['functions'];
-        $args[] = $count['constants'] + $count['classConstants'];
         $args[] = $count['constants'];
+        $args[] = $count['globalConstants'];
         $args[] = $count['classConstants'];
 
         if ($printTests) {
