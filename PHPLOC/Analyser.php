@@ -206,7 +206,7 @@ class PHPLOC_Analyser
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
-                if (trim($token) == '?') {
+                if (trim($tokens[$i]) == '?') {
                     if ($className !== NULL) {
                         $this->count['ccnMethods']++;
                     }
