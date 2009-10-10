@@ -129,7 +129,7 @@ class PHPLOC_Analyser
         $count['constants']   = $count['classConstants'] +
                                 $count['globalConstants'];
 
-        if ($count['eloc'] > 0) {
+        if (isset($count['eloc']) && $count['eloc'] > 0) {
             $count['ccnByLoc'] = $count['ccn'] / $count['eloc'];
         }
 
