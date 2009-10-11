@@ -41,6 +41,10 @@
  * @since     File available since Release 1.0.0
  */
 
+if (!defined('T_NAMESPACE')) {
+    define('T_NAMESPACE', 377);
+}
+
 /**
  * PHPLOC code analyser.
  *
@@ -162,6 +166,7 @@ class PHPLOC_Analyser
     {
         $tokens    = token_get_all(file_get_contents($file));
         $numTokens = count($tokens);
+        $namespace = FALSE;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
@@ -170,17 +175,27 @@ class PHPLOC_Analyser
 
             list ($token, $value) = $tokens[$i];
 
-            if ($token == T_CLASS) {
-                $className = $tokens[$i+2][1];
-
-                if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
-                    $tokens[$i+4][0] == T_EXTENDS) {
-                    $parent = $tokens[$i+6][1];
-                } else {
-                    $parent = NULL;
+            switch ($token) {
+                case T_NAMESPACE: {
+                    $namespace = $this->getNamespaceName($tokens, $i);
                 }
+                break;
 
-                $this->classes[$className] = $parent;
+                case T_CLASS: {
+                    $className = $this->getClassName($namespace, $tokens, $i);
+
+                    if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
+                        $tokens[$i+4][0] == T_EXTENDS) {
+                        $parent = $this->getClassName(
+                          $namespace, $tokens, $i + 4
+                        );
+                    } else {
+                        $parent = NULL;
+                    }
+
+                    $this->classes[$className] = $parent;
+                }
+                break;
             }
         }
     }
@@ -204,6 +219,7 @@ class PHPLOC_Analyser
         $cloc         = 0;
         $blocks       = array();
         $currentBlock = FALSE;
+        $namespace    = FALSE;
         $className    = NULL;
         $functionName = NULL;
         $testClass    = FALSE;
@@ -261,9 +277,16 @@ class PHPLOC_Analyser
             }
 
             switch ($token) {
+                case T_NAMESPACE: {
+                    $namespace = $this->getNamespaceName($tokens, $i);
+                }
+                break;
+
                 case T_CLASS:
                 case T_INTERFACE: {
-                    $className    = $tokens[$i+2][1];
+                    $className    = $this->getClassName(
+                                      $namespace, $tokens, $i
+                                    );
                     $currentBlock = T_CLASS;
 
                     if ($token == T_INTERFACE) {
@@ -428,6 +451,55 @@ class PHPLOC_Analyser
     }
 
     /**
+     * @param  array   $tokens
+     * @param  integer $i
+     * @return string
+     * @since  Method available since Release 1.3.0
+     */
+    protected function getNamespaceName(array $tokens, $i)
+    {
+        $namespace = $tokens[$i+2][1];
+
+        for ($j = $i+3; ; $j += 2) {
+            if (isset($tokens[$j]) && $tokens[$j][0] == T_NS_SEPARATOR) {
+                $namespace .= '\\' . $tokens[$j+1][1];
+            } else {
+                break;
+            }
+        }
+
+        return $namespace;
+    }
+
+    /**
+     * @param  string  $namespace
+     * @param  array   $tokens
+     * @param  integer $i
+     * @return string
+     * @since  Method available since Release 1.3.0
+     */
+    protected function getClassName($namespace, array $tokens, $i)
+    {
+        $i         += 2;
+        $namespaced = FALSE;
+        $className  = $tokens[$i][1];
+
+        if ($className === '\\') {
+            $namespaced = TRUE;
+        }
+
+        while ($tokens[$i+1][0] !== T_WHITESPACE) {
+            $className .= $tokens[++$i][1];
+        }
+
+        if (!$namespaced && $namespace !== FALSE) {
+            $className = $namespace . '\\' . $className;
+        }
+
+        return $className;
+    }
+
+    /**
      * @param  string $className
      * @return boolean
      * @since  Method available since Release 1.2.0
@@ -439,7 +511,8 @@ class PHPLOC_Analyser
 
         // Check ancestry for PHPUnit_Framework_TestCase.
         while ($parent !== NULL) {
-            if ($parent == 'PHPUnit_Framework_TestCase') {
+            if ($parent == 'PHPUnit_Framework_TestCase' ||
+                $parent == '\\PHPUnit_Framework_TestCase') {
                 $result = TRUE;
                 break;
             }
