@@ -200,11 +200,13 @@ class PHPLOC_Analyser
 
         unset($buffer);
 
-        $locClasses = 0;
-        $cloc       = 0;
-        $braces     = 0;
-        $className  = NULL;
-        $testClass  = FALSE;
+        $locClasses   = 0;
+        $cloc         = 0;
+        $blocks       = array();
+        $currentBlock = FALSE;
+        $className    = NULL;
+        $functionName = NULL;
+        $testClass    = FALSE;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
@@ -216,18 +218,34 @@ class PHPLOC_Analyser
                     $this->count['ccn']++;
                 }
 
-                if ($className !== NULL) {
-                    $locClasses += substr_count($tokens[$i], "\n");
-
-                    if ($tokens[$i] == '{') {
-                        $braces++;
+                if ($tokens[$i] == '{') {
+                    if ($currentBlock == T_CLASS) {
+                        $block = $className;
                     }
 
-                    if ($tokens[$i] == '}') {
-                        $braces--;
+                    else if ($currentBlock == T_FUNCTION) {
+                        $block = $functionName;
+                    }
 
-                        if ($braces == 0) {
-                            $className = NULL;
+                    else {
+                        $block = FALSE;
+                    }
+
+                    array_push($blocks, $block);
+
+                    $currentBlock = FALSE;
+                }
+
+                else if ($tokens[$i] == '}') {
+                    $block = array_pop($blocks);
+
+                    if ($block !== FALSE && $block !== NULL) {
+                        if ($block == $functionName) {
+                            $functionName = FALSE;
+                        }
+
+                        else if ($block == $className) {
+                            $className = FALSE;
                             $testClass = FALSE;
                         }
                     }
@@ -243,9 +261,81 @@ class PHPLOC_Analyser
             }
 
             switch ($token) {
-                case T_CURLY_OPEN:
+                case T_CLASS:
+                case T_INTERFACE: {
+                    $className    = $tokens[$i+2][1];
+                    $currentBlock = T_CLASS;
+
+                    if ($token == T_INTERFACE) {
+                        $this->count['interfaces']++;
+                    } else {
+                        if ($countTests && $this->isTestClass($className)) {
+                            $testClass = TRUE;
+                            $this->count['testClasses']++;
+                        } else {
+                            if (isset($tokens[$i-2]) &&
+                                is_array($tokens[$i-2]) &&
+                                $tokens[$i-2][0] == T_ABSTRACT) {
+                                $this->count['abstractClasses']++;
+                            } else {
+                                $this->count['concreteClasses']++;
+                            }
+                        }
+                    }
+                }
+                break;
+
+                case T_FUNCTION: {
+                    if (is_array($tokens[$i+2])) {
+                        $functionName = $tokens[$i+2][1];
+                    } else {
+                        $functionName = $tokens[$i+3][1];
+                    }
+
+                    $currentBlock = T_FUNCTION;
+
+                    if ($className === NULL) {
+                        $this->count['functions']++;
+                    } else {
+                        $static = FALSE;
+
+                        for ($j = $i; $j > 0; $j--) {
+                            if (is_string($tokens[$j])) {
+                                if ($tokens[$j] == '{' || $tokens[$j] == '}') {
+                                    break;
+                                }
+
+                                continue;
+                            }
+
+                            if ($tokens[$j][0] == T_STATIC) {
+                                $static = TRUE;
+                            }
+                        }
+
+                        if ($static) {
+                            $this->count['staticMethods']++;
+                        } else {
+                            if ($testClass &&
+                                strpos($functionName, 'test') === 0) {
+                                $this->count['testMethods']++;
+                            } else {
+                                $this->count['nonStaticMethods']++;
+                            }
+                        }
+                    }
+                }
+                break;
+
+                case T_CURLY_OPEN: {
+                    $currentBlock = T_CURLY_OPEN;
+                    array_push($blocks, $currentBlock);
+                }
+                break;
+
                 case T_DOLLAR_OPEN_CURLY_BRACES: {
-                    $braces++;
+                    $currentBlock = T_DOLLAR_OPEN_CURLY_BRACES;
+                    array_push($blocks, $currentBlock);
                 }
                 break;
 
@@ -267,77 +357,24 @@ class PHPLOC_Analyser
                     $this->count['ccn']++;
                 }
                 break;
-            }
 
-            if ($token == T_COMMENT || $token == T_DOC_COMMENT) {
-                $cloc += substr_count($value, "\n") + 1;
-            }
+                case T_COMMENT:
+                case T_DOC_COMMENT: {
+                    $cloc += substr_count($value, "\n") + 1;
+                }
+                break;
 
-            else if ($token == T_STRING && $value == 'define') {
-                $this->count['globalConstants']++;
-            }
+                case T_CONST: {
+                    $this->count['classConstants']++;
+                }
+                break;
 
-            else if ($token == T_CONST) {
-                $this->count['classConstants']++;
-            }
-
-            else if ($token == T_CLASS || $token == T_INTERFACE) {
-                $braces    = 0;
-                $className = $tokens[$i+2][1];
-
-                if ($token == T_INTERFACE) {
-                    $this->count['interfaces']++;
-                } else {
-                    if ($countTests && $this->isTestClass($className)) {
-                        $testClass = TRUE;
-                        $this->count['testClasses']++;
-                    } else {
-                        if (isset($tokens[$i-2]) && is_array($tokens[$i-2]) &&
-                            $tokens[$i-2][0] == T_ABSTRACT) {
-                            $this->count['abstractClasses']++;
-                        } else {
-                            $this->count['concreteClasses']++;
-                        }
+                case T_STRING: {
+                    if ($value == 'define') {
+                        $this->count['globalConstants']++;
                     }
                 }
-            }
-
-            else if ($token == T_FUNCTION) {
-                if ($className === NULL) {
-                    $this->count['functions']++;
-                } else {
-                    if (is_array($tokens[$i+2])) {
-                        $methodName = $tokens[$i+2][1];
-                    } else {
-                        $methodName = $tokens[$i+3][1];
-                    }
-
-                    $static = FALSE;
-
-                    for ($j = $i; $j > 0; $j--) {
-                        if (is_string($tokens[$j])) {
-                            if ($tokens[$j] == '{' || $tokens[$j] == '}') {
-                                break;
-                            }
-
-                            continue;
-                        }
-
-                        if ($tokens[$j][0] == T_STATIC) {
-                            $static = TRUE;
-                        }
-                    }
-
-                    if ($static) {
-                        $this->count['staticMethods']++;
-                    } else {
-                        if ($testClass && strpos($methodName, 'test') === 0) {
-                            $this->count['testMethods']++;
-                        } else {
-                            $this->count['nonStaticMethods']++;
-                        }
-                    }
-                }
+                break;
             }
         }
 
