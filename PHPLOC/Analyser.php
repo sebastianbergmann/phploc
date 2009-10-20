@@ -434,7 +434,7 @@ class PHPLOC_Analyser
         $this->count['files']++;
 
         if (function_exists('bytekit_disassemble_file')) {
-            $this->count['eloc'] += $this->countEloc($file);
+            $this->count['eloc'] += $this->countEloc($file, $loc);
         }
     }
 
@@ -450,11 +450,12 @@ class PHPLOC_Analyser
     /**
      * Counts the Executable Lines of Code (ELOC) using Bytekit.
      *
-     * @param  string $filename
+     * @param  string  $filename
+     * @param  integer $loc
      * @return integer
      * @since  Method available since Release 1.1.0
      */
-    protected function countEloc($filename)
+    protected function countEloc($filename, $loc)
     {
         $bytecode = @bytekit_disassemble_file($filename);
 
@@ -466,7 +467,8 @@ class PHPLOC_Analyser
 
         foreach ($bytecode['functions'] as $function) {
             foreach ($function['raw']['opcodes'] as $opline) {
-                if (!isset($this->opcodeBlacklist[$opline['opcode']]) &&
+                if ($opline['lineno'] <= $loc &&
+                    !isset($this->opcodeBlacklist[$opline['opcode']]) &&
                     !isset($lines[$opline['lineno']])) {
                     $lines[$opline['lineno']] = TRUE;
                 }
