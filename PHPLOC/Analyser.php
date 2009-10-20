@@ -363,7 +363,9 @@ class PHPLOC_Analyser
                             $visibility == T_PUBLIC &&
                             !$static) {
                             $this->count['testMethods']++;
-                        } else {
+                        }
+
+                        else if (!$testClass) {
                             if ($static) {
                                 $this->count['staticMethods']++;
                             } else {
