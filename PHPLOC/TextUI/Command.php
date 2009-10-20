@@ -41,11 +41,11 @@
  * @since     File available since Release 1.0.0
  */
 
-require 'PHPLOC/Analyser.php';
-require 'PHPLOC/TextUI/Getopt.php';
-require 'PHPLOC/TextUI/ResultPrinter/Text.php';
-require 'PHPLOC/TextUI/ResultPrinter/XML.php';
-require 'PHPLOC/Util/FilterIterator.php';
+require_once 'PHPLOC/Analyser.php';
+require_once 'PHPLOC/TextUI/Getopt.php';
+require_once 'PHPLOC/TextUI/ResultPrinter/Text.php';
+require_once 'PHPLOC/TextUI/ResultPrinter/XML.php';
+require_once 'PHPLOC/Util/FilterIterator.php';
 
 /**
  * TextUI frontend for PHPLOC.
