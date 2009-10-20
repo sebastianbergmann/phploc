@@ -42,24 +42,24 @@ Usage Examples
     Files:                                              100
 
     Lines of Code (LOC):                              14065
-      Cyclomatic Complexity / Lines of Code:           0.09
-    Executable Lines of Code (ELOC):                   5349
+      Cyclomatic Complexity / Lines of Code:           0.08
+    Executable Lines of Code (ELOC):                   5249
     Comment Lines of Code (CLOC):                      5213
     Non-Comment Lines of Code (NCLOC):                 8852
 
     Interfaces:                                           6
     Classes:                                             79
-      Abstract Classes:                                  12
-      Concrete Classes:                                  67
+      Abstract:                                          12 (15.19%)
+      Concrete:                                          67 (84.81%)
       Lines of Code / Number of Classes:                145
-    Methods:                                            368
+    Methods:                                            310
       Scope:
-        Non-Static:                                     335
-        Static:                                          33
+        Non-Static:                                     287 (92.58%)
+        Static:                                          23 (7.42%)
       Visibility:
-        Public:                                         241
-        Non-Public:                                     127
-      Lines of Code / Number of Methods:                 31
+        Public:                                         237 (76.45%)
+        Non-Public:                                      73 (23.55%)
+      Lines of Code / Number of Methods:                 37
       Cyclomatic Complexity / Number of Methods:       2.31
     Functions:                                            0
 
