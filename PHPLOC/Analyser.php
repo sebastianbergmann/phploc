@@ -513,8 +513,8 @@ class PHPLOC_Analyser
             $namespaced = TRUE;
         }
 
-        while ($tokens[$i+1][0] !== T_WHITESPACE) {
-            $className .= $tokens[++$i][1];
+        while (is_array($tokens[$i+1]) && $tokens[$i+1][0] !== T_WHITESPACE) {
+            $className .= $tokens[$i][1];
         }
 
         if (!$namespaced && $namespace !== FALSE) {
