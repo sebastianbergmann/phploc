@@ -85,16 +85,16 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "Non-Comment Lines of Code (NCLOC):           %10d\n\n" .
                    "Interfaces:                                  %10d\n" .
                    "Classes:                                     %10d\n" .
-                   "  Abstract Classes:                          %10d\n" .
-                   "  Concrete Classes:                          %10d\n" .
+                   "  Abstract:                                  %10d (%.2f%%)\n" .
+                   "  Concrete:                                  %10d (%.2f%%)\n" .
                    "  Lines of Code / Number of Classes:         %10d\n" .
                    "Methods:                                     %10d\n" .
                    "  Scope:\n" .
-                   "    Non-Static:                              %10d\n" .
-                   "    Static:                                  %10d\n" .
+                   "    Non-Static:                              %10d (%.2f%%)\n" .
+                   "    Static:                                  %10d (%.2f%%)\n" .
                    "  Visibility:\n" .
-                   "    Public:                                  %10d\n" .
-                   "    Non-Public:                              %10d\n" .
+                   "    Public:                                  %10d (%.2f%%)\n" .
+                   "    Non-Public:                              %10d (%.2f%%)\n" .
                    "  Lines of Code / Number of Methods:         %10d\n" .
                    "  Cyclomatic Complexity / Number of Methods: %10.2f\n" .
                    "Functions:                                   %10d\n\n" .
@@ -107,13 +107,19 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['interfaces'];
         $args[] = $count['classes'];
         $args[] = $count['abstractClasses'];
+        $args[] = ($count['abstractClasses'] / $count['classes']) * 100;
         $args[] = $count['concreteClasses'];
+        $args[] = ($count['concreteClasses'] / $count['classes']) * 100;
         $args[] = $count['locByNoc'];
         $args[] = $count['methods'];
         $args[] = $count['nonStaticMethods'];
+        $args[] = ($count['nonStaticMethods'] / $count['methods']) * 100;
         $args[] = $count['staticMethods'];
+        $args[] = ($count['staticMethods'] / $count['methods']) * 100;
         $args[] = $count['publicMethods'];
+        $args[] = ($count['publicMethods'] / $count['methods']) * 100;
         $args[] = $count['nonPublicMethods'];
+        $args[] = ($count['nonPublicMethods'] / $count['methods']) * 100;
         $args[] = $count['locByNom'];
         $args[] = $count['ccnByNom'];
         $args[] = $count['functions'];
