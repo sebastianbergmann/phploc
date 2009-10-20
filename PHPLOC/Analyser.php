@@ -439,15 +439,6 @@ class PHPLOC_Analyser
     }
 
     /**
-     * @return array
-     * @since  Method available since Release 1.1.0
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
      * Counts the Executable Lines of Code (ELOC) using Bytekit.
      *
      * @param  string  $filename
