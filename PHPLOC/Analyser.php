@@ -231,11 +231,13 @@ class PHPLOC_Analyser
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
                 if (trim($tokens[$i]) == '?') {
-                    if ($className !== NULL) {
-                        $this->count['ccnMethods']++;
-                    }
+                    if (!$testClass) {
+                        if ($className !== NULL) {
+                            $this->count['ccnMethods']++;
+                        }
 
-                    $this->count['ccn']++;
+                        $this->count['ccn']++;
+                    }
                 }
 
                 if ($tokens[$i] == '{') {
@@ -399,11 +401,13 @@ class PHPLOC_Analyser
                 case T_LOGICAL_AND:
                 case T_BOOLEAN_OR:
                 case T_LOGICAL_OR: {
-                    if ($className !== NULL) {
-                        $this->count['ccnMethods']++;
-                    }
+                    if (!$testClass) {
+                        if ($className !== NULL) {
+                            $this->count['ccnMethods']++;
+                        }
 
-                    $this->count['ccn']++;
+                        $this->count['ccn']++;
+                    }
                 }
                 break;
 
