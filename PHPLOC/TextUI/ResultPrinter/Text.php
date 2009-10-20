@@ -89,8 +89,12 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "  Concrete Classes:                          %10d\n" .
                    "  Lines of Code / Number of Classes:         %10d\n" .
                    "Methods:                                     %10d\n" .
-                   "  Non-Static Methods:                        %10d\n" .
-                   "  Static Methods:                            %10d\n" .
+                   "  Scope:\n" .
+                   "    Non-Static:                              %10d\n" .
+                   "    Static:                                  %10d\n" .
+                   "  Visibility:\n" .
+                   "    Public:                                  %10d\n" .
+                   "    Non-Public:                              %10d\n" .
                    "  Lines of Code / Number of Methods:         %10d\n" .
                    "  Cyclomatic Complexity / Number of Methods: %10.2f\n" .
                    "Functions:                                   %10d\n\n" .
@@ -108,6 +112,8 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['methods'];
         $args[] = $count['nonStaticMethods'];
         $args[] = $count['staticMethods'];
+        $args[] = $count['publicMethods'];
+        $args[] = $count['nonPublicMethods'];
         $args[] = $count['locByNom'];
         $args[] = $count['ccnByNom'];
         $args[] = $count['functions'];

@@ -51,12 +51,16 @@ Usage Examples
     Classes:                                             79
       Abstract Classes:                                  12
       Concrete Classes:                                  67
-      Lines of Code / Number of Classes:                178
+      Lines of Code / Number of Classes:                145
     Methods:                                            368
-      Non-Static Methods:                               335
-      Static Methods:                                    33
-      Lines of Code / Number of Methods:                 38
-      Cyclomatic Complexity / Number of Methods:       2.30
+      Scope:
+        Non-Static:                                     335
+        Static:                                          33
+      Visibility:
+        Public:                                         241
+        Non-Public:                                     127
+      Lines of Code / Number of Methods:                 31
+      Cyclomatic Complexity / Number of Methods:       2.31
     Functions:                                            0
 
     Constants:                                           10
