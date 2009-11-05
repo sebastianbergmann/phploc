@@ -41,11 +41,11 @@
  * @since     File available since Release 1.0.0
  */
 
+require_once 'File/Iterator.php';
 require_once 'PHPLOC/Analyser.php';
 require_once 'PHPLOC/TextUI/Getopt.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/Text.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/XML.php';
-require_once 'PHPLOC/Util/FilterIterator.php';
 
 /**
  * TextUI frontend for PHPLOC.
@@ -159,7 +159,7 @@ class PHPLOC_TextUI_Command
 
         foreach ($paths as $path) {
             if (is_dir($path)) {
-                $iterator = new PHPLOC_Util_FilterIterator(
+                $iterator = new File_Iterator(
                   new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($path)
                   ),

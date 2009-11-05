@@ -47,11 +47,6 @@
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
-    <dir name="Util">
-     <file baseinstalldir="/" name="FilterIterator.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-    </dir>
     <file baseinstalldir="/" name="Analyser.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
@@ -76,6 +71,11 @@
    <pearinstaller>
     <min>1.8.1</min>
    </pearinstaller>
+   <package>
+    <name>File_Iterator</name>
+    <channel>pear.phpunit.de</channel>
+    <min>1.0.0</min>
+   </package>
    <extension>
     <name>tokenizer</name>
    </extension>
