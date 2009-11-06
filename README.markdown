@@ -25,10 +25,14 @@ The PEAR channel (`pear.phpunit.de`) that is used to distribute phploc needs to 
 This has to be done only once. Now the PEAR Installer can be used to install packages from the PHPUnit channel:
 
     sb@ubuntu ~ % pear install phpunit/phploc
-    downloading phploc-1.3.0.tgz ...
-    Starting to download phploc-1.3.0.tgz (8,695 bytes)
-    .....done: 8,695 bytes
-    install ok: channel://pear.phpunit.de/phploc-1.3.0
+    downloading phploc-1.3.1.tgz ...
+    Starting to download phploc-1.3.1.tgz (8,241 bytes)
+    .....done: 8,241 bytes
+    downloading File_Iterator-1.0.0.tgz ...
+    Starting to download File_Iterator-1.0.0.tgz (2,353 bytes)
+    ...done: 2,353 bytes
+    install ok: channel://pear.phpunit.de/File_Iterator-1.0.0
+    install ok: channel://pear.phpunit.de/phploc-1.3.1
 
 After the installation you can find the phploc source files inside your local PEAR directory; the path is usually `/usr/lib/php/PHPLOC`.
 
@@ -36,7 +40,7 @@ Usage Examples
 --------------
 
     sb@ubuntu ~ % phploc --count-tests /usr/local/src/ezcomponents/trunk/Workflow
-    phploc 1.3.0 by Sebastian Bergmann.
+    phploc 1.3.1 by Sebastian Bergmann.
 
     Directories:                                         13
     Files:                                              100
