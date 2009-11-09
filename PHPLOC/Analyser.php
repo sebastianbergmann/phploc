@@ -105,20 +105,20 @@ class PHPLOC_Analyser
     {
         if ($countTests) {
             foreach ($files as $file) {
-                $this->preProcessFile($file->getPathName());
+                $this->preProcessFile($file);
             }
         }
 
         $directories = array();
 
         foreach ($files as $file) {
-            $directory = $file->getPath();
+            $directory = dirname($file);
 
             if (!isset($directories[$directory])) {
                 $directories[$directory] = TRUE;
             }
 
-            $this->countFile($file->getPathName(), $countTests);
+            $this->countFile($file, $countTests);
         }
 
         $count = $this->count;

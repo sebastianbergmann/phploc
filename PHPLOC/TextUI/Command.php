@@ -41,7 +41,7 @@
  * @since     File available since Release 1.0.0
  */
 
-require_once 'File/Iterator.php';
+require_once 'File/Iterator/Factory.php';
 require_once 'PHPLOC/Analyser.php';
 require_once 'PHPLOC/TextUI/Getopt.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/Text.php';
@@ -125,7 +125,9 @@ class PHPLOC_TextUI_Command
         }
 
         if (isset($options[1][0])) {
-            $files = self::getFiles($options[1], $suffixes, $exclude);
+            $files = File_Iterator_Factory::getFilesAsArray(
+              $options[1], $suffixes, array(), $exclude
+            );
         } else {
             self::showHelp();
             exit(1);
@@ -142,47 +144,6 @@ class PHPLOC_TextUI_Command
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
             $printer->printResult($logXml, $count);
         }
-    }
-
-    /**
-     * Returns a set of files.
-     *
-     * @param  array $paths
-     * @param  array $suffixes
-     * @param  array $exclude
-     * @return array
-     */
-    protected static function getFiles(array $paths, array $suffixes, array $exclude)
-    {
-        $exclude = array_map('realpath', $exclude);
-        $files   = array();
-
-        foreach ($paths as $path) {
-            if (is_dir($path)) {
-                $iterator = new File_Iterator(
-                  new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($path)
-                  ),
-                  $suffixes
-                );
-
-                foreach ($iterator as $item) {
-                    foreach ($exclude as $_exclude) {
-                        if (strpos($item->getRealPath(), $_exclude) === 0) {
-                            continue 2;
-                        }
-                    }
-
-                    $files[] = $item;
-                }
-            }
-
-            else if (is_file($path)) {
-                $files[] = new SPLFileInfo($path);
-            }
-        }
-
-        return $files;
     }
 
     /**
