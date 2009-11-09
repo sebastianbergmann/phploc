@@ -164,7 +164,7 @@ class PHPLOC_Analyser
      * Pre-processes a single file.
      *
      * @param string $file
-     * @since  Method available since Release 1.2.0
+     * @since Method available since Release 1.2.0
      */
     public function preProcessFile($file)
     {
