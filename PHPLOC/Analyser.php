@@ -163,12 +163,12 @@ class PHPLOC_Analyser
     /**
      * Pre-processes a single file.
      *
-     * @param string $file
+     * @param string $filename
      * @since Method available since Release 1.2.0
      */
-    public function preProcessFile($file)
+    public function preProcessFile($filename)
     {
-        $tokens    = token_get_all(file_get_contents($file));
+        $tokens    = token_get_all(file_get_contents($filename));
         $numTokens = count($tokens);
         $namespace = FALSE;
 
@@ -207,12 +207,12 @@ class PHPLOC_Analyser
     /**
      * Processes a single file.
      *
-     * @param string  $file
+     * @param string  $filename
      * @param boolean $countTests
      */
-    public function countFile($file, $countTests)
+    public function countFile($filename, $countTests)
     {
-        $buffer    = file_get_contents($file);
+        $buffer    = file_get_contents($filename);
         $tokens    = token_get_all($buffer);
         $numTokens = count($tokens);
         $loc       = substr_count($buffer, "\n");
@@ -440,7 +440,7 @@ class PHPLOC_Analyser
         $this->count['files']++;
 
         if (function_exists('bytekit_disassemble_file')) {
-            $this->count['eloc'] += $this->countEloc($file, $loc);
+            $this->count['eloc'] += $this->countEloc($filename, $loc);
         }
     }
 
