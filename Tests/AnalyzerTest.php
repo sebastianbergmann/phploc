@@ -97,6 +97,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'locByNoc' => 16.5,
             'locByNom' => 8.25,
             'directories' => 0,
+            'namespaces' => 1
           ),
           $this->analyser->countFiles(
             array($this->getFileObject('source.php')), FALSE
@@ -138,6 +139,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'locByNoc' => 21.5,
             'locByNom' => 10.75,
             'directories' => 0,
+            'namespaces' => 1
           ),
           $this->analyser->countFiles(
             array(

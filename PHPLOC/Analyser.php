@@ -57,6 +57,7 @@ if (!defined('T_NAMESPACE')) {
  */
 class PHPLOC_Analyser
 {
+    protected $namespaces = array();
     protected $classes = array();
 
     protected $count = array(
@@ -128,6 +129,7 @@ class PHPLOC_Analyser
         }
 
         $count['directories']   = count($directories) - 1;
+        $count['namespaces']    = count($this->namespaces);
         $count['classes']       = $count['abstractClasses'] +
                                   $count['concreteClasses'];
         $count['methods']       = $count['staticMethods'] +
@@ -285,6 +287,10 @@ class PHPLOC_Analyser
             switch ($token) {
                 case T_NAMESPACE: {
                     $namespace = $this->getNamespaceName($tokens, $i);
+
+                    if (!isset($this->namespaces[$namespace])) {
+                        $this->namespaces[$namespace] = TRUE;
+                    }
                 }
                 break;
 
