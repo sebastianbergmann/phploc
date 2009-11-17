@@ -57,9 +57,19 @@ if (!defined('T_NAMESPACE')) {
  */
 class PHPLOC_Analyser
 {
+    /**
+     * @var array
+     */
     protected $namespaces = array();
+
+    /**
+     * @var array
+     */
     protected $classes = array();
 
+    /**
+     * @var array
+     */
     protected $count = array(
       'files'            => 0,
       'loc'              => 0,
@@ -90,6 +100,9 @@ class PHPLOC_Analyser
       'locByNom'         => 0,
     );
 
+    /**
+     * @var array
+     */
     protected $opcodeBlacklist = array(
       'BYTEKIT_NOP' => TRUE
     );
