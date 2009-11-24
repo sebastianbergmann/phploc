@@ -278,11 +278,11 @@ class PHPLOC_Analyser
 
                     if ($block !== FALSE && $block !== NULL) {
                         if ($block == $functionName) {
-                            $functionName = FALSE;
+                            $functionName = NULL;
                         }
 
                         else if ($block == $className) {
-                            $className = FALSE;
+                            $className = NULL;
                             $testClass = FALSE;
                         }
                     }
