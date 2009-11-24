@@ -25,14 +25,14 @@ The PEAR channel (`pear.phpunit.de`) that is used to distribute phploc needs to 
 This has to be done only once. Now the PEAR Installer can be used to install packages from the PHPUnit channel:
 
     sb@ubuntu ~ % pear install phpunit/phploc
-    downloading phploc-1.3.2.tgz ...
-    Starting to download phploc-1.3.2.tgz (8,190 bytes)
+    downloading phploc-1.4.0.tgz ...
+    Starting to download phploc-1.4.0.tgz (8,190 bytes)
     .....done: 8,190 bytes
     downloading File_Iterator-1.1.0.tgz ...
     Starting to download File_Iterator-1.1.0.tgz (3,181 bytes)
     ...done: 3,181 bytes
     install ok: channel://pear.phpunit.de/File_Iterator-1.1.0
-    install ok: channel://pear.phpunit.de/phploc-1.3.2
+    install ok: channel://pear.phpunit.de/phploc-1.4.0
 
 After the installation you can find the phploc source files inside your local PEAR directory; the path is usually `/usr/lib/php/PHPLOC`.
 
@@ -40,22 +40,23 @@ Usage Examples
 --------------
 
     sb@ubuntu ~ % phploc --count-tests /usr/local/src/ezcomponents/trunk/Workflow
-    phploc 1.3.2 by Sebastian Bergmann.
+    phploc 1.4.0 by Sebastian Bergmann.
 
     Directories:                                         13
     Files:                                              100
 
     Lines of Code (LOC):                              14065
-      Cyclomatic Complexity / Lines of Code:           0.08
-    Executable Lines of Code (ELOC):                   5249
+      Cyclomatic Complexity / Lines of Code:           0.07
+    Executable Lines of Code (ELOC):                   5697
     Comment Lines of Code (CLOC):                      5213
     Non-Comment Lines of Code (NCLOC):                 8852
 
+    Namespaces:                                           0
     Interfaces:                                           6
     Classes:                                             79
       Abstract:                                          12 (15.19%)
       Concrete:                                          67 (84.81%)
-      Lines of Code / Number of Classes:                145
+      Lines of Code / Number of Classes:                142
     Methods:                                            310
       Scope:
         Non-Static:                                     287 (92.58%)
@@ -63,8 +64,10 @@ Usage Examples
       Visibility:
         Public:                                         237 (76.45%)
         Non-Public:                                      73 (23.55%)
-      Lines of Code / Number of Methods:                 37
+      Lines of Code / Number of Methods:                 36
       Cyclomatic Complexity / Number of Methods:       2.31
+
+    Anonymous Functions:                                  0
     Functions:                                            0
 
     Constants:                                           10

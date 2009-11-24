@@ -97,7 +97,8 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "    Public:                                  %10d (%.2f%%)\n" .
                    "    Non-Public:                              %10d (%.2f%%)\n" .
                    "  Lines of Code / Number of Methods:         %10d\n" .
-                   "  Cyclomatic Complexity / Number of Methods: %10.2f\n" .
+                   "  Cyclomatic Complexity / Number of Methods: %10.2f\n\n" .
+                   "Anonymous Functions:                         %10d\n" .
                    "Functions:                                   %10d\n\n" .
                    "Constants:                                   %10d\n" .
                    "  Global constants:                          %10d\n" .
@@ -124,6 +125,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['methods'] > 0 ? ($count['nonPublicMethods'] / $count['methods']) * 100 : 0;
         $args[] = $count['locByNom'];
         $args[] = $count['ccnByNom'];
+        $args[] = $count['anonymousFunctions'];
         $args[] = $count['functions'];
         $args[] = $count['constants'];
         $args[] = $count['globalConstants'];

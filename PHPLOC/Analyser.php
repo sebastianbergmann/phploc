@@ -71,33 +71,34 @@ class PHPLOC_Analyser
      * @var array
      */
     protected $count = array(
-      'files'            => 0,
-      'loc'              => 0,
-      'locClasses'       => 0,
-      'cloc'             => 0,
-      'ncloc'            => 0,
-      'eloc'             => 0,
-      'ccn'              => 0,
-      'ccnMethods'       => 0,
-      'interfaces'       => 0,
-      'classes'          => 0,
-      'abstractClasses'  => 0,
-      'concreteClasses'  => 0,
-      'functions'        => 0,
-      'methods'          => 0,
-      'publicMethods'    => 0,
-      'nonPublicMethods' => 0,
-      'nonStaticMethods' => 0,
-      'staticMethods'    => 0,
-      'constants'        => 0,
-      'classConstants'   => 0,
-      'globalConstants'  => 0,
-      'testClasses'      => 0,
-      'testMethods'      => 0,
-      'ccnByLoc'         => 0,
-      'ccnByNom'         => 0,
-      'locByNoc'         => 0,
-      'locByNom'         => 0,
+      'files'              => 0,
+      'loc'                => 0,
+      'locClasses'         => 0,
+      'cloc'               => 0,
+      'ncloc'              => 0,
+      'eloc'               => 0,
+      'ccn'                => 0,
+      'ccnMethods'         => 0,
+      'interfaces'         => 0,
+      'classes'            => 0,
+      'abstractClasses'    => 0,
+      'concreteClasses'    => 0,
+      'anonymousFunctions' => 0,
+      'functions'          => 0,
+      'methods'            => 0,
+      'publicMethods'      => 0,
+      'nonPublicMethods'   => 0,
+      'nonStaticMethods'   => 0,
+      'staticMethods'      => 0,
+      'constants'          => 0,
+      'classConstants'     => 0,
+      'globalConstants'    => 0,
+      'testClasses'        => 0,
+      'testMethods'        => 0,
+      'ccnByLoc'           => 0,
+      'ccnByNom'           => 0,
+      'locByNoc'           => 0,
+      'locByNom'           => 0
     );
 
     /**
@@ -334,65 +335,75 @@ class PHPLOC_Analyser
                 break;
 
                 case T_FUNCTION: {
-                    if (is_array($tokens[$i+2])) {
+                    $currentBlock = T_FUNCTION;
+
+                    if ($tokens[$i+1] == '(' || $tokens[$i+2] == '(') {
+                        $currentBlock = 'anonymous function';
+                        $functionName = 'anonymous function';
+                        $this->count['anonymousFunctions']++;
+                    }
+
+                    else if (is_array($tokens[$i+2])) {
                         $functionName = $tokens[$i+2][1];
-                    } else {
+                    }
+
+                    else {
                         $functionName = $tokens[$i+3][1];
                     }
 
-                    $currentBlock = T_FUNCTION;
+                    if ($currentBlock == T_FUNCTION) {
+                        if ($className === NULL) {
+                            $this->count['functions']++;
+                        } else {
+                            $static     = FALSE;
+                            $visibility = T_PUBLIC;
 
-                    if ($className === NULL) {
-                        $this->count['functions']++;
-                    } else {
-                        $static     = FALSE;
-                        $visibility = T_PUBLIC;
+                            for ($j = $i; $j > 0; $j--) {
+                                if (is_string($tokens[$j])) {
+                                    if ($tokens[$j] == '{' || $tokens[$j] == '}') {
+                                        break;
+                                    }
 
-                        for ($j = $i; $j > 0; $j--) {
-                            if (is_string($tokens[$j])) {
-                                if ($tokens[$j] == '{' || $tokens[$j] == '}') {
-                                    break;
+                                    continue;
                                 }
 
-                                continue;
-                            }
+                                if (isset($tokens[$j][0])) {
+                                    switch ($tokens[$j][0]) {
+                                        case T_PRIVATE: {
+                                            $visibility = T_PRIVATE;
+                                        }
+                                        break;
 
-                            if (isset($tokens[$j][0])) {
-                                switch ($tokens[$j][0]) {
-                                    case T_PRIVATE: {
-                                        $visibility = T_PRIVATE;
-                                    }
-                                    break;
+                                        case T_PROTECTED: {
+                                            $visibility = T_PROTECTED;
+                                        }
+                                        break;
 
-                                    case T_PROTECTED: {
-                                        $visibility = T_PROTECTED;
+                                        case T_STATIC: {
+                                            $static = TRUE;
+                                        }
+                                        break;
                                     }
-                                    break;
-
-                                    case T_STATIC: {
-                                        $static = TRUE;
-                                    }
-                                    break;
                                 }
                             }
-                        }
 
-                        if ($testClass &&
-                            strpos($functionName, 'test') === 0 &&
-                            $visibility == T_PUBLIC &&
-                            !$static) {
-                            $this->count['testMethods']++;
-                        }
-
-                        else if (!$testClass) {
-                            if ($static) {
-                                $this->count['staticMethods']++;
-                            } else {
-                                $this->count['nonStaticMethods']++;
+                            if ($testClass &&
+                                strpos($functionName, 'test') === 0 &&
+                                $visibility == T_PUBLIC &&
+                                !$static) {
+                                $this->count['testMethods']++;
                             }
 
-                            if ($visibility != T_PUBLIC) {
-                                $this->count['nonPublicMethods']++;
+                            else if (!$testClass) {
+                                if ($static) {
+                                    $this->count['staticMethods']++;
+                                } else {
+                                    $this->count['nonStaticMethods']++;
+                                }
+
+                                if ($visibility != T_PUBLIC) {
+                                    $this->count['nonPublicMethods']++;
+                                }
                             }
                         }
                     }

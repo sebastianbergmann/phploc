@@ -42,5 +42,6 @@ class ACLass extends AnAbstractClass implements AnInterface
 
     private function aPrivateMethod()
     {
+        $function = function() {};
     }
 }
