@@ -26,8 +26,8 @@ This has to be done only once. Now the PEAR Installer can be used to install pac
 
     sb@ubuntu ~ % pear install phpunit/phploc
     downloading phploc-1.4.0.tgz ...
-    Starting to download phploc-1.4.0.tgz (8,190 bytes)
-    .....done: 8,190 bytes
+    Starting to download phploc-1.4.0.tgz (8,349 bytes)
+    .....done: 8,349 bytes
     downloading File_Iterator-1.1.0.tgz ...
     Starting to download File_Iterator-1.1.0.tgz (3,181 bytes)
     ...done: 3,181 bytes
