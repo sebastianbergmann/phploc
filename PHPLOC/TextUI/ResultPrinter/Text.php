@@ -88,7 +88,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "Classes:                                     %10d\n" .
                    "  Abstract:                                  %10d (%.2f%%)\n" .
                    "  Concrete:                                  %10d (%.2f%%)\n" .
-                   "  Lines of Code / Number of Classes:         %10d\n" .
+                   "  Average Class Length (NCLOC):              %10d\n" .
                    "Methods:                                     %10d\n" .
                    "  Scope:\n" .
                    "    Non-Static:                              %10d (%.2f%%)\n" .
@@ -96,7 +96,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "  Visibility:\n" .
                    "    Public:                                  %10d (%.2f%%)\n" .
                    "    Non-Public:                              %10d (%.2f%%)\n" .
-                   "  Lines of Code / Number of Methods:         %10d\n" .
+                   "  Average Method Length (NCLOC):             %10d\n" .
                    "  Cyclomatic Complexity / Number of Methods: %10.2f\n\n" .
                    "Anonymous Functions:                         %10d\n" .
                    "Functions:                                   %10d\n\n" .
@@ -113,7 +113,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['classes'] > 0 ? ($count['abstractClasses'] / $count['classes']) * 100 : 0;
         $args[] = $count['concreteClasses'];
         $args[] = $count['classes'] > 0 ? ($count['concreteClasses'] / $count['classes']) * 100 : 0;
-        $args[] = $count['locByNoc'];
+        $args[] = $count['nclocByNoc'];
         $args[] = $count['methods'];
         $args[] = $count['nonStaticMethods'];
         $args[] = $count['methods'] > 0 ? ($count['nonStaticMethods'] / $count['methods']) * 100 : 0;
@@ -123,7 +123,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['methods'] > 0 ? ($count['publicMethods'] / $count['methods']) * 100 : 0;
         $args[] = $count['nonPublicMethods'];
         $args[] = $count['methods'] > 0 ? ($count['nonPublicMethods'] / $count['methods']) * 100 : 0;
-        $args[] = $count['locByNom'];
+        $args[] = $count['nclocByNom'];
         $args[] = $count['ccnByNom'];
         $args[] = $count['anonymousFunctions'];
         $args[] = $count['functions'];

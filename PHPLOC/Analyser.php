@@ -73,7 +73,7 @@ class PHPLOC_Analyser
     protected $count = array(
       'files'              => 0,
       'loc'                => 0,
-      'locClasses'         => 0,
+      'nclocClasses'       => 0,
       'cloc'               => 0,
       'ncloc'              => 0,
       'eloc'               => 0,
@@ -97,8 +97,8 @@ class PHPLOC_Analyser
       'testMethods'        => 0,
       'ccnByLoc'           => 0,
       'ccnByNom'           => 0,
-      'locByNoc'           => 0,
-      'locByNom'           => 0
+      'nclocByNoc'         => 0,
+      'nclocByNom'         => 0
     );
 
     /**
@@ -166,11 +166,11 @@ class PHPLOC_Analyser
         }
 
         if ($count['classes'] > 0) {
-            $count['locByNoc'] = $count['locClasses'] / $count['classes'];
+            $count['nclocByNoc'] = $count['nclocClasses'] / $count['classes'];
         }
 
         if ($count['methods'] > 0) {
-            $count['locByNom'] = $count['locClasses'] / $count['methods'];
+            $count['nclocByNom'] = $count['nclocClasses'] / $count['methods'];
         }
 
         return $count;
@@ -235,7 +235,7 @@ class PHPLOC_Analyser
 
         unset($buffer);
 
-        $locClasses   = 0;
+        $nclocClasses = 0;
         $cloc         = 0;
         $blocks       = array();
         $currentBlock = FALSE;
@@ -295,7 +295,9 @@ class PHPLOC_Analyser
             list ($token, $value) = $tokens[$i];
 
             if ($className !== NULL) {
-                $locClasses += substr_count($value, "\n");
+                if ($token != T_COMMENT && $token != T_DOC_COMMENT) {
+                    $nclocClasses += substr_count($value, "\n");
+                }
             }
 
             switch ($token) {
@@ -466,10 +468,10 @@ class PHPLOC_Analyser
             }
         }
 
-        $this->count['loc']        += $loc;
-        $this->count['locClasses'] += $locClasses;
-        $this->count['cloc']       += $cloc;
-        $this->count['ncloc']      += $loc - $cloc;
+        $this->count['loc']          += $loc;
+        $this->count['nclocClasses'] += $nclocClasses;
+        $this->count['cloc']         += $cloc;
+        $this->count['ncloc']        += $loc - $cloc;
         $this->count['files']++;
 
         if (function_exists('bytekit_disassemble_file')) {
