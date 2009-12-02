@@ -337,18 +337,21 @@ class PHPLOC_Analyser
                 case T_FUNCTION: {
                     $currentBlock = T_FUNCTION;
 
-                    if ($tokens[$i+1] == '(' || $tokens[$i+2] == '(') {
-                        $currentBlock = 'anonymous function';
-                        $functionName = 'anonymous function';
-                        $this->count['anonymousFunctions']++;
-                    }
-
-                    else if (is_array($tokens[$i+2])) {
+                    if (is_array($tokens[$i+2]) &&
+                        $tokens[$i+2][0] == T_STRING) {
                         $functionName = $tokens[$i+2][1];
                     }
 
-                    else {
+                    else if ($tokens[$i+2] == '&' &&
+                             is_array($tokens[$i+3]) &&
+                             $tokens[$i+3][0] == T_STRING) {
                         $functionName = $tokens[$i+3][1];
+                    }
+
+                    else {
+                        $currentBlock = 'anonymous function';
+                        $functionName = 'anonymous function';
+                        $this->count['anonymousFunctions']++;
                     }
 
                     if ($currentBlock == T_FUNCTION) {
