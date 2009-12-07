@@ -518,17 +518,21 @@ class PHPLOC_Analyser
      */
     protected function getNamespaceName(array $tokens, $i)
     {
-        $namespace = $tokens[$i+2][1];
+        if (isset($tokens[$i+2][1])) {
+            $namespace = $tokens[$i+2][1];
 
-        for ($j = $i+3; ; $j += 2) {
-            if (isset($tokens[$j]) && $tokens[$j][0] == T_NS_SEPARATOR) {
-                $namespace .= '\\' . $tokens[$j+1][1];
-            } else {
-                break;
+            for ($j = $i+3; ; $j += 2) {
+                if (isset($tokens[$j]) && $tokens[$j][0] == T_NS_SEPARATOR) {
+                    $namespace .= '\\' . $tokens[$j+1][1];
+                } else {
+                    break;
+                }
             }
+
+            return $namespace;
         }
 
-        return $namespace;
+        return FALSE;
     }
 
     /**
