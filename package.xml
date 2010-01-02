@@ -43,9 +43,6 @@
      <file baseinstalldir="/" name="Command.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
-     <file baseinstalldir="/" name="Getopt.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
     </dir>
     <file baseinstalldir="/" name="Analyser.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -75,6 +72,11 @@
     <name>File_Iterator</name>
     <channel>pear.phpunit.de</channel>
     <min>1.1.0</min>
+   </package>
+   <package>
+    <name>ConsoleTools</name>
+    <channel>components.ez.no</channel>
+    <min>1.6</min>
    </package>
    <extension>
     <name>tokenizer</name>

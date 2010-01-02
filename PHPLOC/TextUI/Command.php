@@ -43,9 +43,15 @@
 
 require_once 'File/Iterator/Factory.php';
 require_once 'PHPLOC/Analyser.php';
-require_once 'PHPLOC/TextUI/Getopt.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/Text.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/XML.php';
+
+require_once 'ezc/Base/base.php';
+
+function __autoload($className)
+{
+    ezcBase::autoload($className);
+}
 
 /**
  * TextUI frontend for PHPLOC.
@@ -64,69 +70,112 @@ class PHPLOC_TextUI_Command
      */
     public static function main()
     {
+        $input = new ezcConsoleInput;
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            '',
+            'count-tests',
+            ezcConsoleInput::TYPE_NONE,
+            FALSE,
+            FALSE
+           )
+        );
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            '',
+            'exclude',
+            ezcConsoleInput::TYPE_STRING,
+            array(),
+            TRUE
+           )
+        );
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            'h',
+            'help',
+            ezcConsoleInput::TYPE_NONE,
+            NULL,
+            FALSE,
+            '',
+            '',
+            array(),
+            array(),
+            FALSE,
+            FALSE,
+            TRUE
+           )
+        );
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            '',
+            'log-xml',
+            ezcConsoleInput::TYPE_STRING,
+            NULL,
+            FALSE
+           )
+        );
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            '',
+            'suffixes',
+            ezcConsoleInput::TYPE_STRING,
+            'php',
+            FALSE
+           )
+        );
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            'v',
+            'version',
+            ezcConsoleInput::TYPE_NONE,
+            NULL,
+            FALSE,
+            '',
+            '',
+            array(),
+            array(),
+            FALSE,
+            FALSE,
+            TRUE
+           )
+        );
+
         try {
-            $options = PHPLOC_TextUI_Getopt::getopt(
-              $_SERVER['argv'],
-              '',
-              array(
-                'count-tests',
-                'exclude=',
-                'help',
-                'log-xml=',
-                'suffixes=',
-                'version'
-              )
-            );
+            $input->process();
         }
 
-        catch (RuntimeException $e) {
-            self::showError($e->getMessage());
+        catch (ezcConsoleOptionException $e) {
+            print $e->getMessage();
+            exit(1);
         }
 
-        $countTests = FALSE;
-        $exclude    = array();
-        $suffixes   = array('php');
-
-        foreach ($options[0] as $option) {
-            switch ($option[0]) {
-                case '--count-tests': {
-                    $countTests = TRUE;
-                }
-                break;
-
-                case '--exclude': {
-                    $exclude[] = $option[1];
-                }
-                break;
-
-                case '--help': {
-                    self::showHelp();
-                    exit(0);
-                }
-                break;
-
-                case '--log-xml': {
-                    $logXml = $option[1];
-                }
-                break;
-
-                case '--suffixes': {
-                    $suffixes = explode(',', $option[1]);
-                    array_map('trim', $suffixes);
-                }
-                break;
-
-                case '--version': {
-                    self::printVersionString();
-                    exit(0);
-                }
-                break;
-            }
+        if ($input->getOption('help')->value) {
+            self::showHelp();
+            exit(0);
         }
 
-        if (isset($options[1][0])) {
+        else if ($input->getOption('version')->value) {
+            self::printVersionString();
+            exit(0);
+        }
+
+        $arguments  = $input->getArguments();
+        $countTests = $input->getOption('count-tests')->value;
+        $exclude    = $input->getOption('exclude')->value;
+        $logXml     = $input->getOption('log-xml')->value;
+
+        $suffixes = explode(',', $input->getOption('suffixes')->value);
+        array_map('trim', $suffixes);
+
+        if (!empty($arguments)) {
             $files = File_Iterator_Factory::getFilesAsArray(
-              $options[1], $suffixes, array(), $exclude
+              $arguments, $suffixes, array(), $exclude
             );
         } else {
             self::showHelp();
@@ -140,24 +189,10 @@ class PHPLOC_TextUI_Command
         $printer  = new PHPLOC_TextUI_ResultPrinter_Text;
         $printer->printResult($count, $countTests);
 
-        if (isset($logXml)) {
+        if ($logXml) {
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
             $printer->printResult($logXml, $count);
         }
-    }
-
-    /**
-     * Shows an error.
-     *
-     * @param string $message
-     */
-    protected static function showError($message)
-    {
-        self::printVersionString();
-
-        print $message;
-
-        exit(1);
     }
 
     /**
