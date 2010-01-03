@@ -160,17 +160,17 @@ class PHPLOC_TextUI_Command
         }
 
         catch (ezcConsoleOptionException $e) {
-            $output->outputText($e->getMessage());
+            print $e->getMessage() . "\n";
             exit(1);
         }
 
         if ($input->getOption('help')->value) {
-            self::showHelp($output);
+            self::showHelp();
             exit(0);
         }
 
         else if ($input->getOption('version')->value) {
-            self::printVersionString($output);
+            self::printVersionString();
             exit(0);
         }
 
@@ -193,17 +193,17 @@ class PHPLOC_TextUI_Command
               $arguments, $suffixes, array(), $exclude
             );
         } else {
-            self::showHelp($output);
+            self::showHelp();
             exit(1);
         }
 
-        self::printVersionString($output);
+        self::printVersionString();
 
         $analyser = new PHPLOC_Analyser($verbose);
         $count    = $analyser->countFiles($files, $countTests);
 
         $printer = new PHPLOC_TextUI_ResultPrinter_Text;
-        $output->outputText($printer->printResult($count, $countTests));
+        $printer->printResult($count, $countTests);
 
         if ($logXml) {
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
@@ -213,15 +213,13 @@ class PHPLOC_TextUI_Command
 
     /**
      * Shows the help.
-     *
-     * @param ezcConsoleOutput $output
      */
-    protected static function showHelp(ezcConsoleOutput $output)
+    protected static function showHelp()
     {
-        self::printVersionString($output);
+        self::printVersionString();
 
-        $output->outputText(<<<EOT
-Usage: phploc [switches] <directory|file>
+        print <<<EOT
+Usage: phploc [switches] <directory|file> ...
 
   --count-tests            Count PHPUnit test case classes and test methods.
 
@@ -236,19 +234,15 @@ Usage: phploc [switches] <directory|file>
   --verbose                Print progress bar.
 
 EOT
-);
+;
     }
 
     /**
      * Prints the version string.
-     *
-     * @param ezcConsoleOutput $output
      */
-    protected static function printVersionString(ezcConsoleOutput $output)
+    protected static function printVersionString()
     {
-        $output->outputText(
-          "phploc @package_version@ by Sebastian Bergmann.\n\n"
-        );
+        print "phploc @package_version@ by Sebastian Bergmann.\n\n";
     }
 }
 ?>
