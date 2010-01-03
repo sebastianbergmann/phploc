@@ -109,6 +109,22 @@ class PHPLOC_Analyser
     );
 
     /**
+     * @var ezcConsoleOutput
+     */
+    protected $output;
+
+    /**
+     * Constructor.
+     *
+     * @param  array   $files
+     * @since  Method available since Release 1.5.0
+     */
+    public function __construct(ezcConsoleOutput $output = NULL)
+    {
+        $this->output = $output;
+    }
+
+    /**
      * Processes a set of files.
      *
      * @param  array   $files
@@ -119,12 +135,30 @@ class PHPLOC_Analyser
     public function countFiles(array $files, $countTests)
     {
         if ($countTests) {
+            if ($this->output !== NULL) {
+                $bar = new ezcConsoleProgressbar($this->output, count($files));
+                $this->output->outputLine('Preprocessing files');
+            }
+
             foreach ($files as $file) {
                 $this->preProcessFile($file);
+
+                if ($this->output !== NULL) {
+                    $bar->advance();
+                }
+            }
+
+            if ($this->output !== NULL) {
+                $this->output->outputLine("\n");
             }
         }
 
         $directories = array();
+
+        if ($this->output !== NULL) {
+            $bar = new ezcConsoleProgressbar($this->output, count($files));
+            $this->output->outputLine('Processing files');
+        }
 
         foreach ($files as $file) {
             $directory = dirname($file);
@@ -134,6 +168,14 @@ class PHPLOC_Analyser
             }
 
             $this->countFile($file, $countTests);
+
+            if ($this->output !== NULL) {
+                $bar->advance();
+            }
+        }
+
+        if ($this->output !== NULL) {
+            $this->output->outputLine("\n");
         }
 
         $count = $this->count;

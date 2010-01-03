@@ -147,6 +147,14 @@ class PHPLOC_TextUI_Command
            )
         );
 
+        $input->registerOption(
+          new ezcConsoleOption(
+            '',
+            'verbose',
+            ezcConsoleInput::TYPE_NONE
+           )
+        );
+
         try {
             $input->process();
         }
@@ -157,7 +165,7 @@ class PHPLOC_TextUI_Command
         }
 
         if ($input->getOption('help')->value) {
-            self::showHelp();
+            self::showHelp($output);
             exit(0);
         }
 
@@ -174,18 +182,24 @@ class PHPLOC_TextUI_Command
         $suffixes = explode(',', $input->getOption('suffixes')->value);
         array_map('trim', $suffixes);
 
+        if ($input->getOption('verbose')->value !== FALSE) {
+            $verbose = $output;
+        } else {
+            $verbose = NULL;
+        }
+
         if (!empty($arguments)) {
             $files = File_Iterator_Factory::getFilesAsArray(
               $arguments, $suffixes, array(), $exclude
             );
         } else {
-            self::showHelp();
+            self::showHelp($output);
             exit(1);
         }
 
         self::printVersionString($output);
 
-        $analyser = new PHPLOC_Analyser;
+        $analyser = new PHPLOC_Analyser($verbose);
         $count    = $analyser->countFiles($files, $countTests);
 
         $printer = new PHPLOC_TextUI_ResultPrinter_Text;
@@ -218,6 +232,8 @@ Usage: phploc [switches] <directory|file>
 
   --help                   Prints this usage information.
   --version                Prints the version and exits.
+
+  --verbose                Print progress bar.
 
 EOT
 );
