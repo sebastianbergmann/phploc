@@ -116,8 +116,8 @@ class PHPLOC_Analyser
     /**
      * Constructor.
      *
-     * @param  array   $files
-     * @since  Method available since Release 1.5.0
+     * @param ezcConsoleOutput $output
+     * @since Method available since Release 1.5.0
      */
     public function __construct(ezcConsoleOutput $output = NULL)
     {
@@ -137,7 +137,7 @@ class PHPLOC_Analyser
         if ($countTests) {
             if ($this->output !== NULL) {
                 $bar = new ezcConsoleProgressbar($this->output, count($files));
-                $this->output->outputLine('Preprocessing files');
+                print "Preprocessing files\n";
             }
 
             foreach ($files as $file) {
@@ -149,7 +149,7 @@ class PHPLOC_Analyser
             }
 
             if ($this->output !== NULL) {
-                $this->output->outputLine("\n");
+                print "\n\n";
             }
         }
 
@@ -157,7 +157,7 @@ class PHPLOC_Analyser
 
         if ($this->output !== NULL) {
             $bar = new ezcConsoleProgressbar($this->output, count($files));
-            $this->output->outputLine('Processing files');
+            print "Processing files\n";
         }
 
         foreach ($files as $file) {
@@ -175,7 +175,7 @@ class PHPLOC_Analyser
         }
 
         if ($this->output !== NULL) {
-            $this->output->outputLine("\n");
+            print "\n\n";
         }
 
         $count = $this->count;
