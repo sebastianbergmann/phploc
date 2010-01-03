@@ -114,9 +114,7 @@ class PHPLOC_TextUI_Command
           new ezcConsoleOption(
             '',
             'log-xml',
-            ezcConsoleInput::TYPE_STRING,
-            NULL,
-            FALSE
+            ezcConsoleInput::TYPE_STRING
            )
         );
 
