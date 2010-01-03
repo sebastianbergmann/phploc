@@ -56,8 +56,9 @@ class PHPLOC_TextUI_ResultPrinter_Text
     /**
      * Prints a result set.
      *
-     * @param array   $count
-     * @param boolean $printTests
+     * @param  array   $count
+     * @param  boolean $printTests
+     * @return string
      */
     public function printResult(array $count, $printTests)
     {
@@ -138,7 +139,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
             $args[]  = $count['testMethods'];
         }
 
-        vprintf($format, $args);
+        return vsprintf($format, $args);
     }
 }
 ?>
