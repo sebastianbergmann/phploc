@@ -195,6 +195,10 @@ class PHPLOC_TextUI_Command
             exit(1);
         }
 
+        if (empty($files)) {
+            self::showError("No files found to scan.\n");
+        }
+
         self::printVersionString();
 
         $analyser = new PHPLOC_Analyser($verbose);
@@ -207,6 +211,20 @@ class PHPLOC_TextUI_Command
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
             $printer->printResult($logXml, $count);
         }
+    }
+
+    /**
+     * Shows an error.
+     *
+     * @param string $message
+     */
+    protected static function showError($message)
+    {
+        self::printVersionString();
+
+        print $message;
+
+        exit(1);
     }
 
     /**
