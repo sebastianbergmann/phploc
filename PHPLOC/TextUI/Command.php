@@ -45,6 +45,7 @@ require_once 'File/Iterator/Factory.php';
 require_once 'PHPLOC/Analyser.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/Text.php';
 require_once 'PHPLOC/TextUI/ResultPrinter/XML.php';
+require_once 'PHPLOC/TextUI/ResultPrinter/CSV.php';
 
 require_once 'ezc/Base/base.php';
 
@@ -121,6 +122,14 @@ class PHPLOC_TextUI_Command
         $input->registerOption(
           new ezcConsoleOption(
             '',
+            'log-csv',
+            ezcConsoleInput::TYPE_STRING
+           )
+        );
+
+        $input->registerOption(
+          new ezcConsoleOption(
+            '',
             'suffixes',
             ezcConsoleInput::TYPE_STRING,
             'php',
@@ -176,6 +185,7 @@ class PHPLOC_TextUI_Command
         $countTests = $input->getOption('count-tests')->value;
         $exclude    = $input->getOption('exclude')->value;
         $logXml     = $input->getOption('log-xml')->value;
+        $logCsv     = $input->getOption('log-csv')->value;
 
         $suffixes = explode(',', $input->getOption('suffixes')->value);
         array_map('trim', $suffixes);
@@ -211,6 +221,11 @@ class PHPLOC_TextUI_Command
             $printer = new PHPLOC_TextUI_ResultPrinter_XML;
             $printer->printResult($logXml, $count);
         }
+
+        if ($logCsv) {
+            $printer = new PHPLOC_TextUI_ResultPrinter_CSV;
+            $printer->printResult($logCsv, $count);
+        }
     }
 
     /**
@@ -240,6 +255,7 @@ Usage: phploc [switches] <directory|file> ...
   --count-tests            Count PHPUnit test case classes and test methods.
 
   --log-xml <file>         Write result in XML format to file.
+  --log-csv <file>         Write result in CSV format to file.
 
   --exclude <directory>    Exclude <directory> from code analysis.
   --suffixes <suffix,...>  A comma-separated list of file suffixes to check.
