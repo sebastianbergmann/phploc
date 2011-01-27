@@ -66,4 +66,3 @@ class PHPLOC_TextUI_ResultPrinter_CSV
         file_put_contents($filename, $contents);
     }
 }
-?>

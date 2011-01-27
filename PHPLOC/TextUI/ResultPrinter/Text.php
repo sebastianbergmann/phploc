@@ -141,4 +141,3 @@ class PHPLOC_TextUI_ResultPrinter_Text
         vprintf($format, $args);
     }
 }
-?>

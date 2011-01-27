@@ -89,4 +89,3 @@ class PHPLOC_TextUI_ResultPrinter_XML
         file_put_contents($filename, $document->saveXML());
     }
 }
-?>

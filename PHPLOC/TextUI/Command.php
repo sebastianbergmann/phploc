@@ -277,4 +277,3 @@ EOT
         print "phploc @package_version@ by Sebastian Bergmann.\n\n";
     }
 }
-?>

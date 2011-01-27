@@ -645,4 +645,3 @@ class PHPLOC_Analyser
         return $result;
     }
 }
-?>
