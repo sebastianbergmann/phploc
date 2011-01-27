@@ -38,7 +38,7 @@
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     File available since Release 1.1.0
+ * @since     File available since Release 1.6.0
  */
 
 /**
@@ -49,7 +49,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://github.com/sebastianbergmann/phploc/tree
- * @since     Class available since Release 1.1.0
+ * @since     Class available since Release 1.6.0
  */
 class PHPLOC_TextUI_ResultPrinter_CSV
 {
