@@ -69,12 +69,12 @@
     <min>5.2.7</min>
    </php>
    <pearinstaller>
-    <min>1.9.0</min>
+    <min>1.9.1</min>
    </pearinstaller>
    <package>
     <name>File_Iterator</name>
     <channel>pear.phpunit.de</channel>
-    <min>1.2.0</min>
+    <min>1.2.3</min>
    </package>
    <package>
     <name>ConsoleTools</name>
