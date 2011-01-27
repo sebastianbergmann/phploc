@@ -61,8 +61,10 @@ class PHPLOC_TextUI_ResultPrinter_CSV
      */
     public function printResult($filename, array $count)
     {
-        $contents = implode(',', array_keys($count)) . PHP_EOL
-                  . implode(',', array_values($count));
-        file_put_contents($filename, $contents);
+        file_put_contents(
+          $filename,
+          implode(',', array_keys($count)) . PHP_EOL .
+          implode(',', array_values($count))
+        );
     }
 }
