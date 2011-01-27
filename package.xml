@@ -33,6 +33,9 @@
    <dir name="PHPLOC">
     <dir name="TextUI">
      <dir name="ResultPrinter">
+      <file baseinstalldir="/" name="CSV.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="/" name="Text.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
