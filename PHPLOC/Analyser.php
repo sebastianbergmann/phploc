@@ -209,8 +209,13 @@ class PHPLOC_Analyser
         }
 
         if ($count['methods'] > 0) {
+            if(isset($count['testMethods'])) {
+                $countTestMethods = $count['testMethods'];
+            } else {
+                $countTestMethods = 0;
+            }
             $count['ccnByNom'] = 1 + ($count['ccnMethods'] /
-                                 ($count['methods'] - $count['testMethods']));
+                                 ($count['methods'] - $countTestMethods));
         }
 
         if ($count['classes'] > 0) {

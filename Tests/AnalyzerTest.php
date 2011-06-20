@@ -67,7 +67,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testWithoutTests()
     {
-        $this->assertEquals(
+        $expected = 
           array(
             'files' => 1,
             'loc' => 47,
@@ -91,15 +91,18 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'constants' => 2,
             'classConstants' => 1,
             'globalConstants' => 1,
-            'testClasses' => 0,
-            'testMethods' => 0,
-            'ccnByLoc' => 0.08,
+            'ccnByLoc' => 0.045,
             'ccnByNom' => 1.5,
             'nclocByNoc' => 14.5,
             'nclocByNom' => 7.25,
             'directories' => 0,
             'namespaces' => 1
-          ),
+        );
+        if(!extension_loaded('bytekit')) {
+          unset($expected['eloc']);
+        }
+        $this->assertEquals(
+          $expected,
           $this->analyser->countFiles(
             array($this->getFileObject('source.php')), FALSE
           ),
@@ -110,7 +113,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testWithTests()
     {
-        $this->assertEquals(
+        $expected = 
           array(
             'files' => 2,
             'loc' => 58,
@@ -136,13 +139,18 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'globalConstants' => 1,
             'testClasses' => 1,
             'testMethods' => 1,
-            'ccnByLoc' => 0.07,
-            'ccnByNom' => 1.5,
+            'ccnByLoc' => 0.036,
+            'ccnByNom' => 1.666,
             'nclocByNoc' => 19,
             'nclocByNom' => 9.5,
             'directories' => 0,
             'namespaces' => 1
-          ),
+        );
+        if(!extension_loaded('bytekit')) {
+          unset($expected['eloc']);
+        }
+        $this->assertEquals(
+          $expected,
           $this->analyser->countFiles(
             array(
               $this->getFileObject('source.php'),
@@ -152,6 +160,24 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           '',
           0.01
         );
+    }
+
+    public function testFilesThatExtendPHPUnitTestCaseAreCountedAsTests() {
+        $result = $this->analyser->countFiles(
+          array(
+            $this->getFileObject('tests.php')
+          ), TRUE
+        );
+        $this->assertSame(1, $result['testClasses']);
+    }
+
+    public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests() {
+        $result = $this->analyser->countFiles(
+            array(
+                $this->getFileObject('twoTestsThatIndirectlyExtendPHPUnitTestCase.php')
+            ), TRUE
+        );
+        $this->assertSame(3, $result['testClasses']);
     }
 
     protected function getFileObject($filename)
