@@ -34,5 +34,5 @@ REM ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 REM POSSIBILITY OF SUCH DAMAGE.
 REM
 
-set PHPBIN="@php_bin@"
+set PHPBIN=@php_bin@
 "@php_bin@" "@bin_dir@\phploc" %*
