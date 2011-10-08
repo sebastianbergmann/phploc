@@ -67,7 +67,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testWithoutTests()
     {
-        $expected = 
+        $expected =
           array(
             'files' => 1,
             'loc' => 47,
@@ -113,7 +113,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testWithTests()
     {
-        $expected = 
+        $expected =
           array(
             'files' => 2,
             'loc' => 58,
