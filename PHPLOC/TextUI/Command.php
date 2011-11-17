@@ -183,6 +183,10 @@ class PHPLOC_TextUI_Command
         $exclude    = $input->getOption('exclude')->value;
         $logXml     = $input->getOption('log-xml')->value;
         $logCsv     = $input->getOption('log-csv')->value;
+        $suffixes   = array_map(
+                        'trim',
+                        explode(',', $input->getOption('suffixes')->value)
+                      );
 
         if (is_array($exclude) && count($exclude) == 1 &&
             strpos($exclude[0], ',') !== FALSE) {
