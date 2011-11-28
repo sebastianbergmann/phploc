@@ -42,7 +42,11 @@
  */
 
 if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 377);
+    define('T_NAMESPACE', 1000);
+}
+
+if (!defined('T_TRAIT')) {
+    define('T_NAMESPACE', 1001);
 }
 
 /**
@@ -80,6 +84,7 @@ class PHPLOC_Analyser
       'ccn'                => 0,
       'ccnMethods'         => 0,
       'interfaces'         => 0,
+      'traits'             => 0,
       'classes'            => 0,
       'abstractClasses'    => 0,
       'concreteClasses'    => 0,
@@ -364,15 +369,22 @@ class PHPLOC_Analyser
                 break;
 
                 case T_CLASS:
-                case T_INTERFACE: {
+                case T_INTERFACE:
+                case T_TRAIT: {
                     $className    = $this->getClassName(
                                       $namespace, $tokens, $i
                                     );
                     $currentBlock = T_CLASS;
 
-                    if ($token == T_INTERFACE) {
+                    if ($token == T_TRAIT) {
+                        $this->count['traits']++;
+                    }
+
+                    else if ($token == T_INTERFACE) {
                         $this->count['interfaces']++;
-                    } else {
+                    }
+
+                    else {
                         if ($countTests && $this->isTestClass($className)) {
                             $testClass = TRUE;
                             $this->count['testClasses']++;

@@ -96,7 +96,8 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'nclocByNoc' => 14.5,
             'nclocByNom' => 7.25,
             'directories' => 0,
-            'namespaces' => 1
+            'namespaces' => 1,
+            'traits' => 0
         );
         if(!extension_loaded('bytekit')) {
           unset($expected['eloc']);
@@ -144,7 +145,8 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'nclocByNoc' => 19,
             'nclocByNom' => 9.5,
             'directories' => 0,
-            'namespaces' => 1
+            'namespaces' => 1,
+            'traits' => 0
         );
         if(!extension_loaded('bytekit')) {
           unset($expected['eloc']);

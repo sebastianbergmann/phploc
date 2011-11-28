@@ -89,6 +89,8 @@ class PHPLOC_TextUI_ResultPrinter_CSV
         $values[] = $count['namespaces'];
         $keys[]   = 'Interfaces';
         $values[] = $count['interfaces'];
+        $keys[]   = 'Traits';
+        $values[] = $count['traits'];
         $keys[]   = 'Classes';
         $values[] = $count['classes'];
         $keys[]   = 'Abstract Classes';

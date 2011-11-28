@@ -85,6 +85,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
                    "Non-Comment Lines of Code (NCLOC):           %10d\n\n" .
                    "Namespaces:                                  %10d\n" .
                    "Interfaces:                                  %10d\n" .
+                   "Traits:                                      %10d\n" .
                    "Classes:                                     %10d\n" .
                    "  Abstract:                                  %10d (%.2f%%)\n" .
                    "  Concrete:                                  %10d (%.2f%%)\n" .
@@ -108,6 +109,7 @@ class PHPLOC_TextUI_ResultPrinter_Text
         $args[] = $count['ncloc'];
         $args[] = $count['namespaces'];
         $args[] = $count['interfaces'];
+        $args[] = $count['traits'];
         $args[] = $count['classes'];
         $args[] = $count['abstractClasses'];
         $args[] = $count['classes'] > 0 ? ($count['abstractClasses'] / $count['classes']) * 100 : 0;
