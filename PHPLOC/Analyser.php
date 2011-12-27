@@ -46,7 +46,7 @@ if (!defined('T_NAMESPACE')) {
 }
 
 if (!defined('T_TRAIT')) {
-    define('T_NAMESPACE', 1001);
+    define('T_TRAIT', 1001);
 }
 
 /**
