@@ -56,7 +56,7 @@ class PHPLOC_TextUI_Command
     /**
      * Main method.
      */
-    public static function main()
+    public function main()
     {
         $input  = new ezcConsoleInput;
         $output = new ezcConsoleOutput;
@@ -159,12 +159,12 @@ class PHPLOC_TextUI_Command
         }
 
         if ($input->getOption('help')->value) {
-            self::showHelp();
+            $this->showHelp();
             exit(0);
         }
 
         else if ($input->getOption('version')->value) {
-            self::printVersionString();
+            $this->printVersionString();
             exit(0);
         }
 
@@ -196,15 +196,15 @@ class PHPLOC_TextUI_Command
               $arguments, $suffixes, array(), $exclude
             );
         } else {
-            self::showHelp();
+            $this->showHelp();
             exit(1);
         }
 
         if (empty($files)) {
-            self::showError("No files found to scan.\n");
+            $this->showError("No files found to scan.\n");
         }
 
-        self::printVersionString();
+        $this->printVersionString();
 
         $analyser = new PHPLOC_Analyser($verbose);
         $count    = $analyser->countFiles($files, $countTests);
@@ -228,9 +228,9 @@ class PHPLOC_TextUI_Command
      *
      * @param string $message
      */
-    protected static function showError($message)
+    protected function showError($message)
     {
-        self::printVersionString();
+        $this->printVersionString();
 
         print $message;
 
@@ -240,9 +240,9 @@ class PHPLOC_TextUI_Command
     /**
      * Shows the help.
      */
-    protected static function showHelp()
+    protected function showHelp()
     {
-        self::printVersionString();
+        $this->printVersionString();
 
         print <<<EOT
 Usage: phploc [switches] <directory|file> ...
@@ -267,7 +267,7 @@ EOT
     /**
      * Prints the version string.
      */
-    protected static function printVersionString()
+    protected function printVersionString()
     {
         print "phploc @package_version@ by Sebastian Bergmann.\n\n";
     }

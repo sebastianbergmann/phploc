@@ -48,4 +48,5 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
 
 require 'PHPLOC/Autoload.php';
 
-PHPLOC_TextUI_Command::main();
+$textui = new PHPLOC_TextUI_Command;
+$textui->main();
