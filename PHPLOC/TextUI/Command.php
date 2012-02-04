@@ -41,16 +41,6 @@
  * @since     File available since Release 1.0.0
  */
 
-require_once 'File/Iterator/Autoload.php';
-require_once 'PHPLOC/Analyser.php';
-require_once 'PHPLOC/TextUI/ResultPrinter/Text.php';
-require_once 'PHPLOC/TextUI/ResultPrinter/XML.php';
-require_once 'PHPLOC/TextUI/ResultPrinter/CSV.php';
-
-require_once 'ezc/Base/base.php';
-
-spl_autoload_register(array('ezcBase', 'autoload'));
-
 /**
  * TextUI frontend for PHPLOC.
  *

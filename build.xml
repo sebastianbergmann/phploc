@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="phploc" default="phpab">
+ <target name="phpab" description="Generate autoloader scripts">
+  <exec executable="phpab">
+   <arg value="--output" />
+   <arg path="PHPLOC/Autoload.php" />
+   <arg value="--compat" />
+   <arg value="--template" />
+   <arg path="PHPLOC/Autoload.php.in" />
+   <arg value="--indent" />
+   <arg value="              " />
+   <arg path="PHPLOC" />
+  </exec>
+ </target>
+</project>

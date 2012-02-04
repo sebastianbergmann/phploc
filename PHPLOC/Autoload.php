@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * phploc
@@ -39,13 +38,32 @@
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     File available since Release 1.0.0
+ * @since     File available since Release 1.7.0
  */
 
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
-}
+require 'File/Iterator/Autoload.php';
+require 'ezc/Base/base.php';
 
-require 'PHPLOC/Autoload.php';
+spl_autoload_register(
+    function($class) {
+        static $classes = null;
 
-PHPLOC_TextUI_Command::main();
+        if ($classes === null) {
+            $classes = array(
+              'phploc_analyser' => '/Analyser.php',
+              'phploc_textui_command' => '/TextUI/Command.php',
+              'phploc_textui_resultprinter_csv' => '/TextUI/ResultPrinter/CSV.php',
+              'phploc_textui_resultprinter_text' => '/TextUI/ResultPrinter/Text.php',
+              'phploc_textui_resultprinter_xml' => '/TextUI/ResultPrinter/XML.php'
+            );
+        }
+
+        $cn = strtolower($class);
+
+        if (isset($classes[$cn])) {
+            require dirname(__FILE__) . $classes[$cn];
+        }
+    }
+);
+
+spl_autoload_register(array('ezcBase', 'autoload'));

@@ -41,12 +41,8 @@
  * @since     File available since Release 1.0.0
  */
 
-if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 1000);
-}
-
 if (!defined('T_TRAIT')) {
-    define('T_TRAIT', 1001);
+    define('T_TRAIT', 1000);
 }
 
 /**
