@@ -1,94 +1,56 @@
 phploc
 ======
 
-**phploc** is a tool for quickly measuring the size of a PHP project.
-
-The goal of **phploc** is not to replace more sophisticated tools such as [phpcs](http://pear.php.net/PHP_CodeSniffer), [pdepend](http://pdepend.org/), or [phpmd](http://phpmd.org/), but rather to provide an alternative to them when you just need to get a quick understanding of a project's size.
-
-Requirements
-------------
-
-* The [tokenizer](http://www.php.net/tokenizer) extension is required to count the Comment Lines of Code (CLOC) and Non-Comment Lines of Code (NCLOC) as well as the number of interfaces, classes, methods, and functions of a project.
-* The [bytekit](http://www.bytekit.org/) extension is an optional requirement and is used to count the Executable Lines of Code (ELOC) of a project.
+**phploc** is a tool for quickly measuring the size and analyzing the structure of a PHP project.
 
 Installation
 ------------
 
-phploc should be installed using the [PEAR Installer](http://pear.php.net/). This installer is the backbone of PEAR, which provides a distribution system for PHP packages, and is shipped with every release of PHP since version 4.3.0.
+`phploc` should be installed using the PEAR Installer, the backbone of the [PHP Extension and Application Repository](http://pear.php.net/) that provides a distribution system for PHP packages.
 
-The PEAR channel (`pear.phpunit.de`) that is used to distribute phploc needs to be registered with the local PEAR environment. Furthermore, a component that phploc depends upon is hosted on the eZ Components PEAR channel (`components.ez.no`).
+Depending on your OS distribution and/or your PHP environment, you may need to install PEAR or update your existing PEAR installation before you can proceed with the following instructions. `sudo pear upgrade PEAR` usually suffices to upgrade an existing PEAR installation. The [PEAR Manual ](http://pear.php.net/manual/en/installation.getting.php) explains how to perform a fresh installation of PEAR.
 
-    sb@ubuntu ~ % pear channel-discover pear.phpunit.de
-    Adding Channel "pear.phpunit.de" succeeded
-    Discovery of channel "pear.phpunit.de" succeeded
+The following two commands (which you may have to run as `root`) are all that is required to install `phploc` using the PEAR Installer:
 
-    sb@ubuntu ~ % pear channel-discover components.ez.no
-    Adding Channel "components.ez.no" succeeded
-    Discovery of channel "components.ez.no" succeeded
+    pear config-set auto_discover 1
+    pear install pear.phpunit.de/phploc
 
-This has to be done only once. Now the PEAR Installer can be used to install packages from the PHPUnit channel:
-
-    sb@ubuntu ~ % pear install phpunit/phploc
-    downloading phploc-1.5.0.tgz ...
-    Starting to download phploc-1.5.0.tgz (7,871 bytes)
-    .....done: 7,871 bytes
-    downloading File_Iterator-1.1.0.tgz ...
-    Starting to download File_Iterator-1.1.0.tgz (3,181 bytes)
-    ...done: 3,181 bytes
-    downloading ConsoleTools-1.6.tgz ...
-    Starting to download ConsoleTools-1.6.tgz (869,925 bytes)
-    .........................................................
-    .........................................................
-    .........................................................
-    ..done: 869,925 bytes
-    downloading Base-1.8.tgz ...
-    Starting to download Base-1.8.tgz (236,357 bytes)
-    ...done: 236,357 bytes
-    install ok: channel://components.ez.no/Base-1.8
-    install ok: channel://components.ez.no/ConsoleTools-1.6
-    install ok: channel://pear.phpunit.de/File_Iterator-1.1.0
-    install ok: channel://pear.phpunit.de/phploc-1.5.0
-
-After the installation you can find the phploc source files inside your local PEAR directory; the path is usually `/usr/lib/php/PHPLOC`.
+After the installation you can find the `phploc` source files inside your local PEAR directory; the path is usually `/usr/lib/php/PHPLOC`.
 
 Usage Examples
 --------------
 
-    sb@ubuntu ~ % phploc --count-tests /usr/local/src/ezcomponents/trunk/Workflow
-    phploc 1.5.0 by Sebastian Bergmann.
+    ➜ ~ phploc /usr/local/src/phpunit/PHPUnit
+    phploc 1.7.0 by Sebastian Bergmann.
 
-    Directories:                                         13
-    Files:                                              100
+    Directories:                                         16
+    Files:                                              117
 
-    Lines of Code (LOC):                              14065
-      Cyclomatic Complexity / Lines of Code:           0.07
-    Executable Lines of Code (ELOC):                   5697
-    Comment Lines of Code (CLOC):                      5213
-    Non-Comment Lines of Code (NCLOC):                 8852
+    Lines of Code (LOC):                              27640
+      Cyclomatic Complexity / Lines of Code:           0.12
+    Comment Lines of Code (CLOC):                     13771
+    Non-Comment Lines of Code (NCLOC):                13869
 
     Namespaces:                                           0
     Interfaces:                                           6
-    Classes:                                             79
-      Abstract:                                          12 (15.19%)
-      Concrete:                                          67 (84.81%)
-      Lines of Code / Number of Classes:                142
-    Methods:                                            310
+    Traits:                                               0
+    Classes:                                            109
+      Abstract:                                           9 (8.26%)
+      Concrete:                                         100 (91.74%)
+      Average Class Length (NCLOC):                     125
+    Methods:                                            723
       Scope:
-        Non-Static:                                     287 (92.58%)
-        Static:                                          23 (7.42%)
+        Non-Static:                                     498 (68.88%)
+        Static:                                         225 (31.12%)
       Visibility:
-        Public:                                         237 (76.45%)
-        Non-Public:                                      73 (23.55%)
-      Lines of Code / Number of Methods:                 36
-      Cyclomatic Complexity / Number of Methods:       2.31
+        Public:                                         510 (70.54%)
+        Non-Public:                                     213 (29.46%)
+      Average Method Length (NCLOC):                     18
+      Cyclomatic Complexity / Number of Methods:       3.34
 
     Anonymous Functions:                                  0
-    Functions:                                            0
+    Functions:                                          128
 
-    Constants:                                           10
-      Global constants:                                   0
-      Class constants:                                   10
-
-    Tests:
-      Classes:                                           10
-      Methods:                                          199
+    Constants:                                           33
+      Global constants:                                   1
+      Class constants:                                   32
