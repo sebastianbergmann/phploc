@@ -168,9 +168,15 @@ class PHPLOC_TextUI_Command
             exit(0);
         }
 
-        $arguments  = $input->getArguments();
+        $arguments = $input->getArguments();
+
+        if (empty($arguments)) {
+            $this->showHelp();
+            exit(1);
+        }
+
         $countTests = $input->getOption('count-tests')->value;
-        $exclude    = $input->getOption('exclude')->value;
+        $excludes   = $input->getOption('exclude')->value;
         $logXml     = $input->getOption('log-xml')->value;
         $logCsv     = $input->getOption('log-csv')->value;
         $suffixes   = array_map(
@@ -178,33 +184,19 @@ class PHPLOC_TextUI_Command
                         explode(',', $input->getOption('suffixes')->value)
                       );
 
-        if (is_array($exclude) && count($exclude) == 1 &&
-            strpos($exclude[0], ',') !== FALSE) {
-            $exclude = explode(',', $exclude[0]);
-            array_map('trim', $exclude);
-        }
-
         if ($input->getOption('verbose')->value !== FALSE) {
             $verbose = $output;
         } else {
             $verbose = NULL;
         }
 
-        if (!empty($arguments)) {
-            $facade = new File_Iterator_Facade;
-            $files  = $facade->getFilesAsArray(
-              $arguments, $suffixes, array(), $exclude
-            );
-        } else {
-            $this->showHelp();
-            exit(1);
-        }
+        $this->printVersionString();
+
+        $files = $this->findFiles($arguments, $excludes, $suffixes);
 
         if (empty($files)) {
             $this->showError("No files found to scan.\n");
         }
-
-        $this->printVersionString();
 
         $analyser = new PHPLOC_Analyser($verbose);
         $count    = $analyser->countFiles($files, $countTests);
@@ -270,5 +262,51 @@ EOT
     protected function printVersionString()
     {
         print "phploc @package_version@ by Sebastian Bergmann.\n\n";
+    }
+
+    /**
+     * @param  array $directories
+     * @param  array $excludes
+     * @param  array $suffixes
+     * @return array
+     * @since  Method available since Release 1.7.0
+     */
+    protected function findFiles(array $directories, array $excludes, array $suffixes)
+    {
+        $files   = array();
+        $finder  = new Symfony\Component\Finder\Finder;
+        $iterate = FALSE;
+
+        try {
+            foreach ($directories as $directory) {
+                if (!is_file($directory)) {
+                    $finder->in($directory);
+                    $iterate = TRUE;
+                } else {
+                    $files[] = realpath($directory);
+                }
+            }
+
+            foreach ($excludes as $exclude) {
+                $finder->exclude($exclude);
+            }
+
+            foreach ($suffixes as $suffix) {
+                $finder->name('*' . $suffix);
+            }
+        }
+
+        catch (Exception $e) {
+            $this->showError($e->getMessage() . "\n");
+            exit(1);
+        }
+
+        if ($iterate) {
+            foreach ($finder as $file) {
+                $files[] = $file->getRealpath();
+            }
+        }
+
+        return $files;
     }
 }

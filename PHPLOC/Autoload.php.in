@@ -41,7 +41,13 @@
  * @since     File available since Release 1.7.0
  */
 
-require 'File/Iterator/Autoload.php';
+require 'Symfony/Component/Finder/Finder.php';
+require 'Symfony/Component/Finder/Glob.php';
+require 'Symfony/Component/Finder/Iterator/FileTypeFilterIterator.php';
+require 'Symfony/Component/Finder/Iterator/FilenameFilterIterator.php';
+require 'Symfony/Component/Finder/Iterator/RecursiveDirectoryIterator.php';
+require 'Symfony/Component/Finder/Iterator/ExcludeDirectoryFilterIterator.php';
+require 'Symfony/Component/Finder/SplFileInfo.php';
 require 'ezc/Base/base.php';
 
 spl_autoload_register(
