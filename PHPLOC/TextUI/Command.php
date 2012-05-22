@@ -144,7 +144,7 @@ class PHPLOC_TextUI_Command
         $input->registerOption(
           new ezcConsoleOption(
             '',
-            'verbose',
+            'progress',
             ezcConsoleInput::TYPE_NONE
            )
         );
@@ -184,10 +184,10 @@ class PHPLOC_TextUI_Command
                         explode(',', $input->getOption('suffixes')->value)
                       );
 
-        if ($input->getOption('verbose')->value !== FALSE) {
-            $verbose = $output;
+        if ($input->getOption('progress')->value !== FALSE) {
+            $progress = $output;
         } else {
-            $verbose = NULL;
+            $progress = NULL;
         }
 
         $this->printVersionString();
@@ -198,7 +198,7 @@ class PHPLOC_TextUI_Command
             $this->showError("No files found to scan.\n");
         }
 
-        $analyser = new PHPLOC_Analyser($verbose);
+        $analyser = new PHPLOC_Analyser($progress);
         $count    = $analyser->countFiles($files, $countTests);
 
         $printer = new PHPLOC_TextUI_ResultPrinter_Text;
@@ -250,7 +250,7 @@ Usage: phploc [switches] <directory|file> ...
   --help                   Prints this usage information.
   --version                Prints the version and exits.
 
-  --verbose                Print progress bar.
+  --progress               Print progress bar.
 
 EOT
 ;
