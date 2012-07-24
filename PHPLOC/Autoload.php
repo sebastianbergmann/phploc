@@ -47,6 +47,7 @@ require 'Symfony/Component/Finder/Iterator/FileTypeFilterIterator.php';
 require 'Symfony/Component/Finder/Iterator/FilenameFilterIterator.php';
 require 'Symfony/Component/Finder/Iterator/RecursiveDirectoryIterator.php';
 require 'Symfony/Component/Finder/Iterator/ExcludeDirectoryFilterIterator.php';
+require 'Symfony/Component/Finder/Iterator/MultiplePcreFilterIterator.php';
 require 'Symfony/Component/Finder/SplFileInfo.php';
 require 'ezc/Base/base.php';
 
