@@ -43,6 +43,7 @@
 
 require 'Symfony/Component/Finder/Finder.php';
 require 'Symfony/Component/Finder/Glob.php';
+require 'Symfony/Component/Finder/Iterator/FilterIterator.php';
 require 'Symfony/Component/Finder/Iterator/FileTypeFilterIterator.php';
 require 'Symfony/Component/Finder/Iterator/MultiplePcreFilterIterator.php';
 require 'Symfony/Component/Finder/Iterator/FilenameFilterIterator.php';
