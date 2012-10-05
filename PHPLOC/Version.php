@@ -41,38 +41,44 @@
  * @since     File available since Release 1.7.0
  */
 
-require 'Symfony/Component/Finder/Finder.php';
-require 'Symfony/Component/Finder/Glob.php';
-require 'Symfony/Component/Finder/Iterator/FilterIterator.php';
-require 'Symfony/Component/Finder/Iterator/FileTypeFilterIterator.php';
-require 'Symfony/Component/Finder/Iterator/MultiplePcreFilterIterator.php';
-require 'Symfony/Component/Finder/Iterator/FilenameFilterIterator.php';
-require 'Symfony/Component/Finder/Iterator/RecursiveDirectoryIterator.php';
-require 'Symfony/Component/Finder/Iterator/ExcludeDirectoryFilterIterator.php';
-require 'Symfony/Component/Finder/SplFileInfo.php';
-require 'ezc/Base/base.php';
+/**
+ * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link      http://github.com/sebastianbergmann/phploc/tree
+ * @since     Class available since Release 1.7.0
+ */
+class PHPLOC_Version
+{
+    const VERSION = '1.7';
+    protected static $version;
 
-spl_autoload_register(
-    function($class) {
-        static $classes = null;
+    /**
+     * @return string
+     */
+    public static function id()
+    {
+        if (self::$version === NULL) {
+            self::$version = self::VERSION;
 
-        if ($classes === null) {
-            $classes = array(
-              'phploc_analyser' => '/Analyser.php',
-              'phploc_textui_command' => '/TextUI/Command.php',
-              'phploc_textui_resultprinter_csv' => '/TextUI/ResultPrinter/CSV.php',
-              'phploc_textui_resultprinter_text' => '/TextUI/ResultPrinter/Text.php',
-              'phploc_textui_resultprinter_xml' => '/TextUI/ResultPrinter/XML.php',
-              'phploc_version' => '/Version.php'
-            );
+            if (is_dir(dirname(__DIR__) . '/.git')) {
+                $dir = getcwd();
+                chdir(__DIR__);
+                $version = exec('git describe --tags');
+                chdir($dir);
+
+                if ($version) {
+                    if (count(explode('.', self::VERSION)) == 3) {
+                        self::$version = $version;
+                    } else {
+                        $version = explode('-', $version);
+
+                        self::$version = self::VERSION . '-' . $version[2];
+                    }
+                }
+            }
         }
 
-        $cn = strtolower($class);
-
-        if (isset($classes[$cn])) {
-            require dirname(__FILE__) . $classes[$cn];
-        }
+        return self::$version;
     }
-);
-
-spl_autoload_register(array('ezcBase', 'autoload'));
+}
