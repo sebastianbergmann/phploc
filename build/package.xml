@@ -30,17 +30,20 @@
  <notes>http://github.com/sebastianbergmann/phploc/tree</notes>
  <contents>
   <dir name="/">
-   <dir name="PHPLOC">
-    <dir name="TextUI">
-     <dir name="ResultPrinter">
+   <dir name="SebastianBergmann">
+    <dir name="PHPLOC">
+     <dir name="Log">
       <file baseinstalldir="/" name="CSV.php" role="php" />
-      <file baseinstalldir="/" name="Text.php" role="php" />
       <file baseinstalldir="/" name="XML.php" role="php" />
      </dir>
-     <file baseinstalldir="/" name="Command.php" role="php" />
+     <dir name="TextUI">
+      <file baseinstalldir="/" name="Command.php" role="php" />
+      <file baseinstalldir="/" name="ResultPrinter.php" role="php" />
+     </dir>
+     <file baseinstalldir="/" name="autoload.php" role="php" />
+     <file baseinstalldir="/" name="Analyser.php" role="php" />
+     <file baseinstalldir="/" name="Version.php" role="php" />
     </dir>
-    <file baseinstalldir="/" name="Analyser.php" role="php" />
-    <file baseinstalldir="/" name="Autoload.php" role="php" />
    </dir>
    <file baseinstalldir="/" name="phploc.php" role="script">
     <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
@@ -50,6 +53,8 @@
     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
     <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
    </file>
+   <file baseinstalldir="/" name="LICENSE" role="doc"/>
+   <file baseinstalldir="/" name="README.markdown" role="doc"/>
   </dir>
  </contents>
  <dependencies>
@@ -61,9 +66,9 @@
     <min>1.9.4</min>
    </pearinstaller>
    <package>
-    <name>Finder</name>
-    <channel>pear.symfony.com</channel>
-    <min>2.1.0RC1</min>
+    <name>FinderFacade</name>
+    <channel>pear.phpunit.de</channel>
+    <min>1.0.4</min>
    </package>
    <package>
     <name>ConsoleTools</name>

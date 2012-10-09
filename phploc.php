@@ -43,10 +43,10 @@
  */
 
 if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
+    require __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'autoload.php';
+} else {
+    require 'SebastianBergmann/PHPCPD/autoload.php';
 }
 
-require 'PHPLOC/Autoload.php';
-
-$textui = new PHPLOC_TextUI_Command;
+$textui = new SebastianBergmann\PHPLOC\TextUI\Command;
 $textui->main();

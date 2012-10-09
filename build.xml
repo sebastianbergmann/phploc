@@ -43,13 +43,12 @@
  <target name="phpab" description="Generate autoloader scripts">
   <exec executable="phpab">
    <arg value="--output" />
-   <arg path="PHPLOC/Autoload.php" />
-   <arg value="--compat" />
+   <arg path="src/autoload.php" />
    <arg value="--template" />
-   <arg path="PHPLOC/Autoload.php.in" />
+   <arg path="src/autoload.php.in" />
    <arg value="--indent" />
    <arg value="              " />
-   <arg path="PHPLOC" />
+   <arg path="src" />
   </exec>
  </target>
 
@@ -57,12 +56,12 @@
   <apply executable="${php}" failonerror="true">
    <arg value="-l" />
 
-   <fileset dir="${basedir}/PHPLOC">
+   <fileset dir="${basedir}/src">
     <include name="**/*.php" />
     <modified />
    </fileset>
 
-   <fileset dir="${basedir}/Tests">
+   <fileset dir="${basedir}/tests">
     <include name="**/*.php" />
     <modified />
    </fileset>
@@ -74,7 +73,7 @@
   <exec executable="phploc">
    <arg value="--log-csv" />
    <arg value="${basedir}/build/logs/phploc.csv" />
-   <arg path="${basedir}/PHPLOC" />
+   <arg path="${basedir}/src" />
   </exec>
  </target>
 
@@ -84,14 +83,14 @@
    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
-   <arg path="${basedir}/PHPLOC" />
+   <arg path="${basedir}/src" />
   </exec>
  </target>
 
  <target name="phpmd"
          description="Perform project mess detection using PHPMD">
   <exec executable="phpmd">
-   <arg path="${basedir}/PHPLOC" />
+   <arg path="${basedir}/src" />
    <arg value="text" />
    <arg value="${basedir}/build/phpmd.xml" />
   </exec>
@@ -100,7 +99,7 @@
  <target name="phpmd-ci"
          description="Perform project mess detection using PHPMD">
   <exec executable="phpmd">
-   <arg path="${basedir}/PHPLOC" />
+   <arg path="${basedir}/src" />
    <arg value="xml" />
    <arg value="${basedir}/build/phpmd.xml" />
    <arg value="--reportfile" />
@@ -113,8 +112,8 @@
   <exec executable="phpcs">
    <arg value="--standard=${basedir}/build/PHPCS" />
    <arg value="--extensions=php" />
-   <arg value="--ignore=Autoload.php" />
-   <arg path="${basedir}/PHPLOC" />
+   <arg value="--ignore=autoload.php" />
+   <arg path="${basedir}/src" />
   </exec>
  </target>
 
@@ -125,8 +124,8 @@
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=${basedir}/build/PHPCS" />
    <arg value="--extensions=php" />
-   <arg value="--ignore=Autoload.php" />
-   <arg path="${basedir}/PHPLOC" />
+   <arg value="--ignore=autoload.php" />
+   <arg path="${basedir}/src" />
   </exec>
  </target>
 
@@ -134,7 +133,7 @@
   <exec executable="phpcpd">
    <arg value="--log-pmd" />
    <arg value="${basedir}/build/logs/pmd-cpd.xml" />
-   <arg path="${basedir}/PHPLOC" />
+   <arg path="${basedir}/src" />
   </exec>
  </target>
 
@@ -145,7 +144,10 @@
    </not>
   </condition>
 
-  <exec executable="${phpunit_cmd}" failonerror="true"/>
+  <exec executable="${phpunit_cmd}" failonerror="true">
+   <arg value="--configuration" />
+   <arg path="${basedir}/build/phpunit.xml" />
+  </exec>
  </target>
 
  <target name="phpcb"
@@ -154,9 +156,32 @@
    <arg value="--log" />
    <arg path="${basedir}/build/logs" />
    <arg value="--source" />
-   <arg path="${basedir}/PHPLOC" />
+   <arg path="${basedir}/src" />
    <arg value="--output" />
    <arg path="${basedir}/build/code-browser" />
   </exec>
+ </target>
+
+ <target name="pear">
+  <mkdir dir="${basedir}/build/SebastianBergmann/PHPLOC"/>
+
+  <copy todir="${basedir}/build/SebastianBergmann/PHPLOC">
+   <fileset dir="${basedir}/src"/>
+  </copy>
+
+  <copy file="LICENSE" todir="${basedir}/build"/>
+  <copy file="README.markdown" todir="${basedir}/build"/>
+  <copy file="phploc.bat" todir="${basedir}/build"/>
+  <copy file="phploc.php" todir="${basedir}/build"/>
+
+  <exec executable="pear" dir="${basedir}/build">
+   <arg value="package" />
+  </exec>
+
+  <delete dir="${basedir}/build/SebastianBergmann"/>
+  <delete file="${basedir}/build/LICENSE"/>
+  <delete file="${basedir}/build/README.markdown"/>
+  <delete file="${basedir}/build/phploc.bat"/>
+  <delete file="${basedir}/build/phploc.php"/>
  </target>
 </project>

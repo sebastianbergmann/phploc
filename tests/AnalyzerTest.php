@@ -42,8 +42,6 @@
  * @since      File available since Release 1.3.0
  */
 
-require_once 'PHPLOC/Analyser.php';
-
 /**
  * Tests for the PHPLOC_Analyser class.
  *
@@ -61,7 +59,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->analyser = new PHPLOC_Analyser;
+        $this->analyser = new SebastianBergmann\PHPLOC\Analyser;
     }
 
     public function testWithoutTests()

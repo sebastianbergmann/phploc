@@ -38,47 +38,56 @@
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @since     File available since Release 1.7.0
+ * @since     File available since Release 1.1.0
  */
 
-/**
- * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link      http://github.com/sebastianbergmann/phploc/tree
- * @since     Class available since Release 1.7.0
- */
-class PHPLOC_Version
+namespace SebastianBergmann\PHPLOC\Log
 {
-    const VERSION = '1.7';
-    protected static $version;
-
     /**
-     * @return string
+     * An XML ResultPrinter for the TextUI.
+     *
+     * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
+     * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+     * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+     * @link      http://github.com/sebastianbergmann/phploc/tree
+     * @since     Class available since Release 1.1.0
      */
-    public static function id()
+    class XML
     {
-        if (self::$version === NULL) {
-            self::$version = self::VERSION;
+        /**
+         * Prints a result set.
+         *
+         * @param string $filename
+         * @param array  $count
+         */
+        public function printResult($filename, array $count)
+        {
+            $document = new \DOMDocument('1.0', 'UTF-8');
+            $document->formatOutput = TRUE;
 
-            if (is_dir(dirname(__DIR__) . '/.git')) {
-                $dir = getcwd();
-                chdir(__DIR__);
-                $version = exec('git describe --tags');
-                chdir($dir);
+            $root = $document->createElement('phploc');
+            $document->appendChild($root);
 
-                if ($version) {
-                    if (count(explode('.', self::VERSION)) == 3) {
-                        self::$version = $version;
-                    } else {
-                        $version = explode('-', $version);
+            if ($count['directories'] > 0) {
+                $root->appendChild(
+                  $document->createElement('directories', $count['directories'])
+                );
 
-                        self::$version = self::VERSION . '-' . $version[2];
-                    }
-                }
+                $root->appendChild(
+                  $document->createElement('files', $count['files'])
+                );
             }
-        }
 
-        return self::$version;
+            unset($count['directories']);
+            unset($count['files']);
+
+            foreach ($count as $k => $v) {
+                $root->appendChild(
+                  $document->createElement($k, $v)
+                );
+            }
+
+            file_put_contents($filename, $document->saveXML());
+        }
     }
 }

@@ -38,53 +38,28 @@
  * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @since     File available since Release 1.1.0
+ * @since     File available since Release 1.7.0
  */
 
-/**
- * An XML ResultPrinter for the TextUI.
- *
- * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link      http://github.com/sebastianbergmann/phploc/tree
- * @since     Class available since Release 1.1.0
- */
-class PHPLOC_TextUI_ResultPrinter_XML
-{
-    /**
-     * Prints a result set.
-     *
-     * @param string $filename
-     * @param array  $count
-     */
-    public function printResult($filename, array $count)
-    {
-        $document = new DOMDocument('1.0', 'UTF-8');
-        $document->formatOutput = TRUE;
+require_once 'SebastianBergmann/FinderFacade/autoload.php';
+require_once 'ezc/Base/base.php';
 
-        $root = $document->createElement('phploc');
-        $document->appendChild($root);
+spl_autoload_register(
+    function($class) {
+        static $classes = null;
 
-        if ($count['directories'] > 0) {
-            $root->appendChild(
-              $document->createElement('directories', $count['directories'])
-            );
-
-            $root->appendChild(
-              $document->createElement('files', $count['files'])
+        if ($classes === null) {
+            $classes = array(
+              ___CLASSLIST___
             );
         }
 
-        unset($count['directories']);
-        unset($count['files']);
+        $cn = strtolower($class);
 
-        foreach ($count as $k => $v) {
-            $root->appendChild(
-              $document->createElement($k, $v)
-            );
+        if (isset($classes[$cn])) {
+            require ___BASEDIR___$classes[$cn];
         }
-
-        file_put_contents($filename, $document->saveXML());
     }
-}
+);
+
+spl_autoload_register(array('ezcBase', 'autoload'));
