@@ -29,6 +29,17 @@
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
+  <delete dir="${basedir}/build/phar"/>
+  <delete dir="${basedir}/build/phpdox"/>
+  <delete dir="${basedir}/build/SebastianBergmann"/>
+  <delete file="${basedir}/build/LICENSE"/>
+  <delete file="${basedir}/build/README.markdown"/>
+  <delete file="${basedir}/build/phploc.bat"/>
+  <delete file="${basedir}/build/phploc.php"/>
+  <delete>
+   <fileset dir="${basedir}/build" includes="**/*.phar"/>
+   <fileset dir="${basedir}/build" includes="**/*.tgz"/>
+  </delete>
  </target>
 
  <target name="prepare" depends="clean,phpab"
@@ -183,5 +194,77 @@
   <delete file="${basedir}/build/README.markdown"/>
   <delete file="${basedir}/build/phploc.bat"/>
   <delete file="${basedir}/build/phploc.php"/>
+ </target>
+
+ <target name="phar"
+         description="Create PHAR archive of PHPLOC and all its dependencies"
+         depends="clean">
+  <mkdir dir="${basedir}/build/phar"/>
+
+  <exec executable="bash" outputproperty="version">
+   <arg value="-c" />
+   <arg value="pear remote-info pear.phpunit.de/phploc|grep Latest|sed 's/Latest      //g'" />
+  </exec>
+
+  <exec executable="pear">
+   <arg value="config-set" />
+   <arg value="auto_discover" />
+   <arg value="1" />
+  </exec>
+
+  <exec executable="pear">
+   <arg value="install" />
+   <arg value="--force" />
+   <arg value="--alldeps" />
+   <arg value="--installroot" />
+   <arg path="${basedir}/build/phar" />
+   <arg value="pear.phpunit.de/phploc" />
+  </exec>
+
+  <delete dir="${basedir}/build/phar/tmp"/>
+
+  <move todir="${basedir}/build/phar/ezc">
+   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/ezc"/>
+  </move>
+
+  <move todir="${basedir}/build/phar/SebastianBergmann">
+   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/SebastianBergmann"/>
+  </move>
+
+  <move todir="${basedir}/build/phar/Symfony">
+   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/Symfony"/>
+  </move>
+
+  <delete dir="${basedir}/build/phar/usr"/>
+
+  <delete>
+   <fileset dir="${basedir}/build/phar">
+    <include name="**/*autoload.php" />
+   </fileset>
+  </delete>
+
+  <exec executable="phpab">
+   <arg value="--all" />
+   <arg value="--phar" />
+   <arg value="--output" />
+   <arg path="${basedir}/build/phploc-${version}.phar" />
+   <arg value="--template" />
+   <arg path="${basedir}/build/phar-autoload.php.in" />
+   <arg value="--indent" />
+   <arg value="            " />
+   <arg path="${basedir}/build/phar" />
+  </exec>
+
+  <chmod file="${basedir}/build/phploc-${version}.phar" perm="ugo+rx"/>
+  <copy file="${basedir}/build/phploc-${version}.phar" tofile="${basedir}/build/phploc-${version}-compressed.phar"/>
+  <chmod file="${basedir}/build/phploc-${version}-compressed.phar" perm="ugo+rx"/>
+
+  <exec executable="phar">
+   <arg value="compress" />
+   <arg value="-f" />
+   <arg path="${basedir}/build/phploc-${version}-compressed.phar" />
+   <arg value="-c" />
+   <arg value="bzip2" />
+  </exec>
  </target>
 </project>

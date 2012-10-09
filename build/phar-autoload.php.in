@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+spl_autoload_register(
+  function ($class)
+  {
+      static $classes = NULL;
+
+      if ($classes === NULL) {
+          $classes = array(
+            ___CLASSLIST___
+          );
+      }
+
+      $class = strtolower($class);
+
+      if (isset($classes[$class])) {
+          require 'phar://___PHAR___' . $classes[$class];
+      }
+  }
+);
+
+$textui = new SebastianBergmann\PHPLOC\TextUI\Command;
+$textui->main();
+
+__HALT_COMPILER();
