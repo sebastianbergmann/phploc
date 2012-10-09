@@ -52,7 +52,7 @@ namespace SebastianBergmann\PHPLOC
      */
     class Version
     {
-        const VERSION = '1.7';
+        const VERSION = '1.7.0';
         protected static $version;
 
         /**
