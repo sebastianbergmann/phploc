@@ -1,0 +1,14 @@
+{
+    "name": "phploc/phploc",
+    "description": "A tool for quickly measuring the size of a PHP project.",
+    "version": "1.7.0",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/finder": "2.1.x-dev",
+        "zetacomponents/console-tools": "1.8"
+    },
+    "autoload": {
+        "classmap": ["PHPLOC/"]
+    },
+    "bin": ["bin/phploc"]
+}
