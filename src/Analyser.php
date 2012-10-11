@@ -121,7 +121,7 @@ namespace SebastianBergmann\PHPLOC
          * @param ezcConsoleOutput $output
          * @since Method available since Release 1.5.0
          */
-        public function __construct(ezcConsoleOutput $output = NULL)
+        public function __construct(\ezcConsoleOutput $output = NULL)
         {
             $this->output = $output;
         }
