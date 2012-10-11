@@ -5,7 +5,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/finder": "2.1.x-dev",
-        "zetacomponents/console-tools": "1.8"
+        "zetacomponents/console-tools": "dev-master"
     },
     "autoload": {
         "classmap": ["PHPLOC/"]
