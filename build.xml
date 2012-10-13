@@ -37,8 +37,8 @@
   <delete file="${basedir}/build/phploc.bat"/>
   <delete file="${basedir}/build/phploc.php"/>
   <delete>
-   <fileset dir="${basedir}/build" includes="**/*.phar"/>
-   <fileset dir="${basedir}/build" includes="**/*.tgz"/>
+   <fileset dir="${basedir}/build" includes="*.phar"/>
+   <fileset dir="${basedir}/build" includes="*.tgz"/>
   </delete>
  </target>
 
@@ -203,47 +203,26 @@
 
   <exec executable="bash" outputproperty="version">
    <arg value="-c" />
-   <arg value="pear remote-info pear.phpunit.de/phploc|grep Latest|sed 's/Latest      //g'" />
+   <arg value="${basedir}/phploc.php --version | awk 'BEGIN { ORS = &quot;&quot;; } {print $2}'" />
   </exec>
 
-  <exec executable="pear">
-   <arg value="config-set" />
-   <arg value="auto_discover" />
-   <arg value="1" />
-  </exec>
+  <untar dest="${basedir}/build/phar" compression="gzip">
+   <fileset dir="${basedir}/build/dependencies">
+    <include name="**/*.tgz"/>
+   </fileset>
+  </untar>
 
-  <exec executable="pear">
-   <arg value="install" />
-   <arg value="--force" />
-   <arg value="--alldeps" />
-   <arg value="--installroot" />
-   <arg path="${basedir}/build/phar" />
-   <arg value="pear.phpunit.de/phploc" />
-  </exec>
-
-  <delete dir="${basedir}/build/phar/tmp"/>
-
-  <move todir="${basedir}/build/phar/ezc">
-   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/ezc"/>
-  </move>
-
-  <move todir="${basedir}/build/phar/SebastianBergmann">
-   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/SebastianBergmann"/>
-  </move>
-
-  <move todir="${basedir}/build/phar/Symfony">
-   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/Symfony"/>
-  </move>
-
-  <move todir="${basedir}/build/phar/TheSeer">
-   <fileset dir="${basedir}/build/phar/usr/local/php-5.4/lib/php/TheSeer"/>
-  </move>
-
-  <delete dir="${basedir}/build/phar/usr"/>
+  <copy todir="${basedir}/build/phar/PHPLOC">
+   <fileset dir="${basedir}/src"/>
+  </copy>
 
   <delete>
    <fileset dir="${basedir}/build/phar">
-    <include name="**/*autoload.php" />
+    <include name="**/autoload.php" />
+    <include name="**/Autoload.php" />
+    <include name="**/Autoload.php.in" />
+    <include name="**/package.sig" />
+    <include name="**/package.xml" />
    </fileset>
   </delete>
 
