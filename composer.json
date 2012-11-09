@@ -11,7 +11,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/sebastianbergmann/phploc/issues",
+        "issues": "https://github.com/sebastianbergmann/phploc/issues"
     },
     "require": {
         "php": ">=5.3.3",
