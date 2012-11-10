@@ -24,7 +24,7 @@
         ]
     },
     "bin": [
-        "composer/bin/phpunit"
+        "composer/bin/phploc"
     ],
     "config": {
         "bin-dir": "bin"
