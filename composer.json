@@ -25,8 +25,5 @@
     },
     "bin": [
         "composer/bin/phploc"
-    ],
-    "config": {
-        "bin-dir": "bin"
-    }
+    ]
 }
