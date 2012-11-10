@@ -67,5 +67,5 @@ if (!$found) {
     );
 }
 
-$textui = new PHPLOC_TextUI_Command;
+$textui = new SebastianBergmann\PHPLOC\TextUI\Command;
 $textui->main();
