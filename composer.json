@@ -16,7 +16,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/finder": "2.1.x-dev",
-        "zetacomponents/console-tools": "dev-master"
+        "zetacomponents/console-tools": "dev-master",
+        "phploc/finder-facade": ">=1.0.5"
     },
     "autoload": {
         "classmap": [
