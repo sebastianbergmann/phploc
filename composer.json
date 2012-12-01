@@ -1,5 +1,5 @@
 {
-    "name": "phploc/phploc",
+    "name": "sebastian/phploc",
     "description": "A tool for quickly measuring the size of a PHP project.",
     "homepage": "https://github.com/sebastianbergmann/phploc",
     "license": "BSD-3-Clause",
