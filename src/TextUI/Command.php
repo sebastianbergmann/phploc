@@ -47,6 +47,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
     use SebastianBergmann\PHPLOC\Analyser;
     use SebastianBergmann\PHPLOC\Version;
     use SebastianBergmann\PHPLOC\Log\CSV;
+    use SebastianBergmann\PHPLOC\Log\TXT;
     use SebastianBergmann\PHPLOC\Log\XML;
 
     /**
@@ -102,6 +103,14 @@ namespace SebastianBergmann\PHPLOC\TextUI
                 FALSE,
                 FALSE,
                 TRUE
+               )
+            );
+			
+			$input->registerOption(
+              new \ezcConsoleOption(
+                '',
+                'log-txt',
+                \ezcConsoleInput::TYPE_STRING
                )
             );
 
@@ -186,6 +195,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $excludes   = $input->getOption('exclude')->value;
             $logXml     = $input->getOption('log-xml')->value;
             $logCsv     = $input->getOption('log-csv')->value;
+            $logTxt    = $input->getOption('log-txt')->value;
             $names      = explode(',', $input->getOption('names')->value);
 
             array_map('trim', $names);
@@ -214,6 +224,11 @@ namespace SebastianBergmann\PHPLOC\TextUI
             if ($logCsv) {
                 $printer = new CSV;
                 $printer->printResult($logCsv, $count);
+            }
+			
+            if ($logTxt) {
+                $printer = new TXT;
+                $printer->printResult($logTxt, $count);
             }
 
             if ($logXml) {
@@ -250,6 +265,7 @@ Usage: phploc [switches] <directory|file> ...
 
   --log-xml <file>         Write result in XML format to file.
   --log-csv <file>         Write result in CSV format to file.
+  --log-txt <file>        Write result in TXT format to file.
 
   --exclude <dir>          Exclude <dir> from code analysis.
   --names <names>          A comma-separated list of file names to check.
