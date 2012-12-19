@@ -195,7 +195,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $excludes   = $input->getOption('exclude')->value;
             $logXml     = $input->getOption('log-xml')->value;
             $logCsv     = $input->getOption('log-csv')->value;
-            $logTxt    = $input->getOption('log-txt')->value;
+            $logTxt     = $input->getOption('log-txt')->value;
             $names      = explode(',', $input->getOption('names')->value);
 
             array_map('trim', $names);
