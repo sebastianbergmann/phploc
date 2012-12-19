@@ -62,11 +62,11 @@ namespace SebastianBergmann\PHPLOC\Log
          * @param string $filename
          * @param array  $count
          */
-        public function printResult($filename, array $count)
+        public function printResult($filename, array $count, $printTests)
 		{
 			$printer = new ResultPrinter;
 			ob_start();
-			$printer->printResult($count, true);
+			$printer->printResult($count, $printTests);
 			$output = ob_get_clean();
 			
             file_put_contents(
