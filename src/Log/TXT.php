@@ -66,7 +66,7 @@ namespace SebastianBergmann\PHPLOC\Log
 		{
 			$printer = new ResultPrinter;
 			ob_start();
-			$printer->printResult($count, $countTests);
+			$printer->printResult($count, true);
 			$output = ob_get_clean();
 			
             file_put_contents(
