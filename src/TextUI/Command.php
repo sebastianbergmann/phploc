@@ -228,7 +228,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
 			
             if ($logTxt) {
                 $printer = new TXT;
-                $printer->printResult($logTxt, $count);
+                $printer->printResult($logTxt, $count, $countTests);
             }
 
             if ($logXml) {
