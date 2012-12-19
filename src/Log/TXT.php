@@ -35,37 +35,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package   phploc
- * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright 2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author    Travis Smith <t@wpsmith.net>
+ * @copyright 2012-2013 Travis Smith <t@wpsmith.net>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @since     File available since Release 1.7.0
+ * @since     File available since Release 1.7.4
  */
 
-require_once 'SebastianBergmann/FinderFacade/autoload.php';
-require_once 'ezc/Base/base.php';
-
-spl_autoload_register(
-    function($class) {
-        static $classes = null;
-
-        if ($classes === null) {
-            $classes = array(
-              'sebastianbergmann\\phploc\\analyser' => '/Analyser.php',
-              'sebastianbergmann\\phploc\\log\\csv' => '/Log/CSV.php',
-              'sebastianbergmann\\phploc\\log\\txt' => '/Log/TXT.php',
-              'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php',
-              'sebastianbergmann\\phploc\\textui\\command' => '/TextUI/Command.php',
-              'sebastianbergmann\\phploc\\textui\\resultprinter' => '/TextUI/ResultPrinter.php',
-              'sebastianbergmann\\phploc\\version' => '/Version.php'
+namespace SebastianBergmann\PHPLOC\Log
+{
+	use SebastianBergmann\PHPLOC\TextUI\ResultPrinter;
+	
+    /**
+     * A Text ResultPrinter for the TextUI.
+     *
+     * @author    Travis Smith <t@wpsmith.net>
+     * @copyright 2012-2013 Travis Smith <t@wpsmith.net>
+     * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+     * @link      http://github.com/sebastianbergmann/phploc/tree
+     * @since     Class available since Release 1.7.4
+     */
+    class TXT
+    {
+        /**
+         * Prints a result set.
+         *
+         * @param string $filename
+         * @param array  $count
+         */
+        public function printResult($filename, array $count, $printTests)
+		{
+			$printer = new ResultPrinter;
+			ob_start();
+			$printer->printResult($count, $printTests);
+			$output = ob_get_clean();
+			
+            file_put_contents(
+              $filename, $output
             );
-        }
-
-        $cn = strtolower($class);
-
-        if (isset($classes[$cn])) {
-            require __DIR__ . $classes[$cn];
-        }
+		}
     }
-);
-
-spl_autoload_register(array('ezcBase', 'autoload'));
+}
