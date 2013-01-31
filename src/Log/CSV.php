@@ -126,7 +126,7 @@ namespace SebastianBergmann\PHPLOC\Log
             $values[] = $count['classConstants'];
 
             if (isset($count['testClasses'])) {
-                $keys[]   = 'Test Clases';
+                $keys[]   = 'Test Classes';
                 $values[] = $count['testClasses'];
                 $keys[]   = 'Test Methods';
                 $values[] = $count['testMethods'];
