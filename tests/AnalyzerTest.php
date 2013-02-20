@@ -114,10 +114,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 2,
-            'loc' => 65,
-            'nclocClasses' => 43,
-            'cloc' => 6,
-            'ncloc' => 59,
+            'loc' => 70,
+            'nclocClasses' => 47,
+            'cloc' => 7,
+            'ncloc' => 63,
             'eloc' => 28,
             'ccn' => 2,
             'ccnMethods' => 2,
@@ -137,10 +137,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'globalConstants' => 1,
             'testClasses' => 1,
             'testMethods' => 2,
-            'ccnByLoc' => 0.033898305084746,
+            'ccnByLoc' => 0.031746031746032,
             'ccnByNom' => 2,
-            'nclocByNoc' => 21.5,
-            'nclocByNom' => 10.75,
+            'nclocByNoc' => 23.5,
+            'nclocByNom' => 11.75,
             'directories' => 0,
             'namespaces' => 1,
             'traits' => 0

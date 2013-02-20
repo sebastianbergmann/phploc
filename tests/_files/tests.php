@@ -7,12 +7,17 @@ class ATest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider barProvider
      */
     public function bar()
     {
     }
 
     protected function doSomething()
+    {
+    }
+
+    public function barProvider()
     {
     }
 }

@@ -555,6 +555,10 @@ namespace SebastianBergmann\PHPLOC
             }
 
             while ($tokens[$currentToken][0] != T_DOC_COMMENT) {
+                if ($tokens[$currentToken] == '{' || $tokens[$currentToken] == '}') {
+                    return false;
+                }
+
                 --$currentToken;
             }
 
