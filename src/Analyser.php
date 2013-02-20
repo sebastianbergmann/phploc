@@ -455,9 +455,7 @@ namespace SebastianBergmann\PHPLOC
                                 }
 
                                 if ($testClass &&
-                                    strpos($functionName, 'test') === 0 &&
-                                    $visibility == T_PUBLIC &&
-                                    !$static) {
+                                    $this->isTestMethod($functionName, $visibility, $static, $tokens, $i)) {
                                     $this->count['testMethods']++;
                                 }
 
@@ -539,6 +537,29 @@ namespace SebastianBergmann\PHPLOC
             if (function_exists('bytekit_disassemble_file')) {
                 $this->count['eloc'] += $this->countEloc($filename, $loc);
             }
+        }
+
+        protected function isTestMethod(
+            $functionName,
+            $visibility,
+            $static,
+            array $tokens,
+            $currentToken
+        ) {
+            if ($static || $visibility != T_PUBLIC) {
+                return false;
+            }
+
+            if (strpos($functionName, 'test') === 0) {
+                return true;
+            }
+
+            while ($tokens[$currentToken][0] != T_DOC_COMMENT) {
+                --$currentToken;
+            }
+
+            return strpos($tokens[$currentToken][1], '@test') !== false ||
+                   strpos($tokens[$currentToken][1], '@scenario') !== false;
         }
 
         /**

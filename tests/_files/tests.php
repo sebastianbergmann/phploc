@@ -5,6 +5,13 @@ class ATest extends PHPUnit_Framework_TestCase
     {
     }
 
+    /**
+     * @test
+     */
+    public function bar()
+    {
+    }
+
     protected function doSomething()
     {
     }
