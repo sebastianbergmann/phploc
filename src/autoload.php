@@ -42,6 +42,7 @@
  */
 
 require_once 'SebastianBergmann/FinderFacade/autoload.php';
+require_once 'SebastianBergmann/Version/autoload.php';
 require_once 'ezc/Base/base.php';
 
 spl_autoload_register(
@@ -54,8 +55,7 @@ spl_autoload_register(
               'sebastianbergmann\\phploc\\log\\csv' => '/Log/CSV.php',
               'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php',
               'sebastianbergmann\\phploc\\textui\\command' => '/TextUI/Command.php',
-              'sebastianbergmann\\phploc\\textui\\resultprinter' => '/TextUI/ResultPrinter.php',
-              'sebastianbergmann\\phploc\\version' => '/Version.php'
+              'sebastianbergmann\\phploc\\textui\\resultprinter' => '/TextUI/ResultPrinter.php'
             );
         }
 

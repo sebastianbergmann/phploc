@@ -44,8 +44,8 @@
 namespace SebastianBergmann\PHPLOC\TextUI
 {
     use SebastianBergmann\FinderFacade\FinderFacade;
+    use SebastianBergmann\Version;
     use SebastianBergmann\PHPLOC\Analyser;
-    use SebastianBergmann\PHPLOC\Version;
     use SebastianBergmann\PHPLOC\Log\CSV;
     use SebastianBergmann\PHPLOC\Log\XML;
 
@@ -60,6 +60,14 @@ namespace SebastianBergmann\PHPLOC\TextUI
      */
     class Command
     {
+        private $version;
+
+        public function __construct()
+        {
+            $version = new Version('2.0', __DIR__);
+            $this->version = $version->getVersion();
+        }
+
         /**
          * Main method.
          */
@@ -270,7 +278,7 @@ EOT
         protected function printVersionString()
         {
             printf(
-              "phploc %s by Sebastian Bergmann.\n\n", Version::id()
+              "phploc %s by Sebastian Bergmann.\n\n", $this->version
             );
         }
     }

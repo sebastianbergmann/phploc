@@ -17,10 +17,10 @@
   <email>sb@sebastian-bergmann.de</email>
   <active>yes</active>
  </lead>
- <date>2012-11-10</date>
+ <date>2013-MM-DD</date>
  <version>
-  <release>1.7.4</release>
-  <api>1.7.0</api>
+  <release>2.0.0</release>
+  <api>2.0.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -42,7 +42,6 @@
      </dir>
      <file baseinstalldir="/" name="autoload.php" role="php" />
      <file baseinstalldir="/" name="Analyser.php" role="php" />
-     <file baseinstalldir="/" name="Version.php" role="php" />
     </dir>
    </dir>
    <file baseinstalldir="/" name="phploc.php" role="script">
@@ -74,6 +73,11 @@
     <name>ConsoleTools</name>
     <channel>components.ez.no</channel>
     <min>1.6</min>
+   </package>
+   <package>
+    <name>Version</name>
+    <channel>pear.phpunit.de</channel>
+    <min>1.0.0</min>
    </package>
    <extension>
     <name>tokenizer</name>
