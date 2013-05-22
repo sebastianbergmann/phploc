@@ -42,6 +42,7 @@
  */
 
 require_once 'SebastianBergmann/FinderFacade/autoload.php';
+require_once 'SebastianBergmann/Git/autoload.php';
 require_once 'SebastianBergmann/Version/autoload.php';
 require_once 'ezc/Base/base.php';
 

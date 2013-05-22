@@ -65,14 +65,19 @@
     <min>1.9.4</min>
    </pearinstaller>
    <package>
+    <name>ConsoleTools</name>
+    <channel>components.ez.no</channel>
+    <min>1.6</min>
+   </package>
+   <package>
     <name>FinderFacade</name>
     <channel>pear.phpunit.de</channel>
     <min>1.0.4</min>
    </package>
    <package>
-    <name>ConsoleTools</name>
-    <channel>components.ez.no</channel>
-    <min>1.6</min>
+    <name>Git</name>
+    <channel>pear.phpunit.de</channel>
+    <min>1.0.0</min>
    </package>
    <package>
     <name>Version</name>

@@ -62,79 +62,113 @@ namespace SebastianBergmann\PHPLOC\Log
          */
         public function printResult($filename, array $count)
         {
-            $keys   = array();
-            $values = array();
+            $buffer = $this->getKeysLine($count);
+
+            if (isset($count['loc'])) {
+                $count = array($count);
+            }
+
+            foreach ($count as $_count) {
+                $values = array();
+
+                if ($_count['directories'] > 0) {
+                    $values[] = $_count['directories'];
+                    $values[] = $_count['files'];
+                }
+
+                $values[] = $_count['loc'];
+                $values[] = $_count['ccnByLoc'];
+
+                if (isset($_count['eloc'])) {
+                    $values[] = $_count['eloc'];
+                }
+
+                $values[] = $_count['cloc'];
+                $values[] = $_count['ncloc'];
+                $values[] = $_count['namespaces'];
+                $values[] = $_count['interfaces'];
+                $values[] = $_count['traits'];
+                $values[] = $_count['classes'];
+                $values[] = $_count['abstractClasses'];
+                $values[] = $_count['concreteClasses'];
+                $values[] = $_count['nclocByNoc'];
+                $values[] = $_count['methods'];
+                $values[] = $_count['nonStaticMethods'];
+                $values[] = $_count['staticMethods'];
+                $values[] = $_count['publicMethods'];
+                $values[] = $_count['nonPublicMethods'];
+                $values[] = $_count['nclocByNom'];
+                $values[] = $_count['ccnByNom'];
+                $values[] = $_count['anonymousFunctions'];
+                $values[] = $_count['functions'];
+                $values[] = $_count['constants'];
+                $values[] = $_count['globalConstants'];
+                $values[] = $_count['classConstants'];
+
+                if (isset($_count['testClasses'])) {
+                    $values[] = $_count['testClasses'];
+                    $values[] = $_count['testMethods'];
+                }
+
+                $buffer .= implode(',', $values) . PHP_EOL;
+            }
+
+            file_put_contents($filename, $buffer);
+        }
+
+        /**
+         * @param  array $count
+         * @return string
+         */
+        private function getKeysLine(array $count)
+        {
+            $keys = array();
+ 
+            if (!isset($count['loc'])) {
+                $_keys = array_keys($count);
+                $count = $count[$_keys[0]];
+            }
 
             if ($count['directories'] > 0) {
                 $keys[]   = 'Directories';
-                $values[] = $count['directories'];
                 $keys[]   = 'Files';
-                $values[] = $count['files'];
             }
 
             $keys[]   = 'Lines of Code (LOC)';
-            $values[] = $count['loc'];
             $keys[]   = 'Cyclomatic Complexity / Lines of Code';
-            $values[] = $count['ccnByLoc'];
 
             if (isset($count['eloc'])) {
                 $keys[]   = 'Executable Lines of Code (ELOC)';
-                $values[] = $count['eloc'];
             }
 
             $keys[]   = 'Comment Lines of Code (CLOC)';
-            $values[] = $count['cloc'];
             $keys[]   = 'Non-Comment Lines of Code (NCLOC)';
-            $values[] = $count['ncloc'];
             $keys[]   = 'Namespaces';
-            $values[] = $count['namespaces'];
             $keys[]   = 'Interfaces';
-            $values[] = $count['interfaces'];
             $keys[]   = 'Traits';
-            $values[] = $count['traits'];
             $keys[]   = 'Classes';
-            $values[] = $count['classes'];
             $keys[]   = 'Abstract Classes';
-            $values[] = $count['abstractClasses'];
             $keys[]   = 'Concrete Classes';
-            $values[] = $count['concreteClasses'];
             $keys[]   = 'Average Class Length (NCLOC)';
-            $values[] = $count['nclocByNoc'];
             $keys[]   = 'Methods';
-            $values[] = $count['methods'];
             $keys[]   = 'Non-Static Methods';
-            $values[] = $count['nonStaticMethods'];
             $keys[]   = 'Static Methods';
-            $values[] = $count['staticMethods'];
             $keys[]   = 'Public Methods';
-            $values[] = $count['publicMethods'];
             $keys[]   = 'Non-Public Methods';
-            $values[] = $count['nonPublicMethods'];
             $keys[]   = 'Average Method Length (NCLOC)';
-            $values[] = $count['nclocByNom'];
             $keys[]   = 'Cyclomatic Complexity / Number of Methods';
-            $values[] = $count['ccnByNom'];
             $keys[]   = 'Anonymous Functions';
-            $values[] = $count['anonymousFunctions'];
             $keys[]   = 'Functions';
-            $values[] = $count['functions'];
             $keys[]   = 'Constants';
-            $values[] = $count['constants'];
             $keys[]   = 'Global Constants';
-            $values[] = $count['globalConstants'];
             $keys[]   = 'Class Constants';
-            $values[] = $count['classConstants'];
 
             if (isset($count['testClasses'])) {
                 $keys[]   = 'Test Classes';
-                $values[] = $count['testClasses'];
                 $keys[]   = 'Test Methods';
-                $values[] = $count['testMethods'];
             }
 
-            file_put_contents(
-              $filename, implode(',', $keys) . PHP_EOL . implode(',', $values)
-            );
+            return implode(',', $keys) . PHP_EOL;
         }
     }
 }

@@ -44,6 +44,7 @@
 namespace SebastianBergmann\PHPLOC\TextUI
 {
     use SebastianBergmann\FinderFacade\FinderFacade;
+    use SebastianBergmann\Git;
     use SebastianBergmann\Version;
     use SebastianBergmann\PHPLOC\Analyser;
     use SebastianBergmann\PHPLOC\Log\CSV;
@@ -80,6 +81,16 @@ namespace SebastianBergmann\PHPLOC\TextUI
               new \ezcConsoleOption(
                 '',
                 'count-tests',
+                \ezcConsoleInput::TYPE_NONE,
+                FALSE,
+                FALSE
+               )
+            );
+
+            $input->registerOption(
+              new \ezcConsoleOption(
+                '',
+                'git-repository',
                 \ezcConsoleInput::TYPE_NONE,
                 FALSE,
                 FALSE
@@ -183,18 +194,19 @@ namespace SebastianBergmann\PHPLOC\TextUI
                 exit(0);
             }
 
-            $arguments = $input->getArguments();
-
-            if (empty($arguments)) {
-                $this->showHelp();
-                exit(1);
-            }
-
+            $arguments  = $input->getArguments();
             $countTests = $input->getOption('count-tests')->value;
+            $gitRepo    = $input->getOption('git-repository')->value;
             $excludes   = $input->getOption('exclude')->value;
             $logXml     = $input->getOption('log-xml')->value;
             $logCsv     = $input->getOption('log-csv')->value;
             $names      = explode(',', $input->getOption('names')->value);
+
+            if (empty($arguments) ||
+                (count($arguments) > 1 && $gitRepo)) {
+                $this->showHelp();
+                exit(1);
+            }
 
             array_map('trim', $names);
 
@@ -206,6 +218,42 @@ namespace SebastianBergmann\PHPLOC\TextUI
 
             $this->printVersionString();
 
+            if (!$gitRepo) {
+                $count = $this->run(
+                  $arguments, $excludes, $names, $countTests, $progress
+                );
+
+                $printer = new ResultPrinter;
+                $printer->printResult($count, $countTests);
+
+                if ($logXml) {
+                    $printer = new XML;
+                    $printer->printResult($logXml, $count);
+                }
+            } else {
+                $git           = new Git($arguments[0]);
+                $currentBranch = $git->getCurrentBranch();
+                $count         = array();
+
+                foreach ($git->getRevisions() as $revision) {
+                    $git->checkout($revision);
+
+                    $count[$revision] = $this->run(
+                      $arguments, $excludes, $names, $countTests, $progress
+                    );
+                }
+
+                $git->checkout($currentBranch);
+            }
+
+            if ($logCsv) {
+                $printer = new CSV;
+                $printer->printResult($logCsv, $count);
+            }
+        }
+
+        private function run($arguments, $excludes, $names, $countTests, $progress)
+        {
             $finder = new FinderFacade($arguments, $excludes, $names);
             $files  = $finder->findFiles();
 
@@ -214,20 +262,8 @@ namespace SebastianBergmann\PHPLOC\TextUI
             }
 
             $analyser = new Analyser($progress);
-            $count    = $analyser->countFiles($files, $countTests);
 
-            $printer = new ResultPrinter;
-            $printer->printResult($count, $countTests);
-
-            if ($logCsv) {
-                $printer = new CSV;
-                $printer->printResult($logCsv, $count);
-            }
-
-            if ($logXml) {
-                $printer = new XML;
-                $printer->printResult($logXml, $count);
-            }
+            return $analyser->countFiles($files, $countTests);
         }
 
         /**
@@ -253,6 +289,10 @@ namespace SebastianBergmann\PHPLOC\TextUI
 
             print <<<EOT
 Usage: phploc [switches] <directory|file> ...
+
+  --git-repository         The (single) directory that is given is a Git
+                           repository. In this case, --log-csv will write one
+                           line of data per revision of the repository.
 
   --count-tests            Count PHPUnit test case classes and test methods.
 
