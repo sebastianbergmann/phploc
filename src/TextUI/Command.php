@@ -240,14 +240,14 @@ namespace SebastianBergmann\PHPLOC\TextUI
                 $count         = array();
 
                 foreach ($git->getRevisions() as $revision) {
-                    $git->checkout($revision);
+                    $git->checkout($revision['sha1']);
 
                     $_count = $this->run(
                       $arguments, $excludes, $names, $countTests, $progress
                     );
 
                     if ($_count) {
-                        $count[$revision] = $_count;
+                        $count[$revision['sha1']] = $_count;
                     }
                 }
 
