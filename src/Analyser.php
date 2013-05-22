@@ -211,11 +211,12 @@ namespace SebastianBergmann\PHPLOC
             }
 
             if ($count['methods'] > 0) {
-                if(isset($count['testMethods'])) {
+                if (isset($count['testMethods'])) {
                     $countTestMethods = $count['testMethods'];
                 } else {
                     $countTestMethods = 0;
                 }
+
                 $count['ccnByNom'] = 1 + ($count['ccnMethods'] /
                                      ($count['methods'] - $countTestMethods));
             }
