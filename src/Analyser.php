@@ -217,8 +217,10 @@ namespace SebastianBergmann\PHPLOC
                     $countTestMethods = 0;
                 }
 
-                $count['ccnByNom'] = 1 + ($count['ccnMethods'] /
-                                     ($count['methods'] - $countTestMethods));
+                $numNonTestMethods = $count['methods'] - $countTestMethods;
+                $count['ccnByNom'] = ($numNonTestMethods +
+                                      $count['ccnMethods']) /
+                                     $numNonTestMethods;
             }
 
             if ($count['classes'] > 0) {
