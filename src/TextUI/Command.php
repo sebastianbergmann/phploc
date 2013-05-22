@@ -223,6 +223,10 @@ namespace SebastianBergmann\PHPLOC\TextUI
                   $arguments, $excludes, $names, $countTests, $progress
                 );
 
+                if (!$count) {
+                    $this->showError("No files found to scan.\n");
+                }
+
                 $printer = new ResultPrinter;
                 $printer->printResult($count, $countTests);
 
@@ -238,9 +242,13 @@ namespace SebastianBergmann\PHPLOC\TextUI
                 foreach ($git->getRevisions() as $revision) {
                     $git->checkout($revision);
 
-                    $count[$revision] = $this->run(
+                    $_count = $this->run(
                       $arguments, $excludes, $names, $countTests, $progress
                     );
+
+                    if ($_count) {
+                        $count[$revision] = $_count;
+                    }
                 }
 
                 $git->checkout($currentBranch);
@@ -258,7 +266,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $files  = $finder->findFiles();
 
             if (empty($files)) {
-                $this->showError("No files found to scan.\n");
+                return FALSE;
             }
 
             $analyser = new Analyser($progress);
