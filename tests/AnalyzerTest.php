@@ -93,13 +93,15 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'nclocByNom' => 7.25,
             'directories' => 0,
             'namespaces' => 1,
-            'traits' => 0
+            'traits' => 0,
+            'testClasses' => 0,
+            'testMethods' => 0
         );
 
         $this->assertEquals(
           $expected,
           $this->analyser->countFiles(
-            array($this->getFileObject('source.php')), FALSE
+            array(__DIR__ . '/_files/source.php'), FALSE
           ),
           '',
           0.01
@@ -146,8 +148,8 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           $expected,
           $this->analyser->countFiles(
             array(
-              $this->getFileObject('source.php'),
-              $this->getFileObject('tests.php')
+              __DIR__ . '/_files/source.php',
+              __DIR__ . '/_files/tests.php'
             ), TRUE
           ),
           '',
@@ -158,8 +160,9 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testFilesThatExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
           array(
-            $this->getFileObject('tests.php')
-          ), TRUE
+            __DIR__ . '/_files/tests.php'
+          ),
+          TRUE
         );
         $this->assertSame(1, $result['testClasses']);
     }
@@ -167,17 +170,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
             array(
-                $this->getFileObject('twoTestsThatIndirectlyExtendPHPUnitTestCase.php')
-            ), TRUE
+                __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
+            ),
+            TRUE
         );
         $this->assertSame(3, $result['testClasses']);
-    }
-
-    protected function getFileObject($filename)
-    {
-        return new SplFileObject(
-          dirname(__FILE__) . DIRECTORY_SEPARATOR .
-          '_files' . DIRECTORY_SEPARATOR . $filename
-        );
     }
 }
