@@ -47,7 +47,8 @@ namespace SebastianBergmann\PHPLOC\TextUI
     use SebastianBergmann\Git;
     use SebastianBergmann\Version;
     use SebastianBergmann\PHPLOC\Analyser;
-    use SebastianBergmann\PHPLOC\Log\CSV;
+    use SebastianBergmann\PHPLOC\Log\CSV\History;
+    use SebastianBergmann\PHPLOC\Log\CSV\Single;
     use SebastianBergmann\PHPLOC\Log\XML;
 
     /**
@@ -230,6 +231,11 @@ namespace SebastianBergmann\PHPLOC\TextUI
                 $printer = new ResultPrinter;
                 $printer->printResult($count, $countTests);
 
+                if ($logCsv) {
+                    $printer = new Single;
+                    $printer->printResult($logCsv, $count);
+                }
+
                 if ($logXml) {
                     $printer = new XML;
                     $printer->printResult($logXml, $count);
@@ -247,16 +253,16 @@ namespace SebastianBergmann\PHPLOC\TextUI
                     );
 
                     if ($_count) {
-                        $count[$revision['sha1']] = $_count;
+                        $count[$revision['date']->format(\DateTime::W3C)] = $_count;
                     }
                 }
 
                 $git->checkout($currentBranch);
-            }
 
-            if ($logCsv) {
-                $printer = new CSV;
-                $printer->printResult($logCsv, $count);
+                if ($logCsv) {
+                    $printer = new History;
+                    $printer->printResult($logCsv, $count);
+                }
             }
         }
 

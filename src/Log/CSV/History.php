@@ -38,35 +38,46 @@
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
  * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @since     File available since Release 1.7.0
+ * @since     File available since Release 2.0.0
  */
 
-require_once 'SebastianBergmann/FinderFacade/autoload.php';
-require_once 'SebastianBergmann/Git/autoload.php';
-require_once 'SebastianBergmann/Version/autoload.php';
-require_once 'ezc/Base/base.php';
+namespace SebastianBergmann\PHPLOC\Log\CSV
+{
+    /**
+     * A CSV ResultPrinter for the TextUI.
+     *
+     * @author    Sebastian Bergmann <sebastian@phpunit.de>
+     * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
+     * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+     * @link      http://github.com/sebastianbergmann/phploc/tree
+     * @since     Class available since Release 2.0.0
+     */
+    class History extends Single
+    {
+        /**
+         * Prints a result set.
+         *
+         * @param string $filename
+         * @param array  $count
+         */
+        public function printResult($filename, array $count)
+        {
+            $buffer = $this->getKeysLine($count);
 
-spl_autoload_register(
-    function($class) {
-        static $classes = null;
+            foreach ($count as $date => $data) {
+                $buffer .= $date . ',' . $this->getValuesLine($data);
+            }
 
-        if ($classes === null) {
-            $classes = array(
-              'sebastianbergmann\\phploc\\analyser' => '/Analyser.php',
-              'sebastianbergmann\\phploc\\log\\csv\\history' => '/Log/CSV/History.php',
-              'sebastianbergmann\\phploc\\log\\csv\\single' => '/Log/CSV/Single.php',
-              'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php',
-              'sebastianbergmann\\phploc\\textui\\command' => '/TextUI/Command.php',
-              'sebastianbergmann\\phploc\\textui\\resultprinter' => '/TextUI/ResultPrinter.php'
-            );
+            file_put_contents($filename, $buffer);
         }
 
-        $cn = strtolower($class);
-
-        if (isset($classes[$cn])) {
-            require __DIR__ . $classes[$cn];
+        /**
+         * @param  array $count
+         * @return string
+         */
+        protected function getKeysLine(array $count)
+        {
+            return 'Date,' . parent::getKeysLine($count);
         }
     }
-);
-
-spl_autoload_register(array('ezcBase', 'autoload'));
+}

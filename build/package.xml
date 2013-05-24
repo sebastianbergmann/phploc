@@ -33,7 +33,10 @@
    <dir name="SebastianBergmann">
     <dir name="PHPLOC">
      <dir name="Log">
-      <file baseinstalldir="/" name="CSV.php" role="php" />
+      <dir name="CSV">
+       <file baseinstalldir="/" name="History.php" role="php" />
+       <file baseinstalldir="/" name="Single.php" role="php" />
+      </dir>
       <file baseinstalldir="/" name="XML.php" role="php" />
      </dir>
      <dir name="TextUI">

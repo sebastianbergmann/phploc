@@ -174,11 +174,6 @@ namespace SebastianBergmann\PHPLOC
 
             $count = $this->count;
 
-            if (!$countTests) {
-                unset($count['testClasses']);
-                unset($count['testMethods']);
-            }
-
             $count['directories']   = count($directories) - 1;
             $count['namespaces']    = count($this->namespaces);
             $count['classes']       = $count['abstractClasses'] +
