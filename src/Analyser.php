@@ -580,6 +580,11 @@ namespace SebastianBergmann\PHPLOC
         {
             $i         += 2;
             $namespaced = FALSE;
+
+            if (!isset($tokens[$i][1])) {
+                return 'invalid class name';
+            }
+
             $className  = $tokens[$i][1];
 
             if ($className === '\\') {
