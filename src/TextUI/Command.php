@@ -243,17 +243,28 @@ namespace SebastianBergmann\PHPLOC\TextUI
             } else {
                 $git           = new Git($arguments[0]);
                 $currentBranch = $git->getCurrentBranch();
+                $revisions     = $git->getRevisions();
                 $count         = array();
 
-                foreach ($git->getRevisions() as $revision) {
+                if ($progress !== NULL) {
+                    $bar = new \ezcConsoleProgressbar(
+                      $progress, count($revisions)
+                    );
+                }
+
+                foreach ($revisions as $revision) {
                     $git->checkout($revision['sha1']);
 
                     $_count = $this->run(
-                      $arguments, $excludes, $names, $countTests, $progress
+                      $arguments, $excludes, $names, $countTests
                     );
 
                     if ($_count) {
                         $count[$revision['date']->format(\DateTime::W3C)] = $_count;
+                    }
+
+                    if ($progress !== NULL) {
+                        $bar->advance();
                     }
                 }
 
@@ -266,7 +277,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
             }
         }
 
-        private function run($arguments, $excludes, $names, $countTests, $progress)
+        private function run($arguments, $excludes, $names, $countTests, $progress = NULL)
         {
             $finder = new FinderFacade($arguments, $excludes, $names);
             $files  = $finder->findFiles();
