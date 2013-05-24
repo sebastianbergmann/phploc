@@ -77,7 +77,6 @@ namespace SebastianBergmann\PHPLOC
           'nclocClasses'       => 0,
           'cloc'               => 0,
           'ncloc'              => 0,
-          'eloc'               => 0,
           'ccn'                => 0,
           'ccnMethods'         => 0,
           'interfaces'         => 0,
@@ -101,13 +100,6 @@ namespace SebastianBergmann\PHPLOC
           'ccnByNom'           => 0,
           'nclocByNoc'         => 0,
           'nclocByNom'         => 0
-        );
-
-        /**
-         * @var array
-         */
-        protected $opcodeBlacklist = array(
-          'BYTEKIT_NOP' => TRUE
         );
 
         /**
@@ -182,10 +174,6 @@ namespace SebastianBergmann\PHPLOC
 
             $count = $this->count;
 
-            if (!function_exists('bytekit_disassemble_file')) {
-                unset($count['eloc']);
-            }
-
             if (!$countTests) {
                 unset($count['testClasses']);
                 unset($count['testMethods']);
@@ -202,11 +190,7 @@ namespace SebastianBergmann\PHPLOC
             $count['constants']     = $count['classConstants'] +
                                       $count['globalConstants'];
 
-            if (isset($count['eloc']) && $count['eloc'] > 0) {
-                $count['ccnByLoc'] = $count['ccn'] / $count['eloc'];
-            }
-
-            else if ($count['ncloc'] > 0) {
+            if ($count['ncloc'] > 0) {
                 $count['ccnByLoc'] = $count['ccn'] / $count['ncloc'];
             }
 
@@ -536,10 +520,6 @@ namespace SebastianBergmann\PHPLOC
             $this->count['cloc']         += $cloc;
             $this->count['ncloc']        += $loc - $cloc;
             $this->count['files']++;
-
-            if (function_exists('bytekit_disassemble_file')) {
-                $this->count['eloc'] += $this->countEloc($filename, $loc);
-            }
         }
 
         protected function isTestMethod(
@@ -567,37 +547,6 @@ namespace SebastianBergmann\PHPLOC
 
             return strpos($tokens[$currentToken][1], '@test') !== false ||
                    strpos($tokens[$currentToken][1], '@scenario') !== false;
-        }
-
-        /**
-         * Counts the Executable Lines of Code (ELOC) using Bytekit.
-         *
-         * @param  string  $filename
-         * @param  integer $loc
-         * @return integer
-         * @since  Method available since Release 1.1.0
-         */
-        protected function countEloc($filename, $loc)
-        {
-            $bytecode = @bytekit_disassemble_file($filename);
-
-            if (!is_array($bytecode)) {
-                return 0;
-            }
-
-            $lines = array();
-
-            foreach ($bytecode['functions'] as $function) {
-                foreach ($function['raw']['opcodes'] as $opline) {
-                    if ($opline['lineno'] <= $loc &&
-                        !isset($this->opcodeBlacklist[$opline['opcode']]) &&
-                        !isset($lines[$opline['lineno']])) {
-                        $lines[$opline['lineno']] = TRUE;
-                    }
-                }
-            }
-
-            return count($lines);
         }
 
         /**

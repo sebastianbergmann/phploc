@@ -78,11 +78,6 @@ namespace SebastianBergmann\PHPLOC\Log
 
                 $values[] = $_count['loc'];
                 $values[] = $_count['ccnByLoc'];
-
-                if (isset($_count['eloc'])) {
-                    $values[] = $_count['eloc'];
-                }
-
                 $values[] = $_count['cloc'];
                 $values[] = $_count['ncloc'];
                 $values[] = $_count['namespaces'];
@@ -136,11 +131,6 @@ namespace SebastianBergmann\PHPLOC\Log
 
             $keys[]   = 'Lines of Code (LOC)';
             $keys[]   = 'Cyclomatic Complexity / Lines of Code';
-
-            if (isset($count['eloc'])) {
-                $keys[]   = 'Executable Lines of Code (ELOC)';
-            }
-
             $keys[]   = 'Comment Lines of Code (CLOC)';
             $keys[]   = 'Non-Comment Lines of Code (NCLOC)';
             $keys[]   = 'Namespaces';

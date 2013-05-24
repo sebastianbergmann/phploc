@@ -88,11 +88,6 @@
     <name>tokenizer</name>
    </extension>
   </required>
-  <optional>
-   <extension>
-    <name>bytekit</name>
-   </extension>
-  </optional>
  </dependencies>
  <phprelease>
   <installconditions>

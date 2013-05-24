@@ -71,7 +71,6 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'nclocClasses' => 29,
             'cloc' => 3,
             'ncloc' => 44,
-            'eloc' => 23,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -96,9 +95,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'namespaces' => 1,
             'traits' => 0
         );
-        if(!extension_loaded('bytekit')) {
-          unset($expected['eloc']);
-        }
+
         $this->assertEquals(
           $expected,
           $this->analyser->countFiles(
@@ -118,7 +115,6 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'nclocClasses' => 47,
             'cloc' => 7,
             'ncloc' => 63,
-            'eloc' => 28,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -145,9 +141,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'namespaces' => 1,
             'traits' => 0
         );
-        if(!extension_loaded('bytekit')) {
-          unset($expected['eloc']);
-        }
+
         $this->assertEquals(
           $expected,
           $this->analyser->countFiles(

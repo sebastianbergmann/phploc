@@ -77,11 +77,6 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $args[]  = $count['loc'];
             $args[]  = $count['ccnByLoc'];
 
-            if (isset($count['eloc'])) {
-                $format .= "Executable Lines of Code (ELOC):             %10d\n";
-                $args[]  = $count['eloc'];
-            }
-
             $format .= "Comment Lines of Code (CLOC):                %10d\n" .
                        "Non-Comment Lines of Code (NCLOC):           %10d\n\n" .
                        "Namespaces:                                  %10d\n" .
