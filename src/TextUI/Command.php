@@ -153,6 +153,16 @@ namespace SebastianBergmann\PHPLOC\TextUI
 
             $input->registerOption(
               new \ezcConsoleOption(
+                '',
+                'names-exclude',
+                \ezcConsoleInput::TYPE_STRING,
+                '',
+                FALSE
+               )
+            );
+
+            $input->registerOption(
+              new \ezcConsoleOption(
                 'v',
                 'version',
                 \ezcConsoleInput::TYPE_NONE,
@@ -195,13 +205,14 @@ namespace SebastianBergmann\PHPLOC\TextUI
                 exit(0);
             }
 
-            $arguments  = $input->getArguments();
-            $countTests = $input->getOption('count-tests')->value;
-            $gitRepo    = $input->getOption('git-repository')->value;
-            $excludes   = $input->getOption('exclude')->value;
-            $logXml     = $input->getOption('log-xml')->value;
-            $logCsv     = $input->getOption('log-csv')->value;
-            $names      = explode(',', $input->getOption('names')->value);
+            $arguments    = $input->getArguments();
+            $countTests   = $input->getOption('count-tests')->value;
+            $gitRepo      = $input->getOption('git-repository')->value;
+            $excludes     = $input->getOption('exclude')->value;
+            $logXml       = $input->getOption('log-xml')->value;
+            $logCsv       = $input->getOption('log-csv')->value;
+            $names        = explode(',', $input->getOption('names')->value);
+            $namesExclude = explode(',', $input->getOption('names-exclude')->value);
 
             if (empty($arguments) ||
                 (count($arguments) > 1 && $gitRepo)) {
@@ -210,6 +221,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
             }
 
             array_map('trim', $names);
+            array_map('trim', $namesExclude);
 
             if ($input->getOption('progress')->value !== FALSE) {
                 $progress = $output;
@@ -221,7 +233,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
 
             if (!$gitRepo) {
                 $count = $this->run(
-                  $arguments, $excludes, $names, $countTests, $progress
+                  $arguments, $excludes, $names, $namesExclude, $countTests, $progress
                 );
 
                 if (!$count) {
@@ -277,9 +289,9 @@ namespace SebastianBergmann\PHPLOC\TextUI
             }
         }
 
-        private function run($arguments, $excludes, $names, $countTests, $progress = NULL)
+        private function run($arguments, $excludes, $names, $namesExclude, $countTests, $progress = NULL)
         {
-            $finder = new FinderFacade($arguments, $excludes, $names);
+            $finder = new FinderFacade($arguments, $excludes, $names, $namesExclude);
             $files  = $finder->findFiles();
 
             if (empty($files)) {
@@ -327,6 +339,7 @@ Usage: phploc [switches] <directory|file> ...
   --exclude <dir>          Exclude <dir> from code analysis.
   --names <names>          A comma-separated list of file names to check.
                            (default: *.php)
+  --names-exclude <names>  A comma-separated list of file names to exclude.
 
   --help                   Prints this usage information.
   --version                Prints the version and exits.
