@@ -523,7 +523,7 @@ namespace SebastianBergmann\PHPLOC
                         $call = FALSE;
                         $j    = $i + 1;
 
-                        while ($tokens[$j] != ';') {
+                        while (isset($tokens[$j]) && $tokens[$j] != ';') {
                             if (is_string($tokens[$j]) && $tokens[$j] == '(') {
                                 $call = TRUE;
                             }
