@@ -18,7 +18,7 @@
         "symfony/finder": ">=2.1.2",
         "zetacomponents/console-tools": "dev-master",
         "sebastian/finder-facade": ">=1.1.0",
-        "sebastian/git": ">=1.0.0@dev",
+        "sebastian/git": ">=1.0.0",
         "sebastian/version": ">=1.0.0"
     },
     "autoload": {
