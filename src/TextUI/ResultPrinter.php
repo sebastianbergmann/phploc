@@ -75,13 +75,13 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $format = <<<END
 Size
   Lines of Code (LOC)                       %10d
-  Non-Comment Lines of Code (NCLOC)         %10d
+  Logical Lines of Code (LLOC)              %10d
     Average Class Length                    %10d
     Average Method Length                   %10d
   Comment Lines of Code (CLOC)              %10d
 
 Complexity
-  Cyclomatic Complexity / NCLOC             %10.2f
+  Cyclomatic Complexity / LLOC              %10.2f
   Cyclomatic Complexity / Number of Methods %10.2f
 
 Dependencies
@@ -118,11 +118,11 @@ END;
             printf(
               $format,
               $count['loc'],
-              $count['ncloc'],
-              $count['nclocByNoc'],
-              $count['nclocByNom'],
+              $count['lloc'],
+              $count['llocByNoc'],
+              $count['llocByNom'],
               $count['cloc'],
-              $count['ccnByLoc'],
+              $count['ccnByLloc'],
               $count['ccnByNom'],
               $count['attributeAccesses'],
               $count['instanceAttributeAccesses'],

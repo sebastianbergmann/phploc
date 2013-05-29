@@ -68,9 +68,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           array(
             'files' => 1,
             'loc' => 62,
-            'nclocClasses' => 44,
             'cloc' => 3,
-            'ncloc' => 59,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -87,10 +85,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'constants' => 2,
             'classConstants' => 1,
             'globalConstants' => 1,
-            'ccnByLoc' => 0.033,
             'ccnByNom' => 1.5,
-            'nclocByNoc' => 22,
-            'nclocByNom' => 11,
             'directories' => 0,
             'namespaces' => 1,
             'traits' => 0,
@@ -101,7 +96,13 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'instanceMethodCalls' => 2,
             'attributeAccesses' => 6,
             'staticAttributeAccesses' => 4,
-            'instanceAttributeAccesses' => 2
+            'instanceAttributeAccesses' => 2,
+            'lloc' => 19,
+            'llocClasses' => 17,
+            'namedFunctions' => 0,
+            'ccnByLloc' => 0.10,
+            'llocByNoc' => 8.5,
+            'llocByNom' => 4.25
         );
 
         $this->assertEquals(
@@ -120,9 +121,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           array(
             'files' => 2,
             'loc' => 85,
-            'nclocClasses' => 62,
             'cloc' => 7,
-            'ncloc' => 78,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -141,10 +140,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'globalConstants' => 1,
             'testClasses' => 1,
             'testMethods' => 2,
-            'ccnByLoc' => 0.025,
             'ccnByNom' => 2,
-            'nclocByNoc' => 31,
-            'nclocByNom' => 15.5,
             'directories' => 0,
             'namespaces' => 1,
             'traits' => 0,
@@ -153,7 +149,13 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'instanceMethodCalls' => 2,
             'attributeAccesses' => 6,
             'staticAttributeAccesses' => 4,
-            'instanceAttributeAccesses' => 2
+            'instanceAttributeAccesses' => 2,
+            'lloc' => 19,
+            'llocClasses' => 17,
+            'namedFunctions' => 0,
+            'ccnByLloc' => 0.10,
+            'llocByNoc' => 8.5,
+            'llocByNom' => 4.25
         );
 
         $this->assertEquals(

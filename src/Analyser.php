@@ -74,9 +74,9 @@ namespace SebastianBergmann\PHPLOC
         protected $count = array(
           'files'                     => 0,
           'loc'                       => 0,
-          'nclocClasses'              => 0,
+          'lloc'                      => 0,
+          'llocClasses'               => 0,
           'cloc'                      => 0,
-          'ncloc'                     => 0,
           'ccn'                       => 0,
           'ccnMethods'                => 0,
           'interfaces'                => 0,
@@ -97,10 +97,10 @@ namespace SebastianBergmann\PHPLOC
           'globalConstants'           => 0,
           'testClasses'               => 0,
           'testMethods'               => 0,
-          'ccnByLoc'                  => 0,
+          'ccnByLloc'                 => 0,
           'ccnByNom'                  => 0,
-          'nclocByNoc'                => 0,
-          'nclocByNom'                => 0,
+          'llocByNoc'                 => 0,
+          'llocByNom'                 => 0,
           'methodCalls'               => 0,
           'staticMethodCalls'         => 0,
           'instanceMethodCalls'       => 0,
@@ -198,8 +198,8 @@ namespace SebastianBergmann\PHPLOC
             $count['methodCalls']       = $count['staticMethodCalls'] +
                                           $count['instanceMethodCalls'];
 
-            if ($count['ncloc'] > 0) {
-                $count['ccnByLoc'] = $count['ccn'] / $count['ncloc'];
+            if ($count['lloc'] > 0) {
+                $count['ccnByLloc'] = $count['ccn'] / $count['lloc'];
             }
 
             if ($count['methods'] > 0) {
@@ -216,11 +216,11 @@ namespace SebastianBergmann\PHPLOC
             }
 
             if ($count['classes'] > 0) {
-                $count['nclocByNoc'] = $count['nclocClasses'] / $count['classes'];
+                $count['llocByNoc'] = $count['llocClasses'] / $count['classes'];
             }
 
             if ($count['methods'] > 0) {
-                $count['nclocByNom'] = $count['nclocClasses'] / $count['methods'];
+                $count['llocByNom'] = $count['llocClasses'] / $count['methods'];
             }
 
             return $count;
@@ -278,15 +278,15 @@ namespace SebastianBergmann\PHPLOC
          */
         public function countFile($filename, $countTests)
         {
-            $buffer    = file_get_contents($filename);
-            $tokens    = token_get_all($buffer);
-            $numTokens = count($tokens);
-            $loc       = substr_count($buffer, "\n");
+            $buffer              = file_get_contents($filename);
+            $this->count['loc'] += substr_count($buffer, "\n");
+            $tokens              = token_get_all($buffer);
+            $numTokens           = count($tokens);
 
             unset($buffer);
 
-            $nclocClasses = 0;
-            $cloc         = 0;
+            $this->count['files']++;
+
             $blocks       = array();
             $currentBlock = FALSE;
             $namespace    = FALSE;
@@ -296,17 +296,25 @@ namespace SebastianBergmann\PHPLOC
 
             for ($i = 0; $i < $numTokens; $i++) {
                 if (is_string($tokens[$i])) {
-                    if (trim($tokens[$i]) == '?') {
-                        if (!$testClass) {
-                            if ($className !== NULL) {
-                                $this->count['ccnMethods']++;
-                            }
+                    $token = trim($tokens[$i]);
 
-                            $this->count['ccn']++;
+                    if ($token == ';') {
+                        if ($className !== NULL) {
+                            $this->count['llocClasses']++;
                         }
+
+                        $this->count['lloc']++;
                     }
 
-                    if ($tokens[$i] == '{') {
+                    else if ($token == '?' && !$testClass) {
+                        if ($className !== NULL) {
+                            $this->count['ccnMethods']++;
+                        }
+
+                        $this->count['ccn']++;
+                    }
+
+                    else if ($token == '{') {
                         if ($currentBlock == T_CLASS) {
                             $block = $className;
                         }
@@ -324,7 +332,7 @@ namespace SebastianBergmann\PHPLOC
                         $currentBlock = FALSE;
                     }
 
-                    else if ($tokens[$i] == '}') {
+                    else if ($token == '}') {
                         $block = array_pop($blocks);
 
                         if ($block !== FALSE && $block !== NULL) {
@@ -343,12 +351,6 @@ namespace SebastianBergmann\PHPLOC
                 }
 
                 list ($token, $value) = $tokens[$i];
-
-                if ($className !== NULL) {
-                    if ($token != T_COMMENT && $token != T_DOC_COMMENT) {
-                        $nclocClasses += substr_count($value, "\n");
-                    }
-                }
 
                 switch ($token) {
                     case T_NAMESPACE: {
@@ -505,7 +507,7 @@ namespace SebastianBergmann\PHPLOC
 
                     case T_COMMENT:
                     case T_DOC_COMMENT: {
-                        $cloc += substr_count($value, "\n") + 1;
+                        $this->count['cloc'] += substr_count($value, "\n") + 1;
                     }
                     break;
 
@@ -556,12 +558,6 @@ namespace SebastianBergmann\PHPLOC
                     break;
                 }
             }
-
-            $this->count['loc']          += $loc;
-            $this->count['nclocClasses'] += $nclocClasses;
-            $this->count['cloc']         += $cloc;
-            $this->count['ncloc']        += $loc - $cloc;
-            $this->count['files']++;
         }
 
         protected function isTestMethod(
