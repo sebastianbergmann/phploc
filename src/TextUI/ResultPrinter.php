@@ -99,7 +99,10 @@ namespace SebastianBergmann\PHPLOC\TextUI
                        "Functions:                                   %10d\n\n" .
                        "Constants:                                   %10d\n" .
                        "  Global constants:                          %10d\n" .
-                       "  Class constants:                           %10d\n";
+                       "  Class constants:                           %10d\n\n" .
+                       "Static Dependencies:                         %10d\n" .
+                       "  Static method calls:                       %10d\n" .
+                       "  Static attribute accesses:                 %10d\n";
 
             $args[] = $count['cloc'];
             $args[] = $count['ncloc'];
@@ -128,6 +131,9 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $args[] = $count['constants'];
             $args[] = $count['globalConstants'];
             $args[] = $count['classConstants'];
+            $args[] = $count['staticDependencies'];
+            $args[] = $count['staticMethodCalls'];
+            $args[] = $count['staticAttributeAccesses'];
 
             if ($printTests) {
                 $format .= "\nTests:\n  Classes:                                   %10d\n" .

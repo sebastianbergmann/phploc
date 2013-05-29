@@ -72,34 +72,36 @@ namespace SebastianBergmann\PHPLOC
          * @var array
          */
         protected $count = array(
-          'files'              => 0,
-          'loc'                => 0,
-          'nclocClasses'       => 0,
-          'cloc'               => 0,
-          'ncloc'              => 0,
-          'ccn'                => 0,
-          'ccnMethods'         => 0,
-          'interfaces'         => 0,
-          'traits'             => 0,
-          'classes'            => 0,
-          'abstractClasses'    => 0,
-          'concreteClasses'    => 0,
-          'anonymousFunctions' => 0,
-          'functions'          => 0,
-          'methods'            => 0,
-          'publicMethods'      => 0,
-          'nonPublicMethods'   => 0,
-          'nonStaticMethods'   => 0,
-          'staticMethods'      => 0,
-          'constants'          => 0,
-          'classConstants'     => 0,
-          'globalConstants'    => 0,
-          'testClasses'        => 0,
-          'testMethods'        => 0,
-          'ccnByLoc'           => 0,
-          'ccnByNom'           => 0,
-          'nclocByNoc'         => 0,
-          'nclocByNom'         => 0
+          'files'                   => 0,
+          'loc'                     => 0,
+          'nclocClasses'            => 0,
+          'cloc'                    => 0,
+          'ncloc'                   => 0,
+          'ccn'                     => 0,
+          'ccnMethods'              => 0,
+          'interfaces'              => 0,
+          'traits'                  => 0,
+          'classes'                 => 0,
+          'abstractClasses'         => 0,
+          'concreteClasses'         => 0,
+          'anonymousFunctions'      => 0,
+          'functions'               => 0,
+          'methods'                 => 0,
+          'publicMethods'           => 0,
+          'nonPublicMethods'        => 0,
+          'nonStaticMethods'        => 0,
+          'staticMethods'           => 0,
+          'constants'               => 0,
+          'classConstants'          => 0,
+          'globalConstants'         => 0,
+          'testClasses'             => 0,
+          'testMethods'             => 0,
+          'ccnByLoc'                => 0,
+          'ccnByNom'                => 0,
+          'nclocByNoc'              => 0,
+          'nclocByNom'              => 0,
+          'staticMethodCalls'       => 0,
+          'staticAttributeAccesses' => 0
         );
 
         /**
@@ -174,16 +176,18 @@ namespace SebastianBergmann\PHPLOC
 
             $count = $this->count;
 
-            $count['directories']   = count($directories) - 1;
-            $count['namespaces']    = count($this->namespaces);
-            $count['classes']       = $count['abstractClasses'] +
-                                      $count['concreteClasses'];
-            $count['methods']       = $count['staticMethods'] +
-                                      $count['nonStaticMethods'];
-            $count['publicMethods'] = $count['methods'] -
-                                      $count['nonPublicMethods'];
-            $count['constants']     = $count['classConstants'] +
-                                      $count['globalConstants'];
+            $count['directories']        = count($directories) - 1;
+            $count['namespaces']         = count($this->namespaces);
+            $count['classes']            = $count['abstractClasses'] +
+                                           $count['concreteClasses'];
+            $count['methods']            = $count['staticMethods'] +
+                                           $count['nonStaticMethods'];
+            $count['publicMethods']      = $count['methods'] -
+                                           $count['nonPublicMethods'];
+            $count['constants']          = $count['classConstants'] +
+                                           $count['globalConstants'];
+            $count['staticDependencies'] = $count['staticMethodCalls'] +
+                                           $count['staticAttributeAccesses'];
 
             if ($count['ncloc'] > 0) {
                 $count['ccnByLoc'] = $count['ccn'] / $count['ncloc'];
@@ -504,6 +508,34 @@ namespace SebastianBergmann\PHPLOC
                     case T_STRING: {
                         if ($value == 'define') {
                             $this->count['globalConstants']++;
+                        }
+                    }
+                    break;
+
+                    case T_DOUBLE_COLON: {
+                        $access = FALSE;
+                        $call   = FALSE;
+                        $j      = $i;
+
+                        while ($tokens[$j] != ';') {
+                            if (is_string($tokens[$j]) && $tokens[$j] == '(') {
+                                $call = TRUE;
+                            }
+
+                            else if (is_array($tokens[$j]) &&
+                                     $tokens[$j][0] == T_VARIABLE) {
+                                $access = TRUE;
+                            }
+
+                            $j++;
+                        }
+
+                        if ($call) {
+                            $this->count['staticMethodCalls']++;
+                        }
+
+                        else if ($access) {
+                            $this->count['staticAttributeAccesses']++;
                         }
                     }
                     break;
