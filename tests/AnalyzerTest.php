@@ -67,10 +67,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 1,
-            'loc' => 47,
-            'nclocClasses' => 29,
+            'loc' => 62,
+            'nclocClasses' => 44,
             'cloc' => 3,
-            'ncloc' => 44,
+            'ncloc' => 59,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -87,15 +87,21 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'constants' => 2,
             'classConstants' => 1,
             'globalConstants' => 1,
-            'ccnByLoc' => 0.045,
+            'ccnByLoc' => 0.033,
             'ccnByNom' => 1.5,
-            'nclocByNoc' => 14.5,
-            'nclocByNom' => 7.25,
+            'nclocByNoc' => 22,
+            'nclocByNom' => 11,
             'directories' => 0,
             'namespaces' => 1,
             'traits' => 0,
             'testClasses' => 0,
-            'testMethods' => 0
+            'testMethods' => 0,
+            'methodCalls' => 6,
+            'staticMethodCalls' => 4,
+            'instanceMethodCalls' => 2,
+            'attributeAccesses' => 6,
+            'staticAttributeAccesses' => 4,
+            'instanceAttributeAccesses' => 2
         );
 
         $this->assertEquals(
@@ -113,10 +119,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 2,
-            'loc' => 70,
-            'nclocClasses' => 47,
+            'loc' => 85,
+            'nclocClasses' => 62,
             'cloc' => 7,
-            'ncloc' => 63,
+            'ncloc' => 78,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -135,13 +141,19 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'globalConstants' => 1,
             'testClasses' => 1,
             'testMethods' => 2,
-            'ccnByLoc' => 0.031746031746032,
+            'ccnByLoc' => 0.025,
             'ccnByNom' => 2,
-            'nclocByNoc' => 23.5,
-            'nclocByNom' => 11.75,
+            'nclocByNoc' => 31,
+            'nclocByNom' => 15.5,
             'directories' => 0,
             'namespaces' => 1,
-            'traits' => 0
+            'traits' => 0,
+            'methodCalls' => 6,
+            'staticMethodCalls' => 4,
+            'instanceMethodCalls' => 2,
+            'attributeAccesses' => 6,
+            'staticAttributeAccesses' => 4,
+            'instanceAttributeAccesses' => 2
         );
 
         $this->assertEquals(

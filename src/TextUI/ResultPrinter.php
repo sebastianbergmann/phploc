@@ -99,7 +99,14 @@ namespace SebastianBergmann\PHPLOC\TextUI
                        "Functions:                                   %10d\n\n" .
                        "Constants:                                   %10d\n" .
                        "  Global constants:                          %10d\n" .
-                       "  Class constants:                           %10d\n";
+                       "  Class constants:                           %10d\n\n" .
+                       "Dependencies:\n" .
+                       "  Attribute Access:                          %10d\n" .
+                       "    Non-Static:                              %10d (%.2f%%)\n" .
+                       "    Static:                                  %10d (%.2f%%)\n" .
+                       "  Method Call:                               %10d\n" .
+                       "    Non-Static:                              %10d (%.2f%%)\n" .
+                       "    Static:                                  %10d (%.2f%%)\n";
 
             $args[] = $count['cloc'];
             $args[] = $count['ncloc'];
@@ -128,6 +135,16 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $args[] = $count['constants'];
             $args[] = $count['globalConstants'];
             $args[] = $count['classConstants'];
+            $args[] = $count['attributeAccesses'];
+            $args[] = $count['instanceAttributeAccesses'];
+            $args[] = $count['attributeAccesses'] > 0 ? ($count['instanceAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0;
+            $args[] = $count['staticAttributeAccesses'];
+            $args[] = $count['attributeAccesses'] > 0 ? ($count['staticAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0;
+            $args[] = $count['methodCalls'];
+            $args[] = $count['instanceMethodCalls'];
+            $args[] = $count['methodCalls'] > 0 ? ($count['instanceMethodCalls'] / $count['methodCalls']) * 100 : 0;
+            $args[] = $count['staticMethodCalls'];
+            $args[] = $count['methodCalls'] > 0 ? ($count['staticMethodCalls'] / $count['methodCalls']) * 100 : 0;
 
             if ($printTests) {
                 $format .= "\nTests:\n  Classes:                                   %10d\n" .

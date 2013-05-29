@@ -27,17 +27,32 @@ class ACLass extends AnAbstractClass implements AnInterface
     {
         $a = 'a';
         $b = "${a} {$a}";
+
+        $o->m();
+        $o->$m();
+        $o->a;
+        $o->$a;
     }
 
     public function aPublicMethod()
     {
         $a = TRUE ? TRUE : FALSE;
+
+        c::m();
+        c::$m();
+        c::$a;
+        c::$a;
     }
 
     protected function aProtectedMethod()
     {
         if (TRUE) {
         }
+
+        $c::m();
+        $c::$m();
+        $c::$a;
+        $c::$a;
     }
 
     private function aPrivateMethod()

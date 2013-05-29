@@ -100,6 +100,12 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               'Constants',
               'Global Constants',
               'Class Constants',
+              'Attribute Accesses',
+              'Non-Static Attribute Accesses',
+              'Static Attribute Accesses',
+              'Method Calls',
+              'Non-Static Method Calls',
+              'Static Method Calls',
               'Test Classes',
               'Test Methods'
             );
@@ -139,6 +145,12 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['constants'],
               $count['globalConstants'],
               $count['classConstants'],
+              $count['attributeAccesses'],
+              $count['instanceAttributeAccesses'],
+              $count['staticAttributeAccesses'],
+              $count['methodCalls'],
+              $count['instanceMethodCalls'],
+              $count['staticMethodCalls'],
               $count['testClasses'],
               $count['testMethods']
             );
