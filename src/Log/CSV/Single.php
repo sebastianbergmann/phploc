@@ -101,10 +101,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               'Global Constants',
               'Class Constants',
               'Test Classes',
-              'Test Methods',
-              'Static Dependencies',
-              'Static Method Calls',
-              'Static Attribute Accesses'
+              'Test Methods'
             );
 
             return implode(',', $keys) . PHP_EOL;
@@ -143,10 +140,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['globalConstants'],
               $count['classConstants'],
               $count['testClasses'],
-              $count['testMethods'],
-              $count['staticDependencies'],
-              $count['staticMethodCalls'],
-              $count['staticAttributeAccesses']
+              $count['testMethods']
             );
 
             return implode(',', $values) . PHP_EOL;
