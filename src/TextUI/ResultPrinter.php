@@ -101,10 +101,10 @@ namespace SebastianBergmann\PHPLOC\TextUI
                        "  Global constants:                          %10d\n" .
                        "  Class constants:                           %10d\n\n" .
                        "Dependencies:\n" .
-                       "  Attribute Access:                          %10d\n" .
+                       "  Attribute Accesses:                        %10d\n" .
                        "    Non-Static:                              %10d (%.2f%%)\n" .
                        "    Static:                                  %10d (%.2f%%)\n" .
-                       "  Method Call:                               %10d\n" .
+                       "  Method Calls:                              %10d\n" .
                        "    Non-Static:                              %10d (%.2f%%)\n" .
                        "    Static:                                  %10d (%.2f%%)\n";
 
