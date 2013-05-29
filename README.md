@@ -4,9 +4,9 @@
 
 ## Installation
 
-There a two supported ways of installing PHPLOC.
+There are three supported ways of installing PHPLOC.
 
-You can use the [PEAR Installer](http://pear.php.net/manual/en/guide.users.commandline.cli.php) to download and install PHPLOC as well as its dependencies. You can also download a [PHP Archive (PHAR)](http://php.net/phar) of PHPLOC that has all required dependencies of PHPLOC bundled in a single file.
+You can use the [PEAR Installer](http://pear.php.net/manual/en/guide.users.commandline.cli.php) or [Composer](http://getcomposer.org/) to download and install PHPLOC as well as its dependencies. You can also download a [PHP Archive (PHAR)](http://php.net/phar) of PHPLOC that has all required (as well as some optional) dependencies of PHPLOC bundled in a single file.
 
 ### PEAR Installer
 
@@ -14,6 +14,16 @@ The following two commands (which you may have to run as `root`) are all that is
 
     pear config-set auto_discover 1
     pear install pear.phpunit.de/phploc
+
+### Composer
+
+To add PHPLOC as a local, per-project dependency to your project, simply add a dependency on `sebastian/phploc` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a development-time dependency on PHPLOC 2.0:
+
+    {
+        "require-dev": {
+            "sebastian/phploc": "2.0.*"
+        }
+    }
 
 ### PHP Archive (PHAR)
 
@@ -23,36 +33,44 @@ The following two commands (which you may have to run as `root`) are all that is
 ## Usage Example
 
     ➜ ~ phploc /usr/local/src/phpunit/PHPUnit
-    phploc 1.7.0 by Sebastian Bergmann.
+    phploc 2.0.0 by Sebastian Bergmann.
 
-    Directories:                                         16
-    Files:                                              117
+    Directories:                                         17
+    Files:                                              121
 
-    Lines of Code (LOC):                              27640
+    Lines of Code (LOC):                              29022
       Cyclomatic Complexity / Lines of Code:           0.12
-    Comment Lines of Code (CLOC):                     13771
-    Non-Comment Lines of Code (NCLOC):                13869
+    Comment Lines of Code (CLOC):                     14155
+    Non-Comment Lines of Code (NCLOC):                14867
 
     Namespaces:                                           0
     Interfaces:                                           6
     Traits:                                               0
-    Classes:                                            109
-      Abstract:                                           9 (8.26%)
-      Concrete:                                         100 (91.74%)
-      Average Class Length (NCLOC):                     125
-    Methods:                                            723
+    Classes:                                            113
+      Abstract:                                           9 (7.96%)
+      Concrete:                                         104 (92.04%)
+      Average Class Length (NCLOC):                     126
+    Methods:                                            750
       Scope:
-        Non-Static:                                     498 (68.88%)
-        Static:                                         225 (31.12%)
+        Non-Static:                                     507 (67.60%)
+        Static:                                         243 (32.40%)
       Visibility:
-        Public:                                         510 (70.54%)
-        Non-Public:                                     213 (29.46%)
-      Average Method Length (NCLOC):                     18
-      Cyclomatic Complexity / Number of Methods:       3.34
+        Public:                                         526 (70.13%)
+        Non-Public:                                     224 (29.87%)
+      Average Method Length (NCLOC):                     19
+      Cyclomatic Complexity / Number of Methods:       3.36
 
-    Anonymous Functions:                                  0
-    Functions:                                          128
+    Anonymous Functions:                                  4
+    Functions:                                          138
 
-    Constants:                                           33
-      Global constants:                                   1
-      Class constants:                                   32
+    Constants:                                           36
+      Global constants:                                   2
+      Class constants:                                   34
+
+    Dependencies:
+      Attribute Access:                                 729
+        Non-Static:                                     647 (88.75%)
+        Static:                                          82 (11.25%)
+      Method Call:                                     1947
+        Non-Static:                                    1383 (71.03%)
+        Static:                                         564 (28.97%)
