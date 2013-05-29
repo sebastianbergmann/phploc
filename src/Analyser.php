@@ -560,31 +560,25 @@ namespace SebastianBergmann\PHPLOC
             }
         }
 
-        protected function isTestMethod(
-            $functionName,
-            $visibility,
-            $static,
-            array $tokens,
-            $currentToken
-        ) {
+        protected function isTestMethod($functionName, $visibility, $static, array $tokens, $currentToken) {
             if ($static || $visibility != T_PUBLIC) {
-                return false;
+                return FALSE;
             }
 
             if (strpos($functionName, 'test') === 0) {
-                return true;
+                return TRUE;
             }
 
             while ($tokens[$currentToken][0] != T_DOC_COMMENT) {
                 if ($tokens[$currentToken] == '{' || $tokens[$currentToken] == '}') {
-                    return false;
+                    return FALSE;
                 }
 
                 --$currentToken;
             }
 
-            return strpos($tokens[$currentToken][1], '@test') !== false ||
-                   strpos($tokens[$currentToken][1], '@scenario') !== false;
+            return strpos($tokens[$currentToken][1], '@test') !== FALSE ||
+                   strpos($tokens[$currentToken][1], '@scenario') !== FALSE;
         }
 
         /**

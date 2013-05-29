@@ -346,8 +346,7 @@ Usage: phploc [switches] <directory|file> ...
 
   --progress               Print progress bar.
 
-EOT
-;
+EOT;
         }
 
         /**
