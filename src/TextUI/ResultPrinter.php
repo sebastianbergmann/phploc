@@ -62,98 +62,117 @@ namespace SebastianBergmann\PHPLOC\TextUI
          */
         public function printResult(array $count, $printTests)
         {
-            $args   = array();
-            $format = '';
-
             if ($count['directories'] > 0) {
-                $format .= "Directories:                                 %10d\n" .
-                           "Files:                                       %10d\n\n";
-                $args[]  = $count['directories'];
-                $args[]  = $count['files'];
+                printf(
+                  "Directories                                 %10d\n" .
+                  "Files                                       %10d\n\n",
+
+                  $count['directories'],
+                  $count['files']
+                );
             }
 
-            $format .= "Lines of Code (LOC):                         %10d\n" .
-                       "  Cyclomatic Complexity / Lines of Code:     %10.2f\n";
-            $args[]  = $count['loc'];
-            $args[]  = $count['ccnByLoc'];
+            $format = <<<END
+Size
+  Lines of Code (LOC)                       %10d
+  Non-Comment Lines of Code (NCLOC)         %10d
+    Average Class Length                    %10d
+    Average Method Length                   %10d
+  Comment Lines of Code (CLOC)              %10d
 
-            $format .= "Comment Lines of Code (CLOC):                %10d\n" .
-                       "Non-Comment Lines of Code (NCLOC):           %10d\n\n" .
-                       "Namespaces:                                  %10d\n" .
-                       "Interfaces:                                  %10d\n" .
-                       "Traits:                                      %10d\n" .
-                       "Classes:                                     %10d\n" .
-                       "  Abstract:                                  %10d (%.2f%%)\n" .
-                       "  Concrete:                                  %10d (%.2f%%)\n" .
-                       "  Average Class Length (NCLOC):              %10d\n" .
-                       "Methods:                                     %10d\n" .
-                       "  Scope:\n" .
-                       "    Non-Static:                              %10d (%.2f%%)\n" .
-                       "    Static:                                  %10d (%.2f%%)\n" .
-                       "  Visibility:\n" .
-                       "    Public:                                  %10d (%.2f%%)\n" .
-                       "    Non-Public:                              %10d (%.2f%%)\n" .
-                       "  Average Method Length (NCLOC):             %10d\n" .
-                       "  Cyclomatic Complexity / Number of Methods: %10.2f\n\n" .
-                       "Anonymous Functions:                         %10d\n" .
-                       "Functions:                                   %10d\n\n" .
-                       "Constants:                                   %10d\n" .
-                       "  Global constants:                          %10d\n" .
-                       "  Class constants:                           %10d\n\n" .
-                       "Dependencies:\n" .
-                       "  Attribute Accesses:                        %10d\n" .
-                       "    Non-Static:                              %10d (%.2f%%)\n" .
-                       "    Static:                                  %10d (%.2f%%)\n" .
-                       "  Method Calls:                              %10d\n" .
-                       "    Non-Static:                              %10d (%.2f%%)\n" .
-                       "    Static:                                  %10d (%.2f%%)\n";
+Complexity
+  Cyclomatic Complexity / NCLOC             %10.2f
+  Cyclomatic Complexity / Number of Methods %10.2f
 
-            $args[] = $count['cloc'];
-            $args[] = $count['ncloc'];
-            $args[] = $count['namespaces'];
-            $args[] = $count['interfaces'];
-            $args[] = $count['traits'];
-            $args[] = $count['classes'];
-            $args[] = $count['abstractClasses'];
-            $args[] = $count['classes'] > 0 ? ($count['abstractClasses'] / $count['classes']) * 100 : 0;
-            $args[] = $count['concreteClasses'];
-            $args[] = $count['classes'] > 0 ? ($count['concreteClasses'] / $count['classes']) * 100 : 0;
-            $args[] = $count['nclocByNoc'];
-            $args[] = $count['methods'];
-            $args[] = $count['nonStaticMethods'];
-            $args[] = $count['methods'] > 0 ? ($count['nonStaticMethods'] / $count['methods']) * 100 : 0;
-            $args[] = $count['staticMethods'];
-            $args[] = $count['methods'] > 0 ? ($count['staticMethods'] / $count['methods']) * 100 : 0;
-            $args[] = $count['publicMethods'];
-            $args[] = $count['methods'] > 0 ? ($count['publicMethods'] / $count['methods']) * 100 : 0;
-            $args[] = $count['nonPublicMethods'];
-            $args[] = $count['methods'] > 0 ? ($count['nonPublicMethods'] / $count['methods']) * 100 : 0;
-            $args[] = $count['nclocByNom'];
-            $args[] = $count['ccnByNom'];
-            $args[] = $count['anonymousFunctions'];
-            $args[] = $count['functions'];
-            $args[] = $count['constants'];
-            $args[] = $count['globalConstants'];
-            $args[] = $count['classConstants'];
-            $args[] = $count['attributeAccesses'];
-            $args[] = $count['instanceAttributeAccesses'];
-            $args[] = $count['attributeAccesses'] > 0 ? ($count['instanceAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0;
-            $args[] = $count['staticAttributeAccesses'];
-            $args[] = $count['attributeAccesses'] > 0 ? ($count['staticAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0;
-            $args[] = $count['methodCalls'];
-            $args[] = $count['instanceMethodCalls'];
-            $args[] = $count['methodCalls'] > 0 ? ($count['instanceMethodCalls'] / $count['methodCalls']) * 100 : 0;
-            $args[] = $count['staticMethodCalls'];
-            $args[] = $count['methodCalls'] > 0 ? ($count['staticMethodCalls'] / $count['methodCalls']) * 100 : 0;
+Dependencies
+  Attribute Accesses                        %10d
+    Non-Static                              %10d (%.2f%%)
+    Static                                  %10d (%.2f%%)
+  Method Calls                              %10d
+    Non-Static                              %10d (%.2f%%)
+    Static                                  %10d (%.2f%%)
+
+Structure
+  Namespaces                                %10d
+  Interfaces                                %10d
+  Traits                                    %10d
+  Classes                                   %10d
+    Abstract Classes                        %10d (%.2f%%)
+    Concrete Classes                        %10d (%.2f%%)
+  Methods                                   %10d
+    Scope
+      Non-Static Methods                    %10d (%.2f%%)
+      Static Methods                        %10d (%.2f%%)
+    Visibility
+      Public Method                         %10d (%.2f%%)
+      Non-Public Methods                    %10d (%.2f%%)
+  Functions                                 %10d
+    Named Functions                         %10d (%.2f%%)
+    Anonymous Functions                     %10d (%.2f%%)
+  Constants                                 %10d
+    Global Constants                        %10d (%.2f%%)
+    Class Constants                         %10d (%.2f%%)
+
+END;
+
+            printf(
+              $format,
+              $count['loc'],
+              $count['ncloc'],
+              $count['nclocByNoc'],
+              $count['nclocByNom'],
+              $count['cloc'],
+              $count['ccnByLoc'],
+              $count['ccnByNom'],
+              $count['attributeAccesses'],
+              $count['instanceAttributeAccesses'],
+              $count['attributeAccesses'] > 0 ? ($count['instanceAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0,
+              $count['staticAttributeAccesses'],
+              $count['attributeAccesses'] > 0 ? ($count['staticAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0,
+              $count['methodCalls'],
+              $count['instanceMethodCalls'],
+              $count['methodCalls'] > 0 ? ($count['instanceMethodCalls'] / $count['methodCalls']) * 100 : 0,
+              $count['staticMethodCalls'],
+              $count['methodCalls'] > 0 ? ($count['staticMethodCalls'] / $count['methodCalls']) * 100 : 0,
+              $count['namespaces'],
+              $count['interfaces'],
+              $count['traits'],
+              $count['classes'],
+              $count['abstractClasses'],
+              $count['classes'] > 0 ? ($count['abstractClasses'] / $count['classes']) * 100 : 0,
+              $count['concreteClasses'],
+              $count['classes'] > 0 ? ($count['concreteClasses'] / $count['classes']) * 100 : 0,
+              $count['methods'],
+              $count['nonStaticMethods'],
+              $count['methods'] > 0 ? ($count['nonStaticMethods'] / $count['methods']) * 100 : 0,
+              $count['staticMethods'],
+              $count['methods'] > 0 ? ($count['staticMethods'] / $count['methods']) * 100 : 0,
+              $count['publicMethods'],
+              $count['methods'] > 0 ? ($count['publicMethods'] / $count['methods']) * 100 : 0,
+              $count['nonPublicMethods'],
+              $count['methods'] > 0 ? ($count['nonPublicMethods'] / $count['methods']) * 100 : 0,
+              $count['functions'],
+              $count['namedFunctions'],
+              $count['functions'] > 0 ? ($count['namedFunctions'] / $count['functions']) * 100 : 0,
+              $count['anonymousFunctions'],
+              $count['functions'] > 0 ? ($count['anonymousFunctions'] / $count['functions']) * 100 : 0,
+              $count['constants'],
+              $count['globalConstants'],
+              $count['constants'] > 0 ? ($count['globalConstants'] / $count['constants']) * 100 : 0,
+              $count['classConstants'],
+              $count['constants'] > 0 ? ($count['classConstants'] / $count['constants']) * 100 : 0
+            );
 
             if ($printTests) {
-                $format .= "\nTests:\n  Classes:                                   %10d\n" .
-                           "  Methods:                                   %10d\n";
-                $args[]  = $count['testClasses'];
-                $args[]  = $count['testMethods'];
-            }
+                printf(
+                  "\nTests\n" .
+                  "  Classes                                   %10d\n" .
+                  "  Methods                                   %10d\n",
 
-            vprintf($format, $args);
+                  $count['testClasses'],
+                  $count['testMethods']
+                );
+            }
         }
     }
 }

@@ -84,8 +84,9 @@ namespace SebastianBergmann\PHPLOC
           'classes'                   => 0,
           'abstractClasses'           => 0,
           'concreteClasses'           => 0,
-          'anonymousFunctions'        => 0,
           'functions'                 => 0,
+          'namedFunctions'            => 0,
+          'anonymousFunctions'        => 0,
           'methods'                   => 0,
           'publicMethods'             => 0,
           'nonPublicMethods'          => 0,
@@ -188,6 +189,8 @@ namespace SebastianBergmann\PHPLOC
                                           $count['nonStaticMethods'];
             $count['publicMethods']     = $count['methods'] -
                                           $count['nonPublicMethods'];
+            $count['functions']         = $count['namedFunctions'] +
+                                          $count['anonymousFunctions'];
             $count['constants']         = $count['classConstants'] +
                                           $count['globalConstants'];
             $count['attributeAccesses'] = $count['staticAttributeAccesses'] +

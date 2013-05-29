@@ -35,42 +35,45 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
     ➜ ~ phploc /usr/local/src/phpunit/PHPUnit
     phploc 2.0.0 by Sebastian Bergmann.
 
-    Directories:                                         17
-    Files:                                              121
+    Directories                                         17
+    Files                                              121
 
-    Lines of Code (LOC):                              29022
-      Cyclomatic Complexity / Lines of Code:           0.12
-    Comment Lines of Code (CLOC):                     14155
-    Non-Comment Lines of Code (NCLOC):                14867
+    Size
+      Lines of Code (LOC)                            29022
+      Non-Comment Lines of Code (NCLOC)              14867
+        Average Class Length                           126
+        Average Method Length                           19
+      Comment Lines of Code (CLOC)                   14155
 
-    Namespaces:                                           0
-    Interfaces:                                           6
-    Traits:                                               0
-    Classes:                                            113
-      Abstract:                                           9 (7.96%)
-      Concrete:                                         104 (92.04%)
-      Average Class Length (NCLOC):                     126
-    Methods:                                            750
-      Scope:
-        Non-Static:                                     507 (67.60%)
-        Static:                                         243 (32.40%)
-      Visibility:
-        Public:                                         526 (70.13%)
-        Non-Public:                                     224 (29.87%)
-      Average Method Length (NCLOC):                     19
-      Cyclomatic Complexity / Number of Methods:       3.36
+    Complexity
+      Cyclomatic Complexity / NCLOC                   0.12
+      Cyclomatic Complexity / Number of Methods       3.36
 
-    Anonymous Functions:                                  4
-    Functions:                                          138
+    Dependencies
+      Attribute Accesses                               729
+        Non-Static                                     647 (88.75%)
+        Static                                          82 (11.25%)
+      Method Calls                                    1947
+        Non-Static                                    1383 (71.03%)
+        Static                                         564 (28.97%)
 
-    Constants:                                           36
-      Global constants:                                   2
-      Class constants:                                   34
-
-    Dependencies:
-      Attribute Access:                                 729
-        Non-Static:                                     647 (88.75%)
-        Static:                                          82 (11.25%)
-      Method Call:                                     1947
-        Non-Static:                                    1383 (71.03%)
-        Static:                                         564 (28.97%)
+    Structure
+      Namespaces                                         0
+      Interfaces                                         6
+      Traits                                             0
+      Classes                                          113
+        Abstract Classes                                 9 (7.96%)
+        Concrete Classes                               104 (92.04%)
+      Methods                                          750
+        Scope
+          Non-Static Methods                           507 (67.60%)
+          Static Methods                               243 (32.40%)
+        Visibility
+          Public Method                                526 (70.13%)
+          Non-Public Methods                           224 (29.87%)
+      Functions                                          4
+        Named Functions                                  0 (0.00%)
+        Anonymous Functions                              4 (100.00%)
+      Constants                                         36
+        Global Constants                                 2 (5.56%)
+        Class Constants                                 34 (94.44%)
