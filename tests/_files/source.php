@@ -25,8 +25,10 @@ class ACLass extends AnAbstractClass implements AnInterface
 
     public static function aStaticMethod()
     {
-        $a = 'a';
-        $b = "${a} {$a}";
+        global $foo;
+
+        $a = $_GET'a';
+        $GLOBALS['bar'] = "${a} {$a}";
 
         $o->m();
         $o->$m();

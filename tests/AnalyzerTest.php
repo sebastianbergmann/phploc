@@ -67,7 +67,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 1,
-            'loc' => 62,
+            'loc' => 64,
             'cloc' => 3,
             'ccn' => 2,
             'ccnMethods' => 2,
@@ -97,15 +97,18 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'attributeAccesses' => 6,
             'staticAttributeAccesses' => 4,
             'instanceAttributeAccesses' => 2,
-            'lloc' => 19,
-            'llocClasses' => 17,
+            'lloc' => 20,
+            'llocClasses' => 18,
             'namedFunctions' => 1,
             'ccnByLloc' => 0.10,
-            'llocByNoc' => 8.5,
-            'llocByNom' => 4.25,
+            'llocByNoc' => 9,
+            'llocByNom' => 4.5,
             'llocFunctions' => 0,
             'llocGlobal' => 2,
-            'llocByNof' => 0
+            'llocByNof' => 0,
+            'globalAccesses' => 2,
+            'globalVariableAccesses' => 1,
+            'superGlobalVariableAccesses' => 1
         );
 
         $this->assertEquals(
@@ -123,7 +126,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 2,
-            'loc' => 85,
+            'loc' => 87,
             'cloc' => 7,
             'ccn' => 2,
             'ccnMethods' => 2,
@@ -153,15 +156,18 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'attributeAccesses' => 6,
             'staticAttributeAccesses' => 4,
             'instanceAttributeAccesses' => 2,
-            'lloc' => 19,
-            'llocClasses' => 17,
+            'lloc' => 20,
+            'llocClasses' => 18,
             'namedFunctions' => 1,
             'ccnByLloc' => 0.10,
-            'llocByNoc' => 8.5,
-            'llocByNom' => 4.25,
+            'llocByNoc' => 9,
+            'llocByNom' => 4.5,
             'llocFunctions' => 0,
             'llocGlobal' => 2,
-            'llocByNof' => 0
+            'llocByNof' => 0,
+            'globalAccesses' => 2,
+            'globalVariableAccesses' => 1,
+            'superGlobalVariableAccesses' => 1
         );
 
         $this->assertEquals(

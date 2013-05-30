@@ -89,6 +89,9 @@ Complexity
   Cyclomatic Complexity / Number of Methods %10.2f
 
 Dependencies
+  Global Accesses                           %10d
+    Global Variables                        %10d (%.2f%%)
+    Super-Global Variables                  %10d (%.2f%%)
   Attribute Accesses                        %10d
     Non-Static                              %10d (%.2f%%)
     Static                                  %10d (%.2f%%)
@@ -135,6 +138,11 @@ END;
               $count['cloc'],
               $count['ccnByLloc'],
               $count['ccnByNom'],
+              $count['globalAccesses'],
+              $count['globalVariableAccesses'],
+              $count['globalAccesses'] > 0 ? ($count['globalVariableAccesses'] / $count['globalAccesses']) * 100 : 0,
+              $count['superGlobalVariableAccesses'],
+              $count['globalAccesses'] > 0 ? ($count['superGlobalVariableAccesses'] / $count['globalAccesses']) * 100 : 0,
               $count['attributeAccesses'],
               $count['instanceAttributeAccesses'],
               $count['attributeAccesses'] > 0 ? ($count['instanceAttributeAccesses'] / $count['attributeAccesses']) * 100 : 0,

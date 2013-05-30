@@ -72,50 +72,72 @@ namespace SebastianBergmann\PHPLOC
          * @var array
          */
         protected $count = array(
-          'files'                     => 0,
-          'loc'                       => 0,
-          'lloc'                      => 0,
-          'llocClasses'               => 0,
-          'llocFunctions'             => 0,
-          'llocGlobal'                => 0,
-          'cloc'                      => 0,
-          'ccn'                       => 0,
-          'ccnMethods'                => 0,
-          'interfaces'                => 0,
-          'traits'                    => 0,
-          'classes'                   => 0,
-          'abstractClasses'           => 0,
-          'concreteClasses'           => 0,
-          'functions'                 => 0,
-          'namedFunctions'            => 0,
-          'anonymousFunctions'        => 0,
-          'methods'                   => 0,
-          'publicMethods'             => 0,
-          'nonPublicMethods'          => 0,
-          'nonStaticMethods'          => 0,
-          'staticMethods'             => 0,
-          'constants'                 => 0,
-          'classConstants'            => 0,
-          'globalConstants'           => 0,
-          'testClasses'               => 0,
-          'testMethods'               => 0,
-          'ccnByLloc'                 => 0,
-          'ccnByNom'                  => 0,
-          'llocByNoc'                 => 0,
-          'llocByNom'                 => 0,
-          'llocByNof'                 => 0,
-          'methodCalls'               => 0,
-          'staticMethodCalls'         => 0,
-          'instanceMethodCalls'       => 0,
-          'attributeAccesses'         => 0,
-          'staticAttributeAccesses'   => 0,
-          'instanceAttributeAccesses' => 0
+          'files'                       => 0,
+          'loc'                         => 0,
+          'lloc'                        => 0,
+          'llocClasses'                 => 0,
+          'llocFunctions'               => 0,
+          'llocGlobal'                  => 0,
+          'cloc'                        => 0,
+          'ccn'                         => 0,
+          'ccnMethods'                  => 0,
+          'interfaces'                  => 0,
+          'traits'                      => 0,
+          'classes'                     => 0,
+          'abstractClasses'             => 0,
+          'concreteClasses'             => 0,
+          'functions'                   => 0,
+          'namedFunctions'              => 0,
+          'anonymousFunctions'          => 0,
+          'methods'                     => 0,
+          'publicMethods'               => 0,
+          'nonPublicMethods'            => 0,
+          'nonStaticMethods'            => 0,
+          'staticMethods'               => 0,
+          'constants'                   => 0,
+          'classConstants'              => 0,
+          'globalConstants'             => 0,
+          'testClasses'                 => 0,
+          'testMethods'                 => 0,
+          'ccnByLloc'                   => 0,
+          'ccnByNom'                    => 0,
+          'llocByNoc'                   => 0,
+          'llocByNom'                   => 0,
+          'llocByNof'                   => 0,
+          'methodCalls'                 => 0,
+          'staticMethodCalls'           => 0,
+          'instanceMethodCalls'         => 0,
+          'attributeAccesses'           => 0,
+          'staticAttributeAccesses'     => 0,
+          'instanceAttributeAccesses'   => 0,
+          'globalAccesses'              => 0,
+          'globalVariableAccesses'      => 0,
+          'superGlobalVariableAccesses' => 0
         );
 
         /**
          * @var ezcConsoleOutput
          */
         protected $output;
+
+        /**
+         * @var array
+         */
+        private $superGlobals = array(
+          '$_ENV' => TRUE,
+          '$_POST' => TRUE,
+          '$_GET' => TRUE,
+          '$_COOKIE' => TRUE,
+          '$_SERVER' => TRUE,
+          '$_FILES' => TRUE,
+          '$_REQUEST' => TRUE,
+          '$HTTP_ENV_VARS' => TRUE,
+          '$HTTP_POST_VARS' => TRUE,
+          '$HTTP_GET_VARS' => TRUE,
+          '$HTTP_COOKIE_VARS' => TRUE,
+          '$HTTP_SERVER_VARS' => TRUE,
+          '$HTTP_POST_FILES' => TRUE
+        );
 
         /**
          * Constructor.
@@ -203,6 +225,8 @@ namespace SebastianBergmann\PHPLOC
             $count['llocGlobal']        = $count['lloc'] -
                                           $count['llocClasses'] -
                                           $count['llocFunctions'];
+            $count['globalAccesses']    = $count['globalVariableAccesses'] +
+                                          $count['superGlobalVariableAccesses'];
 
             if ($count['lloc'] > 0) {
                 $count['ccnByLloc'] = $count['ccn'] / $count['lloc'];
@@ -568,6 +592,18 @@ namespace SebastianBergmann\PHPLOC
                             } else {
                                 $this->count['instanceAttributeAccesses']++;
                             }
+                        }
+                    }
+                    break;
+
+                    case T_GLOBAL: {
+                        $this->count['globalVariableAccesses']++;
+                    }
+                    break;
+
+                    case T_VARIABLE: {
+                        if (isset($this->superGlobals[$value])) {
+                            $this->count['superGlobalVariableAccesses']++;
                         }
                     }
                     break;
