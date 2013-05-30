@@ -76,7 +76,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'abstractClasses' => 1,
             'concreteClasses' => 1,
             'anonymousFunctions' => 1,
-            'functions' => 1,
+            'functions' => 2,
             'methods' => 4,
             'publicMethods' => 2,
             'nonPublicMethods' => 2,
@@ -99,10 +99,13 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'instanceAttributeAccesses' => 2,
             'lloc' => 19,
             'llocClasses' => 17,
-            'namedFunctions' => 0,
+            'namedFunctions' => 1,
             'ccnByLloc' => 0.10,
             'llocByNoc' => 8.5,
-            'llocByNom' => 4.25
+            'llocByNom' => 4.25,
+            'llocFunctions' => 0,
+            'llocGlobal' => 2,
+            'llocByNof' => 0
         );
 
         $this->assertEquals(
@@ -129,7 +132,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'abstractClasses' => 1,
             'concreteClasses' => 1,
             'anonymousFunctions' => 1,
-            'functions' => 1,
+            'functions' => 2,
             'methods' => 4,
             'publicMethods' => 2,
             'nonPublicMethods' => 2,
@@ -152,10 +155,13 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'instanceAttributeAccesses' => 2,
             'lloc' => 19,
             'llocClasses' => 17,
-            'namedFunctions' => 0,
+            'namedFunctions' => 1,
             'ccnByLloc' => 0.10,
             'llocByNoc' => 8.5,
-            'llocByNom' => 4.25
+            'llocByNom' => 4.25,
+            'llocFunctions' => 0,
+            'llocGlobal' => 2,
+            'llocByNof' => 0
         );
 
         $this->assertEquals(
