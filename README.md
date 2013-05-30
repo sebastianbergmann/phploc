@@ -41,8 +41,12 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
     Size
       Lines of Code (LOC)                            29022
       Logical Lines of Code (LLOC)                    3477
-        Average Class Length                            29
-        Average Method Length                            4
+        Classes                                       3307 (95.11%)
+          Average Class Length                          29
+          Average Method Length                          4
+        Functions                                      153 (4.40%)
+          Average Function Length                        1
+        Not in classes or functions                     17 (0.49%)
       Comment Lines of Code (CLOC)                   14155
 
     Complexity
@@ -71,9 +75,9 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
         Visibility
           Public Method                                526 (70.13%)
           Non-Public Methods                           224 (29.87%)
-      Functions                                          4
-        Named Functions                                  0 (0.00%)
-        Anonymous Functions                              4 (100.00%)
+      Functions                                        142
+        Named Functions                                138 (97.18%)
+        Anonymous Functions                              4 (2.82%)
       Constants                                         36
         Global Constants                                 2 (5.56%)
         Class Constants                                 34 (94.44%)
