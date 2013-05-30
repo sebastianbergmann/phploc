@@ -76,8 +76,12 @@ namespace SebastianBergmann\PHPLOC\TextUI
 Size
   Lines of Code (LOC)                       %10d
   Logical Lines of Code (LLOC)              %10d
-    Average Class Length                    %10d
-    Average Method Length                   %10d
+    Classes                                 %10d (%.2f%%)
+      Average Class Length                  %10d
+      Average Method Length                 %10d
+    Functions                               %10d (%.2f%%)
+      Average Function Length               %10d
+    Not in classes or functions             %10d (%.2f%%)
   Comment Lines of Code (CLOC)              %10d
 
 Complexity
@@ -119,8 +123,15 @@ END;
               $format,
               $count['loc'],
               $count['lloc'],
+              $count['llocClasses'],
+              $count['lloc'] > 0 ? ($count['llocClasses'] / $count['lloc']) * 100 : 0,
               $count['llocByNoc'],
               $count['llocByNom'],
+              $count['llocFunctions'],
+              $count['lloc'] > 0 ? ($count['llocFunctions'] / $count['lloc']) * 100 : 0,
+              $count['llocByNof'],
+              $count['llocGlobal'],
+              $count['lloc'] > 0 ? ($count['llocGlobal'] / $count['lloc']) * 100 : 0,
               $count['cloc'],
               $count['ccnByLloc'],
               $count['ccnByNom'],

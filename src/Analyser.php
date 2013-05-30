@@ -76,6 +76,8 @@ namespace SebastianBergmann\PHPLOC
           'loc'                       => 0,
           'lloc'                      => 0,
           'llocClasses'               => 0,
+          'llocFunctions'             => 0,
+          'llocGlobal'                => 0,
           'cloc'                      => 0,
           'ccn'                       => 0,
           'ccnMethods'                => 0,
@@ -101,6 +103,7 @@ namespace SebastianBergmann\PHPLOC
           'ccnByNom'                  => 0,
           'llocByNoc'                 => 0,
           'llocByNom'                 => 0,
+          'llocByNof'                 => 0,
           'methodCalls'               => 0,
           'staticMethodCalls'         => 0,
           'instanceMethodCalls'       => 0,
@@ -197,6 +200,9 @@ namespace SebastianBergmann\PHPLOC
                                           $count['instanceAttributeAccesses'];
             $count['methodCalls']       = $count['staticMethodCalls'] +
                                           $count['instanceMethodCalls'];
+            $count['llocGlobal']        = $count['lloc'] -
+                                          $count['llocClasses'] -
+                                          $count['llocFunctions'];
 
             if ($count['lloc'] > 0) {
                 $count['ccnByLloc'] = $count['ccn'] / $count['lloc'];
@@ -221,6 +227,10 @@ namespace SebastianBergmann\PHPLOC
 
             if ($count['methods'] > 0) {
                 $count['llocByNom'] = $count['llocClasses'] / $count['methods'];
+            }
+
+            if ($count['functions'] > 0) {
+                $count['llocByNof'] = $count['llocFunctions'] / $count['functions'];
             }
 
             return $count;
@@ -301,6 +311,10 @@ namespace SebastianBergmann\PHPLOC
                     if ($token == ';') {
                         if ($className !== NULL && !$testClass) {
                             $this->count['llocClasses']++;
+                        }
+
+                        else if ($functionName !== NULL) {
+                            $this->count['llocFunctions']++;
                         }
 
                         $this->count['lloc']++;
