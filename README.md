@@ -17,11 +17,11 @@ The following two commands (which you may have to run as `root`) are all that is
 
 ### Composer
 
-To add PHPLOC as a local, per-project dependency to your project, simply add a dependency on `sebastian/phploc` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a development-time dependency on PHPLOC 2.0:
+To add PHPLOC as a local, per-project dependency to your project, simply add a dependency on `phploc/phploc` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a development-time dependency on PHPLOC 2.0:
 
     {
         "require-dev": {
-            "sebastian/phploc": "2.0.*"
+            "phploc/phploc": "2.0.*"
         }
     }
 
