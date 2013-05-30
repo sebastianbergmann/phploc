@@ -299,7 +299,7 @@ namespace SebastianBergmann\PHPLOC
                     $token = trim($tokens[$i]);
 
                     if ($token == ';') {
-                        if ($className !== NULL) {
+                        if ($className !== NULL && !$testClass) {
                             $this->count['llocClasses']++;
                         }
 
