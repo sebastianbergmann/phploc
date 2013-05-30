@@ -416,8 +416,9 @@ namespace SebastianBergmann\PHPLOC
                         }
 
                         if ($currentBlock == T_FUNCTION) {
-                            if ($className === NULL) {
-                                $this->count['functions']++;
+                            if ($className === NULL &&
+                                $functionName != 'anonymous function') {
+                                $this->count['namedFunctions']++;
                             } else {
                                 $static     = FALSE;
                                 $visibility = T_PUBLIC;
