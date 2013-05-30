@@ -268,7 +268,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
                     $git->checkout($revision['sha1']);
 
                     $_count = $this->run(
-                      $arguments, $excludes, $names, $countTests
+                      $arguments, $excludes, $names, $namesExclude, $countTests
                     );
 
                     if ($_count) {
