@@ -602,7 +602,11 @@ namespace SebastianBergmann\PHPLOC
                     break;
 
                     case T_VARIABLE: {
-                        if (isset($this->superGlobals[$value])) {
+                        if ($value == '$GLOBALS') {
+                            $this->count['globalVariableAccesses']++;
+                        }
+
+                        else if (isset($this->superGlobals[$value])) {
                             $this->count['superGlobalVariableAccesses']++;
                         }
                     }
