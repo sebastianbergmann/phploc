@@ -90,6 +90,7 @@ Complexity
 
 Dependencies
   Global Accesses                           %10d
+    Global Constants                        %10d (%.2f%%)
     Global Variables                        %10d (%.2f%%)
     Super-Global Variables                  %10d (%.2f%%)
   Attribute Accesses                        %10d
@@ -139,6 +140,8 @@ END;
               $count['ccnByLloc'],
               $count['ccnByNom'],
               $count['globalAccesses'],
+              $count['globalConstantAccesses'],
+              $count['globalAccesses'] > 0 ? ($count['globalConstantAccesses'] / $count['globalAccesses']) * 100 : 0,
               $count['globalVariableAccesses'],
               $count['globalAccesses'] > 0 ? ($count['globalVariableAccesses'] / $count['globalAccesses']) * 100 : 0,
               $count['superGlobalVariableAccesses'],

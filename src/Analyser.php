@@ -71,6 +71,16 @@ namespace SebastianBergmann\PHPLOC
         /**
          * @var array
          */
+        protected $constants = array();
+
+        /**
+         * @var array
+         */
+        protected $possibleConstantAccesses = array();
+
+        /**
+         * @var array
+         */
         protected $count = array(
           'files'                       => 0,
           'loc'                         => 0,
@@ -112,7 +122,8 @@ namespace SebastianBergmann\PHPLOC
           'instanceAttributeAccesses'   => 0,
           'globalAccesses'              => 0,
           'globalVariableAccesses'      => 0,
-          'superGlobalVariableAccesses' => 0
+          'superGlobalVariableAccesses' => 0,
+          'globalConstantAccesses'      => 0,
         );
 
         /**
@@ -225,8 +236,16 @@ namespace SebastianBergmann\PHPLOC
             $count['llocGlobal']        = $count['lloc'] -
                                           $count['llocClasses'] -
                                           $count['llocFunctions'];
-            $count['globalAccesses']    = $count['globalVariableAccesses'] +
-                                          $count['superGlobalVariableAccesses'];
+
+            foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
+                if (in_array($possibleConstantAccess, $this->constants)) {
+                    $count['globalConstantAccesses']++;
+                }
+            }
+
+            $count['globalAccesses'] = $count['globalConstantAccesses'] +
+                                       $count['globalVariableAccesses'] +
+                                       $count['superGlobalVariableAccesses'];
 
             if ($count['lloc'] > 0) {
                 $count['ccnByLloc'] = $count['ccn'] / $count['lloc'];
@@ -558,6 +577,25 @@ namespace SebastianBergmann\PHPLOC
                     case T_STRING: {
                         if ($value == 'define') {
                             $this->count['globalConstants']++;
+
+                            $j = $i + 1;
+
+                            while (isset($tokens[$j]) && $tokens[$j] != ';') {
+                                if (is_array($tokens[$j]) &&
+                                    $tokens[$j][0] == T_CONSTANT_ENCAPSED_STRING) {
+                                    $this->constants[] = str_replace(
+                                      '\'', '', $tokens[$j][1]
+                                    );
+
+                                    break;
+                                }
+
+                                $j++;
+                            }
+                        }
+
+                        else {
+                            $this->possibleConstantAccesses[] = $value;
                         }
                     }
                     break;

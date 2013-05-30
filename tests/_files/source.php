@@ -28,7 +28,7 @@ class ACLass extends AnAbstractClass implements AnInterface
         global $foo;
 
         $a = $_GET'a';
-        $GLOBALS['bar'] = "${a} {$a}";
+        $GLOBALS['bar'] = A_GLOBAL_CONSTANT;
 
         $o->m();
         $o->$m();

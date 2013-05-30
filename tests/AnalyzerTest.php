@@ -106,9 +106,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'llocFunctions' => 0,
             'llocGlobal' => 2,
             'llocByNof' => 0,
-            'globalAccesses' => 3,
+            'globalAccesses' => 4,
             'globalVariableAccesses' => 2,
-            'superGlobalVariableAccesses' => 1
+            'superGlobalVariableAccesses' => 1,
+            'globalConstantAccesses' => 1
         );
 
         $this->assertEquals(
@@ -165,9 +166,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'llocFunctions' => 0,
             'llocGlobal' => 2,
             'llocByNof' => 0,
-            'globalAccesses' => 3,
+            'globalAccesses' => 4,
             'globalVariableAccesses' => 2,
-            'superGlobalVariableAccesses' => 1
+            'superGlobalVariableAccesses' => 1,
+            'globalConstantAccesses' => 1
         );
 
         $this->assertEquals(

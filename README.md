@@ -54,9 +54,10 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
       Cyclomatic Complexity / Number of Methods       3.36
 
     Dependencies
-      Global Accesses                                    8
-        Global Variables                                 0 (0.00%)
-        Super-Global Variables                           8 (100.00%)
+      Global Accesses                                   43
+        Global Constants                                 1 (2.33%)
+        Global Variables                                34 (79.07%)
+        Super-Global Variables                           8 (18.60%)
       Attribute Accesses                               729
         Non-Static                                     647 (88.75%)
         Static                                          82 (11.25%)

@@ -110,6 +110,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               'Global Accesses',
               'Global Variable Accesses',
               'Super-Global Variable Accesses',
+              'Global Constant Accesses',
               'Test Classes',
               'Test Methods'
             );
@@ -159,6 +160,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['globalAccesses'],
               $count['globalVariableAccesses'],
               $count['superGlobalVariableAccesses'],
+              $count['globalConstantAccesses'],
               $count['testClasses'],
               $count['testMethods']
             );
