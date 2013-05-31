@@ -10,4 +10,5 @@ build/phpcpd.bat
 build/phpcpd.php
 build/*.phar
 build/*.tgz
+.idea
 cache.properties
