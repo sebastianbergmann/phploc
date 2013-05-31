@@ -40,14 +40,15 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
 
     Size
       Lines of Code (LOC)                            29022
-      Logical Lines of Code (LLOC)                    3477
+      Comment Lines of Code (CLOC)                   14155 (48.77%)
+      Non-Comment Lines of Code (NCLOC)              14867 (51.23%)
+      Logical Lines of Code (LLOC)                    3477 (11.98%)
         Classes                                       3307 (95.11%)
           Average Class Length                          29
           Average Method Length                          4
         Functions                                      153 (4.40%)
           Average Function Length                        1
         Not in classes or functions                     17 (0.49%)
-      Comment Lines of Code (CLOC)                   14155
 
     Complexity
       Cyclomatic Complexity / LLOC                    0.51

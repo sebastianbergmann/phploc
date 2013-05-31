@@ -238,6 +238,7 @@ namespace SebastianBergmann\PHPLOC
             $count['llocGlobal']        = $count['lloc'] -
                                           $count['llocClasses'] -
                                           $count['llocFunctions'];
+            $count['ncloc']             = $count['loc'] - $count['cloc'];
 
             foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
                 if (in_array($possibleConstantAccess, $this->constants)) {

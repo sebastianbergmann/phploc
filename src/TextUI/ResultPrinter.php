@@ -75,14 +75,15 @@ namespace SebastianBergmann\PHPLOC\TextUI
             $format = <<<END
 Size
   Lines of Code (LOC)                       %10d
-  Logical Lines of Code (LLOC)              %10d
+  Comment Lines of Code (CLOC)              %10d (%.2f%%)
+  Non-Comment Lines of Code (NCLOC)         %10d (%.2f%%)
+  Logical Lines of Code (LLOC)              %10d (%.2f%%)
     Classes                                 %10d (%.2f%%)
       Average Class Length                  %10d
       Average Method Length                 %10d
     Functions                               %10d (%.2f%%)
       Average Function Length               %10d
     Not in classes or functions             %10d (%.2f%%)
-  Comment Lines of Code (CLOC)              %10d
 
 Complexity
   Cyclomatic Complexity / LLOC              %10.2f
@@ -126,7 +127,12 @@ END;
             printf(
               $format,
               $count['loc'],
+              $count['cloc'],
+              $count['loc'] > 0 ? ($count['cloc'] / $count['loc']) * 100 : 0,
+              $count['ncloc'],
+              $count['loc'] > 0 ? ($count['ncloc'] / $count['loc']) * 100 : 0,
               $count['lloc'],
+              $count['loc'] > 0 ? ($count['lloc'] / $count['loc']) * 100 : 0,
               $count['llocClasses'],
               $count['lloc'] > 0 ? ($count['llocClasses'] / $count['lloc']) * 100 : 0,
               $count['llocByNoc'],
@@ -136,7 +142,6 @@ END;
               $count['llocByNof'],
               $count['llocGlobal'],
               $count['lloc'] > 0 ? ($count['llocGlobal'] / $count['lloc']) * 100 : 0,
-              $count['cloc'],
               $count['ccnByLloc'],
               $count['ccnByNom'],
               $count['globalAccesses'],
