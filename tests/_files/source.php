@@ -9,6 +9,7 @@ define('A_GLOBAL_CONSTANT', 'foo');
 
 function &a_global_function()
 {
+    $a = 'b';
 }
 
 interface AnInterface
