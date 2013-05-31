@@ -43,9 +43,11 @@
 
 namespace SebastianBergmann\PHPLOC
 {
+    // @codeCoverageIgnoreStart
     if (!defined('T_TRAIT')) {
         define('T_TRAIT', 1000);
     }
+    // @codeCoverageIgnoreEnd
 
     /**
      * PHPLOC code analyser.
@@ -61,27 +63,27 @@ namespace SebastianBergmann\PHPLOC
         /**
          * @var array
          */
-        protected $namespaces = array();
+        private $namespaces = array();
 
         /**
          * @var array
          */
-        protected $classes = array();
+        private $classes = array();
 
         /**
          * @var array
          */
-        protected $constants = array();
+        private $constants = array();
 
         /**
          * @var array
          */
-        protected $possibleConstantAccesses = array();
+        private $possibleConstantAccesses = array();
 
         /**
          * @var array
          */
-        protected $count = array(
+        private $count = array(
           'files'                       => 0,
           'loc'                         => 0,
           'lloc'                        => 0,
@@ -127,9 +129,9 @@ namespace SebastianBergmann\PHPLOC
         );
 
         /**
-         * @var ezcConsoleOutput
+         * @var \ezcConsoleOutput
          */
-        protected $output;
+        private $output;
 
         /**
          * @var array
@@ -153,7 +155,7 @@ namespace SebastianBergmann\PHPLOC
         /**
          * Constructor.
          *
-         * @param ezcConsoleOutput $output
+         * @param \ezcConsoleOutput $output
          * @since Method available since Release 1.5.0
          */
         public function __construct(\ezcConsoleOutput $output = NULL)
@@ -180,7 +182,7 @@ namespace SebastianBergmann\PHPLOC
                 foreach ($files as $file) {
                     $this->preProcessFile($file);
 
-                    if ($this->output !== NULL) {
+                    if (isset($bar)) {
                         $bar->advance();
                     }
                 }
@@ -206,7 +208,7 @@ namespace SebastianBergmann\PHPLOC
 
                 $this->countFile($file, $countTests);
 
-                if ($this->output !== NULL) {
+                if (isset($bar)) {
                     $bar->advance();
                 }
             }
@@ -296,9 +298,7 @@ namespace SebastianBergmann\PHPLOC
                     continue;
                 }
 
-                list ($token, $value) = $tokens[$i];
-
-                switch ($token) {
+                switch ($tokens[$i][0]) {
                     case T_NAMESPACE: {
                         $namespace = $this->getNamespaceName($tokens, $i);
                     }
@@ -610,11 +610,6 @@ namespace SebastianBergmann\PHPLOC
                                 $call = TRUE;
                             }
 
-                            else if (is_array($tokens[$j]) &&
-                                     $tokens[$j][0] == T_VARIABLE) {
-                                $access = TRUE;
-                            }
-
                             $j++;
                         }
 
@@ -653,34 +648,13 @@ namespace SebastianBergmann\PHPLOC
             }
         }
 
-        protected function isTestMethod($functionName, $visibility, $static, array $tokens, $currentToken) {
-            if ($static || $visibility != T_PUBLIC) {
-                return FALSE;
-            }
-
-            if (strpos($functionName, 'test') === 0) {
-                return TRUE;
-            }
-
-            while ($tokens[$currentToken][0] != T_DOC_COMMENT) {
-                if ($tokens[$currentToken] == '{' || $tokens[$currentToken] == '}') {
-                    return FALSE;
-                }
-
-                --$currentToken;
-            }
-
-            return strpos($tokens[$currentToken][1], '@test') !== FALSE ||
-                   strpos($tokens[$currentToken][1], '@scenario') !== FALSE;
-        }
-
         /**
          * @param  array   $tokens
          * @param  integer $i
          * @return string
          * @since  Method available since Release 1.3.0
          */
-        protected function getNamespaceName(array $tokens, $i)
+        private function getNamespaceName(array $tokens, $i)
         {
             if (isset($tokens[$i+2][1])) {
                 $namespace = $tokens[$i+2][1];
@@ -706,7 +680,7 @@ namespace SebastianBergmann\PHPLOC
          * @return string
          * @since  Method available since Release 1.3.0
          */
-        protected function getClassName($namespace, array $tokens, $i)
+        private function getClassName($namespace, array $tokens, $i)
         {
             $i         += 2;
             $namespaced = FALSE;
@@ -737,7 +711,7 @@ namespace SebastianBergmann\PHPLOC
          * @return boolean
          * @since  Method available since Release 1.2.0
          */
-        protected function isTestClass($className)
+        private function isTestClass($className)
         {
             $parent = $this->classes[$className];
             $result = FALSE;
@@ -770,6 +744,36 @@ namespace SebastianBergmann\PHPLOC
             }
 
             return $result;
+        }
+
+        /**
+         * @param  string  $functionName
+         * @param  integer $visibility
+         * @param  boolean $static
+         * @param  array   $tokens
+         * @param  integer $currentToken
+         * @return boolean
+         * @since  Method available since Release 2.0.0
+         */
+        private function isTestMethod($functionName, $visibility, $static, array $tokens, $currentToken) {
+            if ($static || $visibility != T_PUBLIC) {
+                return FALSE;
+            }
+
+            if (strpos($functionName, 'test') === 0) {
+                return TRUE;
+            }
+
+            while ($tokens[$currentToken][0] != T_DOC_COMMENT) {
+                if ($tokens[$currentToken] == '{' || $tokens[$currentToken] == '}') {
+                    return FALSE;
+                }
+
+                --$currentToken;
+            }
+
+            return strpos($tokens[$currentToken][1], '@test') !== FALSE ||
+                   strpos($tokens[$currentToken][1], '@scenario') !== FALSE;
         }
     }
 }
