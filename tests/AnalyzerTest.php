@@ -55,6 +55,9 @@
  */
 class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var SebastianBergmann\PHPLOC\Analyser
+     */
     protected $analyser;
 
     protected function setUp()
