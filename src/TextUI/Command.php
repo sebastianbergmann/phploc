@@ -275,7 +275,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
                         $count[$revision['date']->format(\DateTime::W3C)] = $_count;
                     }
 
-                    if ($progress !== NULL) {
+                    if (isset($bar)) {
                         $bar->advance();
                     }
                 }
