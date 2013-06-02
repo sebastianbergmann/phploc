@@ -608,18 +608,14 @@ namespace SebastianBergmann\PHPLOC
 
                     case T_DOUBLE_COLON:
                     case T_OBJECT_OPERATOR: {
-                        $call = FALSE;
-                        $j    = $i + 1;
+                        $n = $this->getNextNonWhitespaceTokenPos($tokens, $i);
+                        $nn = $this->getNextNonWhitespaceTokenPos($tokens, $n);
 
-                        while (isset($tokens[$j]) && $tokens[$j] != ';') {
-                            if (is_string($tokens[$j]) && $tokens[$j] == '(') {
-                                $call = TRUE;
-                            }
-
-                            $j++;
-                        }
-
-                        if ($call) {
+                        if ($n && $nn &&
+                            isset($tokens[$n][0]) &&
+                            ($tokens[$n][0] == T_STRING ||
+                             $tokens[$n][0] == T_VARIABLE) &&
+                            $tokens[$nn] == '(') {
                             if ($token == T_DOUBLE_COLON) {
                                 $this->count['staticMethodCalls']++;
                             } else {
@@ -780,6 +776,26 @@ namespace SebastianBergmann\PHPLOC
 
             return strpos($tokens[$currentToken][1], '@test') !== FALSE ||
                    strpos($tokens[$currentToken][1], '@scenario') !== FALSE;
+        }
+
+        /**
+         * @param  array   $tokens
+         * @param  integer $start
+         * @return boolean
+         */
+        private function getNextNonWhitespaceTokenPos(array $tokens, $start)
+        {
+            if (isset($tokens[$start+1])) {
+                if (isset($tokens[$start+1][0]) &&
+                    $tokens[$start+1][0] == T_WHITESPACE &&
+                    isset($tokens[$start+2])) {
+                    return $start + 2;
+                } else {
+                    return $start + 1;
+                }
+            }
+
+            return FALSE;
         }
     }
 }
