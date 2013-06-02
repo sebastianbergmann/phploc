@@ -174,30 +174,38 @@ namespace SebastianBergmann\PHPLOC
         public function countFiles(array $files, $countTests)
         {
             if ($countTests) {
+                // @codeCoverageIgnoreStart
                 if ($this->output !== NULL) {
                     $bar = new \ezcConsoleProgressbar($this->output, count($files));
                     print "Preprocessing files\n";
                 }
+                // @codeCoverageIgnoreEnd
 
                 foreach ($files as $file) {
                     $this->preProcessFile($file);
 
+                    // @codeCoverageIgnoreStart
                     if (isset($bar)) {
                         $bar->advance();
                     }
+                    // @codeCoverageIgnoreEnd
                 }
 
+                // @codeCoverageIgnoreStart
                 if ($this->output !== NULL) {
                     print "\n\n";
                 }
+                // @codeCoverageIgnoreEnd
             }
 
             $directories = array();
 
+            // @codeCoverageIgnoreStart
             if ($this->output !== NULL) {
                 $bar = new \ezcConsoleProgressbar($this->output, count($files));
                 print "Processing files\n";
             }
+            // @codeCoverageIgnoreEnd
 
             foreach ($files as $file) {
                 $directory = dirname($file);
@@ -208,14 +216,18 @@ namespace SebastianBergmann\PHPLOC
 
                 $this->countFile($file, $countTests);
 
+                // @codeCoverageIgnoreStart
                 if (isset($bar)) {
                     $bar->advance();
                 }
+                // @codeCoverageIgnoreEnd
             }
 
+            // @codeCoverageIgnoreStart
             if ($this->output !== NULL) {
                 print "\n\n";
             }
+            // @codeCoverageIgnoreEnd
 
             $count = $this->count;
 
