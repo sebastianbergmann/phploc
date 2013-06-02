@@ -152,7 +152,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'globalConstants' => 1,
             'testClasses' => 1,
             'testMethods' => 2,
-            'ccnByNom' => 2,
+            'ccnByNom' => 1.5,
             'directories' => 0,
             'namespaces' => 1,
             'traits' => 0,

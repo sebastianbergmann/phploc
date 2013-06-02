@@ -235,10 +235,6 @@ namespace SebastianBergmann\PHPLOC
             $count['namespaces']        = count($this->namespaces);
             $count['classes']           = $count['abstractClasses'] +
                                           $count['concreteClasses'];
-            $count['methods']           = $count['staticMethods'] +
-                                          $count['nonStaticMethods'];
-            $count['publicMethods']     = $count['methods'] -
-                                          $count['nonPublicMethods'];
             $count['functions']         = $count['namedFunctions'] +
                                           $count['anonymousFunctions'];
             $count['constants']         = $count['classConstants'] +
@@ -267,16 +263,9 @@ namespace SebastianBergmann\PHPLOC
             }
 
             if ($count['methods'] > 0) {
-                if (isset($count['testMethods'])) {
-                    $countTestMethods = $count['testMethods'];
-                } else {
-                    $countTestMethods = 0;
-                }
-
-                $numNonTestMethods = $count['methods'] - $countTestMethods;
-                $count['ccnByNom'] = ($numNonTestMethods +
+                $count['ccnByNom'] = ($count['methods'] +
                                       $count['ccnMethods']) /
-                                     $numNonTestMethods;
+                                     $count['methods'];
             }
 
             if ($count['classes'] > 0) {
@@ -528,15 +517,19 @@ namespace SebastianBergmann\PHPLOC
                                 }
 
                                 else if (!$testClass) {
-                                    if ($static) {
-                                        $this->count['staticMethods']++;
-                                    } else {
+                                    if (!$static) {
                                         $this->count['nonStaticMethods']++;
+                                    } else {
+                                        $this->count['staticMethods']++;
                                     }
 
-                                    if ($visibility != T_PUBLIC) {
+                                    if ($visibility == T_PUBLIC) {
+                                        $this->count['publicMethods']++;
+                                    } else {
                                         $this->count['nonPublicMethods']++;
                                     }
+
+                                    $this->count['methods']++;
                                 }
                             }
                         }
