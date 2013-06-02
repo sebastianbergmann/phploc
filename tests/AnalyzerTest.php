@@ -70,9 +70,9 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 1,
-            'loc' => 65,
+            'loc' => 67,
             'cloc' => 3,
-            'ncloc' => 62,
+            'ncloc' => 64,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -101,12 +101,12 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'attributeAccesses' => 6,
             'staticAttributeAccesses' => 4,
             'instanceAttributeAccesses' => 2,
-            'lloc' => 21,
-            'llocClasses' => 18,
+            'lloc' => 23,
+            'llocClasses' => 20,
             'namedFunctions' => 1,
-            'ccnByLloc' => 0.10,
-            'llocByNoc' => 9,
-            'llocByNom' => 4.5,
+            'ccnByLloc' => 0.08,
+            'llocByNoc' => 10,
+            'llocByNom' => 5,
             'llocFunctions' => 1,
             'llocGlobal' => 2,
             'llocByNof' => 0.5,
@@ -131,9 +131,9 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $expected =
           array(
             'files' => 2,
-            'loc' => 88,
+            'loc' => 90,
             'cloc' => 7,
-            'ncloc' => 81,
+            'ncloc' => 83,
             'ccn' => 2,
             'ccnMethods' => 2,
             'interfaces' => 1,
@@ -162,12 +162,12 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             'attributeAccesses' => 6,
             'staticAttributeAccesses' => 4,
             'instanceAttributeAccesses' => 2,
-            'lloc' => 21,
-            'llocClasses' => 18,
+            'lloc' => 23,
+            'llocClasses' => 20,
             'namedFunctions' => 1,
-            'ccnByLloc' => 0.10,
-            'llocByNoc' => 9,
-            'llocByNom' => 4.5,
+            'ccnByLloc' => 0.08,
+            'llocByNoc' => 10,
+            'llocByNom' => 5,
             'llocFunctions' => 1,
             'llocGlobal' => 2,
             'llocByNof' => 0.5,
@@ -210,5 +210,20 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(3, $result['testClasses']);
+    }
+
+    /**
+     * @requires PHP 5.4
+     */
+    public function testTraitsAreCountedCorrectly()
+    {
+        $result = $this->analyser->countFiles(
+          array(
+             __DIR__ . '/_files/trait.php'
+          ),
+          FALSE
+        );
+
+        $this->assertEquals(1, $result['traits']);
     }
 }
