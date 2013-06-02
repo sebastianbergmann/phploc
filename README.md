@@ -59,12 +59,12 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
         Global Constants                                 1 (2.33%)
         Global Variables                                34 (79.07%)
         Super-Global Variables                           8 (18.60%)
-      Attribute Accesses                               729
-        Non-Static                                     647 (88.75%)
-        Static                                          82 (11.25%)
-      Method Calls                                    1947
-        Non-Static                                    1383 (71.03%)
-        Static                                         564 (28.97%)
+      Attribute Accesses                              1174
+        Non-Static                                    1054 (89.78%)
+        Static                                         120 (10.22%)
+      Method Calls                                    1502
+        Non-Static                                     976 (64.98%)
+        Static                                         526 (35.02%)
 
     Structure
       Namespaces                                         0
