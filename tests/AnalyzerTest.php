@@ -197,16 +197,18 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           ),
           TRUE
         );
-        $this->assertSame(1, $result['testClasses']);
+
+        $this->assertEquals(1, $result['testClasses']);
     }
 
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
-            array(
-                __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
-            ),
-            TRUE
+          array(
+            __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
+          ),
+          TRUE
         );
-        $this->assertSame(3, $result['testClasses']);
+
+        $this->assertEquals(3, $result['testClasses']);
     }
 }
