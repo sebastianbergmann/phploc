@@ -45,6 +45,7 @@ class ACLass extends AnAbstractClass implements AnInterface
         c::$m();
         c::$a;
         c::$a;
+        c::aConstant;
     }
 
     protected function aProtectedMethod()

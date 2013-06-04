@@ -622,9 +622,12 @@ namespace SebastianBergmann\PHPLOC
                                 $this->count['instanceMethodCalls']++;
                             }
                         } else {
-                            if ($token == T_DOUBLE_COLON) {
+                            if ($token == T_DOUBLE_COLON &&
+                                $tokens[$n][0] == T_VARIABLE) {
                                 $this->count['staticAttributeAccesses']++;
-                            } else {
+                            }
+
+                            else if ($token == T_OBJECT_OPERATOR) {
                                 $this->count['instanceAttributeAccesses']++;
                             }
                         }
