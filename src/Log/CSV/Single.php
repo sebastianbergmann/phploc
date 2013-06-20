@@ -131,7 +131,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['loc'],
               $count['ccnByLloc'],
               $count['cloc'],
-              $count['ncoc'],
+              $count['ncloc'],
               $count['lloc'],
               $count['namespaces'],
               $count['interfaces'],
