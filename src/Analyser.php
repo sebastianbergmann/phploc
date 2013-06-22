@@ -307,6 +307,10 @@ namespace SebastianBergmann\PHPLOC
                     break;
 
                     case T_CLASS: {
+                        if (!$this->isClassDeclaration($tokens, $i)) {
+                            continue;
+                        }
+
                         $className = $this->getClassName($namespace, $tokens, $i);
 
                         if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
@@ -424,6 +428,10 @@ namespace SebastianBergmann\PHPLOC
                     case T_CLASS:
                     case T_INTERFACE:
                     case T_TRAIT: {
+                        if (!$this->isClassDeclaration($tokens, $i)) {
+                            continue;
+                        }
+
                         $className    = $this->getClassName(
                                           $namespace, $tokens, $i
                                         );
@@ -799,6 +807,38 @@ namespace SebastianBergmann\PHPLOC
             }
 
             return FALSE;
+        }
+
+        /**
+         * @param  array   $tokens
+         * @param  integer $start
+         * @return boolean
+         */
+        private function getPreviousNonWhitespaceTokenPos(array $tokens, $start)
+        {
+            if (isset($tokens[$start-1])) {
+                if (isset($tokens[$start-1][0]) &&
+                    $tokens[$start-1][0] == T_WHITESPACE &&
+                    isset($tokens[$start-2])) {
+                    return $start - 2;
+                } else {
+                    return $start - 1;
+                }
+            }
+
+            return FALSE;
+        }
+
+        private function isClassDeclaration($tokens, $i)
+        {
+            $n = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
+
+            if (isset($tokens[$n]) && is_array($tokens[$n]) &&
+                $tokens[$n][0] == T_DOUBLE_COLON) {
+                return FALSE;
+            }
+
+            return TRUE;
         }
     }
 }

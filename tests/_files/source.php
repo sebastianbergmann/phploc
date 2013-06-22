@@ -9,7 +9,7 @@ define('A_GLOBAL_CONSTANT', 'foo');
 
 function &a_global_function()
 {
-    $a = 'b';
+    $a = AClass::CLASS;
 }
 
 interface AnInterface
@@ -20,7 +20,7 @@ abstract class AnAbstractClass
 {
 }
 
-class ACLass extends AnAbstractClass implements AnInterface
+class AClass extends AnAbstractClass implements AnInterface
 {
     const A_CLASS_CONSTANT = 'bar';
 
