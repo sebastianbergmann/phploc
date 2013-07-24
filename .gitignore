@@ -12,3 +12,6 @@ build/*.phar
 build/*.tgz
 .idea
 cache.properties
+composer.phar
+composer.lock
+vendor
