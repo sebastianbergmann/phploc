@@ -1,0 +1,11 @@
+language: php
+
+php:
+    - 5.3
+    - 5.4
+    - 5.5
+
+script: phpunit --configuration ./build/travis-ci.xml
+
+notifications:
+  email: false
