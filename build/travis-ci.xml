@@ -2,7 +2,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://phpunit.de/phpunit.xsd"
          backupGlobals="false"
-         bootstrap="../src/autoload.php"
+         bootstrap="../vendor/autoload.php"
          colors="true"
          verbose="true">
   <testsuite name="PHPLOC">
