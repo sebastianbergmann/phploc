@@ -76,10 +76,6 @@ namespace SebastianBergmann\PHPLOC\CLI
          */
         protected function getCommandName(InputInterface $input)
         {
-            if (!$input->getFirstArgument()) {
-                return 'help';
-            }
-
             return 'phploc';
         }
 
@@ -120,6 +116,10 @@ namespace SebastianBergmann\PHPLOC\CLI
         public function doRun(InputInterface $input, OutputInterface $output)
         {
             $this->printVersionString($output);
+
+            if (!$input->getFirstArgument()) {
+                $input = new ArrayInput(array('--help'));
+            }
 
             parent::doRun($input, $output);
         }
