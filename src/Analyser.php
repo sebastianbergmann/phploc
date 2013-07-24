@@ -129,11 +129,6 @@ namespace SebastianBergmann\PHPLOC
         );
 
         /**
-         * @var \ezcConsoleOutput
-         */
-        private $output;
-
-        /**
          * @var array
          */
         private $superGlobals = array(
@@ -153,17 +148,6 @@ namespace SebastianBergmann\PHPLOC
         );
 
         /**
-         * Constructor.
-         *
-         * @param \ezcConsoleOutput $output
-         * @since Method available since Release 1.5.0
-         */
-        public function __construct(\ezcConsoleOutput $output = NULL)
-        {
-            $this->output = $output;
-        }
-
-        /**
          * Processes a set of files.
          *
          * @param  array   $files
@@ -174,38 +158,12 @@ namespace SebastianBergmann\PHPLOC
         public function countFiles(array $files, $countTests)
         {
             if ($countTests) {
-                // @codeCoverageIgnoreStart
-                if ($this->output !== NULL) {
-                    $bar = new \ezcConsoleProgressbar($this->output, count($files));
-                    print "Preprocessing files\n";
-                }
-                // @codeCoverageIgnoreEnd
-
                 foreach ($files as $file) {
                     $this->preProcessFile($file);
-
-                    // @codeCoverageIgnoreStart
-                    if (isset($bar)) {
-                        $bar->advance();
-                    }
-                    // @codeCoverageIgnoreEnd
                 }
-
-                // @codeCoverageIgnoreStart
-                if ($this->output !== NULL) {
-                    print "\n\n";
-                }
-                // @codeCoverageIgnoreEnd
             }
 
             $directories = array();
-
-            // @codeCoverageIgnoreStart
-            if ($this->output !== NULL) {
-                $bar = new \ezcConsoleProgressbar($this->output, count($files));
-                print "Processing files\n";
-            }
-            // @codeCoverageIgnoreEnd
 
             foreach ($files as $file) {
                 $directory = dirname($file);
@@ -215,19 +173,7 @@ namespace SebastianBergmann\PHPLOC
                 }
 
                 $this->countFile($file, $countTests);
-
-                // @codeCoverageIgnoreStart
-                if (isset($bar)) {
-                    $bar->advance();
-                }
-                // @codeCoverageIgnoreEnd
             }
-
-            // @codeCoverageIgnoreStart
-            if ($this->output !== NULL) {
-                print "\n\n";
-            }
-            // @codeCoverageIgnoreEnd
 
             $count = $this->count;
 

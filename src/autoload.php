@@ -44,7 +44,7 @@
 require_once 'SebastianBergmann/FinderFacade/autoload.php';
 require_once 'SebastianBergmann/Git/autoload.php';
 require_once 'SebastianBergmann/Version/autoload.php';
-require_once 'ezc/Base/base.php';
+require_once 'Symfony/Component/Console/autoloader.php';
 
 spl_autoload_register(
     function($class) {
@@ -53,11 +53,12 @@ spl_autoload_register(
         if ($classes === null) {
             $classes = array(
               'sebastianbergmann\\phploc\\analyser' => '/Analyser.php',
+              'sebastianbergmann\\phploc\\cli\\application' => '/CLI/Application.php',
+              'sebastianbergmann\\phploc\\cli\\command' => '/CLI/Command.php',
               'sebastianbergmann\\phploc\\log\\csv\\history' => '/Log/CSV/History.php',
               'sebastianbergmann\\phploc\\log\\csv\\single' => '/Log/CSV/Single.php',
-              'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php',
-              'sebastianbergmann\\phploc\\textui\\command' => '/TextUI/Command.php',
-              'sebastianbergmann\\phploc\\textui\\resultprinter' => '/TextUI/ResultPrinter.php'
+              'sebastianbergmann\\phploc\\log\\text' => '/Log/Text.php',
+              'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php'
             );
         }
 
@@ -68,5 +69,3 @@ spl_autoload_register(
         }
     }
 );
-
-spl_autoload_register(array('ezcBase', 'autoload'));

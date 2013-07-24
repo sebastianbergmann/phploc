@@ -48,5 +48,5 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
     require 'SebastianBergmann/PHPLOC/autoload.php';
 }
 
-$textui = new SebastianBergmann\PHPLOC\TextUI\Command;
-$textui->main();
+$application = new SebastianBergmann\PHPLOC\CLI\Application;
+$application->run();

@@ -38,10 +38,10 @@
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
  * @copyright 2009-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @since     File available since Release 1.1.0
+ * @since     File available since Release 2.0.0
  */
 
-namespace SebastianBergmann\PHPLOC\TextUI
+namespace SebastianBergmann\PHPLOC\Log
 {
     /**
      * A ResultPrinter for the TextUI.
@@ -52,7 +52,7 @@ namespace SebastianBergmann\PHPLOC\TextUI
      * @link      http://github.com/sebastianbergmann/phploc/tree
      * @since     Class available since Release 1.0.0
      */
-    class ResultPrinter
+    class Text
     {
         /**
          * Prints a result set.

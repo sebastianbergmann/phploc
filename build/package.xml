@@ -68,9 +68,9 @@
     <min>1.9.4</min>
    </pearinstaller>
    <package>
-    <name>ConsoleTools</name>
-    <channel>components.ez.no</channel>
-    <min>1.6</min>
+    <name>Console</name>
+    <channel>pear.symfony.com</channel>
+    <min>2.2.0</min>
    </package>
    <package>
     <name>FinderFacade</name>
