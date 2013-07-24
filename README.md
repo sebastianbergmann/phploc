@@ -4,20 +4,22 @@
 
 ## Installation
 
-There are three supported ways of installing PHPLOC.
+### PHP Archive (PHAR)
 
-You can use the [PEAR Installer](http://pear.php.net/manual/en/guide.users.commandline.cli.php) or [Composer](http://getcomposer.org/) to download and install PHPLOC as well as its dependencies. You can also download a [PHP Archive (PHAR)](http://php.net/phar) of PHPLOC that has all required (as well as some optional) dependencies of PHPLOC bundled in a single file.
+The easiest way to obtain PHPLOC is to download a [PHP Archive (PHAR)](http://php.net/phar) that has all required dependencies of PHPLOC bundled in a single file:
 
-### PEAR Installer
+    wget http://pear.phpunit.de/get/phploc.phar
+    chmod +x phploc.phar
+    mv phploc.phar /usr/local/bin/phploc
 
-The following two commands (which you may have to run as `root`) are all that is required to install PHPLOC using the PEAR Installer:
+You can also immediately use the PHAR after you have downloaded it, of course:
 
-    pear config-set auto_discover 1
-    pear install pear.phpunit.de/phploc
+    wget http://pear.phpunit.de/get/phploc.phar
+    php phploc.phar
 
 ### Composer
 
-To add PHPLOC as a local, per-project dependency to your project, simply add a dependency on `phploc/phploc` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a development-time dependency on the latest stable version of PHPLOC:
+Simply add a dependency on `phploc/phploc` to your project's `composer.json` file if you use [Composer](http://getcomposer.org/) to manage the dependencies of your project. Here is a minimal example of a `composer.json` file that just defines a development-time dependency on PHPLOC:
 
     {
         "require-dev": {
@@ -25,10 +27,23 @@ To add PHPLOC as a local, per-project dependency to your project, simply add a d
         }
     }
 
-### PHP Archive (PHAR)
+For a standalone, system-wide installation via Composer, a `composer.json` similar to the one shown below can be used from an arbitary directory:
 
-    wget http://pear.phpunit.de/get/phploc.phar
-    chmod +x phploc.phar
+    {
+        "require": {
+            "phploc/phploc": "*"
+        },
+        "config": {
+            "bin-dir": "/usr/local/bin/"
+        }
+    }
+
+### PEAR Installer
+
+The following two commands (which you may have to run as `root`) are all that is required to install PHPLOC using the PEAR Installer:
+
+    pear config-set auto_discover 1
+    pear install pear.phpunit.de/phploc
 
 ## Usage Example
 
