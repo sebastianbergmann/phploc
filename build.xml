@@ -24,6 +24,9 @@
  </target>
 
  <target name="clean" description="Cleanup build artifacts">
+  <delete dir="${basedir}/vendor"/>
+  <delete file="${basedir}/composer.lock"/>
+  <delete file="${basedir}/composer.phar"/>
   <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/code-browser"/>
   <delete dir="${basedir}/build/coverage"/>
@@ -206,23 +209,29 @@
    <arg value="${basedir}/phploc.php --version | awk 'BEGIN { ORS = &quot;&quot;; } {print $2}'" />
   </exec>
 
-  <untar dest="${basedir}/build/phar" compression="gzip">
-   <fileset dir="${basedir}/build/dependencies">
-    <include name="**/*.tgz"/>
-   </fileset>
-  </untar>
+  <get src="https://getcomposer.org/composer.phar" dest="${basedir}/composer.phar"/>
 
-  <copy todir="${basedir}/build/phar/PHPLOC">
+  <exec executable="php">
+   <arg value="composer.phar"/>
+   <arg value="install"/>
+  </exec>
+
+  <copy todir="${basedir}/build/phar">
    <fileset dir="${basedir}/src"/>
+   <fileset dir="${basedir}/vendor/sebastian/finder-facade/src"/>
+   <fileset dir="${basedir}/vendor/sebastian/git/src"/>
+   <fileset dir="${basedir}/vendor/sebastian/version/src"/>
+   <fileset dir="${basedir}/vendor/symfony"/>
+   <fileset dir="${basedir}/vendor/theseer/fdomdocument/src"/>
   </copy>
 
   <delete>
    <fileset dir="${basedir}/build/phar">
     <include name="**/autoload.php" />
+    <include name="**/autoload.php.in" />
     <include name="**/Autoload.php" />
     <include name="**/Autoload.php.in" />
-    <include name="**/package.sig" />
-    <include name="**/package.xml" />
+    <include name="**/Tests*/*" />
    </fileset>
   </delete>
 
@@ -239,15 +248,10 @@
   </exec>
 
   <chmod file="${basedir}/build/phploc-${version}.phar" perm="ugo+rx"/>
-  <copy file="${basedir}/build/phploc-${version}.phar" tofile="${basedir}/build/phploc-${version}-compressed.phar"/>
-  <chmod file="${basedir}/build/phploc-${version}-compressed.phar" perm="ugo+rx"/>
 
-  <exec executable="phar">
-   <arg value="compress" />
-   <arg value="-f" />
-   <arg path="${basedir}/build/phploc-${version}-compressed.phar" />
-   <arg value="-c" />
-   <arg value="bzip2" />
-  </exec>
+  <delete dir="${basedir}/build/phar"/>
+  <delete dir="${basedir}/vendor"/>
+  <delete file="${basedir}/composer.lock"/>
+  <delete file="${basedir}/composer.phar"/>
  </target>
 </project>
