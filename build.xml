@@ -217,38 +217,43 @@
   </exec>
 
   <copy todir="${basedir}/build/phar/src">
-   <fileset dir="${basedir}/src"/>
+   <fileset dir="${basedir}/src">
+    <include name="**/*.php" />
+    <exclude name="**/autoload.php" />
+   </fileset>
   </copy>
 
   <copy todir="${basedir}/build/phar/finder-facade">
-   <fileset dir="${basedir}/vendor/sebastian/finder-facade/src"/>
+   <fileset dir="${basedir}/vendor/sebastian/finder-facade/src">
+    <include name="**/*.php" />
+    <exclude name="**/autoload.php" />
+   </fileset>
   </copy>
 
   <copy todir="${basedir}/build/phar/git">
-   <fileset dir="${basedir}/vendor/sebastian/git/src"/>
+   <fileset dir="${basedir}/vendor/sebastian/git/src">
+    <include name="**/*.php" />
+    <exclude name="**/autoload.php" />
+   </fileset>
   </copy>
 
   <copy todir="${basedir}/build/phar/version">
-   <fileset dir="${basedir}/vendor/sebastian/version/src"/>
+   <fileset dir="${basedir}/vendor/sebastian/version/src">
+    <include name="**/*.php" />
+    <exclude name="**/autoload.php" />
+   </fileset>
   </copy>
 
   <copy todir="${basedir}/build/phar/symfony">
-   <fileset dir="${basedir}/vendor/symfony"/>
+   <fileset dir="${basedir}/vendor/symfony">
+    <include name="**/*.php" />
+    <exclude name="**/Tests/**" />
+   </fileset>
   </copy>
 
   <copy todir="${basedir}/build/phar/fdomdocument">
    <fileset dir="${basedir}/vendor/theseer/fdomdocument/src"/>
   </copy>
-
-  <delete>
-   <fileset dir="${basedir}/build/phar">
-    <include name="**/autoload.php" />
-    <include name="**/autoload.php.in" />
-    <include name="**/Autoload.php" />
-    <include name="**/Autoload.php.in" />
-    <include name="**/Tests*/*" />
-   </fileset>
-  </delete>
 
   <exec executable="phpab">
    <arg value="--all" />
