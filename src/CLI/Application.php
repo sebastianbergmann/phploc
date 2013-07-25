@@ -117,6 +117,10 @@ namespace SebastianBergmann\PHPLOC\CLI
         {
             $this->printVersionString($output);
 
+            if ($input->hasParameterOption('--version')) {
+                exit;
+            }
+
             if (!$input->getFirstArgument()) {
                 $input = new ArrayInput(array('--help'));
             }
