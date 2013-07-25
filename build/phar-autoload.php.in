@@ -19,7 +19,7 @@ spl_autoload_register(
   }
 );
 
-$textui = new SebastianBergmann\PHPLOC\TextUI\Command;
-$textui->main();
+$application = new SebastianBergmann\PHPLOC\CLI\Application;
+$application->run();
 
 __HALT_COMPILER();
