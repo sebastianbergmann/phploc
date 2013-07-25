@@ -216,12 +216,27 @@
    <arg value="install"/>
   </exec>
 
-  <copy todir="${basedir}/build/phar">
+  <copy todir="${basedir}/build/phar/src">
    <fileset dir="${basedir}/src"/>
+  </copy>
+
+  <copy todir="${basedir}/build/phar/finder-facade">
    <fileset dir="${basedir}/vendor/sebastian/finder-facade/src"/>
+  </copy>
+
+  <copy todir="${basedir}/build/phar/git">
    <fileset dir="${basedir}/vendor/sebastian/git/src"/>
+  </copy>
+
+  <copy todir="${basedir}/build/phar/version">
    <fileset dir="${basedir}/vendor/sebastian/version/src"/>
+  </copy>
+
+  <copy todir="${basedir}/build/phar/symfony">
    <fileset dir="${basedir}/vendor/symfony"/>
+  </copy>
+
+  <copy todir="${basedir}/build/phar/fdomdocument">
    <fileset dir="${basedir}/vendor/theseer/fdomdocument/src"/>
   </copy>
 
