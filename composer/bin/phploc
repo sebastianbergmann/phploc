@@ -67,5 +67,5 @@ if (!$found) {
     );
 }
 
-$textui = new SebastianBergmann\PHPLOC\TextUI\Command;
-$textui->main();
+$application = new SebastianBergmann\PHPLOC\CLI\Application;
+$application->run();
