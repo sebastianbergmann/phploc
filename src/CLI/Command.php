@@ -122,12 +122,6 @@ namespace SebastianBergmann\PHPLOC\CLI
                      NULL,
                      InputOption::VALUE_REQUIRED,
                      'Write result in XML format to file'
-                   )
-                 ->addOption(
-                     'progress',
-                     NULL,
-                     InputOption::VALUE_NONE,
-                     'Print progress bar'
                    );
         }
 
