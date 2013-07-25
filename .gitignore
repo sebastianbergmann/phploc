@@ -1,13 +1,7 @@
-build/api
-build/code-browser
-build/coverage
-build/logs
-build/pdepend
 build/phar
-build/phpdox
 build/SebastianBergmann
-build/phpcpd.bat
-build/phpcpd.php
+build/phploc.bat
+build/phploc.php
 build/*.phar
 build/*.tgz
 .idea
