@@ -115,11 +115,13 @@ namespace SebastianBergmann\PHPLOC\CLI
          */
         public function doRun(InputInterface $input, OutputInterface $output)
         {
-            $output->write(
-              sprintf(
-                "phploc %s by Sebastian Bergmann.\n\n", $this->getVersion()
-              )
-            );
+            if (!$input->hasParameterOption('--quiet')) {
+                $output->write(
+                  sprintf(
+                    "phploc %s by Sebastian Bergmann.\n\n", $this->getVersion()
+                  )
+                );
+            }
 
             if ($input->hasParameterOption('--version')) {
                 exit;
