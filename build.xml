@@ -9,7 +9,7 @@
   <delete dir="${basedir}/build/phar"/>
   <delete dir="${basedir}/build/SebastianBergmann"/>
   <delete file="${basedir}/build/LICENSE"/>
-  <delete file="${basedir}/build/README.markdown"/>
+  <delete file="${basedir}/build/README.md"/>
   <delete file="${basedir}/build/phploc.bat"/>
   <delete file="${basedir}/build/phploc.php"/>
   <delete>
@@ -64,7 +64,7 @@
   </copy>
 
   <copy file="LICENSE" todir="${basedir}/build"/>
-  <copy file="README.markdown" todir="${basedir}/build"/>
+  <copy file="README.md" todir="${basedir}/build"/>
   <copy file="phploc.bat" todir="${basedir}/build"/>
   <copy file="phploc.php" todir="${basedir}/build"/>
 
@@ -74,7 +74,7 @@
 
   <delete dir="${basedir}/build/SebastianBergmann"/>
   <delete file="${basedir}/build/LICENSE"/>
-  <delete file="${basedir}/build/README.markdown"/>
+  <delete file="${basedir}/build/README.md"/>
   <delete file="${basedir}/build/phploc.bat"/>
   <delete file="${basedir}/build/phploc.php"/>
  </target>
