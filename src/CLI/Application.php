@@ -115,7 +115,11 @@ namespace SebastianBergmann\PHPLOC\CLI
          */
         public function doRun(InputInterface $input, OutputInterface $output)
         {
-            $this->printVersionString($output);
+            $output->write(
+              sprintf(
+                "phploc %s by Sebastian Bergmann.\n\n", $this->getVersion()
+              )
+            );
 
             if ($input->hasParameterOption('--version')) {
                 exit;
@@ -126,20 +130,6 @@ namespace SebastianBergmann\PHPLOC\CLI
             }
 
             parent::doRun($input, $output);
-        }
-
-        /**
-         * Prints the version string.
-         *
-         * @param OutputInterface $output
-         */
-        public function printVersionString(OutputInterface $output)
-        {
-            $output->write(
-              sprintf(
-                "phploc %s by Sebastian Bergmann.\n\n", $this->getVersion()
-              )
-            );
         }
     }
 }
