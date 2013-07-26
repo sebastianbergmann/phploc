@@ -164,7 +164,10 @@ namespace SebastianBergmann\PHPLOC\CLI
             }
 
             $printer = new Text;
-            $printer->printResult($count, $input->getOption('count-tests'));
+
+            $printer->printResult(
+              $output, $count, $input->getOption('count-tests')
+            );
 
             if ($input->getOption('log-csv')) {
                 $printer = new Single;
