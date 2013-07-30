@@ -153,8 +153,8 @@ namespace SebastianBergmann\PHPLOC\CLI
             $count = $this->count(
               $input->getArgument('values'),
               $input->getOption('exclude'),
-              $input->getOption('names'),
-              $input->getOption('names-exclude'),
+              $this->handleCSVOption($input, 'names'),
+              $this->handleCSVOption($input, 'names-exclude'),
               $input->getOption('count-tests')
             );
 
@@ -201,8 +201,8 @@ namespace SebastianBergmann\PHPLOC\CLI
                 $_count = $this->count(
                   $arguments,
                   $input->getOption('exclude'),
-                  $input->getOption('names'),
-                  $input->getOption('names-exclude'),
+                  $this->handleCSVOption($input, 'names'),
+                  $this->handleCSVOption($input, 'names-exclude'),
                   $input->getOption('count-tests')
                 );
 
@@ -231,6 +231,23 @@ namespace SebastianBergmann\PHPLOC\CLI
             $analyser = new Analyser;
 
             return $analyser->countFiles($files, $countTests);
+        }
+
+        /**
+         * @param  Symfony\Component\Console\Input\InputOption $input
+         * @param  string                                      $option
+         * @return array
+         */
+        private function handleCSVOption(InputInterface $input, $option)
+        {
+            $result = $input->getOption($option);
+
+            if (!is_array($result)) {
+                $result = explode(',', $result);
+                array_map('trim', $result);
+            }
+
+            return $result;
         }
     }
 }
