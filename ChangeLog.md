@@ -3,7 +3,7 @@ phploc
 
 This is the list of changes for the phploc 2.0 release series.
 
-phpcpd 2.0.0
+phploc 2.0.0
 ------------
 
 * Implemented #4: Count code outside of classes or functions.
