@@ -130,6 +130,12 @@ namespace SebastianBergmann\PHPLOC\CLI
                      NULL,
                      InputOption::VALUE_REQUIRED,
                      'Write result in XML format to file'
+                   )
+                 ->addOption(
+                     'progress',
+                     null,
+                     InputOption::VALUE_NONE,
+                     'Show progress bar'
                    );
         }
 
@@ -201,10 +207,16 @@ namespace SebastianBergmann\PHPLOC\CLI
          */
         private function executeHistory(InputInterface $input, OutputInterface $output)
         {
-            $git           = new Git($input->getOption('git-repository'));
-            $currentBranch = $git->getCurrentBranch();
-            $revisions     = $git->getRevisions();
-            $count         = array();
+            $git            = new Git($input->getOption('git-repository'));
+            $currentBranch  = $git->getCurrentBranch();
+            $revisions      = $git->getRevisions();
+            $count          = array();
+            $progressHelper = NULL;
+
+            if ($input->getOption('progress')) {
+                $progressHelper = $this->getHelperSet()->get('progress');
+                $progressHelper->start($output, count($revisions));
+            }
 
             foreach ($revisions as $revision) {
                 $git->checkout($revision['sha1']);
@@ -230,9 +242,18 @@ namespace SebastianBergmann\PHPLOC\CLI
                 if ($_count) {
                     $count[$revision['date']->format(\DateTime::W3C)] = $_count;
                 }
+
+                if ($progressHelper !== NULL) {
+                    $progressHelper->advance();
+                }
             }
 
             $git->checkout($currentBranch);
+
+            if ($progressHelper !== NULL) {
+                $progressHelper->finish();
+                $output->writeln('');
+            }
 
             if ($input->getOption('log-csv')) {
                 $printer = new HistoryCSV;
