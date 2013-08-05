@@ -104,7 +104,7 @@ namespace SebastianBergmann\PHPLOC\CLI
                  ->addOption(
                      'git-repository',
                      NULL,
-                     InputOption::VALUE_NONE,
+                     InputOption::VALUE_REQUIRED,
                      'Collect metrics over the history of a Git repository'
                    )
                  ->addOption(
@@ -202,8 +202,7 @@ namespace SebastianBergmann\PHPLOC\CLI
         private function executeHistory(InputInterface $input, OutputInterface $output)
         {
             $arguments     = $input->getArgument('values');
-            $directory     = $arguments[0];
-            $git           = new Git($directory);
+            $git           = new Git($input->getOption('git-repository'));
             $currentBranch = $git->getCurrentBranch();
             $revisions     = $git->getRevisions();
             $count         = array();
