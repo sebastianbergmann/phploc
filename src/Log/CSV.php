@@ -41,7 +41,7 @@
  * @since     File available since Release 2.0.0
  */
 
-namespace SebastianBergmann\PHPLOC\Log\CSV
+namespace SebastianBergmann\PHPLOC\Log
 {
     /**
      * A CSV ResultPrinter for the TextUI.
@@ -52,7 +52,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
      * @link      http://github.com/sebastianbergmann/phploc/tree
      * @since     Class available since Release 1.6.0
      */
-    class Single
+    class CSV
     {
         /**
          * Prints a result set.
