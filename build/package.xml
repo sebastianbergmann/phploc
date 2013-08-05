@@ -39,8 +39,10 @@
      <dir name="Log">
       <dir name="History">
        <file baseinstalldir="/" name="CSV.php" role="php" />
+       <file baseinstalldir="/" name="JSON.php" role="php" />
       </dir>
       <file baseinstalldir="/" name="CSV.php" role="php" />
+      <file baseinstalldir="/" name="JSON.php" role="php" />
       <file baseinstalldir="/" name="Text.php" role="php" />
       <file baseinstalldir="/" name="XML.php" role="php" />
      </dir>

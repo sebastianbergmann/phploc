@@ -47,7 +47,9 @@ namespace SebastianBergmann\PHPLOC\CLI
     use SebastianBergmann\Git;
     use SebastianBergmann\PHPLOC\Analyser;
     use SebastianBergmann\PHPLOC\Log\History\CSV as HistoryCSV;
+    use SebastianBergmann\PHPLOC\Log\History\JSON as HistoryJSON;
     use SebastianBergmann\PHPLOC\Log\CSV;
+    use SebastianBergmann\PHPLOC\Log\JSON;
     use SebastianBergmann\PHPLOC\Log\Text;
     use SebastianBergmann\PHPLOC\Log\XML;
     use Symfony\Component\Console\Command\Command as AbstractCommand;
@@ -118,6 +120,12 @@ namespace SebastianBergmann\PHPLOC\CLI
                      'Write result in CSV format to file'
                    )
                  ->addOption(
+                     'log-json',
+                     NULL,
+                     InputOption::VALUE_REQUIRED,
+                     'Write result in JSON format to file'
+                   )
+                 ->addOption(
                      'log-xml',
                      NULL,
                      InputOption::VALUE_REQUIRED,
@@ -174,6 +182,11 @@ namespace SebastianBergmann\PHPLOC\CLI
                 $printer->printResult($input->getOption('log-csv'), $count);
             }
 
+            if ($input->getOption('log-json')) {
+                $printer = new JSON;
+                $printer->printResult($input->getOption('log-json'), $count);
+            }
+
             if ($input->getOption('log-xml')) {
                 $printer = new XML;
                 $printer->printResult($input->getOption('log-xml'), $count);
@@ -216,6 +229,11 @@ namespace SebastianBergmann\PHPLOC\CLI
             if ($input->getOption('log-csv')) {
                 $printer = new HistoryCSV;
                 $printer->printResult($input->getOption('log-csv'), $count);
+            }
+
+            if ($input->getOption('log-json')) {
+                $printer = new HistoryJSON;
+                $printer->printResult($input->getOption('log-json'), $count);
             }
         }
 

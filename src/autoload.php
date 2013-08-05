@@ -57,6 +57,8 @@ spl_autoload_register(
               'sebastianbergmann\\phploc\\cli\\command' => '/CLI/Command.php',
               'sebastianbergmann\\phploc\\log\\csv' => '/Log/CSV.php',
               'sebastianbergmann\\phploc\\log\\history\\csv' => '/Log/History/CSV.php',
+              'sebastianbergmann\\phploc\\log\\history\\json' => '/Log/History/JSON.php',
+              'sebastianbergmann\\phploc\\log\\json' => '/Log/JSON.php',
               'sebastianbergmann\\phploc\\log\\text' => '/Log/Text.php',
               'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php'
             );
