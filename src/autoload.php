@@ -55,8 +55,8 @@ spl_autoload_register(
               'sebastianbergmann\\phploc\\analyser' => '/Analyser.php',
               'sebastianbergmann\\phploc\\cli\\application' => '/CLI/Application.php',
               'sebastianbergmann\\phploc\\cli\\command' => '/CLI/Command.php',
-              'sebastianbergmann\\phploc\\log\\csv' => '/Log/CSV.php',
-              'sebastianbergmann\\phploc\\log\\history\\csv' => '/Log/History/CSV.php',
+              'sebastianbergmann\\phploc\\log\\csv\\history' => '/Log/CSV/History.php',
+              'sebastianbergmann\\phploc\\log\\csv\\single' => '/Log/CSV/Single.php',
               'sebastianbergmann\\phploc\\log\\text' => '/Log/Text.php',
               'sebastianbergmann\\phploc\\log\\xml' => '/Log/XML.php'
             );

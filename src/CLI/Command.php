@@ -46,8 +46,8 @@ namespace SebastianBergmann\PHPLOC\CLI
     use SebastianBergmann\FinderFacade\FinderFacade;
     use SebastianBergmann\Git;
     use SebastianBergmann\PHPLOC\Analyser;
-    use SebastianBergmann\PHPLOC\Log\History\CSV as HistoryCSV;
-    use SebastianBergmann\PHPLOC\Log\CSV;
+    use SebastianBergmann\PHPLOC\Log\CSV\History;
+    use SebastianBergmann\PHPLOC\Log\CSV\Single;
     use SebastianBergmann\PHPLOC\Log\Text;
     use SebastianBergmann\PHPLOC\Log\XML;
     use Symfony\Component\Console\Command\Command as AbstractCommand;
@@ -176,7 +176,7 @@ namespace SebastianBergmann\PHPLOC\CLI
             );
 
             if ($input->getOption('log-csv')) {
-                $printer = new CSV;
+                $printer = new Single;
                 $printer->printResult($input->getOption('log-csv'), $count);
             }
 
@@ -243,7 +243,7 @@ namespace SebastianBergmann\PHPLOC\CLI
             }
 
             if ($input->getOption('log-csv')) {
-                $printer = new HistoryCSV;
+                $printer = new History;
                 $printer->printResult($input->getOption('log-csv'), $count);
             }
         }
