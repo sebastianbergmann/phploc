@@ -201,7 +201,6 @@ namespace SebastianBergmann\PHPLOC\CLI
          */
         private function executeHistory(InputInterface $input, OutputInterface $output)
         {
-            $arguments     = $input->getArgument('values');
             $git           = new Git($input->getOption('git-repository'));
             $currentBranch = $git->getCurrentBranch();
             $revisions     = $git->getRevisions();
@@ -210,8 +209,18 @@ namespace SebastianBergmann\PHPLOC\CLI
             foreach ($revisions as $revision) {
                 $git->checkout($revision['sha1']);
 
+                $directories = array();
+
+                foreach ($input->getArgument('values') as $value) {
+                    $directory = realpath($value);
+
+                    if ($directory) {
+                        $directories[] = $directory;
+                    }
+                }
+
                 $_count = $this->count(
-                  $arguments,
+                  $directories,
                   $input->getOption('exclude'),
                   $this->handleCSVOption($input, 'names'),
                   $this->handleCSVOption($input, 'names-exclude'),
