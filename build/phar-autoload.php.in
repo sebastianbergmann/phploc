@@ -19,6 +19,8 @@ spl_autoload_register(
   }
 );
 
+Phar::mapPhar('___PHAR___');
+
 $application = new SebastianBergmann\PHPLOC\CLI\Application;
 $application->run();
 
