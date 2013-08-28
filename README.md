@@ -11,13 +11,13 @@
 
 The easiest way to obtain PHPLOC is to download a [PHP Archive (PHAR)](http://php.net/phar) that has all required dependencies of PHPLOC bundled in a single file:
 
-    wget http://pear.phpunit.de/get/phploc.phar
+    wget https://phar.phpunit.de/phploc.phar
     chmod +x phploc.phar
     mv phploc.phar /usr/local/bin/phploc
 
 You can also immediately use the PHAR after you have downloaded it, of course:
 
-    wget http://pear.phpunit.de/get/phploc.phar
+    wget https://phar.phpunit.de/phploc.phar
     php phploc.phar
 
 ### Composer
@@ -48,7 +48,9 @@ The following two commands (which you may have to run as `root`) are all that is
     pear config-set auto_discover 1
     pear install pear.phpunit.de/phploc
 
-## Usage Example
+## Usage Examples
+
+### Analyse a directory and print the result
 
     ➜ ~ phploc /usr/local/src/phpunit/PHPUnit
     phploc 2.0.0 by Sebastian Bergmann.
@@ -104,3 +106,10 @@ The following two commands (which you may have to run as `root`) are all that is
       Constants                                         36
         Global Constants                                 2 (5.56%)
         Class Constants                                 34 (94.44%)
+
+### Analyse a directory for each revision in a Git repository and write the result in CSV format
+
+    ➜ ~ phploc --log-csv log.csv --progress --git-repository . src
+    phploc 2.0.0-BETA1-11-g188c14e by Sebastian Bergmann.
+
+     295/295 [============================] 100%
