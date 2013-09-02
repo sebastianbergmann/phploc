@@ -523,7 +523,11 @@ namespace SebastianBergmann\PHPLOC
                     }
                     break;
 
-                    case T_COMMENT:
+                    case T_COMMENT: {
+                        $this->count['cloc']++;
+                    }
+                    break;
+
                     case T_DOC_COMMENT: {
                         $this->count['cloc'] += substr_count($value, "\n") + 1;
                     }
