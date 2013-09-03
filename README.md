@@ -53,38 +53,38 @@ The following two commands (which you may have to run as `root`) are all that is
 ### Analyse a directory and print the result
 
     ➜ ~ phploc /usr/local/src/phpunit/PHPUnit
-    phploc 2.0.0 by Sebastian Bergmann.
+    phploc 2.0.1 by Sebastian Bergmann.
 
     Directories                                         17
     Files                                              121
 
     Size
-      Lines of Code (LOC)                            29022
-      Comment Lines of Code (CLOC)                   14155 (48.77%)
-      Non-Comment Lines of Code (NCLOC)              14867 (51.23%)
-      Logical Lines of Code (LLOC)                    3477 (11.98%)
-        Classes                                       3307 (95.11%)
+      Lines of Code (LOC)                            29047
+      Comment Lines of Code (CLOC)                   14022 (48.27%)
+      Non-Comment Lines of Code (NCLOC)              15025 (51.73%)
+      Logical Lines of Code (LLOC)                    3484 (11.99%)
+        Classes                                       3314 (95.12%)
           Average Class Length                          29
           Average Method Length                          4
-        Functions                                      153 (4.40%)
+        Functions                                      153 (4.39%)
           Average Function Length                        1
         Not in classes or functions                     17 (0.49%)
 
     Complexity
       Cyclomatic Complexity / LLOC                    0.51
-      Cyclomatic Complexity / Number of Methods       3.36
+      Cyclomatic Complexity / Number of Methods       3.37
 
     Dependencies
       Global Accesses                                   43
         Global Constants                                 1 (2.33%)
         Global Variables                                34 (79.07%)
         Super-Global Variables                           8 (18.60%)
-      Attribute Accesses                              1174
-        Non-Static                                    1054 (89.78%)
-        Static                                         120 (10.22%)
-      Method Calls                                    1502
-        Non-Static                                     976 (64.98%)
-        Static                                         526 (35.02%)
+      Attribute Accesses                              1122
+        Non-Static                                    1054 (93.94%)
+        Static                                          68 (6.06%)
+      Method Calls                                    1503
+        Non-Static                                     976 (64.94%)
+        Static                                         527 (35.06%)
 
     Structure
       Namespaces                                         0
@@ -100,9 +100,9 @@ The following two commands (which you may have to run as `root`) are all that is
         Visibility
           Public Method                                526 (70.13%)
           Non-Public Methods                           224 (29.87%)
-      Functions                                        142
-        Named Functions                                138 (97.18%)
-        Anonymous Functions                              4 (2.82%)
+      Functions                                        143
+        Named Functions                                138 (96.50%)
+        Anonymous Functions                              5 (3.50%)
       Constants                                         36
         Global Constants                                 2 (5.56%)
         Class Constants                                 34 (94.44%)
