@@ -199,7 +199,7 @@ END;
 
             if ($printTests) {
                 $output->write(
-                  printf(
+                  sprintf(
                     "\nTests\n" .
                     "  Classes                                   %10d\n" .
                     "  Methods                                   %10d\n",
