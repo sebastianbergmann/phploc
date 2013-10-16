@@ -167,7 +167,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['testMethods']
             );
 
-            return implode(',', $values) . PHP_EOL;
+            return '"' . implode('","', $values) . '"' . PHP_EOL;
         }
     }
 }
