@@ -82,12 +82,14 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               'Comment Lines of Code (CLOC)',
               'Non-Comment Lines of Code (NCLOC)',
               'Logical Lines of Code (LLOC)',
+              'LLOC outside functions or classes',
               'Namespaces',
               'Interfaces',
               'Traits',
               'Classes',
               'Abstract Classes',
               'Concrete Classes',
+              'Classes Length (LLOC)',
               'Average Class Length (LLOC)',
               'Methods',
               'Non-Static Methods',
@@ -99,6 +101,8 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               'Functions',
               'Named Functions',
               'Anonymous Functions',
+              'Functions Length (LLOC)',
+              'Average Function Length (LLOC)',
               'Constants',
               'Global Constants',
               'Class Constants',
@@ -133,12 +137,14 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['cloc'],
               $count['ncloc'],
               $count['lloc'],
+              $count['llocGlobal'],
               $count['namespaces'],
               $count['interfaces'],
               $count['traits'],
               $count['classes'],
               $count['abstractClasses'],
               $count['concreteClasses'],
+              $count['llocClasses'],
               $count['llocByNoc'],
               $count['methods'],
               $count['nonStaticMethods'],
@@ -150,6 +156,8 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['functions'],
               $count['namedFunctions'],
               $count['anonymousFunctions'],
+              $count['llocFunctions'],
+              $count['llocByNof'],
               $count['constants'],
               $count['globalConstants'],
               $count['classConstants'],
@@ -167,7 +175,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['testMethods']
             );
 
-            return implode(',', $values) . PHP_EOL;
+            return '"' . implode('","', $values) . '"' . PHP_EOL;
         }
     }
 }
