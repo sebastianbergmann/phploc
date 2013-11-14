@@ -438,7 +438,9 @@ namespace SebastianBergmann\PHPLOC
 
                                 for ($j = $i; $j > 0; $j--) {
                                     if (is_string($tokens[$j])) {
-                                        if ($tokens[$j] == '{' || $tokens[$j] == '}') {
+                                        if ($tokens[$j] == '{' ||
+                                            $tokens[$j] == '}' ||
+                                            $tokens[$j] == ';') {
                                             break;
                                         }
 

@@ -24,6 +24,8 @@ class AClass extends AnAbstractClass implements AnInterface
 {
     const A_CLASS_CONSTANT = 'bar';
 
+    private static $a = array();
+
     public static function aStaticMethod()
     {
         global $foo;
