@@ -63,7 +63,7 @@ namespace SebastianBergmann\PHPLOC\CLI
     {
         public function __construct()
         {
-            $version = new Version('2.0.3', __DIR__);
+            $version = new Version('2.0.4', __DIR__);
             parent::__construct('phploc', $version->getVersion());
         }
 
