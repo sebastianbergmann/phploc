@@ -118,7 +118,7 @@ Structure
       Non-Static Methods                    %10d (%.2f%%)
       Static Methods                        %10d (%.2f%%)
     Visibility
-      Public Method                         %10d (%.2f%%)
+      Public Methods                        %10d (%.2f%%)
       Non-Public Methods                    %10d (%.2f%%)
   Functions                                 %10d
     Named Functions                         %10d (%.2f%%)
