@@ -36,13 +36,6 @@ For a system-wide installation via Composer, you can run:
 
 Make sure you have `~/.composer/vendor/bin/` in your path.
 
-### PEAR Installer
-
-The following two commands (which you may have to run as `root`) are all that is required to install PHPLOC using the PEAR Installer:
-
-    pear config-set auto_discover 1
-    pear install pear.phpunit.de/phploc
-
 ## Usage Examples
 
 ### Analyse a directory and print the result

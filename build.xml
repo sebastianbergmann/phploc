@@ -1,157 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="phploc" default="build">
- <target name="build" depends="prepare,lint,phpunit"/>
+    <target name="build" depends="prepare,lint"/>
 
- <target name="clean" description="Cleanup build artifacts">
-  <delete dir="${basedir}/vendor"/>
-  <delete file="${basedir}/composer.lock"/>
-  <delete file="${basedir}/composer.phar"/>
-  <delete dir="${basedir}/build/phar"/>
-  <delete dir="${basedir}/build/SebastianBergmann"/>
-  <delete file="${basedir}/build/LICENSE"/>
-  <delete file="${basedir}/build/README.md"/>
-  <delete file="${basedir}/build/phploc.bat"/>
-  <delete file="${basedir}/build/phploc.php"/>
-  <delete>
-   <fileset dir="${basedir}/build" includes="*.phar"/>
-   <fileset dir="${basedir}/build" includes="*.tgz"/>
-  </delete>
- </target>
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/bin"/>
+        <delete dir="${basedir}/vendor"/>
+        <delete file="${basedir}/composer.lock"/>
+        <delete file="${basedir}/composer.phar"/>
+        <delete dir="${basedir}/build/phar"/>
+        <delete>
+            <fileset dir="${basedir}/build" includes="*.phar"/>
+        </delete>
+    </target>
 
- <target name="prepare" depends="clean,phpab" description="Prepare for build">
- </target>
+    <target name="composer" description="Install dependencies with Composer">
+        <get src="https://getcomposer.org/composer.phar" dest="${basedir}/composer.phar"/>
 
- <target name="phpab" description="Generate autoloader scripts">
-  <exec executable="phpab">
-   <arg value="--output" />
-   <arg path="src/autoload.php" />
-   <arg value="--template" />
-   <arg path="src/autoload.php.in" />
-   <arg value="--indent" />
-   <arg value="              " />
-   <arg path="src" />
-  </exec>
- </target>
+        <exec executable="php">
+            <arg value="composer.phar"/>
+            <arg value="install"/>
+        </exec>
+    </target>
 
- <target name="lint">
-  <apply executable="php" failonerror="true">
-   <arg value="-l" />
+    <target name="prepare" depends="clean,composer" description="Prepare for build">
+    </target>
 
-   <fileset dir="${basedir}/src">
-    <include name="**/*.php" />
-    <modified />
-   </fileset>
+    <target name="lint">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
 
-   <fileset dir="${basedir}/tests">
-    <include name="**/*.php" />
-    <modified />
-   </fileset>
-  </apply>
- </target>
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
 
- <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec executable="phpunit" failonerror="true">
-   <arg value="--configuration" />
-   <arg path="${basedir}/build/phpunit.xml" />
-  </exec>
- </target>
+            <fileset dir="${basedir}/tests">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+        </apply>
+    </target>
 
- <target name="pear">
-  <mkdir dir="${basedir}/build/SebastianBergmann/PHPLOC"/>
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer">
+        <exec executable="phpcs">
+            <arg value="--standard=PSR2" />
+            <arg value="--extensions=php" />
+            <arg path="${basedir}/src" />
+        </exec>
+    </target>
 
-  <copy todir="${basedir}/build/SebastianBergmann/PHPLOC">
-   <fileset dir="${basedir}/src"/>
-  </copy>
+    <target name="phpunit" depends="prepare,lint" description="Run unit tests with PHPUnit">
+        <exec executable="${basedir}/vendor/bin/phpunit" failonerror="true">
+            <arg value="--configuration" />
+            <arg path="${basedir}/build/phpunit.xml" />
+        </exec>
+    </target>
 
-  <copy file="LICENSE" todir="${basedir}/build"/>
-  <copy file="README.md" todir="${basedir}/build"/>
-  <copy file="phploc.bat" todir="${basedir}/build"/>
-  <copy file="phploc.php" todir="${basedir}/build"/>
+    <target name="phar"
+            description="Create PHAR archive of PHPLOC and all its dependencies"
+            depends="clean,composer,phar-build">
+        <mkdir dir="${basedir}/build/phar"/>
+    </target>
 
-  <exec executable="pear" dir="${basedir}/build">
-   <arg value="package" />
-  </exec>
+    <target name="phar-build">
+        <exec executable="bash" outputproperty="version">
+            <arg value="-c" />
+            <arg value="${basedir}/phploc --version | awk 'BEGIN { ORS = &quot;&quot;; } {print $2}'" />
+        </exec>
 
-  <delete dir="${basedir}/build/SebastianBergmann"/>
-  <delete file="${basedir}/build/LICENSE"/>
-  <delete file="${basedir}/build/README.md"/>
-  <delete file="${basedir}/build/phploc.bat"/>
-  <delete file="${basedir}/build/phploc.php"/>
- </target>
+        <copy todir="${basedir}/build/phar/src">
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
 
- <target name="phar"
-         description="Create PHAR archive of PHPLOC and all its dependencies"
-         depends="clean">
-  <mkdir dir="${basedir}/build/phar"/>
+        <copy todir="${basedir}/build/phar/finder-facade">
+            <fileset dir="${basedir}/vendor/sebastian/finder-facade/src">
+                <include name="**/*.php" />
+                <exclude name="**/autoload.php" />
+            </fileset>
+        </copy>
 
-  <exec executable="bash" outputproperty="version">
-   <arg value="-c" />
-   <arg value="${basedir}/phploc.php --version | awk 'BEGIN { ORS = &quot;&quot;; } {print $2}'" />
-  </exec>
+        <copy todir="${basedir}/build/phar/git">
+            <fileset dir="${basedir}/vendor/sebastian/git/src">
+                <include name="**/*.php" />
+                <exclude name="**/autoload.php" />
+            </fileset>
+        </copy>
 
-  <get src="https://getcomposer.org/composer.phar" dest="${basedir}/composer.phar"/>
+        <copy todir="${basedir}/build/phar/version">
+            <fileset dir="${basedir}/vendor/sebastian/version/src">
+                <include name="**/*.php" />
+                <exclude name="**/autoload.php" />
+            </fileset>
+        </copy>
 
-  <exec executable="php">
-   <arg value="composer.phar"/>
-   <arg value="install"/>
-  </exec>
+        <copy todir="${basedir}/build/phar/symfony">
+            <fileset dir="${basedir}/vendor/symfony">
+                <include name="**/*.php" />
+                <exclude name="**/Tests/**" />
+            </fileset>
+        </copy>
 
-  <copy todir="${basedir}/build/phar/src">
-   <fileset dir="${basedir}/src">
-    <include name="**/*.php" />
-    <exclude name="**/autoload.php" />
-   </fileset>
-  </copy>
+        <copy todir="${basedir}/build/phar/fdomdocument">
+            <fileset dir="${basedir}/vendor/theseer/fdomdocument/src"/>
+        </copy>
 
-  <copy todir="${basedir}/build/phar/finder-facade">
-   <fileset dir="${basedir}/vendor/sebastian/finder-facade/src">
-    <include name="**/*.php" />
-    <exclude name="**/autoload.php" />
-   </fileset>
-  </copy>
+        <exec executable="${basedir}/build/phar-manifest.php" output="${basedir}/build/phar/manifest.txt"/>
 
-  <copy todir="${basedir}/build/phar/git">
-   <fileset dir="${basedir}/vendor/sebastian/git/src">
-    <include name="**/*.php" />
-    <exclude name="**/autoload.php" />
-   </fileset>
-  </copy>
+        <exec executable="phpab">
+            <arg value="--all" />
+            <arg value="--phar" />
+            <arg value="--output" />
+            <arg path="${basedir}/build/phploc-${version}.phar" />
+            <arg value="--template" />
+            <arg path="${basedir}/build/phar-autoload.php.in" />
+            <arg value="--indent" />
+            <arg value="            " />
+            <arg path="${basedir}/build/phar" />
+        </exec>
 
-  <copy todir="${basedir}/build/phar/version">
-   <fileset dir="${basedir}/vendor/sebastian/version/src">
-    <include name="**/*.php" />
-    <exclude name="**/autoload.php" />
-   </fileset>
-  </copy>
-
-  <copy todir="${basedir}/build/phar/symfony">
-   <fileset dir="${basedir}/vendor/symfony">
-    <include name="**/*.php" />
-    <exclude name="**/Tests/**" />
-   </fileset>
-  </copy>
-
-  <copy todir="${basedir}/build/phar/fdomdocument">
-   <fileset dir="${basedir}/vendor/theseer/fdomdocument/src"/>
-  </copy>
-
-  <exec executable="phpab">
-   <arg value="--all" />
-   <arg value="--phar" />
-   <arg value="--output" />
-   <arg path="${basedir}/build/phploc-${version}.phar" />
-   <arg value="--template" />
-   <arg path="${basedir}/build/phar-autoload.php.in" />
-   <arg value="--indent" />
-   <arg value="            " />
-   <arg path="${basedir}/build/phar" />
-  </exec>
-
-  <chmod file="${basedir}/build/phploc-${version}.phar" perm="ugo+rx"/>
-
-  <delete dir="${basedir}/build/phar"/>
-  <delete dir="${basedir}/vendor"/>
-  <delete file="${basedir}/composer.lock"/>
-  <delete file="${basedir}/composer.phar"/>
- </target>
+        <chmod file="${basedir}/build/phploc-${version}.phar" perm="ugo+rx"/>
+    </target>
 </project>

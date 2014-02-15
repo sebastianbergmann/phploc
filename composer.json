@@ -26,7 +26,7 @@
         ]
     },
     "bin": [
-        "composer/bin/phploc"
+        "phploc"
     ],
     "extra": {
         "branch-alias": {
