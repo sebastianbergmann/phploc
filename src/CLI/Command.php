@@ -250,8 +250,12 @@ namespace SebastianBergmann\PHPLOC\CLI
 
         private function count(array $arguments, $excludes, $names, $namesExclude, $countTests)
         {
-            $finder = new FinderFacade($arguments, $excludes, $names, $namesExclude);
-            $files  = $finder->findFiles();
+            try {
+                $finder = new FinderFacade($arguments, $excludes, $names, $namesExclude);
+                $files  = $finder->findFiles();
+            } catch (\InvalidArgumentException $ex) {
+                return FALSE;
+            }
 
             if (empty($files)) {
                 return FALSE;
