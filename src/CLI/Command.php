@@ -227,6 +227,7 @@ namespace SebastianBergmann\PHPLOC\CLI
                 );
 
                 if ($_count) {
+                    $_count['commit'] = $revision['sha1'];
                     $count[$revision['date']->format(\DateTime::W3C)] = $_count;
                 }
 

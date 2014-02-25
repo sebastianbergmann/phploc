@@ -75,9 +75,26 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
          * @param  array $count
          * @return string
          */
+        protected function getValuesLine(array $count)
+        {
+            $values = array(
+                'commit' => $count['commit'],
+            );
+
+            return '"' . implode('","', $values) . '",' . parent::getValuesLine($count);
+        }
+
+        /**
+         * @param  array $count
+         * @return string
+         */
         protected function getKeysLine(array $count)
         {
-            return 'Date,' . parent::getKeysLine($count);
+            $keys = array(
+                'Date',
+                'Commit',
+            );
+            return implode(',', $keys) . ',' . parent::getKeysLine($count);
         }
     }
 }
