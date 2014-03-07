@@ -17,7 +17,7 @@
         "php": ">=5.3.3",
         "sebastian/finder-facade": ">=1.1.0",
         "sebastian/git": ">=1.0.0",
-        "sebastian/version": ">=1.0.0",
+        "sebastian/version": ">=1.0.3",
         "symfony/console": ">=2.2.0"
     },
     "autoload": {
