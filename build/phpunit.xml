@@ -3,7 +3,7 @@
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          syntaxCheck="false"
-         bootstrap="../src/autoload.php"
+         bootstrap="../vendor/autoload.php"
          strict="true">
   <testsuites>
     <testsuite name="PHPLOC">
@@ -13,7 +13,6 @@
   <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">../src</directory>
-        <exclude><file>../src/autoload.php</file></exclude>
     </whitelist>
   </filter>
 </phpunit>
