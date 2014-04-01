@@ -787,7 +787,12 @@ namespace SebastianBergmann\PHPLOC
             return FALSE;
         }
 
-        private function isClassDeclaration($tokens, $i)
+        /**
+         * @param  array   $tokens
+         * @param  integer $i
+         * @return boolean
+         */
+        private function isClassDeclaration(array $tokens, $i)
         {
             $n = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
 
