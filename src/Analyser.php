@@ -680,16 +680,22 @@ namespace SebastianBergmann\PHPLOC
         {
             $parent = $this->classes[$className];
             $result = FALSE;
-
+            $count = 0;
+            
             // Check ancestry for PHPUnit_Framework_TestCase.
             while ($parent !== NULL) {
+                $count++;
+                if ($count > 100) {
+                    // Prevent infinite loops and just bail
+                    break;
+                }
                 if ($parent == 'PHPUnit_Framework_TestCase' ||
                     $parent == '\\PHPUnit_Framework_TestCase') {
                     $result = TRUE;
                     break;
                 }
 
-                if (isset($this->classes[$parent])) {
+                if (isset($this->classes[$parent]) && $parent !== $this->classes[$parent]) {
                     $parent = $this->classes[$parent];
                 }
 
