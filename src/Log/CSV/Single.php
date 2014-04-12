@@ -152,7 +152,7 @@ namespace SebastianBergmann\PHPLOC\Log\CSV
               $count['publicMethods'],
               $count['nonPublicMethods'],
               $count['llocByNom'],
-              $count['ccnByNom'],
+              $count['methodCcnAvg'],
               $count['functions'],
               $count['namedFunctions'],
               $count['anonymousFunctions'],
