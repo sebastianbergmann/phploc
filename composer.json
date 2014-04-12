@@ -20,6 +20,9 @@
         "sebastian/version": ">=1.0.3",
         "symfony/console": ">=2.2.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~4"
+    },
     "autoload": {
         "classmap": [
             "src/"
