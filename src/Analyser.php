@@ -333,10 +333,13 @@ namespace SebastianBergmann\PHPLOC
                     $token = trim($tokens[$i]);
 
                     if ($token == ';') {
-                        if ($className !== NULL && $functionName !== NULL && !$testClass) {
+                        if ($className !== NULL && !$testClass) {
                             $this->count['llocClasses']++;
                             $currentClassData['lloc']++;
-                            $currentMethodData['lloc']++;
+
+                            if ($functionName !== NULL) {
+                                $currentMethodData['lloc']++;
+                            }
                         }
 
                         else if ($functionName !== NULL) {
