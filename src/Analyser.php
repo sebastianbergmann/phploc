@@ -112,8 +112,6 @@ namespace SebastianBergmann\PHPLOC
           'testClasses'                 => 0,
           'testMethods'                 => 0,
           'ccnByLloc'                   => 0,
-          'llocByNoc'                   => 0,
-          'llocByNom'                   => 0,
           'llocByNof'                   => 0,
           'methodCalls'                 => 0,
           'staticMethodCalls'           => 0,
