@@ -32,7 +32,7 @@ class AClass extends AnAbstractClass implements AnInterface
 
         $a = $_GET['a'];
         $GLOBALS['bar'] = A_GLOBAL_CONSTANT;
-
+        // Another comment
         $o->m();
         $o->$m();
         $o->a;

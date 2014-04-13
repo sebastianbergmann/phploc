@@ -67,135 +67,149 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testWithoutTests()
     {
-        $expected =
-          array(
-            'files' => 1,
-            'loc' => 70,
-            'cloc' => 3,
-            'ncloc' => 67,
-            'ccn' => 2,
-            'ccnMethods' => 2,
-            'interfaces' => 1,
-            'classes' => 2,
-            'abstractClasses' => 1,
-            'concreteClasses' => 1,
-            'anonymousFunctions' => 1,
-            'functions' => 2,
-            'methods' => 4,
-            'publicMethods' => 2,
-            'nonPublicMethods' => 2,
-            'nonStaticMethods' => 3,
-            'staticMethods' => 1,
-            'constants' => 2,
-            'classConstants' => 1,
-            'globalConstants' => 1,
-            'ccnByNom' => 1.5,
-            'directories' => 0,
-            'namespaces' => 1,
-            'traits' => 0,
-            'testClasses' => 0,
-            'testMethods' => 0,
-            'methodCalls' => 6,
-            'staticMethodCalls' => 4,
-            'instanceMethodCalls' => 2,
-            'attributeAccesses' => 6,
-            'staticAttributeAccesses' => 4,
-            'instanceAttributeAccesses' => 2,
-            'lloc' => 25,
-            'llocClasses' => 22,
-            'namedFunctions' => 1,
-            'ccnByLloc' => 0.08,
-            'llocByNoc' => 11,
-            'llocByNom' => 5.5,
-            'llocFunctions' => 1,
-            'llocGlobal' => 2,
-            'llocByNof' => 0.5,
-            'globalAccesses' => 4,
-            'globalVariableAccesses' => 2,
-            'superGlobalVariableAccesses' => 1,
-            'globalConstantAccesses' => 1
-        );
-
         $this->assertEquals(
-          $expected,
-          $this->analyser->countFiles(
-            array(__DIR__ . '/_files/source.php'), FALSE
-          ),
-          '',
-          0.01
+            array(
+                'files' => 1,
+                'loc' => 70,
+                'lloc' => 25,
+                'llocClasses' => 22,
+                'llocFunctions' => 1,
+                'llocGlobal' => 2,
+                'cloc' => 4,
+                'ccn' => 2,
+                'ccnMethods' => 2,
+                'interfaces' => 1,
+                'traits' => 0,
+                'classes' => 2,
+                'abstractClasses' => 1,
+                'concreteClasses' => 1,
+                'functions' => 2,
+                'namedFunctions' => 1,
+                'anonymousFunctions' => 1,
+                'methods' => 4,
+                'publicMethods' => 2,
+                'nonPublicMethods' => 2,
+                'nonStaticMethods' => 3,
+                'staticMethods' => 1,
+                'constants' => 2,
+                'classConstants' => 1,
+                'globalConstants' => 1,
+                'testClasses' => 0,
+                'testMethods' => 0,
+                'ccnByLloc' => 0.08,
+                'llocByNof' => 0.5,
+                'methodCalls' => 6,
+                'staticMethodCalls' => 4,
+                'instanceMethodCalls' => 2,
+                'attributeAccesses' => 6,
+                'staticAttributeAccesses' => 4,
+                'instanceAttributeAccesses' => 2,
+                'globalAccesses' => 4,
+                'globalVariableAccesses' => 2,
+                'superGlobalVariableAccesses' => 1,
+                'globalConstantAccesses' => 1,
+                'directories' => 0,
+                'namespaces' => 1,
+                'ncloc' => 66,
+                'classCcnMin' => 1,
+                'classCcnAvg' => 1.65,
+                'classCcnMax' => 3,
+                'methodCcnMin' => 1,
+                'methodCcnAvg' => 1.65,
+                'methodCcnMax' => 2,
+                'classLlocMin' => 0,
+                'classLlocAvg' => 7.3,
+                'classLlocMax' => 22,
+                'methodLlocMin' => 4,
+                'methodLlocAvg' => 5.6,
+                'methodLlocMax' => 7
+            ),
+            $this->analyser->countFiles(
+                array(__DIR__ . '/_files/source.php'),
+                false
+            ),
+            '',
+            0.1
         );
     }
 
     public function testWithTests()
     {
-        $expected =
-          array(
-            'files' => 2,
-            'loc' => 93,
-            'cloc' => 7,
-            'ncloc' => 86,
-            'ccn' => 2,
-            'ccnMethods' => 2,
-            'interfaces' => 1,
-            'classes' => 2,
-            'abstractClasses' => 1,
-            'concreteClasses' => 1,
-            'anonymousFunctions' => 1,
-            'functions' => 2,
-            'methods' => 4,
-            'publicMethods' => 2,
-            'nonPublicMethods' => 2,
-            'nonStaticMethods' => 3,
-            'staticMethods' => 1,
-            'constants' => 2,
-            'classConstants' => 1,
-            'globalConstants' => 1,
-            'testClasses' => 1,
-            'testMethods' => 2,
-            'ccnByNom' => 1.5,
-            'directories' => 0,
-            'namespaces' => 1,
-            'traits' => 0,
-            'methodCalls' => 6,
-            'staticMethodCalls' => 4,
-            'instanceMethodCalls' => 2,
-            'attributeAccesses' => 6,
-            'staticAttributeAccesses' => 4,
-            'instanceAttributeAccesses' => 2,
-            'lloc' => 25,
-            'llocClasses' => 22,
-            'namedFunctions' => 1,
-            'ccnByLloc' => 0.08,
-            'llocByNoc' => 11,
-            'llocByNom' => 5.5,
-            'llocFunctions' => 1,
-            'llocGlobal' => 2,
-            'llocByNof' => 0.5,
-            'globalAccesses' => 4,
-            'globalVariableAccesses' => 2,
-            'superGlobalVariableAccesses' => 1,
-            'globalConstantAccesses' => 1
-        );
-
         $this->assertEquals(
-          $expected,
-          $this->analyser->countFiles(
             array(
-              __DIR__ . '/_files/source.php',
-              __DIR__ . '/_files/tests.php'
-            ), TRUE
-          ),
-          '',
-          0.01
+                'files' => 2,
+                'loc' => 93,
+                'lloc' => 25,
+                'llocClasses' => 22,
+                'llocFunctions' => 1,
+                'llocGlobal' => 2,
+                'cloc' => 8,
+                'ccn' => 2,
+                'ccnMethods' => 2,
+                'interfaces' => 1,
+                'traits' => 0,
+                'classes' => 2,
+                'abstractClasses' => 1,
+                'concreteClasses' => 1,
+                'functions' => 2,
+                'namedFunctions' => 1,
+                'anonymousFunctions' => 1,
+                'methods' => 4,
+                'publicMethods' => 2,
+                'nonPublicMethods' => 2,
+                'nonStaticMethods' => 3,
+                'staticMethods' => 1,
+                'constants' => 2,
+                'classConstants' => 1,
+                'globalConstants' => 1,
+                'testClasses' => 1,
+                'testMethods' => 2,
+                'ccnByLloc' => 0.08,
+                'llocByNof' => 0.5,
+                'methodCalls' => 6,
+                'staticMethodCalls' => 4,
+                'instanceMethodCalls' => 2,
+                'attributeAccesses' => 6,
+                'staticAttributeAccesses' => 4,
+                'instanceAttributeAccesses' => 2,
+                'globalAccesses' => 4,
+                'globalVariableAccesses' => 2,
+                'superGlobalVariableAccesses' => 1,
+                'globalConstantAccesses' => 1,
+                'directories' => 0,
+                'namespaces' => 1,
+                'ncloc' => 85,
+                'classCcnMin' => 1,
+                'classCcnAvg' => 1.5,
+                'classCcnMax' => 3,
+                'methodCcnMin' => 1,
+                'methodCcnAvg' => 1.66,
+                'methodCcnMax' => 2,
+                'classLlocMin' => 0,
+                'classLlocAvg' => 5.5,
+                'classLlocMax' => 22,
+                'methodLlocMin' => 4,
+                'methodLlocAvg' => 5.6,
+                'methodLlocMax' => 7
+            ),
+            $this->analyser->countFiles(
+                array(
+                    __DIR__ . '/_files/source.php',
+                    __DIR__ . '/_files/tests.php'
+                ),
+                true
+            ),
+            '',
+            0.1
         );
     }
 
     public function testFilesThatExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
-          array(
-            __DIR__ . '/_files/tests.php'
-          ),
-          TRUE
+            array(
+                __DIR__ . '/_files/tests.php'
+            ),
+            true
         );
 
         $this->assertEquals(1, $result['testClasses']);
@@ -203,10 +217,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
-          array(
-            __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
-          ),
-          TRUE
+            array(
+                __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
+            ),
+            true
         );
 
         $this->assertEquals(3, $result['testClasses']);
@@ -218,10 +232,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testTraitsAreCountedCorrectly()
     {
         $result = $this->analyser->countFiles(
-          array(
-             __DIR__ . '/_files/trait.php'
-          ),
-          FALSE
+            array(
+                __DIR__ . '/_files/trait.php'
+            ),
+            false
         );
 
         $this->assertEquals(1, $result['traits']);
@@ -233,10 +247,10 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testIssue64IsFixed()
     {
         $result = $this->analyser->countFiles(
-          array(
-             __DIR__ . '/_files/issue_62.php'
-          ),
-          FALSE
+            array(
+                __DIR__ . '/_files/issue_62.php'
+            ),
+            false
         );
 
         $this->assertEquals(1, $result['cloc']);
