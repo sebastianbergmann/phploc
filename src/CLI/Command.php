@@ -44,7 +44,7 @@
 namespace SebastianBergmann\PHPLOC\CLI
 {
     use SebastianBergmann\FinderFacade\FinderFacade;
-    use SebastianBergmann\Git;
+    use SebastianBergmann\Git\Git;
     use SebastianBergmann\PHPLOC\Analyser;
     use SebastianBergmann\PHPLOC\Log\CSV\History;
     use SebastianBergmann\PHPLOC\Log\CSV\Single;
