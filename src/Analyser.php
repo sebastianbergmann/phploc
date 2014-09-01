@@ -169,7 +169,7 @@ namespace SebastianBergmann\PHPLOC
                 $directory = dirname($file);
 
                 if (!isset($directories[$directory])) {
-                    $directories[$directory] = TRUE;
+                    $directories[$directory] = true;
                 }
 
                 $this->countFile($file, $countTests);
@@ -239,7 +239,7 @@ namespace SebastianBergmann\PHPLOC
         {
             $tokens    = token_get_all(file_get_contents($filename));
             $numTokens = count($tokens);
-            $namespace = FALSE;
+            $namespace = false;
 
             for ($i = 0; $i < $numTokens; $i++) {
                 if (is_string($tokens[$i])) {
@@ -265,7 +265,7 @@ namespace SebastianBergmann\PHPLOC
                               $namespace, $tokens, $i + 4
                             );
                         } else {
-                            $parent = NULL;
+                            $parent = null;
                         }
 
                         $this->classes[$className] = $parent;
@@ -293,11 +293,11 @@ namespace SebastianBergmann\PHPLOC
             $this->count['files']++;
 
             $blocks       = array();
-            $currentBlock = FALSE;
-            $namespace    = FALSE;
-            $className    = NULL;
-            $functionName = NULL;
-            $testClass    = FALSE;
+            $currentBlock = false;
+            $namespace    = false;
+            $className    = null;
+            $functionName = null;
+            $testClass    = false;
 
             for ($i = 0; $i < $numTokens; $i++) {
                 if (is_string($tokens[$i])) {
@@ -308,14 +308,14 @@ namespace SebastianBergmann\PHPLOC
                             $this->count['llocClasses']++;
                         }
 
-                        else if ($functionName !== NULL) {
+                        elseif ($functionName !== NULL) {
                             $this->count['llocFunctions']++;
                         }
 
                         $this->count['lloc']++;
                     }
 
-                    else if ($token == '?' && !$testClass) {
+                    elseif ($token == '?' && !$testClass) {
                         if ($className !== NULL) {
                             $this->count['ccnMethods']++;
                         }
@@ -323,35 +323,35 @@ namespace SebastianBergmann\PHPLOC
                         $this->count['ccn']++;
                     }
 
-                    else if ($token == '{') {
+                    elseif ($token == '{') {
                         if ($currentBlock == T_CLASS) {
                             $block = $className;
                         }
 
-                        else if ($currentBlock == T_FUNCTION) {
+                        elseif ($currentBlock == T_FUNCTION) {
                             $block = $functionName;
                         }
 
                         else {
-                            $block = FALSE;
+                            $block = false;
                         }
 
                         array_push($blocks, $block);
 
-                        $currentBlock = FALSE;
+                        $currentBlock = false;
                     }
 
-                    else if ($token == '}') {
+                    elseif ($token == '}') {
                         $block = array_pop($blocks);
 
                         if ($block !== FALSE && $block !== NULL) {
                             if ($block == $functionName) {
-                                $functionName = NULL;
+                                $functionName = null;
                             }
 
-                            else if ($block == $className) {
-                                $className = NULL;
-                                $testClass = FALSE;
+                            elseif ($block == $className) {
+                                $className = null;
+                                $testClass = false;
                             }
                         }
                     }
@@ -366,7 +366,7 @@ namespace SebastianBergmann\PHPLOC
                         $namespace = $this->getNamespaceName($tokens, $i);
 
                         if (!isset($this->namespaces[$namespace])) {
-                            $this->namespaces[$namespace] = TRUE;
+                            $this->namespaces[$namespace] = true;
                         }
                     }
                     break;
@@ -387,13 +387,13 @@ namespace SebastianBergmann\PHPLOC
                             $this->count['traits']++;
                         }
 
-                        else if ($token == T_INTERFACE) {
+                        elseif ($token == T_INTERFACE) {
                             $this->count['interfaces']++;
                         }
 
                         else {
                             if ($countTests && $this->isTestClass($className)) {
-                                $testClass = TRUE;
+                                $testClass = true;
                                 $this->count['testClasses']++;
                             } else {
                                 if (isset($tokens[$i-2]) &&
@@ -416,7 +416,7 @@ namespace SebastianBergmann\PHPLOC
                             $functionName = $tokens[$i+2][1];
                         }
 
-                        else if ($tokens[$i+2] == '&' &&
+                        elseif ($tokens[$i+2] == '&' &&
                                  is_array($tokens[$i+3]) &&
                                  $tokens[$i+3][0] == T_STRING) {
                             $functionName = $tokens[$i+3][1];
@@ -433,7 +433,7 @@ namespace SebastianBergmann\PHPLOC
                                 $functionName != 'anonymous function') {
                                 $this->count['namedFunctions']++;
                             } else {
-                                $static     = FALSE;
+                                $static     = false;
                                 $visibility = T_PUBLIC;
 
                                 for ($j = $i; $j > 0; $j--) {
@@ -460,7 +460,7 @@ namespace SebastianBergmann\PHPLOC
                                             break;
 
                                             case T_STATIC: {
-                                                $static = TRUE;
+                                                $static = true;
                                             }
                                             break;
                                         }
@@ -472,7 +472,7 @@ namespace SebastianBergmann\PHPLOC
                                     $this->count['testMethods']++;
                                 }
 
-                                else if (!$testClass) {
+                                elseif (!$testClass) {
                                     if (!$static) {
                                         $this->count['nonStaticMethods']++;
                                     } else {
@@ -587,7 +587,7 @@ namespace SebastianBergmann\PHPLOC
                                 $this->count['staticAttributeAccesses']++;
                             }
 
-                            else if ($token == T_OBJECT_OPERATOR) {
+                            elseif ($token == T_OBJECT_OPERATOR) {
                                 $this->count['instanceAttributeAccesses']++;
                             }
                         }
@@ -604,7 +604,7 @@ namespace SebastianBergmann\PHPLOC
                             $this->count['globalVariableAccesses']++;
                         }
 
-                        else if (isset($this->superGlobals[$value])) {
+                        elseif (isset($this->superGlobals[$value])) {
                             $this->count['superGlobalVariableAccesses']++;
                         }
                     }
@@ -648,7 +648,7 @@ namespace SebastianBergmann\PHPLOC
         private function getClassName($namespace, array $tokens, $i)
         {
             $i         += 2;
-            $namespaced = FALSE;
+            $namespaced = false;
 
             if (!isset($tokens[$i][1])) {
                 return 'invalid class name';
@@ -657,7 +657,7 @@ namespace SebastianBergmann\PHPLOC
             $className  = $tokens[$i][1];
 
             if ($className === '\\') {
-                $namespaced = TRUE;
+                $namespaced = true;
             }
 
             while (is_array($tokens[$i+1]) && $tokens[$i+1][0] !== T_WHITESPACE) {
@@ -679,9 +679,9 @@ namespace SebastianBergmann\PHPLOC
         private function isTestClass($className)
         {
             $parent = $this->classes[$className];
-            $result = FALSE;
+            $result = false;
             $count = 0;
-            
+
             // Check ancestry for PHPUnit_Framework_TestCase.
             while ($parent !== NULL) {
                 $count++;
@@ -691,7 +691,7 @@ namespace SebastianBergmann\PHPLOC
                 }
                 if ($parent == 'PHPUnit_Framework_TestCase' ||
                     $parent == '\\PHPUnit_Framework_TestCase') {
-                    $result = TRUE;
+                    $result = true;
                     break;
                 }
 
@@ -710,7 +710,7 @@ namespace SebastianBergmann\PHPLOC
             // of the parent class ends with "TestCase".
             if (!$result) {
                 if (substr($this->classes[$className], -8) == 'TestCase') {
-                    $result = TRUE;
+                    $result = true;
                 }
             }
 

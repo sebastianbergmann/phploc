@@ -81,45 +81,45 @@ namespace SebastianBergmann\PHPLOC\CLI
                    )
                  ->addOption(
                      'names',
-                     NULL,
+                     null,
                      InputOption::VALUE_REQUIRED,
                      'A comma-separated list of file names to check',
                      array('*.php')
                    )
                  ->addOption(
                      'names-exclude',
-                     NULL,
+                     null,
                      InputOption::VALUE_REQUIRED,
                      'A comma-separated list of file names to exclude',
                     array()
                    )
                  ->addOption(
                      'count-tests',
-                     NULL,
+                     null,
                      InputOption::VALUE_NONE,
                      'Count PHPUnit test case classes and test methods'
                    )
                  ->addOption(
                      'git-repository',
-                     NULL,
+                     null,
                      InputOption::VALUE_REQUIRED,
                      'Collect metrics over the history of a Git repository'
                    )
                  ->addOption(
                      'exclude',
-                     NULL,
+                     null,
                      InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                      'Exclude a directory from code analysis'
                    )
                  ->addOption(
                      'log-csv',
-                     NULL,
+                     null,
                      InputOption::VALUE_REQUIRED,
                      'Write result in CSV format to file'
                    )
                  ->addOption(
                      'log-xml',
-                     NULL,
+                     null,
                      InputOption::VALUE_REQUIRED,
                      'Write result in XML format to file'
                    )
@@ -198,7 +198,7 @@ namespace SebastianBergmann\PHPLOC\CLI
             $currentBranch  = $git->getCurrentBranch();
             $revisions      = $git->getRevisions();
             $count          = array();
-            $progressHelper = NULL;
+            $progressHelper = null;
 
             if ($input->getOption('progress')) {
                 $progressHelper = $this->getHelperSet()->get('progress');
