@@ -63,7 +63,7 @@ namespace SebastianBergmann\PHPLOC\Log
         public function printResult($filename, array $count)
         {
             $document = new \DOMDocument('1.0', 'UTF-8');
-            $document->formatOutput = TRUE;
+            $document->formatOutput = true;
 
             $root = $document->createElement('phploc');
             $document->appendChild($root);

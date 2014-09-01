@@ -8,4 +8,3 @@ class AIndirectExtendTest extends BaseTest {
 
 class BIndirectExtendTest extends BaseTest {
 }
-

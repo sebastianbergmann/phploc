@@ -119,7 +119,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
           $expected,
           $this->analyser->countFiles(
-            array(__DIR__ . '/_files/source.php'), FALSE
+            array(__DIR__ . '/_files/source.php'), false
           ),
           '',
           0.01
@@ -183,7 +183,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             array(
               __DIR__ . '/_files/source.php',
               __DIR__ . '/_files/tests.php'
-            ), TRUE
+            ), true
           ),
           '',
           0.01
@@ -195,7 +195,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           array(
             __DIR__ . '/_files/tests.php'
           ),
-          TRUE
+          true
         );
 
         $this->assertEquals(1, $result['testClasses']);
@@ -206,7 +206,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           array(
             __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
           ),
-          TRUE
+          true
         );
 
         $this->assertEquals(3, $result['testClasses']);
@@ -221,7 +221,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           array(
              __DIR__ . '/_files/trait.php'
           ),
-          FALSE
+          false
         );
 
         $this->assertEquals(1, $result['traits']);
@@ -236,7 +236,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
           array(
              __DIR__ . '/_files/issue_62.php'
           ),
-          FALSE
+          false
         );
 
         $this->assertEquals(1, $result['cloc']);

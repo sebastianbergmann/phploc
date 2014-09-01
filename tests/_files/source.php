@@ -9,7 +9,7 @@ define('A_GLOBAL_CONSTANT', 'foo');
 
 function &a_global_function()
 {
-    $a = AClass::CLASS;
+    $a = AClass::class;
 }
 
 interface AnInterface
@@ -41,7 +41,7 @@ class AClass extends AnAbstractClass implements AnInterface
 
     public function aPublicMethod()
     {
-        $a = TRUE ? TRUE : FALSE;
+        $a = true ? true : false;
 
         c::m();
         c::$m();
@@ -52,7 +52,7 @@ class AClass extends AnAbstractClass implements AnInterface
 
     protected function aProtectedMethod()
     {
-        if (TRUE) {
+        if (true) {
         }
 
         $c::m();
@@ -63,7 +63,7 @@ class AClass extends AnAbstractClass implements AnInterface
 
     private function aPrivateMethod()
     {
-        $function = function() {};
+        $function = function () {};
         echo "This is {$great}";
         echo "This is ${great}";
     }
