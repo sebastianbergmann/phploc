@@ -235,9 +235,9 @@ namespace SebastianBergmann\PHPLOC\CLI
         }
 
         /**
-         * @param  Symfony\Component\Console\Input\InputOption $input
-         * @param  string                                      $option
-         * @return array
+         * @param  InputInterface $input
+         * @param  string         $option
+         * @return string[]
          */
         private function handleCSVOption(InputInterface $input, $option)
         {
