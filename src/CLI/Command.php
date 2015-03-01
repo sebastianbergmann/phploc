@@ -22,6 +22,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
@@ -167,11 +168,11 @@ class Command extends AbstractCommand
         $currentBranch  = $git->getCurrentBranch();
         $revisions      = $git->getRevisions();
         $count          = array();
-        $progressHelper = null;
+        $progressBar    = null;
 
         if ($input->getOption('progress')) {
-            $progressHelper = $this->getHelperSet()->get('progress');
-            $progressHelper->start($output, count($revisions));
+            $progressBar = new ProgressBar($output, count($revisions));
+            $progressBar->start();
         }
 
         foreach ($revisions as $revision) {
@@ -200,15 +201,15 @@ class Command extends AbstractCommand
                 $count[$revision['date']->format(\DateTime::W3C)] = $_count;
             }
 
-            if ($progressHelper !== null) {
-                $progressHelper->advance();
+            if ($progressBar !== null) {
+                $progressBar->advance();
             }
         }
 
         $git->checkout($currentBranch);
 
-        if ($progressHelper !== null) {
-            $progressHelper->finish();
+        if ($progressBar !== null) {
+            $progressBar->finish();
             $output->writeln('');
         }
 
