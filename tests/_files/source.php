@@ -1,7 +1,7 @@
 <?php
 namespace a\name\space;
 
-/**
+/*
  * A comment.
  */
 
@@ -20,6 +20,9 @@ abstract class AnAbstractClass
 {
 }
 
+/**
+ * A comment.
+ */
 class AClass extends AnAbstractClass implements AnInterface
 {
     const A_CLASS_CONSTANT = 'bar';

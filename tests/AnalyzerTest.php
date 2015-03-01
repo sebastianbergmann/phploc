@@ -36,12 +36,12 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 'files' => 1,
-                'loc' => 70,
+                'loc' => 73,
                 'lloc' => 25,
                 'llocClasses' => 22,
                 'llocFunctions' => 1,
                 'llocGlobal' => 2,
-                'cloc' => 4,
+                'cloc' => 7,
                 'ccn' => 2,
                 'ccnMethods' => 2,
                 'interfaces' => 1,
@@ -104,12 +104,12 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 'files' => 2,
-                'loc' => 93,
+                'loc' => 96,
                 'lloc' => 25,
                 'llocClasses' => 22,
                 'llocFunctions' => 1,
                 'llocGlobal' => 2,
-                'cloc' => 8,
+                'cloc' => 11,
                 'ccn' => 2,
                 'ccnMethods' => 2,
                 'interfaces' => 1,
