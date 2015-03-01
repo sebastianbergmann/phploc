@@ -8,43 +8,42 @@
  * file that was distributed with this source code.
  */
 
-namespace SebastianBergmann\PHPLOC\Log
-{
-    use Symfony\Component\Console\Output\OutputInterface;
+namespace SebastianBergmann\PHPLOC\Log;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * A ResultPrinter for the TextUI.
+ *
+ * @author    Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright Sebastian Bergmann <sebastian@phpunit.de>
+ * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link      http://github.com/sebastianbergmann/phploc/tree
+ * @since     Class available since Release 1.0.0
+ */
+class Text
+{
     /**
-     * A ResultPrinter for the TextUI.
+     * Prints a result set.
      *
-     * @author    Sebastian Bergmann <sebastian@phpunit.de>
-     * @copyright Sebastian Bergmann <sebastian@phpunit.de>
-     * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
-     * @link      http://github.com/sebastianbergmann/phploc/tree
-     * @since     Class available since Release 1.0.0
+     * @param OutputInterface $output
+     * @param array           $count
+     * @param boolean         $printTests
      */
-    class Text
+    public function printResult(OutputInterface $output, array $count, $printTests)
     {
-        /**
-         * Prints a result set.
-         *
-         * @param OutputInterface $output
-         * @param array           $count
-         * @param boolean         $printTests
-         */
-        public function printResult(OutputInterface $output, array $count, $printTests)
-        {
-            if ($count['directories'] > 0) {
-                $output->write(
-                  sprintf(
+        if ($count['directories'] > 0) {
+            $output->write(
+                sprintf(
                     "Directories                                 %10d\n" .
                     "Files                                       %10d\n\n",
-
                     $count['directories'],
                     $count['files']
-                  )
-                );
-            }
+                )
+            );
+        }
 
-            $format = <<<END
+        $format = <<<END
 Size
   Lines of Code (LOC)                       %10d
   Comment Lines of Code (CLOC)              %10d (%.2f%%)
@@ -105,8 +104,8 @@ Structure
 
 END;
 
-            $output->write(
-              sprintf(
+        $output->write(
+            sprintf(
                 $format,
                 $count['loc'],
                 $count['cloc'],
@@ -179,21 +178,19 @@ END;
                 $count['constants'] > 0 ? ($count['globalConstants'] / $count['constants']) * 100 : 0,
                 $count['classConstants'],
                 $count['constants'] > 0 ? ($count['classConstants'] / $count['constants']) * 100 : 0
-              )
-            );
+            )
+        );
 
-            if ($printTests) {
-                $output->write(
-                  sprintf(
+        if ($printTests) {
+            $output->write(
+                sprintf(
                     "\nTests\n" .
                     "  Classes                                   %10d\n" .
                     "  Methods                                   %10d\n",
-
                     $count['testClasses'],
                     $count['testMethods']
-                  )
-                );
-            }
+                )
+            );
         }
     }
 }
