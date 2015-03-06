@@ -2,7 +2,7 @@ build/phar
 build/SebastianBergmann
 build/phploc.bat
 build/phploc.php
-build/*.phar
+build/*.phar*
 build/*.tgz
 .idea
 cache.properties
