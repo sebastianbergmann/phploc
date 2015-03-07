@@ -14,7 +14,7 @@
         "issues": "https://github.com/sebastianbergmann/phploc/issues"
     },
     "require": {
-        "php": ">=5.3.3",
+        "php": "~5.4",
         "sebastian/finder-facade": "~1.1",
         "sebastian/git": "~2.0",
         "sebastian/version": "~1.0.3",

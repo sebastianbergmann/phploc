@@ -96,7 +96,7 @@ class Application extends AbstractApplication
         }
 
         if (!$input->getFirstArgument()) {
-            $input = new ArrayInput(array('--help'));
+            $input = new ArrayInput(['--help']);
         }
 
         parent::doRun($input, $output);

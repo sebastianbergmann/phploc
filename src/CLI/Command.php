@@ -40,26 +40,26 @@ class Command extends AbstractCommand
     {
         $this->setName('phploc')
              ->setDefinition(
-                 array(
+                 [
                    new InputArgument(
                        'values',
                        InputArgument::IS_ARRAY
                    )
-                 )
+                 ]
              )
              ->addOption(
                  'names',
                  null,
                  InputOption::VALUE_REQUIRED,
                  'A comma-separated list of file names to check',
-                 array('*.php')
+                 ['*.php']
              )
              ->addOption(
                  'names-exclude',
                  null,
                  InputOption::VALUE_REQUIRED,
                  'A comma-separated list of file names to exclude',
-                 array()
+                 []
              )
              ->addOption(
                  'count-tests',
@@ -167,7 +167,7 @@ class Command extends AbstractCommand
         $git            = new Git($input->getOption('git-repository'));
         $currentBranch  = $git->getCurrentBranch();
         $revisions      = $git->getRevisions();
-        $count          = array();
+        $count          = [];
         $progressBar    = null;
 
         if ($input->getOption('progress')) {
@@ -178,7 +178,7 @@ class Command extends AbstractCommand
         foreach ($revisions as $revision) {
             $git->checkout($revision['sha1']);
 
-            $directories = array();
+            $directories = [];
 
             foreach ($input->getArgument('values') as $value) {
                 $directory = realpath($value);

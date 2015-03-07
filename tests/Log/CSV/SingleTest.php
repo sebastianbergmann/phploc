@@ -15,7 +15,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
      */
     private $single;
 
-    private $sample_row = array(
+    private $sample_row = [
         'directories' => 1,
         'files' => 2,
         'loc' => 3,
@@ -57,7 +57,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
         'globalConstantAccesses' => 39,
         'testClasses' => 40,
         'testMethods' => 41
-    );
+    ];
 
     public function setUp()
     {

@@ -44,9 +44,7 @@ class History extends Single
      */
     protected function getValuesLine(array $count)
     {
-        $values = array(
-            'commit' => $count['commit'],
-        );
+        $values = ['commit' => $count['commit']];
 
         return '"' . implode('","', $values) . '",' . parent::getValuesLine($count);
     }
@@ -57,10 +55,8 @@ class History extends Single
      */
     protected function getKeysLine(array $count)
     {
-        $keys = array(
-            'Date',
-            'Commit',
-        );
+        $keys = ['Date', 'Commit'];
+
         return implode(',', $keys) . ',' . parent::getKeysLine($count);
     }
 }
