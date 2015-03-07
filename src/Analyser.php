@@ -504,11 +504,14 @@ class Analyser
                     break;
 
                 case T_COMMENT:
-                    $this->count['cloc']++;
-                    break;
-
                 case T_DOC_COMMENT:
-                    $this->count['cloc'] += substr_count($value, "\n") + 1;
+                    $lf = substr_count($value, "\n");
+
+                    $this->count['cloc'] += $lf;
+
+                    if ($lf > 1) {
+                        $this->count['cloc']++;
+                    }
                     break;
 
                 case T_CONST:
