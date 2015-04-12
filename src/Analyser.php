@@ -89,7 +89,13 @@ class Analyser
       'globalAccesses'              => 0,
       'globalVariableAccesses'      => 0,
       'superGlobalVariableAccesses' => 0,
-      'globalConstantAccesses'      => 0
+      'globalConstantAccesses'      => 0,
+      'methodCcnMin'                => 0,
+      'methodCcnAvg'                => 0,
+      'methodCcnMax'                => 0,
+      'methodLlocMin'               => 0,
+      'methodLlocAvg'               => 0,
+      'methodLlocMax'               => 0
     );
 
     /**
