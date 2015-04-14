@@ -336,9 +336,9 @@ class Analyser
                             $functionName = null;
 
                             if ($currentMethodData !== null) {
-                                $this->methodCcn[] = $currentMethodData['ccn'];
+                                $this->methodCcn[]  = $currentMethodData['ccn'];
                                 $this->methodLloc[] = $currentMethodData['lloc'];
-                                $currentMethodData = null;
+                                $currentMethodData  = null;
                             }
                         } elseif ($block == $className) {
                             $className         = null;
