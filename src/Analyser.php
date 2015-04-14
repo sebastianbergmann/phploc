@@ -404,13 +404,15 @@ class Analyser
                 case T_FUNCTION:
                     $currentBlock = T_FUNCTION;
 
-                    if (is_array($tokens[$i+2]) &&
-                        $tokens[$i+2][0] == T_STRING) {
-                        $functionName = $tokens[$i+2][1];
-                    } elseif ($tokens[$i+2] == '&' &&
-                             is_array($tokens[$i+3]) &&
-                             $tokens[$i+3][0] == T_STRING) {
-                        $functionName = $tokens[$i+3][1];
+                    $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
+
+                    if (!is_array($tokens[$next]) && $tokens[$next] == '&') {
+                        $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
+                    }
+
+                    if (is_array($tokens[$next]) &&
+                        $tokens[$next][0] == T_STRING) {
+                        $functionName = $tokens[$next][1];
                     } else {
                         $currentBlock = 'anonymous function';
                         $functionName = 'anonymous function';
