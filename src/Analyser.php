@@ -636,7 +636,7 @@ class Analyser
             $className = $namespace . '\\' . $className;
         }
 
-        return $className;
+        return strtolower($className);
     }
 
     /**
@@ -659,8 +659,8 @@ class Analyser
                 break;
             }
 
-            if ($parent == 'PHPUnit_Framework_TestCase' ||
-                $parent == '\\PHPUnit_Framework_TestCase') {
+            if ($parent == 'phpunit_framework_testcase' ||
+                $parent == '\\phpunit_framework_testcase') {
                 $result = true;
                 break;
             }
@@ -677,7 +677,7 @@ class Analyser
         // Fallback: Treat the class as a test case class if the name
         // of the parent class ends with "TestCase".
         if (!$result) {
-            if (substr($this->classes[$className], -8) == 'TestCase') {
+            if (substr($this->classes[$className], -8) == 'testcase') {
                 $result = true;
             }
         }
