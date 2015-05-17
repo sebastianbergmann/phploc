@@ -648,7 +648,7 @@ class Analyser
     {
         $parent = $this->classes[$className];
         $result = false;
-        $count = 0;
+        $count  = 0;
 
         // Check ancestry for PHPUnit_Framework_TestCase.
         while ($parent !== null) {
