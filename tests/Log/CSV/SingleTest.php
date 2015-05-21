@@ -46,9 +46,24 @@ class SingleTest extends \PHPUnit_Framework_TestCase
     {
         ob_start();
         $this->single->printResult('php://output', static::$sample_row);
-        $output = ob_get_clean();
+        $rawOutput = ob_get_clean();
 
-        $this->assertRegExp('#"1","2".+$#is', $output, "Printed result does not contain a value line");
+        $outputLines = explode("\n", $rawOutput);
+        $outputLines = array_filter($outputLines);
+        $this->assertCount(
+            2,
+            $outputLines,
+            'Result should contain one heading- and one data-line'
+        );
+
+        $data = explode(',', end($outputLines));
+
+        $this->assertRegExp('#"1","2".+$#is', $rawOutput, 'Printed result does not contain a value line');
+        $this->assertCount(
+            count(static::$sample_row),
+            $data,
+            'Result is missing some metrics'
+        );
     }
 
     public function testPrintedResultContainsEqualNumHeadingsAndValues()
