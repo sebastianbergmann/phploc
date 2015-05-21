@@ -11,14 +11,14 @@
 class HistoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \SebastianBergmann\PHPLOC\Log\CSV\Single
-     */
-    private $history;
-
-    /**
      * @var array
      */
     private static $sample_data;
+
+    /**
+     * @var \SebastianBergmann\PHPLOC\Log\CSV\Single
+     */
+    private $history;
 
     /**
      * @beforeClass
