@@ -46,19 +46,19 @@ class SingleTest extends \PHPUnit_Framework_TestCase
     {
         ob_start();
         $this->single->printResult('php://output', static::$sample_row);
-        $rawOutput = ob_get_clean();
+        $raw_output = ob_get_clean();
 
-        $outputLines = explode("\n", $rawOutput);
-        $outputLines = array_filter($outputLines);
+        $output_lines = explode("\n", $raw_output);
+        $output_lines = array_filter($output_lines);
         $this->assertCount(
             2,
-            $outputLines,
+            $output_lines,
             'Result should contain one heading- and one data-line'
         );
 
-        $data = explode(',', end($outputLines));
+        $data = explode(',', end($output_lines));
 
-        $this->assertRegExp('#"1","2".+$#is', $rawOutput, 'Printed result does not contain a value line');
+        $this->assertRegExp('#"1","2".+$#is', $raw_output, 'Printed result does not contain a value line');
         $this->assertCount(
             count(static::$sample_row),
             $data,

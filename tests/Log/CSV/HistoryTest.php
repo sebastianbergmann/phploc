@@ -25,16 +25,16 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpSampleRow()
     {
-        $sampleRow1 = FixtureHelper::getSampleRow();
-        $sampleRow2 = FixtureHelper::getSampleRow();
+        $sample_row_1 = FixtureHelper::getSampleRow();
+        $sample_row_2 = FixtureHelper::getSampleRow();
         // Have values for the two sample rows disjunct.
-        $sampleRowsCount = count($sampleRow1);
-        foreach (array_keys($sampleRow2) as $metricName) {
-            $sampleRow2[$metricName] += $sampleRowsCount;
+        $sample_rows_count = count($sample_row_1);
+        foreach (array_keys($sample_row_2) as $metric_name) {
+            $sample_row_2[$metric_name] += $sample_rows_count;
         }
 
-        $data1 = ['commit' => 'foo'] + $sampleRow1;
-        $data2 = ['commit' => 'bar'] + $sampleRow2;
+        $data1 = ['commit' => 'foo'] + $sample_row_1;
+        $data2 = ['commit' => 'bar'] + $sample_row_2;
 
         static::$sample_data = [
             '2014-06-09T00:00:00' => $data1,

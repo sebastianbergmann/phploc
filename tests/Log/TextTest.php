@@ -20,15 +20,15 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
         $count = FixtureHelper::getSampleRow();
 
-        $textLogger = new \SebastianBergmann\PHPLOC\Log\Text();
-        $textLogger->printResult($output, $count, true);
-        $rawResult = $output->output;
-        $rows = explode("\n", $rawResult);
+        $text_logger = new \SebastianBergmann\PHPLOC\Log\Text();
+        $text_logger->printResult($output, $count, true);
+        $raw_result = $output->output;
+        $rows = explode("\n", $raw_result);
         $rows = array_filter($rows);
 
         // At text output, there are seven summary-lines, without a values, such as "Tests".
-        $summaryLinesCount = 7;
-        $this->assertCount(count($count) + $summaryLinesCount, $rows);
+        $summary_lines_count = 7;
+        $this->assertCount(count($count) + $summary_lines_count, $rows);
     }
 }
 
