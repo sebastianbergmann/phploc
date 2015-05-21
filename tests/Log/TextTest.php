@@ -18,16 +18,17 @@ class TextTest extends \PHPUnit_Framework_TestCase
     {
         $output = new TestOutput();
 
-        $countMeta = FixtureHelper::getSampleRow();
+        $count = FixtureHelper::getSampleRow();
 
         $textLogger = new \SebastianBergmann\PHPLOC\Log\Text();
-        $textLogger->printResult($output, $countMeta, true);
+        $textLogger->printResult($output, $count, true);
         $rawResult = $output->output;
         $rows = explode("\n", $rawResult);
         $rows = array_filter($rows);
 
+        // At text output, there are seven summary-lines, without a values, such as "Tests".
         $summaryLinesCount = 7;
-        $this->assertCount(count($countMeta) + $summaryLinesCount, $rows);
+        $this->assertCount(count($count) + $summaryLinesCount, $rows);
     }
 }
 
