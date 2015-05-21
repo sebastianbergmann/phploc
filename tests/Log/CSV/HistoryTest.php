@@ -106,7 +106,7 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
         ]
     ];
 
-    public function setUp()
+    protected function setUp()
     {
         $this->history = new \SebastianBergmann\PHPLOC\Log\CSV\History();
     }

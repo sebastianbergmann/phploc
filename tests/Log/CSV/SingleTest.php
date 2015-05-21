@@ -59,7 +59,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
         'testMethods' => 41
     ];
 
-    public function setUp()
+    protected function setUp()
     {
         $this->single = new \SebastianBergmann\PHPLOC\Log\CSV\Single();
     }
