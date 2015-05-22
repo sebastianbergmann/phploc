@@ -16,7 +16,7 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     private static $sample_data;
 
     /**
-     * @var \SebastianBergmann\PHPLOC\Log\CSV\Single
+     * @var \SebastianBergmann\PHPLOC\Log\CSV\History
      */
     private $history;
 
@@ -71,7 +71,7 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
         $this->history->printResult('php://output', static::$sample_data);
         $output = ob_get_clean();
 
-        $rows = explode("\n", trim($output));
+        $rows = explode(PHP_EOL, trim($output));
         $this->assertEquals(3, count($rows), "Printed result contained more or less than expected 2 rows");
     }
 }

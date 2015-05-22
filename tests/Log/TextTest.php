@@ -8,6 +8,9 @@
  * file that was distributed with this source code.
  */
 
+/**
+ * @covers \SebastianBergmann\PHPLOC\Log\Text
+ */
 class TextTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -23,10 +26,10 @@ class TextTest extends \PHPUnit_Framework_TestCase
         $text_logger = new \SebastianBergmann\PHPLOC\Log\Text();
         $text_logger->printResult($output, $count, true);
         $raw_result = $output->output;
-        $rows = explode("\n", $raw_result);
+        $rows = explode(PHP_EOL, $raw_result);
         $rows = array_filter($rows);
 
-        // At text output, there are seven summary-lines, without a values, such as "Tests".
+        // At text output, there are seven summary-lines (without a value) such as "Tests".
         $summary_lines_count = 7;
         $this->assertCount(count($count) + $summary_lines_count, $rows);
     }

@@ -8,6 +8,9 @@
  * file that was distributed with this source code.
  */
 
+/**
+ * @covers \SebastianBergmann\PHPLOC\Log\CSV\Single
+ */
 class SingleTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -48,7 +51,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
         $this->single->printResult('php://output', static::$sample_row);
         $raw_output = ob_get_clean();
 
-        $output_lines = explode("\n", $raw_output);
+        $output_lines = explode(PHP_EOL, $raw_output);
         $output_lines = array_filter($output_lines);
         $this->assertCount(
             2,
@@ -72,9 +75,9 @@ class SingleTest extends \PHPUnit_Framework_TestCase
         $this->single->printResult('php://output', static::$sample_row);
         $output = ob_get_clean();
 
-        $rows = explode("\n", $output);
-        $headings = explode(",", $rows[0]);
-        $vals = explode(",", $rows[1]);
+        $rows = explode(PHP_EOL, $output);
+        $headings = explode(',', $rows[0]);
+        $vals = explode(',', $rows[1]);
 
         $this->assertEquals(
             count($headings),
@@ -89,7 +92,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
         $this->single->printResult('php://output', static::$sample_row);
         $output = ob_get_clean();
 
-        $rows = explode("\n", trim($output));
+        $rows = explode(PHP_EOL, trim($output));
         $this->assertEquals(2, count($rows), "Printed result contained more or less than expected 2 rows");
     }
 
