@@ -17,6 +17,5 @@ require_once
 
 require_once
     __DIR__ . DIRECTORY_SEPARATOR .
-    '_fixture' . DIRECTORY_SEPARATOR .
     'FixtureHelper.php'
 ;
