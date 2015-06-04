@@ -89,7 +89,7 @@ class Analyser
       'methodCcnMax'                => 0,
       'methodLlocMin'               => 0,
       'methodLlocAvg'               => 0,
-      'methodLlocMax'               => 0,            
+      'methodLlocMax'               => 0,
     ];
 
     /**
