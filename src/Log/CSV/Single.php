@@ -47,7 +47,18 @@ class Single
         'staticMethods' => 'Static Methods',
         'publicMethods' => 'Public Methods',
         'nonPublicMethods' => 'Non-Public Methods',
+        'classLlocAvg' => 'Average Class Length (LLOC)',
+        'classLlocMin' => 'Minimum Class Length (LLOC)',
+        'classLlocMax' => 'Maximum Class Length (LLOC)',
+        'classCcnAvg' => 'Cyclomatic Complexity / Number of Classes',
+        'classCcnMin' => 'Minimum Class Complexity',
+        'classCcnMax' => 'Maximum Class Complexity',
+        'methodLlocAvg' => 'Average Method Length (LLOC)',
+        'methodLlocMin' => 'Minimal Method Length (LLOC)',
+        'methodLlocMax' => 'Maximal Method Length (LLOC)',
         'methodCcnAvg' => 'Cyclomatic Complexity / Number of Methods',
+        'methodCcnMin' => 'Minimum Method Complexity',
+        'methodCcnMax' => 'Maximum Method Complexity',
         'functions' => 'Functions',
         'namedFunctions' => 'Named Functions',
         'anonymousFunctions' => 'Anonymous Functions',
@@ -74,7 +85,7 @@ class Single
      * Prints a result set.
      *
      * @param string $filename
-     * @param array  $count
+     * @param array $count
      */
     public function printResult($filename, array $count)
     {

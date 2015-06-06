@@ -45,6 +45,7 @@ class Analyser
      * @var array
      */
     private $count = [
+      'directories'                 => 0,
       'files'                       => 0,
       'loc'                         => 0,
       'lloc'                        => 0,
@@ -52,9 +53,11 @@ class Analyser
       'llocFunctions'               => 0,
       'llocGlobal'                  => 0,
       'cloc'                        => 0,
+      'ncloc'                       => 0,
       'ccn'                         => 0,
       'ccnMethods'                  => 0,
       'interfaces'                  => 0,
+      'namespaces'                  => 0,
       'traits'                      => 0,
       'classes'                     => 0,
       'abstractClasses'             => 0,
@@ -84,6 +87,12 @@ class Analyser
       'globalVariableAccesses'      => 0,
       'superGlobalVariableAccesses' => 0,
       'globalConstantAccesses'      => 0,
+      'classCcnMin'                 => 0,
+      'classCcnAvg'                 => 0,
+      'classCcnMax'                 => 0,
+      'classLlocMin'                => 0,
+      'classLlocAvg'                => 0,
+      'classLlocMax'                => 0,
       'methodCcnMin'                => 0,
       'methodCcnAvg'                => 0,
       'methodCcnMax'                => 0,
