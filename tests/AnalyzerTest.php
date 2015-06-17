@@ -218,4 +218,19 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $result['cloc']);
     }
+
+    /**
+     * @ticket 112
+     */
+    public function testIssue112IsFixed()
+    {
+        $result = $this->analyser->countFiles(
+            array(
+                __DIR__ . '/_files/issue_112.php'
+            ),
+            false
+        );
+
+        $this->assertEquals(5, $result['loc']);
+    }
 }
