@@ -13,10 +13,6 @@ namespace SebastianBergmann\PHPLOC\Log\CSV;
 /**
  * A CSV ResultPrinter for the TextUI.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link      http://github.com/sebastianbergmann/phploc/tree
  * @since     Class available since Release 1.6.0
  */
 class Single
@@ -27,47 +23,47 @@ class Single
      * @var array
      */
     private $colmap = array(
-        'directories' => 'Directories',
-        'files' => 'Files',
-        'loc' => 'Lines of Code (LOC)',
-        'ccnByLloc' => 'Cyclomatic Complexity / Lines of Code',
-        'cloc' => 'Comment Lines of Code (CLOC)',
-        'ncloc' => 'Non-Comment Lines of Code (NCLOC)',
-        'lloc' => 'Logical Lines of Code (LLOC)',
-        'llocGlobal' => 'LLOC outside functions or classes',
-        'namespaces' => 'Namespaces',
-        'interfaces' => 'Interfaces',
-        'traits' => 'Traits',
-        'classes' => 'Classes',
-        'abstractClasses' => 'Abstract Classes',
-        'concreteClasses' => 'Concrete Classes',
-        'llocClasses' => 'Classes Length (LLOC)',
-        'methods' => 'Methods',
-        'nonStaticMethods' => 'Non-Static Methods',
-        'staticMethods' => 'Static Methods',
-        'publicMethods' => 'Public Methods',
-        'nonPublicMethods' => 'Non-Public Methods',
-        'methodCcnAvg' => 'Cyclomatic Complexity / Number of Methods',
-        'functions' => 'Functions',
-        'namedFunctions' => 'Named Functions',
-        'anonymousFunctions' => 'Anonymous Functions',
-        'llocFunctions' => 'Functions Length (LLOC)',
-        'llocByNof' => 'Average Function Length (LLOC)',
-        'constants' => 'Constants',
-        'globalConstants' => 'Global Constants',
-        'classConstants' => 'Class Constants',
-        'attributeAccesses' => 'Attribute Accesses',
-        'instanceAttributeAccesses' => 'Non-Static Attribute Accesses',
-        'staticAttributeAccesses' => 'Static Attribute Accesses',
-        'methodCalls' => 'Method Calls',
-        'instanceMethodCalls' => 'Non-Static Method Calls',
-        'staticMethodCalls' => 'Static Method Calls',
-        'globalAccesses' => 'Global Accesses',
-        'globalVariableAccesses' => 'Global Variable Accesses',
+        'directories'                 => 'Directories',
+        'files'                       => 'Files',
+        'loc'                         => 'Lines of Code (LOC)',
+        'ccnByLloc'                   => 'Cyclomatic Complexity / Lines of Code',
+        'cloc'                        => 'Comment Lines of Code (CLOC)',
+        'ncloc'                       => 'Non-Comment Lines of Code (NCLOC)',
+        'lloc'                        => 'Logical Lines of Code (LLOC)',
+        'llocGlobal'                  => 'LLOC outside functions or classes',
+        'namespaces'                  => 'Namespaces',
+        'interfaces'                  => 'Interfaces',
+        'traits'                      => 'Traits',
+        'classes'                     => 'Classes',
+        'abstractClasses'             => 'Abstract Classes',
+        'concreteClasses'             => 'Concrete Classes',
+        'llocClasses'                 => 'Classes Length (LLOC)',
+        'methods'                     => 'Methods',
+        'nonStaticMethods'            => 'Non-Static Methods',
+        'staticMethods'               => 'Static Methods',
+        'publicMethods'               => 'Public Methods',
+        'nonPublicMethods'            => 'Non-Public Methods',
+        'methodCcnAvg'                => 'Cyclomatic Complexity / Number of Methods',
+        'functions'                   => 'Functions',
+        'namedFunctions'              => 'Named Functions',
+        'anonymousFunctions'          => 'Anonymous Functions',
+        'llocFunctions'               => 'Functions Length (LLOC)',
+        'llocByNof'                   => 'Average Function Length (LLOC)',
+        'constants'                   => 'Constants',
+        'globalConstants'             => 'Global Constants',
+        'classConstants'              => 'Class Constants',
+        'attributeAccesses'           => 'Attribute Accesses',
+        'instanceAttributeAccesses'   => 'Non-Static Attribute Accesses',
+        'staticAttributeAccesses'     => 'Static Attribute Accesses',
+        'methodCalls'                 => 'Method Calls',
+        'instanceMethodCalls'         => 'Non-Static Method Calls',
+        'staticMethodCalls'           => 'Static Method Calls',
+        'globalAccesses'              => 'Global Accesses',
+        'globalVariableAccesses'      => 'Global Variable Accesses',
         'superGlobalVariableAccesses' => 'Super-Global Variable Accesses',
-        'globalConstantAccesses' => 'Global Constant Accesses',
-        'testClasses' => 'Test Classes',
-        'testMethods' => 'Test Methods'
+        'globalConstantAccesses'      => 'Global Constant Accesses',
+        'testClasses'                 => 'Test Classes',
+        'testMethods'                 => 'Test Methods'
     );
 
     /**
@@ -85,7 +81,7 @@ class Single
     }
 
     /**
-     * @param  array $count
+     * @param  array  $count
      * @return string
      */
     protected function getKeysLine(array $count)
@@ -94,7 +90,7 @@ class Single
     }
 
     /**
-     * @param  array $count
+     * @param  array                     $count
      * @throws \InvalidArgumentException
      * @return string
      */
