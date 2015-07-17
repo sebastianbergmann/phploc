@@ -13,10 +13,6 @@ namespace SebastianBergmann\PHPLOC\Log;
 /**
  * An XML ResultPrinter for the TextUI.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link      http://github.com/sebastianbergmann/phploc/tree
  * @since     Class available since Release 1.1.0
  */
 class XML
@@ -29,7 +25,7 @@ class XML
      */
     public function printResult($filename, array $count)
     {
-        $document = new \DOMDocument('1.0', 'UTF-8');
+        $document               = new \DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
 
         $root = $document->createElement('phploc');

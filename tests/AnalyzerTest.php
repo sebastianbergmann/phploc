@@ -11,12 +11,6 @@
 /**
  * Tests for the PHPLOC_Analyser class.
  *
- * @package    PHPLOC
- * @subpackage Tests
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/phploc/
  * @since      Class available since Release 1.3.0
  */
 class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
@@ -217,5 +211,20 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(1, $result['cloc']);
+    }
+
+    /**
+     * @ticket 112
+     */
+    public function testIssue112IsFixed()
+    {
+        $result = $this->analyser->countFiles(
+            array(
+                __DIR__ . '/_files/issue_112.php'
+            ),
+            false
+        );
+
+        $this->assertEquals(5, $result['loc']);
     }
 }

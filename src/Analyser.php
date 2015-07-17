@@ -13,10 +13,6 @@ namespace SebastianBergmann\PHPLOC;
 /**
  * PHPLOC code analyser.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link      http://github.com/sebastianbergmann/phploc/tree
  * @since     Class available since Release 1.0.0
  */
 class Analyser
@@ -45,79 +41,79 @@ class Analyser
      * @var array
      */
     private $count = [
-      'directories'                 => 0,
-      'files'                       => 0,
-      'loc'                         => 0,
-      'lloc'                        => 0,
-      'llocClasses'                 => 0,
-      'llocFunctions'               => 0,
-      'llocGlobal'                  => 0,
-      'cloc'                        => 0,
-      'ncloc'                       => 0,
-      'ccn'                         => 0,
-      'ccnMethods'                  => 0,
-      'interfaces'                  => 0,
-      'namespaces'                  => 0,
-      'traits'                      => 0,
-      'classes'                     => 0,
-      'abstractClasses'             => 0,
-      'concreteClasses'             => 0,
-      'functions'                   => 0,
-      'namedFunctions'              => 0,
-      'anonymousFunctions'          => 0,
-      'methods'                     => 0,
-      'publicMethods'               => 0,
-      'nonPublicMethods'            => 0,
-      'nonStaticMethods'            => 0,
-      'staticMethods'               => 0,
-      'constants'                   => 0,
-      'classConstants'              => 0,
-      'globalConstants'             => 0,
-      'testClasses'                 => 0,
-      'testMethods'                 => 0,
-      'ccnByLloc'                   => 0,
-      'llocByNof'                   => 0,
-      'methodCalls'                 => 0,
-      'staticMethodCalls'           => 0,
-      'instanceMethodCalls'         => 0,
-      'attributeAccesses'           => 0,
-      'staticAttributeAccesses'     => 0,
-      'instanceAttributeAccesses'   => 0,
-      'globalAccesses'              => 0,
-      'globalVariableAccesses'      => 0,
-      'superGlobalVariableAccesses' => 0,
-      'globalConstantAccesses'      => 0,
-      'classCcnMin'                 => 0,
-      'classCcnAvg'                 => 0,
-      'classCcnMax'                 => 0,
-      'classLlocMin'                => 0,
-      'classLlocAvg'                => 0,
-      'classLlocMax'                => 0,
-      'methodCcnMin'                => 0,
-      'methodCcnAvg'                => 0,
-      'methodCcnMax'                => 0,
-      'methodLlocMin'               => 0,
-      'methodLlocAvg'               => 0,
-      'methodLlocMax'               => 0,
+        'directories'                 => 0,
+        'files'                       => 0,
+        'loc'                         => 0,
+        'lloc'                        => 0,
+        'llocClasses'                 => 0,
+        'llocFunctions'               => 0,
+        'llocGlobal'                  => 0,
+        'cloc'                        => 0,
+        'ncloc'                       => 0,
+        'ccn'                         => 0,
+        'ccnMethods'                  => 0,
+        'interfaces'                  => 0,
+        'namespaces'                  => 0,
+        'traits'                      => 0,
+        'classes'                     => 0,
+        'abstractClasses'             => 0,
+        'concreteClasses'             => 0,
+        'functions'                   => 0,
+        'namedFunctions'              => 0,
+        'anonymousFunctions'          => 0,
+        'methods'                     => 0,
+        'publicMethods'               => 0,
+        'nonPublicMethods'            => 0,
+        'nonStaticMethods'            => 0,
+        'staticMethods'               => 0,
+        'constants'                   => 0,
+        'classConstants'              => 0,
+        'globalConstants'             => 0,
+        'testClasses'                 => 0,
+        'testMethods'                 => 0,
+        'ccnByLloc'                   => 0,
+        'llocByNof'                   => 0,
+        'methodCalls'                 => 0,
+        'staticMethodCalls'           => 0,
+        'instanceMethodCalls'         => 0,
+        'attributeAccesses'           => 0,
+        'staticAttributeAccesses'     => 0,
+        'instanceAttributeAccesses'   => 0,
+        'globalAccesses'              => 0,
+        'globalVariableAccesses'      => 0,
+        'superGlobalVariableAccesses' => 0,
+        'globalConstantAccesses'      => 0,
+        'classCcnMin'                 => 0,
+        'classCcnAvg'                 => 0,
+        'classCcnMax'                 => 0,
+        'classLlocMin'                => 0,
+        'classLlocAvg'                => 0,
+        'classLlocMax'                => 0,
+        'methodCcnMin'                => 0,
+        'methodCcnAvg'                => 0,
+        'methodCcnMax'                => 0,
+        'methodLlocMin'               => 0,
+        'methodLlocAvg'               => 0,
+        'methodLlocMax'               => 0,
     ];
 
     /**
      * @var array
      */
     private $superGlobals = [
-      '$_ENV' => true,
-      '$_POST' => true,
-      '$_GET' => true,
-      '$_COOKIE' => true,
-      '$_SERVER' => true,
-      '$_FILES' => true,
-      '$_REQUEST' => true,
-      '$HTTP_ENV_VARS' => true,
-      '$HTTP_POST_VARS' => true,
-      '$HTTP_GET_VARS' => true,
-      '$HTTP_COOKIE_VARS' => true,
-      '$HTTP_SERVER_VARS' => true,
-      '$HTTP_POST_FILES' => true
+        '$_ENV'             => true,
+        '$_POST'            => true,
+        '$_GET'             => true,
+        '$_COOKIE'          => true,
+        '$_SERVER'          => true,
+        '$_FILES'           => true,
+        '$_REQUEST'         => true,
+        '$HTTP_ENV_VARS'    => true,
+        '$HTTP_POST_VARS'   => true,
+        '$HTTP_GET_VARS'    => true,
+        '$HTTP_COOKIE_VARS' => true,
+        '$HTTP_SERVER_VARS' => true,
+        '$HTTP_POST_FILES'  => true
     ];
 
     /**
@@ -143,8 +139,8 @@ class Analyser
     /**
      * Processes a set of files.
      *
-     * @param  array   $files
-     * @param  boolean $countTests
+     * @param  array $files
+     * @param  bool  $countTests
      * @return array
      * @since  Method available since Release 1.2.0
      */
@@ -277,8 +273,8 @@ class Analyser
     /**
      * Processes a single file.
      *
-     * @param string  $filename
-     * @param boolean $countTests
+     * @param string $filename
+     * @param bool   $countTests
      */
     public function countFile($filename, $countTests)
     {
@@ -591,8 +587,8 @@ class Analyser
     }
 
     /**
-     * @param  array   $tokens
-     * @param  integer $i
+     * @param  array  $tokens
+     * @param  int    $i
      * @return string
      * @since  Method available since Release 1.3.0
      */
@@ -616,9 +612,9 @@ class Analyser
     }
 
     /**
-     * @param  string  $namespace
-     * @param  array   $tokens
-     * @param  integer $i
+     * @param  string $namespace
+     * @param  array  $tokens
+     * @param  int    $i
      * @return string
      * @since  Method available since Release 1.3.0
      */
@@ -650,7 +646,7 @@ class Analyser
 
     /**
      * @param  string $className
-     * @return boolean
+     * @return bool
      * @since  Method available since Release 1.2.0
      */
     private function isTestClass($className)
@@ -695,12 +691,12 @@ class Analyser
     }
 
     /**
-     * @param  string  $functionName
-     * @param  integer $visibility
-     * @param  boolean $static
-     * @param  array   $tokens
-     * @param  integer $currentToken
-     * @return boolean
+     * @param  string $functionName
+     * @param  int    $visibility
+     * @param  bool   $static
+     * @param  array  $tokens
+     * @param  int    $currentToken
+     * @return bool
      * @since  Method available since Release 2.0.0
      */
     private function isTestMethod($functionName, $visibility, $static, array $tokens, $currentToken)
@@ -726,9 +722,9 @@ class Analyser
     }
 
     /**
-     * @param  array   $tokens
-     * @param  integer $start
-     * @return boolean
+     * @param  array $tokens
+     * @param  int   $start
+     * @return bool
      */
     private function getNextNonWhitespaceTokenPos(array $tokens, $start)
     {
@@ -746,9 +742,9 @@ class Analyser
     }
 
     /**
-     * @param  array   $tokens
-     * @param  integer $start
-     * @return boolean
+     * @param  array $tokens
+     * @param  int   $start
+     * @return bool
      */
     private function getPreviousNonWhitespaceTokenPos(array $tokens, $start)
     {
@@ -766,9 +762,9 @@ class Analyser
     }
 
     /**
-     * @param  array   $tokens
-     * @param  integer $i
-     * @return boolean
+     * @param  array $tokens
+     * @param  int   $i
+     * @return bool
      */
     private function isClassDeclaration(array $tokens, $i)
     {
