@@ -28,7 +28,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testWithoutTests()
     {
         $this->assertEquals(
-            array(
+            [
                 'files' => 1,
                 'loc' => 73,
                 'lloc' => 25,
@@ -83,9 +83,9 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
                 'methodLlocMin' => 4,
                 'methodLlocAvg' => 5.6,
                 'methodLlocMax' => 7
-            ),
+            ],
             $this->analyser->countFiles(
-                array(__DIR__ . '/_files/source.php'),
+                [__DIR__ . '/_files/source.php'],
                 false
             ),
             '',
@@ -96,7 +96,7 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testWithTests()
     {
         $this->assertEquals(
-            array(
+            [
                 'files' => 2,
                 'loc' => 96,
                 'lloc' => 25,
@@ -151,12 +151,12 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
                 'methodLlocMin' => 4,
                 'methodLlocAvg' => 5.6,
                 'methodLlocMax' => 7
-            ),
+            ],
             $this->analyser->countFiles(
-                array(
+                [
                     __DIR__ . '/_files/source.php',
                     __DIR__ . '/_files/tests.php'
-                ),
+                ],
                 true
             ),
             '',
@@ -166,9 +166,9 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testFilesThatExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
-            array(
+            [
                 __DIR__ . '/_files/tests.php'
-            ),
+            ],
             true
         );
 
@@ -177,24 +177,21 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests() {
         $result = $this->analyser->countFiles(
-            array(
+            [
                 __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
-            ),
+            ],
             true
         );
 
         $this->assertEquals(3, $result['testClasses']);
     }
 
-    /**
-     * @requires PHP 5.4
-     */
     public function testTraitsAreCountedCorrectly()
     {
         $result = $this->analyser->countFiles(
-            array(
+            [
                 __DIR__ . '/_files/trait.php'
-            ),
+            ],
             false
         );
 
@@ -207,9 +204,9 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
     public function testIssue64IsFixed()
     {
         $result = $this->analyser->countFiles(
-            array(
+            [
                 __DIR__ . '/_files/issue_62.php'
-            ),
+            ],
             false
         );
 

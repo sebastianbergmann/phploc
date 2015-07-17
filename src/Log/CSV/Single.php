@@ -22,7 +22,7 @@ class Single
      *
      * @var array
      */
-    private $colmap = array(
+    private $colmap = [
         'directories'                 => 'Directories',
         'files'                       => 'Files',
         'loc'                         => 'Lines of Code (LOC)',
@@ -43,7 +43,18 @@ class Single
         'staticMethods'               => 'Static Methods',
         'publicMethods'               => 'Public Methods',
         'nonPublicMethods'            => 'Non-Public Methods',
+        'classLlocAvg'                => 'Average Class Length (LLOC)',
+        'classLlocMin'                => 'Minimum Class Length (LLOC)',
+        'classLlocMax'                => 'Maximum Class Length (LLOC)',
+        'classCcnAvg'                 => 'Cyclomatic Complexity / Number of Classes',
+        'classCcnMin'                 => 'Minimum Class Complexity',
+        'classCcnMax'                 => 'Maximum Class Complexity',
+        'methodLlocAvg'               => 'Average Method Length (LLOC)',
+        'methodLlocMin'               => 'Minimal Method Length (LLOC)',
+        'methodLlocMax'               => 'Maximal Method Length (LLOC)',
         'methodCcnAvg'                => 'Cyclomatic Complexity / Number of Methods',
+        'methodCcnMin'                => 'Minimum Method Complexity',
+        'methodCcnMax'                => 'Maximum Method Complexity',
         'functions'                   => 'Functions',
         'namedFunctions'              => 'Named Functions',
         'anonymousFunctions'          => 'Anonymous Functions',
@@ -64,7 +75,7 @@ class Single
         'globalConstantAccesses'      => 'Global Constant Accesses',
         'testClasses'                 => 'Test Classes',
         'testMethods'                 => 'Test Methods'
-    );
+    ];
 
     /**
      * Prints a result set.
@@ -96,7 +107,8 @@ class Single
      */
     protected function getValuesLine(array $count)
     {
-        $values = array();
+        $values = [];
+
         foreach ($this->colmap as $key => $name) {
             if (isset($count[$key])) {
                 $values[] = $count[$key];

@@ -25,7 +25,7 @@ class Application extends AbstractApplication
 {
     public function __construct()
     {
-        $version = new Version('2.1.3', dirname(dirname(__DIR__)));
+        $version = new Version('2.1.2', dirname(dirname(__DIR__)));
         parent::__construct('phploc', $version->getVersion());
     }
 
@@ -92,7 +92,7 @@ class Application extends AbstractApplication
         }
 
         if (!$input->getFirstArgument()) {
-            $input = new ArrayInput(array('--help'));
+            $input = new ArrayInput(['--help']);
         }
 
         parent::doRun($input, $output);
