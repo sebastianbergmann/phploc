@@ -8,58 +8,30 @@
  * file that was distributed with this source code.
  */
 
+/**
+ * @covers \SebastianBergmann\PHPLOC\Log\CSV\Single
+ */
 class SingleTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var array
+     */
+    private static $sample_row;
+
     /**
      * @var \SebastianBergmann\PHPLOC\Log\CSV\Single
      */
     private $single;
 
-    private $sample_row = [
-        'directories' => 1,
-        'files' => 2,
-        'loc' => 3,
-        'ccnByLloc' => 4,
-        'cloc' => 5,
-        'ncloc' => 6,
-        'lloc' => 7,
-        'llocGlobal' => 8,
-        'namespaces' => 9,
-        'interfaces' => 10,
-        'traits' => 11,
-        'classes' => 12,
-        'abstractClasses' => 13,
-        'concreteClasses' => 14,
-        'llocClasses' => 15,
-        'methods' => 16,
-        'nonStaticMethods' => 17,
-        'staticMethods' => 18,
-        'publicMethods' => 19,
-        'nonPublicMethods' => 20,
-        'methodCcnAvg' => 21,
-        'functions' => 22,
-        'namedFunctions' => 23,
-        'anonymousFunctions' => 24,
-        'llocFunctions' => 25,
-        'llocByNof' => 26,
-        'constants' => 27,
-        'globalConstants' => 28,
-        'classConstants' => 29,
-        'attributeAccesses' => 30,
-        'instanceAttributeAccesses' => 31,
-        'staticAttributeAccesses' => 32,
-        'methodCalls' => 33,
-        'instanceMethodCalls' => 34,
-        'staticMethodCalls' => 35,
-        'globalAccesses' => 36,
-        'globalVariableAccesses' => 37,
-        'superGlobalVariableAccesses' => 38,
-        'globalConstantAccesses' => 39,
-        'testClasses' => 40,
-        'testMethods' => 41
-    ];
+    /**
+     * @beforeClass
+     */
+    public static function setUpSampleRow()
+    {
+        static::$sample_row = FixtureHelper::getSampleRow();
+    }
 
-    public function setUp()
+    protected function setUp()
     {
         $this->single = new \SebastianBergmann\PHPLOC\Log\CSV\Single();
     }
@@ -67,7 +39,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
     public function testPrintedResultContainsHeadings()
     {
         ob_start();
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', static::$sample_row);
         $output = ob_get_clean();
 
         $this->assertRegExp('#Directories,Files.+$#is', $output, "Printed result does not contain a heading line");
@@ -76,21 +48,36 @@ class SingleTest extends \PHPUnit_Framework_TestCase
     public function testPrintedResultContainsData()
     {
         ob_start();
-        $this->single->printResult('php://output', $this->sample_row);
-        $output = ob_get_clean();
+        $this->single->printResult('php://output', static::$sample_row);
+        $raw_output = ob_get_clean();
 
-        $this->assertRegExp('#"1","2".+$#is', $output, "Printed result does not contain a value line");
+        $output_lines = explode(PHP_EOL, $raw_output);
+        $output_lines = array_filter($output_lines);
+        $this->assertCount(
+            2,
+            $output_lines,
+            'Result should contain one heading- and one data-line'
+        );
+
+        $data = explode(',', end($output_lines));
+
+        $this->assertRegExp('#"1","2".+$#is', $raw_output, 'Printed result does not contain a value line');
+        $this->assertCount(
+            count(static::$sample_row),
+            $data,
+            'Result is missing some metrics'
+        );
     }
 
     public function testPrintedResultContainsEqualNumHeadingsAndValues()
     {
         ob_start();
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', static::$sample_row);
         $output = ob_get_clean();
 
-        $rows = explode("\n", $output);
-        $headings = explode(",", $rows[0]);
-        $vals = explode(",", $rows[1]);
+        $rows = explode(PHP_EOL, $output);
+        $headings = explode(',', $rows[0]);
+        $vals = explode(',', $rows[1]);
 
         $this->assertEquals(
             count($headings),
@@ -102,10 +89,10 @@ class SingleTest extends \PHPUnit_Framework_TestCase
     public function testExactlyTwoRowsArePrinted()
     {
         ob_start();
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', static::$sample_row);
         $output = ob_get_clean();
 
-        $rows = explode("\n", trim($output));
+        $rows = explode(PHP_EOL, trim($output));
         $this->assertEquals(2, count($rows), "Printed result contained more or less than expected 2 rows");
     }
 
@@ -114,7 +101,7 @@ class SingleTest extends \PHPUnit_Framework_TestCase
      */
     public function testPrintPartialRow()
     {
-        $count = $this->sample_row;
+        $count = static::$sample_row;
         unset($count['llocByNof']);
 
         ob_start();
