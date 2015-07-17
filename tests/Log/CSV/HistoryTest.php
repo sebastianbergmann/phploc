@@ -33,13 +33,13 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
             $sample_row_2[$metric_name] += $sample_rows_count;
         }
 
-        $data1 = ['commit' => 'foo'] + $sample_row_1;
-        $data2 = ['commit' => 'bar'] + $sample_row_2;
+        $data1 = array('commit' => 'foo') + $sample_row_1;
+        $data2 = array('commit' => 'bar') + $sample_row_2;
 
-        static::$sample_data = [
+        static::$sample_data = array(
             '2014-06-09T00:00:00' => $data1,
             '2014-07-09T00:00:00' => $data2,
-        ];
+        );
     }
 
     protected function setUp()
