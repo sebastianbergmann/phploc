@@ -1,5 +1,5 @@
-# Change Log for phploc
-All notable changes to phploc are documented in this file
+# Change Log for PHPLOC
+All notable changes to PHPLOC are documented in this file
 using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
@@ -34,7 +34,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Refactor how average complexity is calculated and implement minimum/maximum measures
 
 ### Fixed
-- phploc uses deprecated functionality
+- PHPLOC uses deprecated functionality
 
 ## [2.0.6] - 2014-06-25
 [2.0.6]: https://github.com/sebastianbergmann/phploc/compare/2.0.5...2.0.6
