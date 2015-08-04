@@ -17,21 +17,42 @@ namespace SebastianBergmann\PHPLOC\Log\CSV;
  */
 class History extends Single
 {
+
     /**
-     * Prints a result set.
-     *
-     * @param string $filename
-     * @param array  $count
+     * @var resource The file handle for this instance
      */
-    public function printResult($filename, array $count)
+    protected $file;
+
+    /**
+     * @var bool Is the file initialized
+     */
+    protected $isInitialized = false;
+
+    /**
+     * Construct the history printer
+     *
+     * @param string $filename The name of the file to write to
+     */
+    public function __construct($filename)
     {
-        $buffer = $this->getKeysLine($count);
-
-        foreach ($count as $date => $data) {
-            $buffer .= $date . ',' . $this->getValuesLine($data);
+        $this->file = fopen($filename, 'w+');
+        if (!$this->file) {
+            throw new \RuntimeException("Could not open file for writing");
         }
+    }
 
-        file_put_contents($filename, $buffer);
+    /**
+     * Print a single row to the output file
+     *
+     * @param array $data A single row of data
+     */
+    public function printRow(array $data)
+    {
+        if (!$this->isInitialized) {
+            $this->isInitialized = true;
+            fwrite($this->file, $this->getKeysLine($data));
+        }
+        fwrite($this->file, $this->getValuesLine($data));
     }
 
     /**
@@ -40,9 +61,11 @@ class History extends Single
      */
     protected function getValuesLine(array $count)
     {
-        $values = ['commit' => $count['commit']];
+        $values = [
+            'commit' => $count['commit'],
+        ];
 
-        return '"' . implode('","', $values) . '",' . parent::getValuesLine($count);
+        return $count['date'] . ',"' . implode('","', $values) . '",' . parent::getValuesLine($count);
     }
 
     /**
