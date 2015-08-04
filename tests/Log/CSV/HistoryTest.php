@@ -16,7 +16,8 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     private $history;
 
     private $sample_data = [
-        '2014-06-09T00:00:00' => [
+        [
+            'date' => '2014-06-09T00:00:00',
             'commit' => 'foo',
             'directories' => 1,
             'files' => 2,
@@ -60,7 +61,8 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
             'testClasses' => 40,
             'testMethods' => 41
         ],
-        '2014-07-09T00:00:00' => [
+        [
+            'date' => '2014-07-09T00:00:00',
             'commit' => 'bar',
             'directories' => 42,
             'files' => 43,
@@ -108,13 +110,15 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->history = new \SebastianBergmann\PHPLOC\Log\CSV\History();
+        $this->history = new \SebastianBergmann\PHPLOC\Log\CSV\History('php://output');
     }
 
     public function testPrintedResultContainsHeadings()
     {
         ob_start();
-        $this->history->printResult('php://output', $this->sample_data);
+        foreach ($this->sample_data as $row) {
+            $this->history->printRow($row);
+        }
         $output = ob_get_clean();
 
         $this->assertRegExp('#^Date,Commit,Directories,Files.+$#mis', $output, "Printed result does not contain a heading line");
@@ -123,7 +127,9 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     public function testPrintedResultContainsData()
     {
         ob_start();
-        $this->history->printResult('php://output', $this->sample_data);
+        foreach ($this->sample_data as $row) {
+            $this->history->printRow($row);
+        }
         $output = ob_get_clean();
 
         $this->assertRegExp('#^2014-06-09T00:00:00,"foo","1".+$#mis', $output, "Printed result does not contain a value line");
@@ -132,7 +138,9 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
     public function testExactlyThreeRowsArePrinted()
     {
         ob_start();
-        $this->history->printResult('php://output', $this->sample_data);
+        foreach ($this->sample_data as $row) {
+            $this->history->printRow($row);
+        }
         $output = ob_get_clean();
 
         $rows = explode("\n", trim($output));

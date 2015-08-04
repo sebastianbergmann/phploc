@@ -163,8 +163,12 @@ class Command extends AbstractCommand
         $git            = new Git($input->getOption('git-repository'));
         $currentBranch  = $git->getCurrentBranch();
         $revisions      = $git->getRevisions();
-        $count          = [];
+        $printer        = null;
         $progressBar    = null;
+
+        if ($input->getOption('log-csv')) {
+            $printer = new History($input->getOption('log-csv'));
+        }
 
         if ($input->getOption('progress')) {
             $progressBar = new ProgressBar($output, count($revisions));
@@ -193,8 +197,11 @@ class Command extends AbstractCommand
             );
 
             if ($_count) {
-                $_count['commit']                                 = $revision['sha1'];
-                $count[$revision['date']->format(\DateTime::W3C)] = $_count;
+                $_count['commit'] = $revision['sha1'];
+                $_count['date']   = $revision['date']->format(\DateTime::W3C);
+                if ($printer) {
+                    $printer->printRow($_count);
+                }
             }
 
             if ($progressBar !== null) {
@@ -209,10 +216,6 @@ class Command extends AbstractCommand
             $output->writeln('');
         }
 
-        if ($input->getOption('log-csv')) {
-            $printer = new History;
-            $printer->printResult($input->getOption('log-csv'), $count);
-        }
     }
 
     private function count(array $arguments, $excludes, $names, $namesExclude, $countTests)
