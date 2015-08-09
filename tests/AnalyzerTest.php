@@ -22,6 +22,11 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $this->resetAnalyser();
+    }
+
+    private function resetAnalyser()
+    {
         $this->analyser = new SebastianBergmann\PHPLOC\Analyser;
     }
 
@@ -229,5 +234,32 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(5, $result['loc']);
+    }
+
+    public function testIssue126IsFixed()
+    {
+        // issue_126_X.php => CLOC
+        $testsForIssue126 = array(
+            1 => 1,
+            2 => 1,
+            3 => 1,
+            4 => 2,
+            5 => 3,
+            6 => 3,
+            7 => 3,
+        );
+
+        foreach($testsForIssue126 as $fileNumber => $cloc) {
+            $file = __DIR__ . '/_files/issue_126/issue_126_' . $fileNumber . '.php';
+            $result = $this->analyser->countFiles(array($file), false);
+
+            $assertString = sprintf('Failed asserting that %s matches expected %s in issue_126_%d.php',
+                                $result['cloc'],
+                                $cloc,
+                                $fileNumber
+            );
+            $this->assertEquals($cloc, $result['cloc'], $assertString);
+            $this->resetAnalyser();
+        }
     }
 }

@@ -515,15 +515,11 @@ class Analyser
 
                 case T_COMMENT:
                 case T_DOC_COMMENT:
-                    $lf = substr_count($value, "\n");
-
-                    $this->count['cloc'] += $lf;
-
-                    if ($lf > 1) {
-                        $this->count['cloc']++;
-                    }
+                    // We want to count all intermediate lines before the token ends
+                    // But sometimes a new token starts after a newline, we don't want to count that.
+                    // That happend with /* */ and /**  */, but not with // since it'll end at the end
+                    $this->count['cloc'] += substr_count(rtrim($value, "\n"), "\n") + 1;
                     break;
-
                 case T_CONST:
                     $this->count['classConstants']++;
                     break;
