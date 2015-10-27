@@ -47,6 +47,7 @@ class Analyser
      * @var array
      */
     private $count = array(
+        'directories'                 => 0,
         'files'                       => 0,
         'loc'                         => 0,
         'lloc'                        => 0,
@@ -54,9 +55,11 @@ class Analyser
         'llocFunctions'               => 0,
         'llocGlobal'                  => 0,
         'cloc'                        => 0,
+        'ncloc'                       => 0,
         'ccn'                         => 0,
         'ccnMethods'                  => 0,
         'interfaces'                  => 0,
+        'namespaces'                  => 0,
         'traits'                      => 0,
         'classes'                     => 0,
         'abstractClasses'             => 0,
