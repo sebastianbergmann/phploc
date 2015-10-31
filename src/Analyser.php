@@ -367,7 +367,7 @@ class Analyser
                     break;
                     
                 case T_USE;
-                    while($tokens[++$i][0] !== ";");
+                    while($tokens[++$i][0] !== ";" && $i < $numTokens);
                     continue;
                     
                 case T_CLASS:
