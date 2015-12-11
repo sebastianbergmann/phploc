@@ -32,7 +32,7 @@ class Text
             if(isset($count['project_directory'])) {
                 $output->write(
                     sprintf(
-                        "\n\nProject directory                                 %s\n",
+                        "\n\nProject Directory                                 %s\n",
                         $count['project_directory']
                     )
                 );

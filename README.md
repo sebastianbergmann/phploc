@@ -101,3 +101,33 @@ Make sure you have `~/.composer/vendor/bin/` in your path.
     phploc 2.0.4 by Sebastian Bergmann.
 
      295/295 [============================] 100%
+
+### Analyse multiple directories and separate results
+
+By using `--separate` option, you can analyse multiple directories and output their results separately, which are normally merged together. This option will let you output one CSV or XML file, with each directory you provided represented as a separate entity.
+
+    ➜ ~ phploc ~/web_project ~/cli_project --separate --log-csv results.csv
+    phploc 2.0.4 by Sebastian Bergmann.
+
+    Project Directory                           ~/web_project
+    Directories                                          3
+    Files                                                8
+
+    Size
+      Lines of Code (LOC)                             1858
+      Comment Lines of Code (CLOC)                     560 (30.14%)
+      Non-Comment Lines of Code (NCLOC)               1298 (69.86%)
+      .....
+      
+      
+    
+    
+    Project Directory                           ~/cli_project
+    Directories                                          2
+    Files                                                9
+
+    Size
+      Lines of Code (LOC)                             1858
+      Comment Lines of Code (CLOC)                     560 (30.14%)
+      Non-Comment Lines of Code (NCLOC)               1298 (69.86%)
+      .....
