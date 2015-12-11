@@ -123,4 +123,24 @@ class SingleTest extends \PHPUnit_Framework_TestCase
 
         $this->fail("No exception was raised for malformed input var");
     }
+
+    public function testProjectSeparation()
+    {
+        $sample1 = array_merge(['project_directory' => rand()], $this->sample_row);
+        $sample2 = array_merge(['project_directory' => rand()], $this->sample_row);
+
+        // Clean previous CSV file.
+        $this->setUp();
+
+        ob_start();
+        $this->single->addResult('php://output', $sample1);
+        $this->single->addResult('php://output', $sample2);
+        $output = ob_get_clean();
+
+        $this->assertRegExp('#Project Directory,Directories,Files.+$#is', $output, "Printed result does not contain project directory header");
+
+        $rows = explode("\n", trim($output));
+        $this->assertEquals(3, count($rows), "Printed result contained more or less than expected 3 rows (1 header and 2 project lines)");
+    }
+
 }

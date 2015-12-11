@@ -92,7 +92,13 @@ class Command extends AbstractCommand
                  null,
                  InputOption::VALUE_NONE,
                  'Show progress bar'
-             );
+             )
+            ->addOption(
+                'separate',
+                null,
+                InputOption::VALUE_NONE,
+                'Separate results for each directory'
+            );
     }
 
     /**
@@ -120,35 +126,60 @@ class Command extends AbstractCommand
      */
     private function executeSingle(InputInterface $input, OutputInterface $output)
     {
-        $count = $this->count(
-            $input->getArgument('values'),
-            $input->getOption('exclude'),
-            $this->handleCSVOption($input, 'names'),
-            $this->handleCSVOption($input, 'names-exclude'),
-            $input->getOption('count-tests')
-        );
+        $counts = [];
 
-        if (!$count) {
+        if($input->getOption('separate')) {
+            foreach($input->getArgument('values') as $directory) {
+                $count = $this->count(
+                    [$directory],
+                    $input->getOption('exclude'),
+                    $this->handleCSVOption($input, 'names'),
+                    $this->handleCSVOption($input, 'names-exclude'),
+                    $input->getOption('count-tests')
+                );
+
+                $count['project_directory'] = $directory;
+                $counts[] = $count;
+            }
+        } else {
+            $counts[] = $this->count(
+                $input->getArgument('values'),
+                $input->getOption('exclude'),
+                $this->handleCSVOption($input, 'names'),
+                $this->handleCSVOption($input, 'names-exclude'),
+                $input->getOption('count-tests')
+            );
+        }
+
+        if (!$counts || count($counts) < 1) {
             $output->writeln('No files found to scan');
             exit(1);
         }
 
         $printer = new Text;
 
-        $printer->printResult(
-            $output,
-            $count,
-            $input->getOption('count-tests')
-        );
+        foreach($counts as $count) {
+            $printer->printResult(
+                $output,
+                $count,
+                $input->getOption('count-tests')
+            );
+        }
 
         if ($input->getOption('log-csv')) {
             $printer = new Single;
-            $printer->printResult($input->getOption('log-csv'), $count);
+
+            foreach($counts as $count) {
+                $printer->addResult($input->getOption('log-csv'), $count);
+            }
         }
 
         if ($input->getOption('log-xml')) {
             $printer = new XML;
-            $printer->printResult($input->getOption('log-xml'), $count);
+
+            foreach($counts as $count) {
+                $printer->addResult($input->getOption('log-xml'), $count);
+            }
         }
     }
 
@@ -215,6 +246,16 @@ class Command extends AbstractCommand
         }
     }
 
+    /**
+     * Processes a directory
+     *
+     * @param array $arguments
+     * @param $excludes
+     * @param $names
+     * @param $namesExclude
+     * @param $countTests
+     * @return array|bool
+     */
     private function count(array $arguments, $excludes, $names, $namesExclude, $countTests)
     {
         try {

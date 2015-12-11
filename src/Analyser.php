@@ -314,7 +314,7 @@ class Analyser
                     if ($className !== null) {
                         $this->count['ccnMethods']++;
                         $currentClassData['ccn']++;
-                        $currentMethodData['ccn']++;
+                        if(isset($currentMethodData['ccn'])) $currentMethodData['ccn']++;
                     }
 
                     $this->count['ccn']++;
