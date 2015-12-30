@@ -18,7 +18,7 @@
         "sebastian/finder-facade": "~1.1",
         "sebastian/git": "~2.0",
         "sebastian/version": "~1.0.3",
-        "symfony/console": "~2.5"
+        "symfony/console": "~2.5|~3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4"
