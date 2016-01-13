@@ -81,11 +81,36 @@ class Single
     }
 
     /**
+     * Adds a new result line to the file. Will create and add headers if this is the first attempt.
+     *
+     * @param string $filename
+     * @param array $count
+     */
+    public function addResult($filename, array $count)
+    {
+        static $createdFirstLine = false;
+
+        if($createdFirstLine) {
+            file_put_contents($filename, file_get_contents($filename).$this->getValuesLine($count));
+        } else {
+            $this->printResult($filename, $count);
+            $createdFirstLine = true;
+        }
+    }
+
+    /**
      * @param  array  $count
      * @return string
      */
     protected function getKeysLine(array $count)
     {
+        if(isset($count['project_directory'])) {
+            $this->colmap = array_merge(
+                ['project_directory' => 'Project Directory'],
+                $this->colmap
+            );
+        }
+
         return implode(',', array_values($this->colmap)) . PHP_EOL;
     }
 
@@ -97,6 +122,13 @@ class Single
     protected function getValuesLine(array $count)
     {
         $values = [];
+
+        if(isset($count['project_directory']) && !isset($this->colmap['project_directory'])) {
+            $this->colmap = array_merge(
+                ['project_directory' => 'Project Directory'],
+                $this->colmap
+            );
+        }
 
         foreach ($this->colmap as $key => $name) {
             if (isset($count[$key])) {

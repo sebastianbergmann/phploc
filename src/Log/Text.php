@@ -29,6 +29,15 @@ class Text
     public function printResult(OutputInterface $output, array $count, $printTests)
     {
         if ($count['directories'] > 0) {
+            if(isset($count['project_directory'])) {
+                $output->write(
+                    sprintf(
+                        "\n\nProject Directory                                 %s\n",
+                        $count['project_directory']
+                    )
+                );
+            }
+
             $output->write(
                 sprintf(
                     "Directories                                 %10d\n" .
