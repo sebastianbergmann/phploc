@@ -264,4 +264,21 @@ class PHPLOC_AnalyserTest extends PHPUnit_Framework_TestCase
             array(7, 3),
         );
     }
+
+    /**
+     * @ticket 139
+     */
+    public function testIssue139IsFixed()
+    {
+        error_reporting(E_ALL);
+
+        $result = $this->analyser->countFiles(
+            array(
+                __DIR__ . '/_files/issue_139.php'
+            ),
+            false
+        );
+
+        $this->assertEquals(1, $result['anonymousFunctions']);
+    }
 }
