@@ -77,6 +77,8 @@ class Application extends AbstractApplication
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->disableXdebug();
+
         if (!$input->hasParameterOption('--quiet')) {
             $output->write(
                 sprintf(
@@ -96,5 +98,18 @@ class Application extends AbstractApplication
         }
 
         parent::doRun($input, $output);
+    }
+
+    private function disableXdebug()
+    {
+        if (!extension_loaded('xdebug')) {
+            return;
+        }
+
+        ini_set('xdebug.scream', 0);
+        ini_set('xdebug.max_nesting_level', 8192);
+        ini_set('xdebug.show_exception_trace', 0);
+
+        xdebug_disable();
     }
 }
