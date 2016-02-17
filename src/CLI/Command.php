@@ -161,6 +161,15 @@ class Command extends AbstractCommand
      */
     private function executeHistory(InputInterface $input, OutputInterface $output)
     {
+        if (!is_dir($input->getOption('git-repository'))) {
+            throw new RuntimeException(
+                sprintf(
+                    'Working directory "%s" does not exist',
+                    $input->getOption('git-repository')
+                )
+            );
+        }
+
         $git = new Git($input->getOption('git-repository'));
 
         if (!$git->isWorkingCopyClean()) {
