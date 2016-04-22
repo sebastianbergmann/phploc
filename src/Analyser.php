@@ -303,7 +303,11 @@ class Analyser
                         $currentClassData['lloc']++;
 
                         if ($functionName !== null) {
-                            $currentMethodData['lloc']++;
+                            if ($currentMethodData === null) {
+                                $currentMethodData = ['ccn' => 0, 'lloc' => 1];
+                            } else {
+                                $currentMethodData['lloc']++;
+                            }
                         }
                     } elseif ($functionName !== null) {
                         $this->count['llocFunctions']++;
@@ -365,12 +369,12 @@ class Analyser
                         $this->namespaces[$namespace] = true;
                     }
                     break;
-                    
+
                 case T_USE;
                     while($tokens[++$i][0] !== ";" && $i < $numTokens);
                     $i--;
                     continue;
-                    
+
                 case T_CLASS:
                 case T_INTERFACE:
                 case T_TRAIT:
@@ -504,8 +508,13 @@ class Analyser
                     if (!$testClass) {
                         if ($currentMethodData !== null) {
                             $this->count['ccnMethods']++;
-                            $currentClassData['ccn']++;
                             $currentMethodData['ccn']++;
+
+                            if ($currentClassData === null) {
+                                $currentClassData = ['ccn' => 1, 'lloc' => 0];
+                            } else {
+                                $currentClassData['ccn']++;
+                            }
                         }
 
                         $this->count['ccn']++;
