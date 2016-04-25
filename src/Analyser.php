@@ -365,12 +365,7 @@ class Analyser
                         $this->namespaces[$namespace] = true;
                     }
                     break;
-                    
-                case T_USE;
-                    while($tokens[++$i][0] !== ";" && $i < $numTokens);
-                    $i--;
-                    continue;
-                    
+
                 case T_CLASS:
                 case T_INTERFACE:
                 case T_TRAIT:
