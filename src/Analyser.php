@@ -398,6 +398,12 @@ class Analyser
                     break;
 
                 case T_FUNCTION:
+                    $prev = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
+
+                    if ($tokens[$prev][0] === T_USE) {
+                        continue;
+                    }
+
                     $currentBlock = T_FUNCTION;
 
                     $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
