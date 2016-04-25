@@ -12,6 +12,6 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.0] - 2016-01-13
 
-[3.0.1]: https://github.com/sebastianbergmann/phpunit/compare/3.0.0...3.0.1
-[3.0.0]: https://github.com/sebastianbergmann/phpunit/compare/2.1.5...3.0.0
+[3.0.1]: https://github.com/sebastianbergmann/phploc/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/sebastianbergmann/phploc/compare/2.1.5...3.0.0
 
