@@ -619,18 +619,13 @@ class Analyser
      */
     private function getClassName($namespace, array $tokens, $i)
     {
-        $i         += 2;
-        $namespaced = false;
-
+        $i += 2;
         if (!isset($tokens[$i][1])) {
             return 'invalid class name';
         }
-
         $className  = $tokens[$i][1];
 
-        if ($className === '\\') {
-            $namespaced = true;
-        }
+        $namespaced = $className === '\\';
 
         while (is_array($tokens[$i+1]) && $tokens[$i+1][0] !== T_WHITESPACE) {
             $className .= $tokens[++$i][1];
