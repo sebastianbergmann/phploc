@@ -265,10 +265,6 @@ class Command extends AbstractCommand
     {
         $result = $input->getOption($option);
 
-        if (!is_array($result)) {
-            $result = explode(',', $result);
-        }
-
-        return $result;
+        return is_array($result) ? $result : explode(',', $result);
     }
 }
