@@ -651,7 +651,6 @@ class Analyser
     private function isTestClass($className)
     {
         $parent = $this->classes[$className];
-        $result = false;
         $count  = 0;
 
         // Check ancestry for PHPUnit_Framework_TestCase.
@@ -665,8 +664,7 @@ class Analyser
 
             if ($parent == 'phpunit_framework_testcase' ||
                 $parent == '\\phpunit_framework_testcase') {
-                $result = true;
-                break;
+                return true;
             }
 
             if (isset($this->classes[$parent]) && $parent !== $this->classes[$parent]) {
@@ -680,13 +678,7 @@ class Analyser
 
         // Fallback: Treat the class as a test case class if the name
         // of the parent class ends with "TestCase".
-        if (!$result) {
-            if (substr($this->classes[$className], -8) == 'testcase') {
-                $result = true;
-            }
-        }
-
-        return $result;
+        return substr($this->classes[$className], -8) === 'testcase';
     }
 
     /**
