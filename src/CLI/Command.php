@@ -267,7 +267,6 @@ class Command extends AbstractCommand
 
         if (!is_array($result)) {
             $result = explode(',', $result);
-            array_map('trim', $result);
         }
 
         return $result;
