@@ -117,9 +117,12 @@ class SingleTest extends \PHPUnit_Framework_TestCase
         $count = $this->sample_row;
         unset($count['llocByNof']);
 
-        ob_start();
-        $this->single->printResult('php://output', $count);
-        ob_end_clean();
+        try {
+            ob_start();
+            $this->single->printResult('php://output', $count);
+        } finally {
+            ob_end_clean();
+        }
 
         $this->fail("No exception was raised for malformed input var");
     }
