@@ -6,6 +6,7 @@ install:
 php:
   - 5.6
   - 7.0
+  - 7.1
   - hhvm
 
 script: phpunit --configuration ./build/travis-ci.xml
