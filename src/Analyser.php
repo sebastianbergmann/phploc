@@ -18,6 +18,11 @@ namespace SebastianBergmann\PHPLOC;
 class Analyser
 {
     /**
+     * @var Collector
+     */
+    private $collector;
+
+    /**
      * @var array
      */
     private $namespaces = [];
@@ -41,7 +46,6 @@ class Analyser
      * @var array
      */
     private $count = [
-        'files'                       => 0,
         'loc'                         => 0,
         'lloc'                        => 0,
         'llocClasses'                 => 0,
@@ -133,6 +137,11 @@ class Analyser
      */
     private $methodLloc = [];
 
+    public function __construct()
+    {
+        $this->collector = new Collector();
+    }
+
     /**
      * Processes a set of files.
      *
@@ -143,27 +152,12 @@ class Analyser
      */
     public function countFiles(array $files, $countTests)
     {
-        if ($countTests) {
-            foreach ($files as $file) {
-                $this->preProcessFile($file);
-            }
-        }
-
-        $directories = [];
-
         foreach ($files as $file) {
-            $directory = dirname($file);
-
-            if (!isset($directories[$directory])) {
-                $directories[$directory] = true;
-            }
-
             $this->countFile($file, $countTests);
         }
 
         $count = $this->count;
 
-        $count['directories']       = count($directories) - 1;
         $count['namespaces']        = count($this->namespaces);
         $count['classes']           = $count['abstractClasses'] +
                                       $count['concreteClasses'];
@@ -222,7 +216,7 @@ class Analyser
             $count['llocByNof'] = $count['llocFunctions'] / $count['functions'];
         }
 
-        return $count;
+        return array_merge($count, $this->collector->getPublisher()->toArray());
     }
 
     /**
@@ -275,6 +269,10 @@ class Analyser
      */
     public function countFile($filename, $countTests)
     {
+        if ($countTests) {
+            $this->preProcessFile($filename);
+        }
+
         $buffer              = file_get_contents($filename);
         $this->count['loc'] += substr_count($buffer, "\n");
         $tokens              = token_get_all($buffer);
@@ -282,7 +280,7 @@ class Analyser
 
         unset($buffer);
 
-        $this->count['files']++;
+        $this->collector->addFile($filename);
 
         $blocks            = [];
         $currentBlock      = false;
