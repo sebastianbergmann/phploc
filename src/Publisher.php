@@ -143,7 +143,7 @@ class Publisher
 
     public function getGlobalConstantAccesses()
     {
-        return $this->getValue('global constant accesses');
+        return count(array_intersect($this->getValue('possible constant accesses', []), $this->getValue('constant', [])));
     }
 
     public function getGlobalVariableAccesses()
@@ -366,9 +366,9 @@ class Publisher
         return isset($this->counts[$key]) ? min($this->counts[$key]) : 0;
     }
 
-    private function getValue($key)
+    private function getValue($key, $default = 0)
     {
-        return isset($this->counts[$key]) ? $this->counts[$key] : 0;
+        return isset($this->counts[$key]) ? $this->counts[$key] : $default;
     }
 
     private function divide($x, $y)

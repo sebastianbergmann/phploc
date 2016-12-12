@@ -67,9 +67,14 @@ class Collector
         $this->increment('total method complexity');
     }
 
-    public function incrementGlobalConstantAccesses()
+    public function addPossibleConstantAccesses($name)
     {
-        $this->increment('global constant accesses');
+        $this->addToArray('possible constant accesses', $name);
+    }
+
+    public function addConstant($name)
+    {
+        $this->addToArray('constant', $name);
     }
 
     public function incrementGlobalVariableAccesses()

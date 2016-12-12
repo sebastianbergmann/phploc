@@ -30,16 +30,6 @@ class Analyser
     /**
      * @var array
      */
-    private $constants = [];
-
-    /**
-     * @var array
-     */
-    private $possibleConstantAccesses = [];
-
-    /**
-     * @var array
-     */
     private $superGlobals = [
         '$_ENV'             => true,
         '$_POST'            => true,
@@ -73,12 +63,6 @@ class Analyser
     {
         foreach ($files as $file) {
             $this->countFile($file, $countTests);
-        }
-
-        foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
-            if (in_array($possibleConstantAccess, $this->constants)) {
-                $this->collector->incrementGlobalConstantAccesses();
-            }
         }
 
         return $this->collector->getPublisher()->toArray();
@@ -390,7 +374,7 @@ class Analyser
                         while (isset($tokens[$j]) && $tokens[$j] != ';') {
                             if (is_array($tokens[$j]) &&
                                 $tokens[$j][0] == T_CONSTANT_ENCAPSED_STRING) {
-                                $this->constants[] = str_replace('\'', '', $tokens[$j][1]);
+                                $this->collector->addConstant(str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
                             }
@@ -398,7 +382,7 @@ class Analyser
                             $j++;
                         }
                     } else {
-                        $this->possibleConstantAccesses[] = $value;
+                        $this->collector->addPossibleConstantAccesses($value);
                     }
                     break;
 
