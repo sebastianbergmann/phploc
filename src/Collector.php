@@ -167,6 +167,16 @@ class Collector
         $this->increment('class constants');
     }
 
+    public function incrementTestClasses()
+    {
+        $this->increment('test classes');
+    }
+
+    public function incrementTestMethods()
+    {
+        $this->increment('test methods');
+    }
+
     private function addUnique($key, $name)
     {
         $this->check($key, []);

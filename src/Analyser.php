@@ -40,14 +40,6 @@ class Analyser
     /**
      * @var array
      */
-    private $count = [
-        'testClasses'                 => 0,
-        'testMethods'                 => 0,
-    ];
-
-    /**
-     * @var array
-     */
     private $superGlobals = [
         '$_ENV'             => true,
         '$_POST'            => true,
@@ -83,15 +75,13 @@ class Analyser
             $this->countFile($file, $countTests);
         }
 
-        $count = $this->count;
-
         foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
             if (in_array($possibleConstantAccess, $this->constants)) {
                 $this->collector->incrementGlobalConstantAccesses();
             }
         }
 
-        return array_merge($count, $this->collector->getPublisher()->toArray());
+        return $this->collector->getPublisher()->toArray();
     }
 
     /**
@@ -253,7 +243,7 @@ class Analyser
                     } else {
                         if ($countTests && $this->isTestClass($className)) {
                             $testClass = true;
-                            $this->count['testClasses']++;
+                            $this->collector->incrementTestClasses();
                         } else {
                             if (isset($tokens[$i-2]) &&
                                 is_array($tokens[$i-2]) &&
@@ -328,7 +318,7 @@ class Analyser
 
                             if ($testClass &&
                                 $this->isTestMethod($functionName, $visibility, $static, $tokens, $i)) {
-                                $this->count['testMethods']++;
+                                $this->collector->incrementTestMethods();
                             } elseif (!$testClass) {
                                 $currentMethodData = ['ccn' => 1, 'lloc' => 0];
 

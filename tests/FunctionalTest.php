@@ -64,12 +64,6 @@ class PHPLOC_FunctionalTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($officialOutput, $newOutput);
         $this->assertSame(file_get_contents('official.csv'), file_get_contents('new.csv'));
-
-        $officialXml = new DOMDocument();
-        $officialXml->load('official.xml');
-        $newXml = new DOMDocument();
-        $newXml->load('official.xml');
-
-        $this->assertEqualXMLStructure($officialXml->firstChild, $newXml->firstChild);
+        $this->assertSame(file_get_contents('official.xml'), file_get_contents('new.xml'));
     }
 }
