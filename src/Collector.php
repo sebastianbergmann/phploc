@@ -47,6 +47,26 @@ class Collector
         $this->increment('function lines');
     }
 
+    public function addClassComplexity($complexity)
+    {
+        $this->addToArray('class complexity', $complexity);
+    }
+
+    public function addMethodComplexity($complexity)
+    {
+        $this->addToArray('method complexity', $complexity);
+    }
+
+    public function incrementComplexity()
+    {
+        $this->increment('complexity');
+    }
+
+    public function incrementMethodComplexity()
+    {
+        $this->increment('total method complexity');
+    }
+
     public function incrementNamedFunctions()
     {
         $this->increment('named functions');
