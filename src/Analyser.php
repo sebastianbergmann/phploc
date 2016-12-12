@@ -25,11 +25,6 @@ class Analyser
     /**
      * @var array
      */
-    private $namespaces = [];
-
-    /**
-     * @var array
-     */
     private $classes = [];
 
     /**
@@ -46,19 +41,6 @@ class Analyser
      * @var array
      */
     private $count = [
-        'interfaces'                  => 0,
-        'traits'                      => 0,
-        'classes'                     => 0,
-        'abstractClasses'             => 0,
-        'concreteClasses'             => 0,
-        'methods'                     => 0,
-        'publicMethods'               => 0,
-        'nonPublicMethods'            => 0,
-        'nonStaticMethods'            => 0,
-        'staticMethods'               => 0,
-        'constants'                   => 0,
-        'classConstants'              => 0,
-        'globalConstants'             => 0,
         'testClasses'                 => 0,
         'testMethods'                 => 0,
     ];
@@ -102,12 +84,6 @@ class Analyser
         }
 
         $count = $this->count;
-
-        $count['namespaces']        = count($this->namespaces);
-        $count['classes']           = $count['abstractClasses'] +
-                                      $count['concreteClasses'];
-        $count['constants']         = $count['classConstants'] +
-                                      $count['globalConstants'];
 
         foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
             if (in_array($possibleConstantAccess, $this->constants)) {
@@ -256,10 +232,7 @@ class Analyser
             switch ($token) {
                 case T_NAMESPACE:
                     $namespace = $this->getNamespaceName($tokens, $i);
-
-                    if (!isset($this->namespaces[$namespace])) {
-                        $this->namespaces[$namespace] = true;
-                    }
+                    $this->collector->addNamespace($namespace);
                     break;
 
                 case T_CLASS:
@@ -274,9 +247,9 @@ class Analyser
                     $currentBlock     = T_CLASS;
 
                     if ($token == T_TRAIT) {
-                        $this->count['traits']++;
+                        $this->collector->incrementTraits();
                     } elseif ($token == T_INTERFACE) {
-                        $this->count['interfaces']++;
+                        $this->collector->incrementInterfaces();
                     } else {
                         if ($countTests && $this->isTestClass($className)) {
                             $testClass = true;
@@ -285,9 +258,9 @@ class Analyser
                             if (isset($tokens[$i-2]) &&
                                 is_array($tokens[$i-2]) &&
                                 $tokens[$i-2][0] == T_ABSTRACT) {
-                                $this->count['abstractClasses']++;
+                                $this->collector->incrementAbstractClasses();
                             } else {
-                                $this->count['concreteClasses']++;
+                                $this->collector->incrementConcreteClasses();
                             }
                         }
                     }
@@ -360,18 +333,16 @@ class Analyser
                                 $currentMethodData = ['ccn' => 1, 'lloc' => 0];
 
                                 if (!$static) {
-                                    $this->count['nonStaticMethods']++;
+                                    $this->collector->incrementNonStaticMethods();
                                 } else {
-                                    $this->count['staticMethods']++;
+                                    $this->collector->incrementStaticMethods();
                                 }
 
                                 if ($visibility == T_PUBLIC) {
-                                    $this->count['publicMethods']++;
+                                    $this->collector->incrementPublicMethods();
                                 } else {
-                                    $this->count['nonPublicMethods']++;
+                                    $this->collector->incrementNonPublicMethods();
                                 }
-
-                                $this->count['methods']++;
                             }
                         }
                     }
@@ -417,12 +388,12 @@ class Analyser
                     $this->collector->incrementCommentLines(substr_count(rtrim($value, "\n"), "\n") + 1);
                     break;
                 case T_CONST:
-                    $this->count['classConstants']++;
+                    $this->collector->incrementClassConstants();
                     break;
 
                 case T_STRING:
                     if ($value == 'define') {
-                        $this->count['globalConstants']++;
+                        $this->collector->incrementGlobalConstants();
 
                         $j = $i + 1;
 
