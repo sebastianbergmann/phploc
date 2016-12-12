@@ -271,6 +271,16 @@ class Publisher
         return $this->getValue('class constants');
     }
 
+    public function getTestClasses()
+    {
+        return $this->getValue('test classes');
+    }
+
+    public function getTestMethods()
+    {
+        return $this->getValue('test methods');
+    }
+
     public function toArray()
     {
         return [
@@ -299,6 +309,8 @@ class Publisher
             'constants' => $this->getConstants(),
             'classConstants' => $this->getClassConstants(),
             'globalConstants' => $this->getGlobalConstants(),
+            'testClasses' => $this->getTestClasses(),
+            'testMethods' => $this->getTestMethods(),
             'ccnByLloc' => $this->getAverageComplexityPerLogicalLine(),
             'llocByNof' => $this->getAverageFunctionLength(),
             'methodCalls' => $this->getMethodCalls(),
