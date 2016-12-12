@@ -186,6 +186,61 @@ class Publisher
         return $this->getValue('static method calls');
     }
 
+    public function getNamespaces()
+    {
+        return $this->getCount('namespaces');
+    }
+
+    public function getInterfaces()
+    {
+        return $this->getValue('interfaces');
+    }
+
+    public function getTraits()
+    {
+        return $this->getValue('traits');
+    }
+
+    public function getClasses()
+    {
+        return $this->getAbstractClasses() + $this->getConcreteClasses();
+    }
+
+    public function getAbstractClasses()
+    {
+        return $this->getValue('abstract classes');
+    }
+
+    public function getConcreteClasses()
+    {
+        return $this->getValue('concrete classes');
+    }
+
+    public function getMethods()
+    {
+        return $this->getNonStaticMethods() + $this->getStaticMethods();
+    }
+
+    public function getNonStaticMethods()
+    {
+        return $this->getValue('non-static methods');
+    }
+
+    public function getStaticMethods()
+    {
+        return $this->getValue('static methods');
+    }
+
+    public function getPublicMethods()
+    {
+        return $this->getValue('public methods');
+    }
+
+    public function getNonPublicMethods()
+    {
+        return $this->getValue('non-public methods');
+    }
+
     public function getFunctions()
     {
         return $this->getNamedFunctions() + $this->getAnonymousFunctions();
@@ -201,6 +256,21 @@ class Publisher
         return $this->getValue('anonymous functions');
     }
 
+    public function getConstants()
+    {
+        return $this->getGlobalConstants() + $this->getClassConstants();
+    }
+
+    public function getGlobalConstants()
+    {
+        return $this->getValue('global constants');
+    }
+
+    public function getClassConstants()
+    {
+        return $this->getValue('class constants');
+    }
+
     public function toArray()
     {
         return [
@@ -213,9 +283,22 @@ class Publisher
             'cloc' => $this->getCommentLines(),
             'ccn' => $this->getComplexity(),
             'ccnMethods' => $this->getMethodComplexity(),
+            'interfaces' => $this->getInterfaces(),
+            'traits' => $this->getTraits(),
+            'classes' => $this->getClasses(),
+            'abstractClasses' => $this->getAbstractClasses(),
+            'concreteClasses' => $this->getConcreteClasses(),
             'functions' => $this->getFunctions(),
             'namedFunctions' => $this->getNamedFunctions(),
             'anonymousFunctions' => $this->getAnonymousFunctions(),
+            'methods' => $this->getMethods(),
+            'publicMethods' => $this->getPublicMethods(),
+            'nonPublicMethods' => $this->getNonPublicMethods(),
+            'nonStaticMethods' => $this->getNonStaticMethods(),
+            'staticMethods' => $this->getStaticMethods(),
+            'constants' => $this->getConstants(),
+            'classConstants' => $this->getClassConstants(),
+            'globalConstants' => $this->getGlobalConstants(),
             'ccnByLloc' => $this->getAverageComplexityPerLogicalLine(),
             'llocByNof' => $this->getAverageFunctionLength(),
             'methodCalls' => $this->getMethodCalls(),
@@ -241,6 +324,7 @@ class Publisher
             'methodLlocMin' => $this->getMinimumMethodLength(),
             'methodLlocAvg' => $this->getAverageMethodLength(),
             'methodLlocMax' => $this->getMaximumMethodLength(),
+            'namespaces' => $this->getNamespaces(),
             'ncloc' => $this->getNonCommentLines(),
         ];
     }

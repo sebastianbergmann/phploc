@@ -102,6 +102,51 @@ class Collector
         $this->increment('static method calls');
     }
 
+    public function addNamespace($namespace)
+    {
+        $this->addUnique('namespaces', $namespace);
+    }
+
+    public function incrementInterfaces()
+    {
+        $this->increment('interfaces');
+    }
+
+    public function incrementTraits()
+    {
+        $this->increment('traits');
+    }
+
+    public function incrementAbstractClasses()
+    {
+        $this->increment('abstract classes');
+    }
+
+    public function incrementConcreteClasses()
+    {
+        $this->increment('concrete classes');
+    }
+
+    public function incrementNonStaticMethods()
+    {
+        $this->increment('non-static methods');
+    }
+
+    public function incrementStaticMethods()
+    {
+        $this->increment('static methods');
+    }
+
+    public function incrementPublicMethods()
+    {
+        $this->increment('public methods');
+    }
+
+    public function incrementNonPublicMethods()
+    {
+        $this->increment('non-public methods');
+    }
+
     public function incrementNamedFunctions()
     {
         $this->increment('named functions');
@@ -110,6 +155,16 @@ class Collector
     public function incrementAnonymousFunctions()
     {
         $this->increment('anonymous functions');
+    }
+
+    public function incrementGlobalConstants()
+    {
+        $this->increment('global constants');
+    }
+
+    public function incrementClassConstants()
+    {
+        $this->increment('class constants');
     }
 
     private function addUnique($key, $name)
