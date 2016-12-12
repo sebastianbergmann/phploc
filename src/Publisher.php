@@ -91,6 +91,51 @@ class Publisher
         return $this->getLogicalLines() - $this->getClassLines() - $this->getFunctionLines();
     }
 
+    public function getComplexity()
+    {
+        return $this->getValue('complexity');
+    }
+
+    public function getMethodComplexity()
+    {
+        return $this->getValue('total method complexity');
+    }
+
+    public function getAverageComplexityPerLogicalLine()
+    {
+        return $this->divide($this->getComplexity(), $this->getLogicalLines());
+    }
+
+    public function getAverageComplexityPerClass()
+    {
+        return $this->getAverage('class complexity');
+    }
+
+    public function getMinimumClassComplexity()
+    {
+        return $this->getMinimum('class complexity');
+    }
+
+    public function getMaximumClassComplexity()
+    {
+        return $this->getMaximum('class complexity');
+    }
+
+    public function getAverageComplexityPerMethod()
+    {
+        return $this->getAverage('method complexity');
+    }
+
+    public function getMinimumMethodComplexity()
+    {
+        return $this->getMinimum('method complexity');
+    }
+
+    public function getMaximumMethodComplexity()
+    {
+        return $this->getMaximum('method complexity');
+    }
+
     public function getFunctions()
     {
         return $this->getNamedFunctions() + $this->getAnonymousFunctions();
@@ -116,14 +161,23 @@ class Publisher
             'llocFunctions' => $this->getFunctionLines(),
             'llocGlobal' => $this->getNotInClassesOrFunctions(),
             'cloc' => $this->getCommentLines(),
+            'ccn' => $this->getComplexity(),
+            'ccnMethods' => $this->getMethodComplexity(),
             'functions' => $this->getFunctions(),
             'namedFunctions' => $this->getNamedFunctions(),
             'anonymousFunctions' => $this->getAnonymousFunctions(),
+            'ccnByLloc' => $this->getAverageComplexityPerLogicalLine(),
             'llocByNof' => $this->getAverageFunctionLength(),
             'directories' => $this->getDirectories(),
+            'classCcnMin' => $this->getMinimumClassComplexity(),
+            'classCcnAvg' => $this->getAverageComplexityPerClass(),
+            'classCcnMax' => $this->getMaximumClassComplexity(),
             'classLlocMin' => $this->getMinimumClassLength(),
             'classLlocAvg' => $this->getAverageClassLength(),
             'classLlocMax' => $this->getMaximumClassLength(),
+            'methodCcnMin' => $this->getMinimumMethodComplexity(),
+            'methodCcnAvg' => $this->getAverageComplexityPerMethod(),
+            'methodCcnMax' => $this->getMaximumMethodComplexity(),
             'methodLlocMin' => $this->getMinimumMethodLength(),
             'methodLlocAvg' => $this->getAverageMethodLength(),
             'methodLlocMax' => $this->getMaximumMethodLength(),

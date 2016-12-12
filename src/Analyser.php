@@ -46,8 +46,6 @@ class Analyser
      * @var array
      */
     private $count = [
-        'ccn'                         => 0,
-        'ccnMethods'                  => 0,
         'interfaces'                  => 0,
         'traits'                      => 0,
         'classes'                     => 0,
@@ -63,7 +61,6 @@ class Analyser
         'globalConstants'             => 0,
         'testClasses'                 => 0,
         'testMethods'                 => 0,
-        'ccnByLloc'                   => 0,
         'methodCalls'                 => 0,
         'staticMethodCalls'           => 0,
         'instanceMethodCalls'         => 0,
@@ -74,12 +71,6 @@ class Analyser
         'globalVariableAccesses'      => 0,
         'superGlobalVariableAccesses' => 0,
         'globalConstantAccesses'      => 0,
-        'classCcnMin'                 => 0,
-        'classCcnAvg'                 => 0,
-        'classCcnMax'                 => 0,
-        'methodCcnMin'                => 0,
-        'methodCcnAvg'                => 0,
-        'methodCcnMax'                => 0,
     ];
 
     /**
@@ -100,16 +91,6 @@ class Analyser
         '$HTTP_SERVER_VARS' => true,
         '$HTTP_POST_FILES'  => true
     ];
-
-    /**
-     * @var array
-     */
-    private $classCcn = [];
-
-    /**
-     * @var array
-     */
-    private $methodCcn = [];
 
     public function __construct()
     {
@@ -152,25 +133,7 @@ class Analyser
                                    $count['globalVariableAccesses'] +
                                    $count['superGlobalVariableAccesses'];
 
-        if (count($this->classCcn) > 0) {
-            $count['classCcnMin'] = min($this->classCcn);
-            $count['classCcnAvg'] = array_sum($this->classCcn) / count($this->classCcn);
-            $count['classCcnMax'] = max($this->classCcn);
-        }
-
-        if (count($this->methodCcn) > 0) {
-            $count['methodCcnMin'] = min($this->methodCcn);
-            $count['methodCcnAvg'] = array_sum($this->methodCcn) / count($this->methodCcn);
-            $count['methodCcnMax'] = max($this->methodCcn);
-        }
-
-        $publisher = $this->collector->getPublisher();
-
-        if ($publisher ->getLogicalLines() > 0) {
-            $count['ccnByLloc'] = $count['ccn'] / $publisher ->getLogicalLines();
-        }
-
-        return array_merge($count, $publisher->toArray());
+        return array_merge($count, $this->collector->getPublisher()->toArray());
     }
 
     /**
@@ -263,12 +226,12 @@ class Analyser
                     $this->collector->incrementLogicalLines();
                 } elseif ($token == '?' && !$testClass) {
                     if ($className !== null) {
-                        $this->count['ccnMethods']++;
+                        $this->collector->incrementMethodComplexity();
                         $currentClassData['ccn']++;
                         $currentMethodData['ccn']++;
                     }
 
-                    $this->count['ccn']++;
+                    $this->collector->incrementComplexity();
                 } elseif ($token == '{') {
                     if ($currentBlock == T_CLASS) {
                         $block = $className;
@@ -289,14 +252,14 @@ class Analyser
                             $functionName = null;
 
                             if ($currentMethodData !== null) {
-                                $this->methodCcn[]  = $currentMethodData['ccn'];
+                                $this->collector->addMethodComplexity($currentMethodData['ccn']);
                                 $this->collector->addMethodLines($currentMethodData['lloc']);
                                 $currentMethodData  = null;
                             }
                         } elseif ($block == $className) {
                             $className         = null;
                             $testClass         = false;
-                            $this->classCcn[]  = $currentClassData['ccn'];
+                            $this->collector->addClassComplexity($currentClassData['ccn']);
                             $this->collector->addClassLines($currentClassData['lloc']);
                             $currentClassData  = null;
                         }
@@ -455,12 +418,12 @@ class Analyser
                 case T_LOGICAL_OR:
                     if (!$testClass) {
                         if ($currentMethodData !== null) {
-                            $this->count['ccnMethods']++;
+                            $this->collector->incrementMethodComplexity();
                             $currentClassData['ccn']++;
                             $currentMethodData['ccn']++;
                         }
 
-                        $this->count['ccn']++;
+                        $this->collector->incrementComplexity();
                     }
                     break;
 
