@@ -46,12 +46,6 @@ class Analyser
      * @var array
      */
     private $count = [
-        'loc'                         => 0,
-        'lloc'                        => 0,
-        'llocClasses'                 => 0,
-        'llocFunctions'               => 0,
-        'llocGlobal'                  => 0,
-        'cloc'                        => 0,
         'ccn'                         => 0,
         'ccnMethods'                  => 0,
         'interfaces'                  => 0,
@@ -59,9 +53,6 @@ class Analyser
         'classes'                     => 0,
         'abstractClasses'             => 0,
         'concreteClasses'             => 0,
-        'functions'                   => 0,
-        'namedFunctions'              => 0,
-        'anonymousFunctions'          => 0,
         'methods'                     => 0,
         'publicMethods'               => 0,
         'nonPublicMethods'            => 0,
@@ -73,7 +64,6 @@ class Analyser
         'testClasses'                 => 0,
         'testMethods'                 => 0,
         'ccnByLloc'                   => 0,
-        'llocByNof'                   => 0,
         'methodCalls'                 => 0,
         'staticMethodCalls'           => 0,
         'instanceMethodCalls'         => 0,
@@ -87,15 +77,9 @@ class Analyser
         'classCcnMin'                 => 0,
         'classCcnAvg'                 => 0,
         'classCcnMax'                 => 0,
-        'classLlocMin'                => 0,
-        'classLlocAvg'                => 0,
-        'classLlocMax'                => 0,
         'methodCcnMin'                => 0,
         'methodCcnAvg'                => 0,
         'methodCcnMax'                => 0,
-        'methodLlocMin'               => 0,
-        'methodLlocAvg'               => 0,
-        'methodLlocMax'               => 0
     ];
 
     /**
@@ -125,17 +109,7 @@ class Analyser
     /**
      * @var array
      */
-    private $classLloc = [];
-
-    /**
-     * @var array
-     */
     private $methodCcn = [];
-
-    /**
-     * @var array
-     */
-    private $methodLloc = [];
 
     public function __construct()
     {
@@ -161,18 +135,12 @@ class Analyser
         $count['namespaces']        = count($this->namespaces);
         $count['classes']           = $count['abstractClasses'] +
                                       $count['concreteClasses'];
-        $count['functions']         = $count['namedFunctions'] +
-                                      $count['anonymousFunctions'];
         $count['constants']         = $count['classConstants'] +
                                       $count['globalConstants'];
         $count['attributeAccesses'] = $count['staticAttributeAccesses'] +
                                       $count['instanceAttributeAccesses'];
         $count['methodCalls']       = $count['staticMethodCalls'] +
                                       $count['instanceMethodCalls'];
-        $count['llocGlobal']        = $count['lloc'] -
-                                      $count['llocClasses'] -
-                                      $count['llocFunctions'];
-        $count['ncloc']             = $count['loc'] - $count['cloc'];
 
         foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
             if (in_array($possibleConstantAccess, $this->constants)) {
@@ -183,10 +151,6 @@ class Analyser
         $count['globalAccesses'] = $count['globalConstantAccesses'] +
                                    $count['globalVariableAccesses'] +
                                    $count['superGlobalVariableAccesses'];
-
-        if ($count['lloc'] > 0) {
-            $count['ccnByLloc'] = $count['ccn'] / $count['lloc'];
-        }
 
         if (count($this->classCcn) > 0) {
             $count['classCcnMin'] = min($this->classCcn);
@@ -200,23 +164,13 @@ class Analyser
             $count['methodCcnMax'] = max($this->methodCcn);
         }
 
-        if (count($this->classLloc) > 0) {
-            $count['classLlocMin'] = min($this->classLloc);
-            $count['classLlocAvg'] = array_sum($this->classLloc) / count($this->classLloc);
-            $count['classLlocMax'] = max($this->classLloc);
+        $publisher = $this->collector->getPublisher();
+
+        if ($publisher ->getLogicalLines() > 0) {
+            $count['ccnByLloc'] = $count['ccn'] / $publisher ->getLogicalLines();
         }
 
-        if (count($this->methodLloc) > 0) {
-            $count['methodLlocMin'] = min($this->methodLloc);
-            $count['methodLlocAvg'] = array_sum($this->methodLloc) / count($this->methodLloc);
-            $count['methodLlocMax'] = max($this->methodLloc);
-        }
-
-        if ($count['functions'] > 0) {
-            $count['llocByNof'] = $count['llocFunctions'] / $count['functions'];
-        }
-
-        return array_merge($count, $this->collector->getPublisher()->toArray());
+        return array_merge($count, $publisher->toArray());
     }
 
     /**
@@ -274,7 +228,7 @@ class Analyser
         }
 
         $buffer              = file_get_contents($filename);
-        $this->count['loc'] += substr_count($buffer, "\n");
+        $this->collector->incrementLines(substr_count($buffer, "\n"));
         $tokens              = token_get_all($buffer);
         $numTokens           = count($tokens);
 
@@ -297,17 +251,16 @@ class Analyser
 
                 if ($token == ';') {
                     if ($className !== null && !$testClass) {
-                        $this->count['llocClasses']++;
                         $currentClassData['lloc']++;
 
                         if ($functionName !== null) {
                             $currentMethodData['lloc']++;
                         }
                     } elseif ($functionName !== null) {
-                        $this->count['llocFunctions']++;
+                        $this->collector->incrementFunctionLines();
                     }
 
-                    $this->count['lloc']++;
+                    $this->collector->incrementLogicalLines();
                 } elseif ($token == '?' && !$testClass) {
                     if ($className !== null) {
                         $this->count['ccnMethods']++;
@@ -337,14 +290,14 @@ class Analyser
 
                             if ($currentMethodData !== null) {
                                 $this->methodCcn[]  = $currentMethodData['ccn'];
-                                $this->methodLloc[] = $currentMethodData['lloc'];
+                                $this->collector->addMethodLines($currentMethodData['lloc']);
                                 $currentMethodData  = null;
                             }
                         } elseif ($block == $className) {
                             $className         = null;
                             $testClass         = false;
                             $this->classCcn[]  = $currentClassData['ccn'];
-                            $this->classLloc[] = $currentClassData['lloc'];
+                            $this->collector->addClassLines($currentClassData['lloc']);
                             $currentClassData  = null;
                         }
                     }
@@ -416,13 +369,13 @@ class Analyser
                     } else {
                         $currentBlock = 'anonymous function';
                         $functionName = 'anonymous function';
-                        $this->count['anonymousFunctions']++;
+                        $this->collector->incrementAnonymousFunctions();
                     }
 
                     if ($currentBlock == T_FUNCTION) {
                         if ($className === null &&
                             $functionName != 'anonymous function') {
-                            $this->count['namedFunctions']++;
+                            $this->collector->incrementNamedFunctions();
                         } else {
                             $static     = false;
                             $visibility = T_PUBLIC;
@@ -516,7 +469,7 @@ class Analyser
                     // We want to count all intermediate lines before the token ends
                     // But sometimes a new token starts after a newline, we don't want to count that.
                     // That happend with /* */ and /**  */, but not with // since it'll end at the end
-                    $this->count['cloc'] += substr_count(rtrim($value, "\n"), "\n") + 1;
+                    $this->collector->incrementCommentLines(substr_count(rtrim($value, "\n"), "\n") + 1);
                     break;
                 case T_CONST:
                     $this->count['classConstants']++;
