@@ -67,6 +67,41 @@ class Collector
         $this->increment('total method complexity');
     }
 
+    public function incrementGlobalConstantAccesses()
+    {
+        $this->increment('global constant accesses');
+    }
+
+    public function incrementGlobalVariableAccesses()
+    {
+        $this->increment('global variable accesses');
+    }
+
+    public function incrementSuperGlobalVariableAccesses()
+    {
+        $this->increment('super global variable accesses');
+    }
+
+    public function incrementNonStaticAttributeAccesses()
+    {
+        $this->increment('non-static attribute accesses');
+    }
+
+    public function incrementStaticAttributeAccesses()
+    {
+        $this->increment('static attribute accesses');
+    }
+
+    public function incrementNonStaticMethodCalls()
+    {
+        $this->increment('non-static method calls');
+    }
+
+    public function incrementStaticMethodCalls()
+    {
+        $this->increment('static method calls');
+    }
+
     public function incrementNamedFunctions()
     {
         $this->increment('named functions');

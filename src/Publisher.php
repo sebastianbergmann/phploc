@@ -136,6 +136,56 @@ class Publisher
         return $this->getMaximum('method complexity');
     }
 
+    public function getGlobalAccesses()
+    {
+        return $this->getGlobalConstantAccesses() + $this->getGlobalVariableAccesses() + $this->getSuperGlobalVariableAccesses();
+    }
+
+    public function getGlobalConstantAccesses()
+    {
+        return $this->getValue('global constant accesses');
+    }
+
+    public function getGlobalVariableAccesses()
+    {
+        return $this->getValue('global variable accesses');
+    }
+
+    public function getSuperGlobalVariableAccesses()
+    {
+        return $this->getValue('super global variable accesses');
+    }
+
+    public function getAttributeAccesses()
+    {
+        return $this->getNonStaticAttributeAccesses() + $this->getStaticAttributeAccesses();
+    }
+
+    public function getNonStaticAttributeAccesses()
+    {
+        return $this->getValue('non-static attribute accesses');
+    }
+
+    public function getStaticAttributeAccesses()
+    {
+        return $this->getValue('static attribute accesses');
+    }
+
+    public function getMethodCalls()
+    {
+        return $this->getNonStaticMethodCalls() + $this->getStaticMethodCalls();
+    }
+
+    public function getNonStaticMethodCalls()
+    {
+        return $this->getValue('non-static method calls');
+    }
+
+    public function getStaticMethodCalls()
+    {
+        return $this->getValue('static method calls');
+    }
+
     public function getFunctions()
     {
         return $this->getNamedFunctions() + $this->getAnonymousFunctions();
@@ -168,6 +218,16 @@ class Publisher
             'anonymousFunctions' => $this->getAnonymousFunctions(),
             'ccnByLloc' => $this->getAverageComplexityPerLogicalLine(),
             'llocByNof' => $this->getAverageFunctionLength(),
+            'methodCalls' => $this->getMethodCalls(),
+            'staticMethodCalls' => $this->getStaticMethodCalls(),
+            'instanceMethodCalls' => $this->getNonStaticMethodCalls(),
+            'attributeAccesses' => $this->getAttributeAccesses(),
+            'staticAttributeAccesses' => $this->getStaticAttributeAccesses(),
+            'instanceAttributeAccesses' => $this->getNonStaticAttributeAccesses(),
+            'globalAccesses' => $this->getGlobalAccesses(),
+            'globalVariableAccesses' => $this->getGlobalVariableAccesses(),
+            'superGlobalVariableAccesses' => $this->getSuperGlobalVariableAccesses(),
+            'globalConstantAccesses' => $this->getGlobalConstantAccesses(),
             'directories' => $this->getDirectories(),
             'classCcnMin' => $this->getMinimumClassComplexity(),
             'classCcnAvg' => $this->getAverageComplexityPerClass(),

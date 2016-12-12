@@ -61,16 +61,6 @@ class Analyser
         'globalConstants'             => 0,
         'testClasses'                 => 0,
         'testMethods'                 => 0,
-        'methodCalls'                 => 0,
-        'staticMethodCalls'           => 0,
-        'instanceMethodCalls'         => 0,
-        'attributeAccesses'           => 0,
-        'staticAttributeAccesses'     => 0,
-        'instanceAttributeAccesses'   => 0,
-        'globalAccesses'              => 0,
-        'globalVariableAccesses'      => 0,
-        'superGlobalVariableAccesses' => 0,
-        'globalConstantAccesses'      => 0,
     ];
 
     /**
@@ -118,20 +108,12 @@ class Analyser
                                       $count['concreteClasses'];
         $count['constants']         = $count['classConstants'] +
                                       $count['globalConstants'];
-        $count['attributeAccesses'] = $count['staticAttributeAccesses'] +
-                                      $count['instanceAttributeAccesses'];
-        $count['methodCalls']       = $count['staticMethodCalls'] +
-                                      $count['instanceMethodCalls'];
 
         foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
             if (in_array($possibleConstantAccess, $this->constants)) {
-                $count['globalConstantAccesses']++;
+                $this->collector->incrementGlobalConstantAccesses();
             }
         }
-
-        $count['globalAccesses'] = $count['globalConstantAccesses'] +
-                                   $count['globalVariableAccesses'] +
-                                   $count['superGlobalVariableAccesses'];
 
         return array_merge($count, $this->collector->getPublisher()->toArray());
     }
@@ -470,29 +452,29 @@ class Analyser
                          $tokens[$n][0] == T_VARIABLE) &&
                         $tokens[$nn] == '(') {
                         if ($token == T_DOUBLE_COLON) {
-                            $this->count['staticMethodCalls']++;
+                            $this->collector->incrementStaticMethodCalls();
                         } else {
-                            $this->count['instanceMethodCalls']++;
+                            $this->collector->incrementNonStaticMethodCalls();
                         }
                     } else {
                         if ($token == T_DOUBLE_COLON &&
                             $tokens[$n][0] == T_VARIABLE) {
-                            $this->count['staticAttributeAccesses']++;
+                            $this->collector->incrementStaticAttributeAccesses();
                         } elseif ($token == T_OBJECT_OPERATOR) {
-                            $this->count['instanceAttributeAccesses']++;
+                            $this->collector->incrementNonStaticAttributeAccesses();
                         }
                     }
                     break;
 
                 case T_GLOBAL:
-                    $this->count['globalVariableAccesses']++;
+                    $this->collector->incrementGlobalVariableAccesses();
                     break;
 
                 case T_VARIABLE:
                     if ($value == '$GLOBALS') {
-                        $this->count['globalVariableAccesses']++;
+                        $this->collector->incrementGlobalVariableAccesses();
                     } elseif (isset($this->superGlobals[$value])) {
-                        $this->count['superGlobalVariableAccesses']++;
+                        $this->collector->incrementSuperGlobalVariableAccesses();
                     }
                     break;
             }
