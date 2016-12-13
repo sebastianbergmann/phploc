@@ -1,7 +1,14 @@
+git:
+    depth: 1
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
 language: php
 
 install:
-  - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer install --no-interaction
 
 php:
   - 5.6
