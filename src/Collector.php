@@ -6,6 +6,10 @@ class Collector
 {
     private $counts = [];
 
+    private $currentClassComplexity = 0;
+
+    private $currentClassLines = 0;
+
     public function getPublisher()
     {
         return new Publisher($this->counts);
@@ -32,9 +36,24 @@ class Collector
         $this->increment('logical lines');
     }
 
-    public function addClassLines($number)
+    public function currentClassReset()
     {
-        $this->addToArray('class lines', $number);
+        if ($this->currentClassComplexity > 0) {
+            $this->addToArray('class complexity', $this->currentClassComplexity);
+            $this->addToArray('class lines', $this->currentClassLines);
+        }
+        $this->currentClassComplexity = 0;
+        $this->currentClassLines = 0;
+    }
+
+    public function currentClassIncrementComplexity()
+    {
+        $this->currentClassComplexity++;
+    }
+
+    public function currentClassIncrementLines()
+    {
+        $this->currentClassLines++;
     }
 
     public function addMethodLines($number)
@@ -45,11 +64,6 @@ class Collector
     public function incrementFunctionLines()
     {
         $this->increment('function lines');
-    }
-
-    public function addClassComplexity($complexity)
-    {
-        $this->addToArray('class complexity', $complexity);
     }
 
     public function addMethodComplexity($complexity)

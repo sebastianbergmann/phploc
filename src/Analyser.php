@@ -137,7 +137,7 @@ class Analyser
         $className         = null;
         $functionName      = null;
         $testClass         = false;
-        $currentClassData  = null;
+        $this->collector->currentClassReset();
         $currentMethodData = null;
 
         for ($i = 0; $i < $numTokens; $i++) {
@@ -146,7 +146,7 @@ class Analyser
 
                 if ($token == ';') {
                     if ($className !== null && !$testClass) {
-                        $currentClassData['lloc']++;
+                        $this->collector->currentClassIncrementLines();
 
                         if ($functionName !== null) {
                             $currentMethodData['lloc']++;
@@ -159,7 +159,7 @@ class Analyser
                 } elseif ($token == '?' && !$testClass) {
                     if ($className !== null) {
                         $this->collector->incrementMethodComplexity();
-                        $currentClassData['ccn']++;
+                        $this->collector->currentClassIncrementComplexity();
                         $currentMethodData['ccn']++;
                     }
 
@@ -191,9 +191,7 @@ class Analyser
                         } elseif ($block == $className) {
                             $className         = null;
                             $testClass         = false;
-                            $this->collector->addClassComplexity($currentClassData['ccn']);
-                            $this->collector->addClassLines($currentClassData['lloc']);
-                            $currentClassData  = null;
+                            $this->collector->currentClassReset();
                         }
                     }
                 }
@@ -216,7 +214,8 @@ class Analyser
                         continue;
                     }
 
-                    $currentClassData = ['ccn' => 1, 'lloc' => 0];
+                    $this->collector->currentClassReset();
+                    $this->collector->currentClassIncrementComplexity();
                     $className        = $this->getClassName($namespace, $tokens, $i);
                     $currentBlock     = T_CLASS;
 
@@ -346,7 +345,7 @@ class Analyser
                     if (!$testClass) {
                         if ($currentMethodData !== null) {
                             $this->collector->incrementMethodComplexity();
-                            $currentClassData['ccn']++;
+                            $this->collector->currentClassIncrementComplexity();
                             $currentMethodData['ccn']++;
                         }
 
