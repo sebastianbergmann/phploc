@@ -138,7 +138,7 @@ class Analyser
         $functionName      = null;
         $testClass         = false;
         $this->collector->currentClassReset();
-        $currentMethodData = null;
+        $isInMethod = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
@@ -149,7 +149,7 @@ class Analyser
                         $this->collector->currentClassIncrementLines();
 
                         if ($functionName !== null) {
-                            $currentMethodData['lloc']++;
+                            $this->collector->currentMethodIncrementLines();
                         }
                     } elseif ($functionName !== null) {
                         $this->collector->incrementFunctionLines();
@@ -158,9 +158,8 @@ class Analyser
                     $this->collector->incrementLogicalLines();
                 } elseif ($token == '?' && !$testClass) {
                     if ($className !== null) {
-                        $this->collector->incrementMethodComplexity();
                         $this->collector->currentClassIncrementComplexity();
-                        $currentMethodData['ccn']++;
+                        $this->collector->currentMethodIncrementComplexity();
                     }
 
                     $this->collector->incrementComplexity();
@@ -183,10 +182,9 @@ class Analyser
                         if ($block == $functionName) {
                             $functionName = null;
 
-                            if ($currentMethodData !== null) {
-                                $this->collector->addMethodComplexity($currentMethodData['ccn']);
-                                $this->collector->addMethodLines($currentMethodData['lloc']);
-                                $currentMethodData  = null;
+                            if ($isInMethod) {
+                                $this->collector->currentMethodStop();
+                                $isInMethod = false;
                             }
                         } elseif ($block == $className) {
                             $className         = null;
@@ -303,7 +301,8 @@ class Analyser
                                 $this->isTestMethod($functionName, $visibility, $static, $tokens, $i)) {
                                 $this->collector->incrementTestMethods();
                             } elseif (!$testClass) {
-                                $currentMethodData = ['ccn' => 1, 'lloc' => 0];
+                                $isInMethod = true;
+                                $this->collector->currentMethodStart();
 
                                 if (!$static) {
                                     $this->collector->incrementNonStaticMethods();
@@ -343,10 +342,9 @@ class Analyser
                 case T_BOOLEAN_OR:
                 case T_LOGICAL_OR:
                     if (!$testClass) {
-                        if ($currentMethodData !== null) {
-                            $this->collector->incrementMethodComplexity();
+                        if ($isInMethod) {
                             $this->collector->currentClassIncrementComplexity();
-                            $currentMethodData['ccn']++;
+                            $this->collector->currentMethodIncrementComplexity();
                         }
 
                         $this->collector->incrementComplexity();
