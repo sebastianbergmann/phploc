@@ -597,11 +597,8 @@ class Analyser
     {
         $n = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
 
-        if (isset($tokens[$n]) && is_array($tokens[$n]) &&
-            $tokens[$n][0] == T_DOUBLE_COLON) {
-            return false;
-        }
-
-        return true;
+        return !isset($tokens[$n])
+            || !is_array($tokens[$n])
+            || !in_array($tokens[$n][0], [T_DOUBLE_COLON, T_NEW], true);
     }
 }
