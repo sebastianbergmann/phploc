@@ -18,81 +18,14 @@ namespace SebastianBergmann\PHPLOC;
 class Analyser
 {
     /**
-     * @var array
+     * @var Collector
      */
-    private $namespaces = [];
+    private $collector;
 
     /**
      * @var array
      */
     private $classes = [];
-
-    /**
-     * @var array
-     */
-    private $constants = [];
-
-    /**
-     * @var array
-     */
-    private $possibleConstantAccesses = [];
-
-    /**
-     * @var array
-     */
-    private $count = [
-        'files'                       => 0,
-        'loc'                         => 0,
-        'lloc'                        => 0,
-        'llocClasses'                 => 0,
-        'llocFunctions'               => 0,
-        'llocGlobal'                  => 0,
-        'cloc'                        => 0,
-        'ccn'                         => 0,
-        'ccnMethods'                  => 0,
-        'interfaces'                  => 0,
-        'traits'                      => 0,
-        'classes'                     => 0,
-        'abstractClasses'             => 0,
-        'concreteClasses'             => 0,
-        'functions'                   => 0,
-        'namedFunctions'              => 0,
-        'anonymousFunctions'          => 0,
-        'methods'                     => 0,
-        'publicMethods'               => 0,
-        'nonPublicMethods'            => 0,
-        'nonStaticMethods'            => 0,
-        'staticMethods'               => 0,
-        'constants'                   => 0,
-        'classConstants'              => 0,
-        'globalConstants'             => 0,
-        'testClasses'                 => 0,
-        'testMethods'                 => 0,
-        'ccnByLloc'                   => 0,
-        'llocByNof'                   => 0,
-        'methodCalls'                 => 0,
-        'staticMethodCalls'           => 0,
-        'instanceMethodCalls'         => 0,
-        'attributeAccesses'           => 0,
-        'staticAttributeAccesses'     => 0,
-        'instanceAttributeAccesses'   => 0,
-        'globalAccesses'              => 0,
-        'globalVariableAccesses'      => 0,
-        'superGlobalVariableAccesses' => 0,
-        'globalConstantAccesses'      => 0,
-        'classCcnMin'                 => 0,
-        'classCcnAvg'                 => 0,
-        'classCcnMax'                 => 0,
-        'classLlocMin'                => 0,
-        'classLlocAvg'                => 0,
-        'classLlocMax'                => 0,
-        'methodCcnMin'                => 0,
-        'methodCcnAvg'                => 0,
-        'methodCcnMax'                => 0,
-        'methodLlocMin'               => 0,
-        'methodLlocAvg'               => 0,
-        'methodLlocMax'               => 0
-    ];
 
     /**
      * @var array
@@ -113,25 +46,10 @@ class Analyser
         '$HTTP_POST_FILES'  => true
     ];
 
-    /**
-     * @var array
-     */
-    private $classCcn = [];
-
-    /**
-     * @var array
-     */
-    private $classLloc = [];
-
-    /**
-     * @var array
-     */
-    private $methodCcn = [];
-
-    /**
-     * @var array
-     */
-    private $methodLloc = [];
+    public function __construct()
+    {
+        $this->collector = new Collector();
+    }
 
     /**
      * Processes a set of files.
@@ -143,86 +61,11 @@ class Analyser
      */
     public function countFiles(array $files, $countTests)
     {
-        if ($countTests) {
-            foreach ($files as $file) {
-                $this->preProcessFile($file);
-            }
-        }
-
-        $directories = [];
-
         foreach ($files as $file) {
-            $directory = dirname($file);
-
-            if (!isset($directories[$directory])) {
-                $directories[$directory] = true;
-            }
-
             $this->countFile($file, $countTests);
         }
 
-        $count = $this->count;
-
-        $count['directories']       = count($directories) - 1;
-        $count['namespaces']        = count($this->namespaces);
-        $count['classes']           = $count['abstractClasses'] +
-                                      $count['concreteClasses'];
-        $count['functions']         = $count['namedFunctions'] +
-                                      $count['anonymousFunctions'];
-        $count['constants']         = $count['classConstants'] +
-                                      $count['globalConstants'];
-        $count['attributeAccesses'] = $count['staticAttributeAccesses'] +
-                                      $count['instanceAttributeAccesses'];
-        $count['methodCalls']       = $count['staticMethodCalls'] +
-                                      $count['instanceMethodCalls'];
-        $count['llocGlobal']        = $count['lloc'] -
-                                      $count['llocClasses'] -
-                                      $count['llocFunctions'];
-        $count['ncloc']             = $count['loc'] - $count['cloc'];
-
-        foreach ($this->possibleConstantAccesses as $possibleConstantAccess) {
-            if (in_array($possibleConstantAccess, $this->constants)) {
-                $count['globalConstantAccesses']++;
-            }
-        }
-
-        $count['globalAccesses'] = $count['globalConstantAccesses'] +
-                                   $count['globalVariableAccesses'] +
-                                   $count['superGlobalVariableAccesses'];
-
-        if ($count['lloc'] > 0) {
-            $count['ccnByLloc'] = $count['ccn'] / $count['lloc'];
-        }
-
-        if (count($this->classCcn) > 0) {
-            $count['classCcnMin'] = min($this->classCcn);
-            $count['classCcnAvg'] = array_sum($this->classCcn) / count($this->classCcn);
-            $count['classCcnMax'] = max($this->classCcn);
-        }
-
-        if (count($this->methodCcn) > 0) {
-            $count['methodCcnMin'] = min($this->methodCcn);
-            $count['methodCcnAvg'] = array_sum($this->methodCcn) / count($this->methodCcn);
-            $count['methodCcnMax'] = max($this->methodCcn);
-        }
-
-        if (count($this->classLloc) > 0) {
-            $count['classLlocMin'] = min($this->classLloc);
-            $count['classLlocAvg'] = array_sum($this->classLloc) / count($this->classLloc);
-            $count['classLlocMax'] = max($this->classLloc);
-        }
-
-        if (count($this->methodLloc) > 0) {
-            $count['methodLlocMin'] = min($this->methodLloc);
-            $count['methodLlocAvg'] = array_sum($this->methodLloc) / count($this->methodLloc);
-            $count['methodLlocMax'] = max($this->methodLloc);
-        }
-
-        if ($count['functions'] > 0) {
-            $count['llocByNof'] = $count['llocFunctions'] / $count['functions'];
-        }
-
-        return $count;
+        return $this->collector->getPublisher()->toArray();
     }
 
     /**
@@ -275,14 +118,18 @@ class Analyser
      */
     public function countFile($filename, $countTests)
     {
+        if ($countTests) {
+            $this->preProcessFile($filename);
+        }
+
         $buffer              = file_get_contents($filename);
-        $this->count['loc'] += substr_count($buffer, "\n");
+        $this->collector->incrementLines(substr_count($buffer, "\n"));
         $tokens              = token_get_all($buffer);
         $numTokens           = count($tokens);
 
         unset($buffer);
 
-        $this->count['files']++;
+        $this->collector->addFile($filename);
 
         $blocks            = [];
         $currentBlock      = false;
@@ -290,8 +137,8 @@ class Analyser
         $className         = null;
         $functionName      = null;
         $testClass         = false;
-        $currentClassData  = null;
-        $currentMethodData = null;
+        $this->collector->currentClassReset();
+        $isInMethod = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (is_string($tokens[$i])) {
@@ -299,25 +146,23 @@ class Analyser
 
                 if ($token == ';') {
                     if ($className !== null && !$testClass) {
-                        $this->count['llocClasses']++;
-                        $currentClassData['lloc']++;
+                        $this->collector->currentClassIncrementLines();
 
                         if ($functionName !== null) {
-                            $currentMethodData['lloc']++;
+                            $this->collector->currentMethodIncrementLines();
                         }
                     } elseif ($functionName !== null) {
-                        $this->count['llocFunctions']++;
+                        $this->collector->incrementFunctionLines();
                     }
 
-                    $this->count['lloc']++;
+                    $this->collector->incrementLogicalLines();
                 } elseif ($token == '?' && !$testClass) {
                     if ($className !== null) {
-                        $this->count['ccnMethods']++;
-                        $currentClassData['ccn']++;
-                        $currentMethodData['ccn']++;
+                        $this->collector->currentClassIncrementComplexity();
+                        $this->collector->currentMethodIncrementComplexity();
                     }
 
-                    $this->count['ccn']++;
+                    $this->collector->incrementComplexity();
                 } elseif ($token == '{') {
                     if ($currentBlock == T_CLASS) {
                         $block = $className;
@@ -337,17 +182,14 @@ class Analyser
                         if ($block == $functionName) {
                             $functionName = null;
 
-                            if ($currentMethodData !== null) {
-                                $this->methodCcn[]  = $currentMethodData['ccn'];
-                                $this->methodLloc[] = $currentMethodData['lloc'];
-                                $currentMethodData  = null;
+                            if ($isInMethod) {
+                                $this->collector->currentMethodStop();
+                                $isInMethod = false;
                             }
                         } elseif ($block == $className) {
                             $className         = null;
                             $testClass         = false;
-                            $this->classCcn[]  = $currentClassData['ccn'];
-                            $this->classLloc[] = $currentClassData['lloc'];
-                            $currentClassData  = null;
+                            $this->collector->currentClassReset();
                         }
                     }
                 }
@@ -360,10 +202,7 @@ class Analyser
             switch ($token) {
                 case T_NAMESPACE:
                     $namespace = $this->getNamespaceName($tokens, $i);
-
-                    if (!isset($this->namespaces[$namespace])) {
-                        $this->namespaces[$namespace] = true;
-                    }
+                    $this->collector->addNamespace($namespace);
                     break;
 
                 case T_CLASS:
@@ -373,25 +212,26 @@ class Analyser
                         continue;
                     }
 
-                    $currentClassData = ['ccn' => 1, 'lloc' => 0];
+                    $this->collector->currentClassReset();
+                    $this->collector->currentClassIncrementComplexity();
                     $className        = $this->getClassName($namespace, $tokens, $i);
                     $currentBlock     = T_CLASS;
 
                     if ($token == T_TRAIT) {
-                        $this->count['traits']++;
+                        $this->collector->incrementTraits();
                     } elseif ($token == T_INTERFACE) {
-                        $this->count['interfaces']++;
+                        $this->collector->incrementInterfaces();
                     } else {
                         if ($countTests && $this->isTestClass($className)) {
                             $testClass = true;
-                            $this->count['testClasses']++;
+                            $this->collector->incrementTestClasses();
                         } else {
                             if (isset($tokens[$i-2]) &&
                                 is_array($tokens[$i-2]) &&
                                 $tokens[$i-2][0] == T_ABSTRACT) {
-                                $this->count['abstractClasses']++;
+                                $this->collector->incrementAbstractClasses();
                             } else {
-                                $this->count['concreteClasses']++;
+                                $this->collector->incrementConcreteClasses();
                             }
                         }
                     }
@@ -418,13 +258,13 @@ class Analyser
                     } else {
                         $currentBlock = 'anonymous function';
                         $functionName = 'anonymous function';
-                        $this->count['anonymousFunctions']++;
+                        $this->collector->incrementAnonymousFunctions();
                     }
 
                     if ($currentBlock == T_FUNCTION) {
                         if ($className === null &&
                             $functionName != 'anonymous function') {
-                            $this->count['namedFunctions']++;
+                            $this->collector->incrementNamedFunctions();
                         } else {
                             $static     = false;
                             $visibility = T_PUBLIC;
@@ -459,23 +299,22 @@ class Analyser
 
                             if ($testClass &&
                                 $this->isTestMethod($functionName, $visibility, $static, $tokens, $i)) {
-                                $this->count['testMethods']++;
+                                $this->collector->incrementTestMethods();
                             } elseif (!$testClass) {
-                                $currentMethodData = ['ccn' => 1, 'lloc' => 0];
+                                $isInMethod = true;
+                                $this->collector->currentMethodStart();
 
                                 if (!$static) {
-                                    $this->count['nonStaticMethods']++;
+                                    $this->collector->incrementNonStaticMethods();
                                 } else {
-                                    $this->count['staticMethods']++;
+                                    $this->collector->incrementStaticMethods();
                                 }
 
                                 if ($visibility == T_PUBLIC) {
-                                    $this->count['publicMethods']++;
+                                    $this->collector->incrementPublicMethods();
                                 } else {
-                                    $this->count['nonPublicMethods']++;
+                                    $this->collector->incrementNonPublicMethods();
                                 }
-
-                                $this->count['methods']++;
                             }
                         }
                     }
@@ -503,13 +342,12 @@ class Analyser
                 case T_BOOLEAN_OR:
                 case T_LOGICAL_OR:
                     if (!$testClass) {
-                        if ($currentMethodData !== null) {
-                            $this->count['ccnMethods']++;
-                            $currentClassData['ccn']++;
-                            $currentMethodData['ccn']++;
+                        if ($isInMethod) {
+                            $this->collector->currentClassIncrementComplexity();
+                            $this->collector->currentMethodIncrementComplexity();
                         }
 
-                        $this->count['ccn']++;
+                        $this->collector->incrementComplexity();
                     }
                     break;
 
@@ -518,22 +356,22 @@ class Analyser
                     // We want to count all intermediate lines before the token ends
                     // But sometimes a new token starts after a newline, we don't want to count that.
                     // That happend with /* */ and /**  */, but not with // since it'll end at the end
-                    $this->count['cloc'] += substr_count(rtrim($value, "\n"), "\n") + 1;
+                    $this->collector->incrementCommentLines(substr_count(rtrim($value, "\n"), "\n") + 1);
                     break;
                 case T_CONST:
-                    $this->count['classConstants']++;
+                    $this->collector->incrementClassConstants();
                     break;
 
                 case T_STRING:
                     if ($value == 'define') {
-                        $this->count['globalConstants']++;
+                        $this->collector->incrementGlobalConstants();
 
                         $j = $i + 1;
 
                         while (isset($tokens[$j]) && $tokens[$j] != ';') {
                             if (is_array($tokens[$j]) &&
                                 $tokens[$j][0] == T_CONSTANT_ENCAPSED_STRING) {
-                                $this->constants[] = str_replace('\'', '', $tokens[$j][1]);
+                                $this->collector->addConstant(str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
                             }
@@ -541,7 +379,7 @@ class Analyser
                             $j++;
                         }
                     } else {
-                        $this->possibleConstantAccesses[] = $value;
+                        $this->collector->addPossibleConstantAccesses($value);
                     }
                     break;
 
@@ -556,29 +394,29 @@ class Analyser
                          $tokens[$n][0] == T_VARIABLE) &&
                         $tokens[$nn] == '(') {
                         if ($token == T_DOUBLE_COLON) {
-                            $this->count['staticMethodCalls']++;
+                            $this->collector->incrementStaticMethodCalls();
                         } else {
-                            $this->count['instanceMethodCalls']++;
+                            $this->collector->incrementNonStaticMethodCalls();
                         }
                     } else {
                         if ($token == T_DOUBLE_COLON &&
                             $tokens[$n][0] == T_VARIABLE) {
-                            $this->count['staticAttributeAccesses']++;
+                            $this->collector->incrementStaticAttributeAccesses();
                         } elseif ($token == T_OBJECT_OPERATOR) {
-                            $this->count['instanceAttributeAccesses']++;
+                            $this->collector->incrementNonStaticAttributeAccesses();
                         }
                     }
                     break;
 
                 case T_GLOBAL:
-                    $this->count['globalVariableAccesses']++;
+                    $this->collector->incrementGlobalVariableAccesses();
                     break;
 
                 case T_VARIABLE:
                     if ($value == '$GLOBALS') {
-                        $this->count['globalVariableAccesses']++;
+                        $this->collector->incrementGlobalVariableAccesses();
                     } elseif (isset($this->superGlobals[$value])) {
-                        $this->count['superGlobalVariableAccesses']++;
+                        $this->collector->incrementSuperGlobalVariableAccesses();
                     }
                     break;
             }
@@ -769,11 +607,8 @@ class Analyser
     {
         $n = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
 
-        if (isset($tokens[$n]) && is_array($tokens[$n]) &&
-            $tokens[$n][0] == T_DOUBLE_COLON) {
-            return false;
-        }
-
-        return true;
+        return !isset($tokens[$n])
+            || !is_array($tokens[$n])
+            || !in_array($tokens[$n][0], [T_DOUBLE_COLON, T_NEW], true);
     }
 }
