@@ -10,6 +10,10 @@ class Collector
 
     private $currentClassLines = 0;
 
+    private $currentMethodComplexity = 0;
+
+    private $currentMethodLines = 0;
+
     public function getPublisher()
     {
         return new Publisher($this->counts);
@@ -56,9 +60,27 @@ class Collector
         $this->currentClassLines++;
     }
 
-    public function addMethodLines($number)
+    public function currentMethodStart()
     {
-        $this->addToArray('method lines', $number);
+        $this->currentMethodComplexity = 1;
+        $this->currentMethodLines = 0;
+    }
+
+    public function currentMethodIncrementComplexity()
+    {
+        $this->currentMethodComplexity++;
+        $this->increment('total method complexity');
+    }
+
+    public function currentMethodIncrementLines()
+    {
+        $this->currentMethodLines++;
+    }
+
+    public function currentMethodStop()
+    {
+        $this->addToArray('method complexity', $this->currentMethodComplexity);
+        $this->addToArray('method lines', $this->currentMethodLines);
     }
 
     public function incrementFunctionLines()
@@ -66,19 +88,9 @@ class Collector
         $this->increment('function lines');
     }
 
-    public function addMethodComplexity($complexity)
-    {
-        $this->addToArray('method complexity', $complexity);
-    }
-
     public function incrementComplexity()
     {
         $this->increment('complexity');
-    }
-
-    public function incrementMethodComplexity()
-    {
-        $this->increment('total method complexity');
     }
 
     public function addPossibleConstantAccesses($name)
