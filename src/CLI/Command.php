@@ -235,7 +235,6 @@ class Command extends AbstractCommand
             $progressBar->finish();
             $output->writeln('');
         }
-
     }
 
     private function count(array $arguments, $excludes, $names, $namesExclude, $countTests)
@@ -257,8 +256,9 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param  InputInterface $input
-     * @param  string         $option
+     * @param InputInterface $input
+     * @param string         $option
+     *
      * @return array
      */
     private function handleCSVOption(InputInterface $input, $option)

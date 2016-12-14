@@ -54,9 +54,11 @@ class Analyser
     /**
      * Processes a set of files.
      *
-     * @param  array $files
-     * @param  bool  $countTests
+     * @param array $files
+     * @param bool  $countTests
+     *
      * @return array
+     *
      * @since  Method available since Release 1.2.0
      */
     public function countFiles(array $files, $countTests)
@@ -72,6 +74,7 @@ class Analyser
      * Pre-processes a single file.
      *
      * @param string $filename
+     *
      * @since Method available since Release 1.2.0
      */
     public function preProcessFile($filename)
@@ -197,7 +200,7 @@ class Analyser
                 continue;
             }
 
-            list ($token, $value) = $tokens[$i];
+            list($token, $value) = $tokens[$i];
 
             switch ($token) {
                 case T_NAMESPACE:
@@ -424,9 +427,11 @@ class Analyser
     }
 
     /**
-     * @param  array  $tokens
-     * @param  int    $i
+     * @param array $tokens
+     * @param int   $i
+     *
      * @return string
+     *
      * @since  Method available since Release 1.3.0
      */
     private function getNamespaceName(array $tokens, $i)
@@ -449,10 +454,12 @@ class Analyser
     }
 
     /**
-     * @param  string $namespace
-     * @param  array  $tokens
-     * @param  int    $i
+     * @param string $namespace
+     * @param array  $tokens
+     * @param int    $i
+     *
      * @return string
+     *
      * @since  Method available since Release 1.3.0
      */
     private function getClassName($namespace, array $tokens, $i)
@@ -477,8 +484,10 @@ class Analyser
     }
 
     /**
-     * @param  string $className
+     * @param string $className
+     *
      * @return bool
+     *
      * @since  Method available since Release 1.2.0
      */
     private function isTestClass($className)
@@ -515,12 +524,14 @@ class Analyser
     }
 
     /**
-     * @param  string $functionName
-     * @param  int    $visibility
-     * @param  bool   $static
-     * @param  array  $tokens
-     * @param  int    $currentToken
+     * @param string $functionName
+     * @param int    $visibility
+     * @param bool   $static
+     * @param array  $tokens
+     * @param int    $currentToken
+     *
      * @return bool
+     *
      * @since  Method available since Release 2.0.0
      */
     private function isTestMethod($functionName, $visibility, $static, array $tokens, $currentToken)
@@ -546,8 +557,9 @@ class Analyser
     }
 
     /**
-     * @param  array $tokens
-     * @param  int   $start
+     * @param array $tokens
+     * @param int   $start
+     *
      * @return bool
      */
     private function getNextNonWhitespaceTokenPos(array $tokens, $start)
@@ -566,8 +578,9 @@ class Analyser
     }
 
     /**
-     * @param  array $tokens
-     * @param  int   $start
+     * @param array $tokens
+     * @param int   $start
+     *
      * @return bool
      */
     private function getPreviousNonWhitespaceTokenPos(array $tokens, $start)
@@ -586,8 +599,9 @@ class Analyser
     }
 
     /**
-     * @param  array $tokens
-     * @param  int   $i
+     * @param array $tokens
+     * @param int   $i
+     *
      * @return bool
      */
     private function isClassDeclaration(array $tokens, $i)

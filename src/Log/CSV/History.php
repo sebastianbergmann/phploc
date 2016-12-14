@@ -17,7 +17,6 @@ namespace SebastianBergmann\PHPLOC\Log\CSV;
  */
 class History extends Single
 {
-
     /**
      * @var resource The file handle for this instance
      */
@@ -37,7 +36,7 @@ class History extends Single
     {
         $this->file = fopen($filename, 'w+');
         if (!$this->file) {
-            throw new \RuntimeException("Could not open file for writing");
+            throw new \RuntimeException('Could not open file for writing');
         }
     }
 
@@ -56,7 +55,8 @@ class History extends Single
     }
 
     /**
-     * @param  array  $count
+     * @param array $count
+     *
      * @return string
      */
     protected function getValuesLine(array $count)
@@ -69,7 +69,8 @@ class History extends Single
     }
 
     /**
-     * @param  array  $count
+     * @param array $count
+     *
      * @return string
      */
     protected function getKeysLine(array $count)

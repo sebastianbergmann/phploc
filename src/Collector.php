@@ -47,7 +47,7 @@ class Collector
             $this->addToArray('class lines', $this->currentClassLines);
         }
         $this->currentClassComplexity = 0;
-        $this->currentClassLines = 0;
+        $this->currentClassLines      = 0;
     }
 
     public function currentClassIncrementComplexity()
@@ -63,7 +63,7 @@ class Collector
     public function currentMethodStart()
     {
         $this->currentMethodComplexity = 1;
-        $this->currentMethodLines = 0;
+        $this->currentMethodLines      = 0;
     }
 
     public function currentMethodIncrementComplexity()

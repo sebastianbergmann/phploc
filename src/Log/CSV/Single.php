@@ -81,7 +81,8 @@ class Single
     }
 
     /**
-     * @param  array  $count
+     * @param array $count
+     *
      * @return string
      */
     protected function getKeysLine(array $count)
@@ -90,8 +91,10 @@ class Single
     }
 
     /**
-     * @param  array                     $count
+     * @param array $count
+     *
      * @throws \InvalidArgumentException
+     *
      * @return string
      */
     protected function getValuesLine(array $count)
