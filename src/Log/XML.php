@@ -33,22 +33,7 @@ class XML
         $root = $document->createElement('phploc');
         $document->appendChild($root);
 
-        if ($publisher->getDirectories() > 0) {
-            $root->appendChild(
-                $document->createElement('directories', $publisher->getDirectories())
-            );
-
-            $root->appendChild(
-                $document->createElement('files', $publisher->getFiles())
-            );
-        }
-
-        $count = $publisher->toArray();
-
-        unset($count['directories']);
-        unset($count['files']);
-
-        foreach ($count as $k => $v) {
+        foreach ($publisher->toArrayStartWithDirectories() as $k => $v) {
             $root->appendChild(
                 $document->createElement($k, $v)
             );

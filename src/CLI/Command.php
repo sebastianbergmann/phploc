@@ -16,6 +16,7 @@ use SebastianBergmann\Git\RuntimeException;
 use SebastianBergmann\PHPLOC\Analyser;
 use SebastianBergmann\PHPLOC\Log\CSV\History;
 use SebastianBergmann\PHPLOC\Log\CSV\Single;
+use SebastianBergmann\PHPLOC\Log\JSON;
 use SebastianBergmann\PHPLOC\Log\Text;
 use SebastianBergmann\PHPLOC\Log\XML;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
@@ -83,6 +84,12 @@ class Command extends AbstractCommand
                  'Write result in CSV format to file'
              )
              ->addOption(
+                 'log-json',
+                 null,
+                 InputOption::VALUE_REQUIRED,
+                 'Write result in JSON format to file'
+             )
+             ->addOption(
                  'log-xml',
                  null,
                  InputOption::VALUE_REQUIRED,
@@ -145,6 +152,11 @@ class Command extends AbstractCommand
         if ($input->getOption('log-csv')) {
             $printer = new Single();
             $printer->printResult($input->getOption('log-csv'), $publisher);
+        }
+
+        if ($input->getOption('log-json')) {
+            $printer = new JSON();
+            $printer->printResult($input->getOption('log-json'), $publisher);
         }
 
         if ($input->getOption('log-xml')) {
