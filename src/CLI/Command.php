@@ -143,8 +143,8 @@ class Command extends AbstractCommand
         );
 
         if ($input->getOption('log-csv')) {
-            $printer = new Single;
-            $printer->printResult($input->getOption('log-csv'), $publisher->toArray());
+            $printer = new Single();
+            $printer->printResult($input->getOption('log-csv'), $publisher);
         }
 
         if ($input->getOption('log-xml')) {

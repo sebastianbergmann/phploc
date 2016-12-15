@@ -49,7 +49,7 @@ class History extends Single
     {
         if (!$this->isInitialized) {
             $this->isInitialized = true;
-            fwrite($this->file, $this->getKeysLine($data));
+            fwrite($this->file, $this->getKeysLine());
         }
         fwrite($this->file, $this->getValuesLine($data));
     }
@@ -69,14 +69,10 @@ class History extends Single
     }
 
     /**
-     * @param array $count
-     *
      * @return string
      */
-    protected function getKeysLine(array $count)
+    protected function getKeysLine()
     {
-        $keys = ['Date', 'Commit'];
-
-        return implode(',', $keys) . ',' . parent::getKeysLine($count);
+        return 'Date,Commit,' . parent::getKeysLine();
     }
 }
