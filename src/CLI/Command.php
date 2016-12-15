@@ -148,8 +148,8 @@ class Command extends AbstractCommand
         }
 
         if ($input->getOption('log-xml')) {
-            $printer = new XML;
-            $printer->printResult($input->getOption('log-xml'), $publisher->toArray());
+            $printer = new XML();
+            $printer->printResult($input->getOption('log-xml'), $publisher);
         }
     }
 
