@@ -19,6 +19,7 @@ use SebastianBergmann\PHPLOC\Log\CSV\Single;
 use SebastianBergmann\PHPLOC\Log\JSON;
 use SebastianBergmann\PHPLOC\Log\Text;
 use SebastianBergmann\PHPLOC\Log\XML;
+use SebastianBergmann\PHPLOC\Publisher;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -220,19 +221,20 @@ class Command extends AbstractCommand
                 }
             }
 
-            $_count = $this->count(
+            $publisher = $this->count(
                 $directories,
                 $input->getOption('exclude'),
                 $this->handleCSVOption($input, 'names'),
                 $this->handleCSVOption($input, 'names-exclude'),
                 $input->getOption('count-tests')
-            )->toArray();
+            );
 
-            if ($_count) {
-                $_count['commit'] = $revision['sha1'];
-                $_count['date']   = $revision['date']->format(\DateTime::W3C);
+            if ($publisher instanceof Publisher) {
+                $count = $publisher->toArray();
+                $count['commit'] = $revision['sha1'];
+                $count['date']   = $revision['date']->format(\DateTime::W3C);
                 if ($printer) {
-                    $printer->printRow($_count);
+                    $printer->printRow($count);
                 }
             }
 
