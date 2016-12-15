@@ -252,7 +252,7 @@ class Command extends AbstractCommand
 
         $analyser = new Analyser;
 
-        return $analyser->countFiles($files, $countTests);
+        return $analyser->countFiles($files, $countTests)->toArray();
     }
 
     /**

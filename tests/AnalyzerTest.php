@@ -86,7 +86,7 @@ class AnalyserTest extends TestCase
             $this->analyser->countFiles(
                 [__DIR__ . '/_files/source.php'],
                 false
-            ),
+            )->toArray(),
             '',
             0.1
         );
@@ -157,7 +157,7 @@ class AnalyserTest extends TestCase
                     __DIR__ . '/_files/tests.php'
                 ],
                 true
-            ),
+            )->toArray(),
             '',
             0.1
         );
@@ -170,7 +170,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/tests.php'
             ],
             true
-        );
+        )->toArray();
 
         $this->assertEquals(1, $result['testClasses']);
     }
@@ -182,7 +182,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php'
             ],
             true
-        );
+        )->toArray();
 
         $this->assertEquals(3, $result['testClasses']);
     }
@@ -194,7 +194,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/trait.php'
             ],
             false
-        );
+        )->toArray();
 
         $this->assertEquals(1, $result['traits']);
     }
@@ -209,7 +209,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/issue_62.php'
             ],
             false
-        );
+        )->toArray();
 
         $this->assertEquals(1, $result['cloc']);
     }
@@ -224,7 +224,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/issue_112.php'
             ],
             false
-        );
+        )->toArray();
 
         $this->assertEquals(5, $result['loc']);
     }
@@ -236,7 +236,7 @@ class AnalyserTest extends TestCase
     public function testIssue126IsFixed($fileNumber, $cloc)
     {
         $file   = __DIR__ . '/_files/issue_126/issue_126_' . $fileNumber . '.php';
-        $result = $this->analyser->countFiles([$file], false);
+        $result = $this->analyser->countFiles([$file], false)->toArray();
 
         $assertString = sprintf('Failed asserting that %s matches expected %s in issue_126_%d.php',
                             $result['cloc'],
@@ -274,7 +274,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/issue_138.php'
             ],
             false
-        );
+        )->toArray();
 
         $this->assertSame(1, $result['classes']);
     }
@@ -291,7 +291,7 @@ class AnalyserTest extends TestCase
                 __DIR__ . '/_files/issue_139.php'
             ],
             false
-        );
+        )->toArray();
 
         $this->assertEquals(1, $result['anonymousFunctions']);
     }
