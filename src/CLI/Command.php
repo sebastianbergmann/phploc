@@ -121,7 +121,7 @@ class Command extends AbstractCommand
      */
     private function executeSingle(InputInterface $input, OutputInterface $output)
     {
-        $count = $this->count(
+        $publisher = $this->count(
             $input->getArgument('values'),
             $input->getOption('exclude'),
             $this->handleCSVOption($input, 'names'),
@@ -129,7 +129,7 @@ class Command extends AbstractCommand
             $input->getOption('count-tests')
         );
 
-        if (!$count) {
+        if ($publisher->getFiles() === 0) {
             $output->writeln('No files found to scan');
             exit(1);
         }
@@ -138,18 +138,18 @@ class Command extends AbstractCommand
 
         $printer->printResult(
             $output,
-            $count,
+            $publisher,
             $input->getOption('count-tests')
         );
 
         if ($input->getOption('log-csv')) {
             $printer = new Single;
-            $printer->printResult($input->getOption('log-csv'), $count);
+            $printer->printResult($input->getOption('log-csv'), $publisher->toArray());
         }
 
         if ($input->getOption('log-xml')) {
             $printer = new XML;
-            $printer->printResult($input->getOption('log-xml'), $count);
+            $printer->printResult($input->getOption('log-xml'), $publisher->toArray());
         }
     }
 
@@ -214,7 +214,7 @@ class Command extends AbstractCommand
                 $this->handleCSVOption($input, 'names'),
                 $this->handleCSVOption($input, 'names-exclude'),
                 $input->getOption('count-tests')
-            );
+            )->toArray();
 
             if ($_count) {
                 $_count['commit'] = $revision['sha1'];
@@ -252,7 +252,7 @@ class Command extends AbstractCommand
 
         $analyser = new Analyser;
 
-        return $analyser->countFiles($files, $countTests)->toArray();
+        return $analyser->countFiles($files, $countTests);
     }
 
     /**
