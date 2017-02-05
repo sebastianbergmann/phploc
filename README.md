@@ -32,64 +32,78 @@ You can then invoke it using the `vendor/bin/phploc` executable.
 
 ### Analyse a directory and print the result
 
-    ➜ ~ phploc src
-    phploc 2.0.4 by Sebastian Bergmann.
+```
+$ phploc src
+phploc 3.1.0 by Sebastian Bergmann.
 
-    Directories                                          3
-    Files                                                8
+Directories                                          4
+Files                                               11
 
-    Size
-      Lines of Code (LOC)                             1858
-      Comment Lines of Code (CLOC)                     560 (30.14%)
-      Non-Comment Lines of Code (NCLOC)               1298 (69.86%)
-      Logical Lines of Code (LLOC)                     289 (15.55%)
-        Classes                                        260 (89.97%)
-          Average Class Length                          37
-          Average Method Length                          9
-        Functions                                        5 (1.73%)
-          Average Function Length                        5
-        Not in classes or functions                     24 (8.30%)
+Size
+  Lines of Code (LOC)                             2087
+  Comment Lines of Code (CLOC)                     314 (15.05%)
+  Non-Comment Lines of Code (NCLOC)               1773 (84.95%)
+  Logical Lines of Code (LLOC)                     417 (19.98%)
+    Classes                                        386 (92.57%)
+      Average Class Length                          35
+        Minimum Class Length                         0
+        Maximum Class Length                       172
+      Average Method Length                          2
+        Minimum Method Length                        1
+        Maximum Method Length                      117
+    Functions                                        0 (0.00%)
+      Average Function Length                        0
+    Not in classes or functions                     31 (7.43%)
 
-    Complexity
-      Cyclomatic Complexity / LLOC                    0.67
-      Cyclomatic Complexity / Number of Methods       7.86
+Cyclomatic Complexity
+  Average Complexity per LLOC                     0.47
+  Average Complexity per Class                   19.00
+    Minimum Class Complexity                      1.00
+    Maximum Class Complexity                    137.00
+  Average Complexity per Method                   2.46
+    Minimum Method Complexity                     1.00
+    Maximum Method Complexity                    96.00
 
-    Dependencies
-      Global Accesses                                    2
-        Global Constants                                 2 (100.00%)
-        Global Variables                                 0 (0.00%)
-        Super-Global Variables                           0 (0.00%)
-      Attribute Accesses                                48
-        Non-Static                                      48 (100.00%)
-        Static                                           0 (0.00%)
-      Method Calls                                      96
-        Non-Static                                      91 (94.79%)
-        Static                                           5 (5.21%)
+Dependencies
+  Global Accesses                                    0
+    Global Constants                                 0 (0.00%)
+    Global Variables                                 0 (0.00%)
+    Super-Global Variables                           0 (0.00%)
+  Attribute Accesses                                91
+    Non-Static                                      91 (100.00%)
+    Static                                           0 (0.00%)
+  Method Calls                                     313
+    Non-Static                                     307 (98.08%)
+    Static                                           6 (1.92%)
 
-    Structure
-      Namespaces                                         4
-      Interfaces                                         0
-      Traits                                             0
-      Classes                                            7
-        Abstract Classes                                 0 (0.00%)
-        Concrete Classes                                 7 (100.00%)
-      Methods                                           28
-        Scope
-          Non-Static Methods                            28 (100.00%)
-          Static Methods                                 0 (0.00%)
-        Visibility
-          Public Method                                 10 (35.71%)
-          Non-Public Methods                            18 (64.29%)
-      Functions                                          1
-        Named Functions                                  0 (0.00%)
-        Anonymous Functions                              1 (100.00%)
-      Constants                                          1
-        Global Constants                                 1 (100.00%)
-        Class Constants                                  0 (0.00%)
+Structure
+  Namespaces                                         4
+  Interfaces                                         1
+  Traits                                             0
+  Classes                                           10
+    Abstract Classes                                 0 (0.00%)
+    Concrete Classes                                10 (100.00%)
+  Methods                                          136
+    Scope
+      Non-Static Methods                           136 (100.00%)
+      Static Methods                                 0 (0.00%)
+    Visibility
+      Public Methods                               105 (77.21%)
+      Non-Public Methods                            31 (22.79%)
+  Functions                                          0
+    Named Functions                                  0 (0.00%)
+    Anonymous Functions                              0 (0.00%)
+  Constants                                          0
+    Global Constants                                 0 (0.00%)
+    Class Constants                                  0 (0.00%)
+```
 
 ### Analyse a directory for each revision in a Git repository and write the result in CSV format
 
-    ➜ ~ phploc --log-csv log.csv --progress --git-repository . src
-    phploc 2.0.4 by Sebastian Bergmann.
+```
+$ phploc --log-csv /tmp/log.csv --progress --git-repository . src
+phploc 3.1.0 by Sebastian Bergmann.
 
-     295/295 [============================] 100%
+ 177/177 [============================] 100%
+```
+
