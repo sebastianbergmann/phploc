@@ -17,11 +17,8 @@
         "php": "^5.6 || ^7.0",
         "sebastian/finder-facade": "^1.1",
         "sebastian/git": "^2.1",
-        "sebastian/version": "^1.0.3 || ^2.0",
-        "symfony/console": "^2.5 || ^3.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.7"
+        "sebastian/version": "^2.0",
+        "symfony/console": "^3.0"
     },
     "autoload": {
         "classmap": [

@@ -11,30 +11,22 @@
 
 The easiest way to obtain PHPLOC is to download a [PHP Archive (PHAR)](http://php.net/phar) that has all required dependencies of PHPLOC bundled in a single file:
 
-    wget https://phar.phpunit.de/phploc.phar
-    chmod +x phploc.phar
-    mv phploc.phar /usr/local/bin/phploc
+    $ wget https://phar.phpunit.de/phploc.phar
+    $ chmod +x phploc.phar
+    $ mv phploc.phar /usr/local/bin/phploc
 
 You can also immediately use the PHAR after you have downloaded it, of course:
 
-    wget https://phar.phpunit.de/phploc.phar
-    php phploc.phar
+    $ wget https://phar.phpunit.de/phploc.phar
+    $ php phploc.phar
 
 ### Composer
 
-Simply add a dependency on `phploc/phploc` to your project's `composer.json` file if you use [Composer](http://getcomposer.org/) to manage the dependencies of your project. Here is a minimal example of a `composer.json` file that just defines a development-time dependency on PHPLOC:
+You can add this tool as a local, per-project, development-time dependency to your project using [Composer](https://getcomposer.org/):
 
-    {
-        "require-dev": {
-            "phploc/phploc": "*"
-        }
-    }
+    $ composer require --dev phploc/phploc
 
-For a system-wide installation via Composer, you can run:
-
-    composer global require 'phploc/phploc=*'
-
-Make sure you have `~/.composer/vendor/bin/` in your path.
+You can then invoke it using the `vendor/bin/phploc` executable.
 
 ## Usage Examples
 

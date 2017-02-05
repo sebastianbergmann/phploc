@@ -1,11 +1,6 @@
-build/phar
-build/SebastianBergmann
-build/phploc.bat
-build/phploc.php
-build/*.phar*
-build/*.tgz
-.idea
-cache.properties
-composer.phar
-composer.lock
-vendor
+/build/phar
+/build/*.phar*
+/.idea
+/composer.lock
+/vendor
+/tools
