@@ -11,12 +11,13 @@ sudo: false
 before_install:
   - composer self-update
   - composer clear-cache
+  - wget https://phar.phpunit.de/phpunit.phar
 
 install:
   - travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable
 
 script:
-  - phpunit
+  - php phpunit.phar
 
 notifications:
   email: false
