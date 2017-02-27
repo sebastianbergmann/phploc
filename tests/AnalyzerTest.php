@@ -175,7 +175,31 @@ class AnalyserTest extends TestCase
         $this->assertEquals(1, $result['testClasses']);
     }
 
+    public function testFilesThatExtendPHPUnitTestCaseAreCountedAsTests2()
+    {
+        $result = $this->analyser->countFiles(
+            [
+                __DIR__ . '/_files/tests_old.php'
+            ],
+            true
+        );
+
+        $this->assertEquals(1, $result['testClasses']);
+    }
+
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests()
+    {
+        $result = $this->analyser->countFiles(
+            [
+                __DIR__ . '/_files/twoTestsThatIndirectlyExtendOldPHPUnitTestCase.php'
+            ],
+            true
+        );
+
+        $this->assertEquals(3, $result['testClasses']);
+    }
+
+    public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests2()
     {
         $result = $this->analyser->countFiles(
             [

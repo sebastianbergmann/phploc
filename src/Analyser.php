@@ -505,7 +505,10 @@ class Analyser
             }
 
             if ($parent == 'phpunit_framework_testcase' ||
-                $parent == '\\phpunit_framework_testcase') {
+                $parent == '\\phpunit_framework_testcase' ||
+                // TODO: Recognize PHPUnit\Framework\TestCase when it is imported
+                $parent == 'phpunit\\framework\\testcase' ||
+                $parent == '\\phpunit\\framework\\testcase') {
                 return true;
             }
 
