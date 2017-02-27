@@ -18,7 +18,7 @@
         "sebastian/finder-facade": "^1.1",
         "sebastian/git": "^2.1",
         "sebastian/version": "^2.0",
-        "symfony/console": "^3.0"
+        "symfony/console": "^2.7|^3.0"
     },
     "autoload": {
         "classmap": [
