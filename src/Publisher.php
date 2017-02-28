@@ -281,6 +281,23 @@ class Publisher
         return $this->getValue('test methods');
     }
 
+    public function toArrayStartWithDirectories()
+    {
+        $array = $this->toArray();
+        unset($array['directories']);
+        unset($array['files']);
+        if ($this->getDirectories() > 0) {
+            $array = array_merge(
+                [
+                    'directories' => $this->getDirectories(),
+                    'files'       => $this->getFiles(),
+                ],
+                $array
+            );
+        }
+        return $array;
+    }
+
     public function toArray()
     {
         return [

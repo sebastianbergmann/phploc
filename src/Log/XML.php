@@ -10,6 +10,8 @@
 
 namespace SebastianBergmann\PHPLOC\Log;
 
+use SebastianBergmann\PHPLOC\Publisher;
+
 /**
  * An XML ResultPrinter for the TextUI.
  *
@@ -20,10 +22,10 @@ class XML
     /**
      * Prints a result set.
      *
-     * @param string $filename
-     * @param array  $count
+     * @param string    $filename
+     * @param Publisher $publisher
      */
-    public function printResult($filename, array $count)
+    public function printResult($filename, Publisher $publisher)
     {
         $document               = new \DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
@@ -31,20 +33,7 @@ class XML
         $root = $document->createElement('phploc');
         $document->appendChild($root);
 
-        if ($count['directories'] > 0) {
-            $root->appendChild(
-                $document->createElement('directories', $count['directories'])
-            );
-
-            $root->appendChild(
-                $document->createElement('files', $count['files'])
-            );
-        }
-
-        unset($count['directories']);
-        unset($count['files']);
-
-        foreach ($count as $k => $v) {
+        foreach ($publisher->toArrayStartWithDirectories() as $k => $v) {
             $root->appendChild(
                 $document->createElement($k, $v)
             );

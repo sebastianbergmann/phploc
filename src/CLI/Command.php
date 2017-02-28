@@ -16,8 +16,10 @@ use SebastianBergmann\Git\RuntimeException;
 use SebastianBergmann\PHPLOC\Analyser;
 use SebastianBergmann\PHPLOC\Log\CSV\History;
 use SebastianBergmann\PHPLOC\Log\CSV\Single;
+use SebastianBergmann\PHPLOC\Log\JSON;
 use SebastianBergmann\PHPLOC\Log\Text;
 use SebastianBergmann\PHPLOC\Log\XML;
+use SebastianBergmann\PHPLOC\Publisher;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -83,6 +85,12 @@ class Command extends AbstractCommand
                  'Write result in CSV format to file'
              )
              ->addOption(
+                 'log-json',
+                 null,
+                 InputOption::VALUE_REQUIRED,
+                 'Write result in JSON format to file'
+             )
+             ->addOption(
                  'log-xml',
                  null,
                  InputOption::VALUE_REQUIRED,
@@ -121,7 +129,7 @@ class Command extends AbstractCommand
      */
     private function executeSingle(InputInterface $input, OutputInterface $output)
     {
-        $count = $this->count(
+        $publisher = $this->count(
             $input->getArgument('values'),
             $input->getOption('exclude'),
             $this->handleCSVOption($input, 'names'),
@@ -129,7 +137,7 @@ class Command extends AbstractCommand
             $input->getOption('count-tests')
         );
 
-        if (!$count) {
+        if ($publisher->getFiles() === 0) {
             $output->writeln('No files found to scan');
             exit(1);
         }
@@ -138,18 +146,23 @@ class Command extends AbstractCommand
 
         $printer->printResult(
             $output,
-            $count,
+            $publisher,
             $input->getOption('count-tests')
         );
 
         if ($input->getOption('log-csv')) {
-            $printer = new Single;
-            $printer->printResult($input->getOption('log-csv'), $count);
+            $printer = new Single();
+            $printer->printResult($input->getOption('log-csv'), $publisher);
+        }
+
+        if ($input->getOption('log-json')) {
+            $printer = new JSON();
+            $printer->printResult($input->getOption('log-json'), $publisher);
         }
 
         if ($input->getOption('log-xml')) {
-            $printer = new XML;
-            $printer->printResult($input->getOption('log-xml'), $count);
+            $printer = new XML();
+            $printer->printResult($input->getOption('log-xml'), $publisher);
         }
     }
 
@@ -208,7 +221,7 @@ class Command extends AbstractCommand
                 }
             }
 
-            $_count = $this->count(
+            $publisher = $this->count(
                 $directories,
                 $input->getOption('exclude'),
                 $this->handleCSVOption($input, 'names'),
@@ -216,11 +229,12 @@ class Command extends AbstractCommand
                 $input->getOption('count-tests')
             );
 
-            if ($_count) {
-                $_count['commit'] = $revision['sha1'];
-                $_count['date']   = $revision['date']->format(\DateTime::W3C);
+            if ($publisher instanceof Publisher) {
+                $count = $publisher->toArray();
+                $count['commit'] = $revision['sha1'];
+                $count['date']   = $revision['date']->format(\DateTime::W3C);
                 if ($printer) {
-                    $printer->printRow($_count);
+                    $printer->printRow($count);
                 }
             }
 

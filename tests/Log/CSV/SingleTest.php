@@ -11,15 +11,21 @@
 namespace SebastianBergmann\PHPLOC;
 
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\PHPLOC\Log\CSV\Single;
 
 class SingleTest extends TestCase
 {
     /**
-     * @var \SebastianBergmann\PHPLOC\Log\CSV\Single
+     * @var Publisher
+     */
+    private $publisher;
+
+    /**
+     * @var Single
      */
     private $single;
 
-    private $sample_row = [
+    private $sampleRow = [
         'directories'                 => 1,
         'files'                       => 2,
         'loc'                         => 3,
@@ -65,14 +71,17 @@ class SingleTest extends TestCase
 
     protected function setUp()
     {
-        $this->single = new \SebastianBergmann\PHPLOC\Log\CSV\Single();
+        $this->publisher = $this->createMock(Publisher::class);
+        $this->publisher->method('toArray')->willReturn($this->sampleRow);
+
+        $this->single = new Single();
     }
 
     public function testPrintedResultContainsHeadings()
     {
         ob_start();
 
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', $this->publisher);
         $output = ob_get_clean();
 
         $this->assertRegExp('#Directories,Files.+$#is', $output, 'Printed result does not contain a heading line');
@@ -82,7 +91,7 @@ class SingleTest extends TestCase
     {
         ob_start();
 
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', $this->publisher);
         $output = ob_get_clean();
 
         $this->assertRegExp('#"1","2".+$#is', $output, 'Printed result does not contain a value line');
@@ -92,7 +101,7 @@ class SingleTest extends TestCase
     {
         ob_start();
 
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', $this->publisher);
         $output = ob_get_clean();
 
         $rows     = explode("\n", $output);
@@ -110,7 +119,7 @@ class SingleTest extends TestCase
     {
         ob_start();
 
-        $this->single->printResult('php://output', $this->sample_row);
+        $this->single->printResult('php://output', $this->publisher);
         $output = ob_get_clean();
 
         $rows = explode("\n", trim($output));
@@ -122,12 +131,15 @@ class SingleTest extends TestCase
      */
     public function testPrintPartialRow()
     {
-        $count = $this->sample_row;
-        unset($count['llocByNof']);
+        $sampleRow = $this->sampleRow;
+        unset($sampleRow['llocByNof']);
+
+        $this->publisher = $this->createMock(Publisher::class);
+        $this->publisher->method('toArray')->willReturn($sampleRow);
 
         try {
             ob_start();
-            $this->single->printResult('php://output', $count);
+            $this->single->printResult('php://output', $this->publisher);
         } finally {
             ob_end_clean();
         }

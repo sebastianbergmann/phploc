@@ -57,7 +57,7 @@ class Analyser
      * @param array $files
      * @param bool  $countTests
      *
-     * @return array
+     * @return Publisher
      *
      * @since  Method available since Release 1.2.0
      */
@@ -67,7 +67,7 @@ class Analyser
             $this->countFile($file, $countTests);
         }
 
-        return $this->collector->getPublisher()->toArray();
+        return $this->collector->getPublisher();
     }
 
     /**

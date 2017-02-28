@@ -10,6 +10,8 @@
 
 namespace SebastianBergmann\PHPLOC\Log\CSV;
 
+use SebastianBergmann\PHPLOC\Publisher;
+
 /**
  * A CSV ResultPrinter for the TextUI.
  *
@@ -69,23 +71,21 @@ class Single
     /**
      * Prints a result set.
      *
-     * @param string $filename
-     * @param array  $count
+     * @param string    $filename
+     * @param Publisher $publisher
      */
-    public function printResult($filename, array $count)
+    public function printResult($filename, Publisher $publisher)
     {
         file_put_contents(
             $filename,
-            $this->getKeysLine($count) . $this->getValuesLine($count)
+            $this->getKeysLine() . $this->getValuesLine($publisher->toArray())
         );
     }
 
     /**
-     * @param array $count
-     *
      * @return string
      */
-    protected function getKeysLine(array $count)
+    protected function getKeysLine()
     {
         return implode(',', array_values($this->colmap)) . PHP_EOL;
     }
