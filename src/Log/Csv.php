@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace SebastianBergmann\PHPLOC\Log\CSV;
+namespace SebastianBergmann\PHPLOC\Log;
 
 /**
  * A CSV ResultPrinter for the TextUI.
  *
  * @since     Class available since Release 1.6.0
  */
-class Single
+class Csv
 {
     /**
      * Mapping between internal and human-readable metric names

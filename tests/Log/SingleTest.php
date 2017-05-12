@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class SingleTest extends TestCase
 {
     /**
-     * @var \SebastianBergmann\PHPLOC\Log\CSV\Single
+     * @var \SebastianBergmann\PHPLOC\Log\Csv
      */
     private $single;
 
@@ -65,7 +65,7 @@ class SingleTest extends TestCase
 
     protected function setUp()
     {
-        $this->single = new \SebastianBergmann\PHPLOC\Log\CSV\Single();
+        $this->single = new \SebastianBergmann\PHPLOC\Log\Csv;
     }
 
     public function testPrintedResultContainsHeadings()
