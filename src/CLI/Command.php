@@ -20,7 +20,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * @since     Class available since Release 2.0.0
@@ -78,12 +77,6 @@ class Command extends AbstractCommand
                  null,
                  InputOption::VALUE_REQUIRED,
                  'Write result in XML format to file'
-             )
-             ->addOption(
-                 'progress',
-                 null,
-                 InputOption::VALUE_NONE,
-                 'Show progress bar'
              );
     }
 
