@@ -12,10 +12,8 @@ namespace SebastianBergmann\PHPLOC\Log;
 
 /**
  * An XML ResultPrinter for the TextUI.
- *
- * @since     Class available since Release 1.1.0
  */
-class XML
+class Xml
 {
     /**
      * Prints a result set.
@@ -50,6 +48,6 @@ class XML
             );
         }
 
-        file_put_contents($filename, $document->saveXML());
+        \file_put_contents($filename, $document->saveXML());
     }
 }

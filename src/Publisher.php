@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of PHPLOC.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace SebastianBergmann\PHPLOC;
 
 class Publisher
@@ -143,7 +150,7 @@ class Publisher
 
     public function getGlobalConstantAccesses()
     {
-        return count(array_intersect($this->getValue('possible constant accesses', []), $this->getValue('constant', [])));
+        return \count(\array_intersect($this->getValue('possible constant accesses', []), $this->getValue('constant', [])));
     }
 
     public function getGlobalVariableAccesses()
@@ -348,22 +355,22 @@ class Publisher
 
     private function getCount($key)
     {
-        return isset($this->counts[$key]) ? count($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? \count($this->counts[$key]) : 0;
     }
 
     private function getSum($key)
     {
-        return isset($this->counts[$key]) ? array_sum($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? \array_sum($this->counts[$key]) : 0;
     }
 
     private function getMaximum($key)
     {
-        return isset($this->counts[$key]) ? max($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? \max($this->counts[$key]) : 0;
     }
 
     private function getMinimum($key)
     {
-        return isset($this->counts[$key]) ? min($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? \min($this->counts[$key]) : 0;
     }
 
     private function getValue($key, $default = 0)

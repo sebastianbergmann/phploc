@@ -12,8 +12,6 @@ namespace SebastianBergmann\PHPLOC;
 
 /**
  * PHPLOC code analyser.
- *
- * @since     Class available since Release 1.0.0
  */
 class Analyser
 {
@@ -58,8 +56,6 @@ class Analyser
      * @param bool  $countTests
      *
      * @return array
-     *
-     * @since  Method available since Release 1.2.0
      */
     public function countFiles(array $files, $countTests)
     {
@@ -74,17 +70,15 @@ class Analyser
      * Pre-processes a single file.
      *
      * @param string $filename
-     *
-     * @since Method available since Release 1.2.0
      */
     public function preProcessFile($filename)
     {
-        $tokens    = token_get_all(file_get_contents($filename));
-        $numTokens = count($tokens);
+        $tokens    = \token_get_all(\file_get_contents($filename));
+        $numTokens = \count($tokens);
         $namespace = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if (is_string($tokens[$i])) {
+            if (\is_string($tokens[$i])) {
                 continue;
             }
 
@@ -100,8 +94,8 @@ class Analyser
 
                     $className = $this->getClassName($namespace, $tokens, $i);
 
-                    if (isset($tokens[$i+4]) && is_array($tokens[$i+4]) &&
-                        $tokens[$i+4][0] == T_EXTENDS) {
+                    if (isset($tokens[$i + 4]) && \is_array($tokens[$i + 4]) &&
+                        $tokens[$i + 4][0] == T_EXTENDS) {
                         $parent = $this->getClassName($namespace, $tokens, $i + 4);
                     } else {
                         $parent = null;
@@ -125,10 +119,10 @@ class Analyser
             $this->preProcessFile($filename);
         }
 
-        $buffer              = file_get_contents($filename);
-        $this->collector->incrementLines(substr_count($buffer, "\n"));
-        $tokens              = token_get_all($buffer);
-        $numTokens           = count($tokens);
+        $buffer              = \file_get_contents($filename);
+        $this->collector->incrementLines(\substr_count($buffer, "\n"));
+        $tokens              = \token_get_all($buffer);
+        $numTokens           = \count($tokens);
 
         unset($buffer);
 
@@ -144,8 +138,8 @@ class Analyser
         $isInMethod = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if (is_string($tokens[$i])) {
-                $token = trim($tokens[$i]);
+            if (\is_string($tokens[$i])) {
+                $token = \trim($tokens[$i]);
 
                 if ($token == ';') {
                     if ($className !== null && !$testClass) {
@@ -175,11 +169,11 @@ class Analyser
                         $block = false;
                     }
 
-                    array_push($blocks, $block);
+                    \array_push($blocks, $block);
 
                     $currentBlock = false;
                 } elseif ($token == '}') {
-                    $block = array_pop($blocks);
+                    $block = \array_pop($blocks);
 
                     if ($block !== false && $block !== null) {
                         if ($block == $functionName) {
@@ -229,9 +223,9 @@ class Analyser
                             $testClass = true;
                             $this->collector->incrementTestClasses();
                         } else {
-                            if (isset($tokens[$i-2]) &&
-                                is_array($tokens[$i-2]) &&
-                                $tokens[$i-2][0] == T_ABSTRACT) {
+                            if (isset($tokens[$i - 2]) &&
+                                \is_array($tokens[$i - 2]) &&
+                                $tokens[$i - 2][0] == T_ABSTRACT) {
                                 $this->collector->incrementAbstractClasses();
                             } else {
                                 $this->collector->incrementConcreteClasses();
@@ -251,11 +245,11 @@ class Analyser
 
                     $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
 
-                    if (!is_array($tokens[$next]) && $tokens[$next] == '&') {
+                    if (!\is_array($tokens[$next]) && $tokens[$next] == '&') {
                         $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
                     }
 
-                    if (is_array($tokens[$next]) &&
+                    if (\is_array($tokens[$next]) &&
                         $tokens[$next][0] == T_STRING) {
                         $functionName = $tokens[$next][1];
                     } else {
@@ -273,7 +267,7 @@ class Analyser
                             $visibility = T_PUBLIC;
 
                             for ($j = $i; $j > 0; $j--) {
-                                if (is_string($tokens[$j])) {
+                                if (\is_string($tokens[$j])) {
                                     if ($tokens[$j] == '{' ||
                                         $tokens[$j] == '}' ||
                                         $tokens[$j] == ';') {
@@ -325,12 +319,12 @@ class Analyser
 
                 case T_CURLY_OPEN:
                     $currentBlock = T_CURLY_OPEN;
-                    array_push($blocks, $currentBlock);
+                    \array_push($blocks, $currentBlock);
                     break;
 
                 case T_DOLLAR_OPEN_CURLY_BRACES:
                     $currentBlock = T_DOLLAR_OPEN_CURLY_BRACES;
-                    array_push($blocks, $currentBlock);
+                    \array_push($blocks, $currentBlock);
                     break;
 
                 case T_IF:
@@ -359,7 +353,7 @@ class Analyser
                     // We want to count all intermediate lines before the token ends
                     // But sometimes a new token starts after a newline, we don't want to count that.
                     // That happend with /* */ and /**  */, but not with // since it'll end at the end
-                    $this->collector->incrementCommentLines(substr_count(rtrim($value, "\n"), "\n") + 1);
+                    $this->collector->incrementCommentLines(\substr_count(\rtrim($value, "\n"), "\n") + 1);
                     break;
                 case T_CONST:
                     $this->collector->incrementClassConstants();
@@ -372,9 +366,9 @@ class Analyser
                         $j = $i + 1;
 
                         while (isset($tokens[$j]) && $tokens[$j] != ';') {
-                            if (is_array($tokens[$j]) &&
+                            if (\is_array($tokens[$j]) &&
                                 $tokens[$j][0] == T_CONSTANT_ENCAPSED_STRING) {
-                                $this->collector->addConstant(str_replace('\'', '', $tokens[$j][1]));
+                                $this->collector->addConstant(\str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
                             }
@@ -431,17 +425,15 @@ class Analyser
      * @param int   $i
      *
      * @return string
-     *
-     * @since  Method available since Release 1.3.0
      */
     private function getNamespaceName(array $tokens, $i)
     {
-        if (isset($tokens[$i+2][1])) {
-            $namespace = $tokens[$i+2][1];
+        if (isset($tokens[$i + 2][1])) {
+            $namespace = $tokens[$i + 2][1];
 
-            for ($j = $i+3;; $j += 2) {
+            for ($j = $i + 3;; $j += 2) {
                 if (isset($tokens[$j]) && $tokens[$j][0] == T_NS_SEPARATOR) {
-                    $namespace .= '\\' . $tokens[$j+1][1];
+                    $namespace .= '\\' . $tokens[$j + 1][1];
                 } else {
                     break;
                 }
@@ -459,8 +451,6 @@ class Analyser
      * @param int    $i
      *
      * @return string
-     *
-     * @since  Method available since Release 1.3.0
      */
     private function getClassName($namespace, array $tokens, $i)
     {
@@ -472,7 +462,7 @@ class Analyser
 
         $namespaced = $className === '\\';
 
-        while (is_array($tokens[$i+1]) && $tokens[$i+1][0] !== T_WHITESPACE) {
+        while (\is_array($tokens[$i + 1]) && $tokens[$i + 1][0] !== T_WHITESPACE) {
             $className .= $tokens[++$i][1];
         }
 
@@ -480,15 +470,13 @@ class Analyser
             $className = $namespace . '\\' . $className;
         }
 
-        return strtolower($className);
+        return \strtolower($className);
     }
 
     /**
      * @param string $className
      *
      * @return bool
-     *
-     * @since  Method available since Release 1.2.0
      */
     private function isTestClass($className)
     {
@@ -523,7 +511,7 @@ class Analyser
 
         // Fallback: Treat the class as a test case class if the name
         // of the parent class ends with "TestCase".
-        return substr($this->classes[$className], -8) === 'testcase';
+        return \substr($this->classes[$className], -8) === 'testcase';
     }
 
     /**
@@ -534,8 +522,6 @@ class Analyser
      * @param int    $currentToken
      *
      * @return bool
-     *
-     * @since  Method available since Release 2.0.0
      */
     private function isTestMethod($functionName, $visibility, $static, array $tokens, $currentToken)
     {
@@ -543,7 +529,7 @@ class Analyser
             return false;
         }
 
-        if (strpos($functionName, 'test') === 0) {
+        if (\strpos($functionName, 'test') === 0) {
             return true;
         }
 
@@ -555,8 +541,8 @@ class Analyser
             --$currentToken;
         }
 
-        return strpos($tokens[$currentToken][1], '@test') !== false ||
-               strpos($tokens[$currentToken][1], '@scenario') !== false;
+        return \strpos($tokens[$currentToken][1], '@test') !== false ||
+               \strpos($tokens[$currentToken][1], '@scenario') !== false;
     }
 
     /**
@@ -567,10 +553,10 @@ class Analyser
      */
     private function getNextNonWhitespaceTokenPos(array $tokens, $start)
     {
-        if (isset($tokens[$start+1])) {
-            if (isset($tokens[$start+1][0]) &&
-                $tokens[$start+1][0] == T_WHITESPACE &&
-                isset($tokens[$start+2])) {
+        if (isset($tokens[$start + 1])) {
+            if (isset($tokens[$start + 1][0]) &&
+                $tokens[$start + 1][0] == T_WHITESPACE &&
+                isset($tokens[$start + 2])) {
                 return $start + 2;
             } else {
                 return $start + 1;
@@ -588,10 +574,10 @@ class Analyser
      */
     private function getPreviousNonWhitespaceTokenPos(array $tokens, $start)
     {
-        if (isset($tokens[$start-1])) {
-            if (isset($tokens[$start-1][0]) &&
-                $tokens[$start-1][0] == T_WHITESPACE &&
-                isset($tokens[$start-2])) {
+        if (isset($tokens[$start - 1])) {
+            if (isset($tokens[$start - 1][0]) &&
+                $tokens[$start - 1][0] == T_WHITESPACE &&
+                isset($tokens[$start - 2])) {
                 return $start - 2;
             } else {
                 return $start - 1;
@@ -612,7 +598,7 @@ class Analyser
         $n = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
 
         return !isset($tokens[$n])
-            || !is_array($tokens[$n])
-            || !in_array($tokens[$n][0], [T_DOUBLE_COLON, T_NEW], true);
+            || !\is_array($tokens[$n])
+            || !\in_array($tokens[$n][0], [T_DOUBLE_COLON, T_NEW], true);
     }
 }

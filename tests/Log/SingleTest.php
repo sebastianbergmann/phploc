@@ -70,51 +70,51 @@ class SingleTest extends TestCase
 
     public function testPrintedResultContainsHeadings()
     {
-        ob_start();
+        \ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = ob_get_clean();
+        $output = \ob_get_clean();
 
         $this->assertRegExp('#Directories,Files.+$#is', $output, 'Printed result does not contain a heading line');
     }
 
     public function testPrintedResultContainsData()
     {
-        ob_start();
+        \ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = ob_get_clean();
+        $output = \ob_get_clean();
 
         $this->assertRegExp('#"1","2".+$#is', $output, 'Printed result does not contain a value line');
     }
 
     public function testPrintedResultContainsEqualNumHeadingsAndValues()
     {
-        ob_start();
+        \ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = ob_get_clean();
+        $output = \ob_get_clean();
 
-        $rows     = explode("\n", $output);
-        $headings = explode(',', $rows[0]);
-        $vals     = explode(',', $rows[1]);
+        $rows     = \explode("\n", $output);
+        $headings = \explode(',', $rows[0]);
+        $vals     = \explode(',', $rows[1]);
 
         $this->assertEquals(
-            count($headings),
-            count($vals),
+            \count($headings),
+            \count($vals),
             'Printed result does not contain same number of headings and values'
         );
     }
 
     public function testExactlyTwoRowsArePrinted()
     {
-        ob_start();
+        \ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = ob_get_clean();
+        $output = \ob_get_clean();
 
-        $rows = explode("\n", trim($output));
-        $this->assertEquals(2, count($rows), 'Printed result contained more or less than expected 2 rows');
+        $rows = \explode("\n", \trim($output));
+        $this->assertEquals(2, \count($rows), 'Printed result contained more or less than expected 2 rows');
     }
 
     /**
@@ -126,10 +126,10 @@ class SingleTest extends TestCase
         unset($count['llocByNof']);
 
         try {
-            ob_start();
+            \ob_start();
             $this->single->printResult('php://output', $count);
         } finally {
-            ob_end_clean();
+            \ob_end_clean();
         }
 
         $this->fail('No exception was raised for malformed input var');

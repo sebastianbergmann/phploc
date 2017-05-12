@@ -14,16 +14,13 @@ use SebastianBergmann\FinderFacade\FinderFacade;
 use SebastianBergmann\PHPLOC\Analyser;
 use SebastianBergmann\PHPLOC\Log\Csv;
 use SebastianBergmann\PHPLOC\Log\Text;
-use SebastianBergmann\PHPLOC\Log\XML;
+use SebastianBergmann\PHPLOC\Log\Xml;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @since     Class available since Release 2.0.0
- */
 class Command extends AbstractCommand
 {
     /**
@@ -117,7 +114,7 @@ class Command extends AbstractCommand
         }
 
         if ($input->getOption('log-xml')) {
-            $printer = new XML;
+            $printer = new Xml;
             $printer->printResult($input->getOption('log-xml'), $count);
         }
     }
@@ -150,6 +147,6 @@ class Command extends AbstractCommand
     {
         $result = $input->getOption($option);
 
-        return is_array($result) ? $result : explode(',', $result);
+        return \is_array($result) ? $result : \explode(',', $result);
     }
 }

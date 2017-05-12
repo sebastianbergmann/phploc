@@ -12,8 +12,6 @@ namespace SebastianBergmann\PHPLOC\Log;
 
 /**
  * A CSV ResultPrinter for the TextUI.
- *
- * @since     Class available since Release 1.6.0
  */
 class Csv
 {
@@ -74,7 +72,7 @@ class Csv
      */
     public function printResult($filename, array $count)
     {
-        file_put_contents(
+        \file_put_contents(
             $filename,
             $this->getKeysLine($count) . $this->getValuesLine($count)
         );
@@ -87,7 +85,7 @@ class Csv
      */
     protected function getKeysLine(array $count)
     {
-        return implode(',', array_values($this->colmap)) . PHP_EOL;
+        return \implode(',', \array_values($this->colmap)) . PHP_EOL;
     }
 
     /**
@@ -109,6 +107,6 @@ class Csv
             }
         }
 
-        return '"' . implode('","', $values) . '"' . PHP_EOL;
+        return '"' . \implode('","', $values) . '"' . PHP_EOL;
     }
 }

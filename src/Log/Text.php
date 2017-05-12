@@ -14,8 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * A ResultPrinter for the TextUI.
- *
- * @since     Class available since Release 1.0.0
  */
 class Text
 {
@@ -30,7 +28,7 @@ class Text
     {
         if ($count['directories'] > 0) {
             $output->write(
-                sprintf(
+                \sprintf(
                     "Directories                                 %10d\n" .
                     "Files                                       %10d\n\n",
                     $count['directories'],
@@ -101,7 +99,7 @@ Structure
 END;
 
         $output->write(
-            sprintf(
+            \sprintf(
                 $format,
                 $count['loc'],
                 $count['cloc'],
@@ -179,7 +177,7 @@ END;
 
         if ($printTests) {
             $output->write(
-                sprintf(
+                \sprintf(
                     "\nTests\n" .
                     "  Classes                                   %10d\n" .
                     "  Methods                                   %10d\n",
