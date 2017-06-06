@@ -75,13 +75,6 @@
             </fileset>
         </copy>
 
-        <copy todir="${basedir}/build/phar/git">
-            <fileset dir="${basedir}/vendor/sebastian/git/src">
-                <include name="**/*.php" />
-                <exclude name="**/autoload.php" />
-            </fileset>
-        </copy>
-
         <copy todir="${basedir}/build/phar/version">
             <fileset dir="${basedir}/vendor/sebastian/version/src">
                 <include name="**/*.php" />

@@ -2,7 +2,7 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [4.0.0] - 201Y-MM-DD
+## [4.0.0] - 2017-06-06
 
 ### Removed
 
