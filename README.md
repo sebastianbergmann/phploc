@@ -1,5 +1,5 @@
-[![Latest Stable Version](https://poser.pugx.org/phploc/phploc/v/stable.png)](https://packagist.org/packages/phploc/phploc)
-[![Build Status](https://travis-ci.org/sebastianbergmann/phploc.png?branch=master)](https://travis-ci.org/sebastianbergmann/phploc)
+[![Latest Stable Version](https://img.shields.io/packagist/v/phploc/phploc.svg?style=flat-square)](https://packagist.org/packages/phploc/phploc)
+[![Build Status](https://img.shields.io/travis/sebastianbergmann/phploc/master.svg?style=flat-square)](https://travis-ci.org/sebastianbergmann/phploc)
 
 # PHPLOC
 
