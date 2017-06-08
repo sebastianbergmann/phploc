@@ -7,6 +7,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 ### Removed
 
 * Removed the '--git-repository' option (and the corresponding functionality)
+* Removed the '--progress' option (and the corresponding functionality)
 
 ## [3.0.1] - 2016-04-25
 

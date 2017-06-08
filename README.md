@@ -97,13 +97,3 @@ Structure
     Global Constants                                 0 (0.00%)
     Class Constants                                  0 (0.00%)
 ```
-
-### Analyse a directory for each revision in a Git repository and write the result in CSV format
-
-```
-$ phploc --log-csv /tmp/log.csv --progress --git-repository . src
-phploc 3.1.0 by Sebastian Bergmann.
-
- 177/177 [============================] 100%
-```
-
