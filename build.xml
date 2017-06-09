@@ -3,6 +3,7 @@
     <target name="setup" depends="clean,install-dependencies"/>
 
     <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/phar"/>
         <delete dir="${basedir}/vendor"/>
         <delete file="${basedir}/composer.lock"/>
         <delete>
