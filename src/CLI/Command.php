@@ -97,10 +97,10 @@ class Command extends AbstractCommand
 
         if (!$count) {
             $output->writeln('No files found to scan');
-            exit(0);
+            return 0;
         }
 
-        $printer = new Text;
+        $printer = new Text();
 
         $printer->printResult(
             $output,
@@ -109,12 +109,12 @@ class Command extends AbstractCommand
         );
 
         if ($input->getOption('log-csv')) {
-            $printer = new Csv;
+            $printer = new Csv();
             $printer->printResult($input->getOption('log-csv'), $count);
         }
 
         if ($input->getOption('log-xml')) {
-            $printer = new Xml;
+            $printer = new Xml();
             $printer->printResult($input->getOption('log-xml'), $count);
         }
     }
@@ -132,7 +132,7 @@ class Command extends AbstractCommand
             return false;
         }
 
-        $analyser = new Analyser;
+        $analyser = new Analyser();
 
         return $analyser->countFiles($files, $countTests);
     }
