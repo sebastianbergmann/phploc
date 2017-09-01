@@ -352,7 +352,7 @@ class Analyser
                 case T_DOC_COMMENT:
                     // We want to count all intermediate lines before the token ends
                     // But sometimes a new token starts after a newline, we don't want to count that.
-                    // That happend with /* */ and /**  */, but not with // since it'll end at the end
+                    // That happened with /* */ and /**  */, but not with // since it'll end at the end
                     $this->collector->incrementCommentLines(\substr_count(\rtrim($value, "\n"), "\n") + 1);
                     break;
                 case T_CONST:
