@@ -12,6 +12,11 @@ env:
     - DEPENDENCIES="high"
     - DEPENDENCIES="low"
 
+matrix:
+  include:
+    - php: 7.1
+      env: DEPENDENCIES=beta
+
 sudo: false
 
 before_install:
@@ -21,6 +26,7 @@ before_install:
   - if [ $(phpenv version-name) != "5.6" ]; then wget https://phar.phpunit.de/phpunit.phar; fi
 
 install:
+  - if [[ "$DEPENDENCIES" = 'beta' ]]; then composer config minimum-stability beta; travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader; fi;
   - if [[ "$DEPENDENCIES" = 'high' ]]; then travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable; fi
   - if [[ "$DEPENDENCIES" = 'low' ]]; then travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable --prefer-lowest; fi
 
