@@ -97,7 +97,7 @@ class Command extends AbstractCommand
 
         if (!$count) {
             $output->writeln('No files found to scan');
-            exit(1);
+            exit(0);
         }
 
         $printer = new Text;
