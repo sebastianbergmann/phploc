@@ -28,6 +28,12 @@ You can add this tool as a local, per-project, development-time dependency to yo
 
 You can then invoke it using the `vendor/bin/phploc` executable.
 
+You can also add it globally:
+
+    $ composer global require phploc/phploc
+
+And you can then invoke it with `phploc`.  If this does not work, make sure to have `export PATH=~/.composer/vendor/bin:$PATH` in your ~/.bash_profile (or ~/.bashrc) file:
+
 ## Usage Examples
 
 ### Analyse a directory and print the result
