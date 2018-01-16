@@ -60,7 +60,10 @@ class SingleTest extends TestCase
         'superGlobalVariableAccesses' => 38,
         'globalConstantAccesses'      => 39,
         'testClasses'                 => 40,
-        'testMethods'                 => 41
+        'testMethods'                 => 41,
+        'classCcnAvg'                 => 42,
+        'classLlocAvg'                => 43,
+        'methodLlocAvg'               => 44
     ];
 
     protected function setUp()
