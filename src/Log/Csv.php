@@ -48,6 +48,8 @@ class Csv
         'anonymousFunctions'          => 'Anonymous Functions',
         'llocFunctions'               => 'Functions Length (LLOC)',
         'llocByNof'                   => 'Average Function Length (LLOC)',
+        'classLlocAvg'                => 'Average Class Length',
+        'methodLlocAvg'               => 'Average Method Length',
         'constants'                   => 'Constants',
         'globalConstants'             => 'Global Constants',
         'classConstants'              => 'Class Constants',
