@@ -41,6 +41,7 @@ class Csv
         'staticMethods'               => 'Static Methods',
         'publicMethods'               => 'Public Methods',
         'nonPublicMethods'            => 'Non-Public Methods',
+        'classCcnAvg'                 => 'Cyclomatic Complexity / Number of Classes' /* In Text output: 'Average Complexity per Class' */,
         'methodCcnAvg'                => 'Cyclomatic Complexity / Number of Methods',
         'functions'                   => 'Functions',
         'namedFunctions'              => 'Named Functions',
