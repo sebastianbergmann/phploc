@@ -89,7 +89,7 @@ class Analyser
 
                 case T_CLASS:
                     if (!$this->isClassDeclaration($tokens, $i)) {
-                        continue;
+                        break;
                     }
 
                     $className = $this->getClassName($namespace, $tokens, $i);
@@ -206,7 +206,7 @@ class Analyser
                 case T_INTERFACE:
                 case T_TRAIT:
                     if (!$this->isClassDeclaration($tokens, $i)) {
-                        continue;
+                        break;
                     }
 
                     $this->collector->currentClassReset();
@@ -238,7 +238,7 @@ class Analyser
                     $prev = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
 
                     if ($tokens[$prev][0] === T_USE) {
-                        continue;
+                        break;
                     }
 
                     $currentBlock = T_FUNCTION;
