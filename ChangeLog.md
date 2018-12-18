@@ -23,6 +23,8 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.1] - 2016-04-25
 
+### Fixed
+
 * Fixed [#139](https://github.com/sebastianbergmann/phploc/issues/139): Introduction of `T_USE` in `Analyser.php` gives `PHP Notice: Undefined index: ccn`
 * Fixed [#141](https://github.com/sebastianbergmann/phploc/issues/141): `Undefined index: ccn in phar:///usr/local/bin/phploc/src/Analyser.php on line 507`
 
