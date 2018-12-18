@@ -8,6 +8,10 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 * Fixed [#182](https://github.com/sebastianbergmann/phploc/pull/182): `"continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"`
 
+### Removed
+
+* This tool is no longer supported on PHP 5.6, PHP 7.0, and PHP 7.1
+
 ## [4.0.1] - 2017-11-18
 
 ### Changed

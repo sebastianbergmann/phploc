@@ -1,10 +1,8 @@
 language: php
 
 php:
-  - 5.6
-  - 7.0
-  - 7.1
   - 7.2
+  - 7.3
   - master
 
 env:
@@ -17,8 +15,7 @@ sudo: false
 before_install:
   - composer self-update
   - composer clear-cache
-  - if [ $(phpenv version-name) = "5.6" ]; then wget https://phar.phpunit.de/phpunit-5.7.phar -O phpunit.phar; fi
-  - if [ $(phpenv version-name) != "5.6" ]; then wget https://phar.phpunit.de/phpunit.phar; fi
+  - wget https://phar.phpunit.de/phpunit-7.5.phar
 
 install:
   - if [[ "$DEPENDENCIES" = 'high' ]]; then travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable; fi

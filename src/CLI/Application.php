@@ -22,7 +22,7 @@ class Application extends AbstractApplication
 {
     public function __construct()
     {
-        $version = new Version('4.0.1', \dirname(\dirname(__DIR__)));
+        $version = new Version('5.0', \dirname(\dirname(__DIR__)));
         parent::__construct('phploc', $version->getVersion());
     }
 
