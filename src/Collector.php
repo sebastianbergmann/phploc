@@ -26,28 +26,28 @@ class Collector
         return new Publisher($this->counts);
     }
 
-    public function addFile($filename)
+    public function addFile($filename): void
     {
         $this->increment('files');
         $this->addUnique('directories', \dirname($filename));
     }
 
-    public function incrementLines($number)
+    public function incrementLines($number): void
     {
         $this->increment('lines', $number);
     }
 
-    public function incrementCommentLines($number)
+    public function incrementCommentLines($number): void
     {
         $this->increment('comment lines', $number);
     }
 
-    public function incrementLogicalLines()
+    public function incrementLogicalLines(): void
     {
         $this->increment('logical lines');
     }
 
-    public function currentClassReset()
+    public function currentClassReset(): void
     {
         if ($this->currentClassComplexity > 0) {
             $this->addToArray('class complexity', $this->currentClassComplexity);
@@ -57,183 +57,183 @@ class Collector
         $this->currentClassLines      = 0;
     }
 
-    public function currentClassIncrementComplexity()
+    public function currentClassIncrementComplexity(): void
     {
         $this->currentClassComplexity++;
     }
 
-    public function currentClassIncrementLines()
+    public function currentClassIncrementLines(): void
     {
         $this->currentClassLines++;
     }
 
-    public function currentMethodStart()
+    public function currentMethodStart(): void
     {
         $this->currentMethodComplexity = 1;
         $this->currentMethodLines      = 0;
     }
 
-    public function currentMethodIncrementComplexity()
+    public function currentMethodIncrementComplexity(): void
     {
         $this->currentMethodComplexity++;
         $this->increment('total method complexity');
     }
 
-    public function currentMethodIncrementLines()
+    public function currentMethodIncrementLines(): void
     {
         $this->currentMethodLines++;
     }
 
-    public function currentMethodStop()
+    public function currentMethodStop(): void
     {
         $this->addToArray('method complexity', $this->currentMethodComplexity);
         $this->addToArray('method lines', $this->currentMethodLines);
     }
 
-    public function incrementFunctionLines()
+    public function incrementFunctionLines(): void
     {
         $this->increment('function lines');
     }
 
-    public function incrementComplexity()
+    public function incrementComplexity(): void
     {
         $this->increment('complexity');
     }
 
-    public function addPossibleConstantAccesses($name)
+    public function addPossibleConstantAccesses($name): void
     {
         $this->addToArray('possible constant accesses', $name);
     }
 
-    public function addConstant($name)
+    public function addConstant($name): void
     {
         $this->addToArray('constant', $name);
     }
 
-    public function incrementGlobalVariableAccesses()
+    public function incrementGlobalVariableAccesses(): void
     {
         $this->increment('global variable accesses');
     }
 
-    public function incrementSuperGlobalVariableAccesses()
+    public function incrementSuperGlobalVariableAccesses(): void
     {
         $this->increment('super global variable accesses');
     }
 
-    public function incrementNonStaticAttributeAccesses()
+    public function incrementNonStaticAttributeAccesses(): void
     {
         $this->increment('non-static attribute accesses');
     }
 
-    public function incrementStaticAttributeAccesses()
+    public function incrementStaticAttributeAccesses(): void
     {
         $this->increment('static attribute accesses');
     }
 
-    public function incrementNonStaticMethodCalls()
+    public function incrementNonStaticMethodCalls(): void
     {
         $this->increment('non-static method calls');
     }
 
-    public function incrementStaticMethodCalls()
+    public function incrementStaticMethodCalls(): void
     {
         $this->increment('static method calls');
     }
 
-    public function addNamespace($namespace)
+    public function addNamespace($namespace): void
     {
         $this->addUnique('namespaces', $namespace);
     }
 
-    public function incrementInterfaces()
+    public function incrementInterfaces(): void
     {
         $this->increment('interfaces');
     }
 
-    public function incrementTraits()
+    public function incrementTraits(): void
     {
         $this->increment('traits');
     }
 
-    public function incrementAbstractClasses()
+    public function incrementAbstractClasses(): void
     {
         $this->increment('abstract classes');
     }
 
-    public function incrementConcreteClasses()
+    public function incrementConcreteClasses(): void
     {
         $this->increment('concrete classes');
     }
 
-    public function incrementNonStaticMethods()
+    public function incrementNonStaticMethods(): void
     {
         $this->increment('non-static methods');
     }
 
-    public function incrementStaticMethods()
+    public function incrementStaticMethods(): void
     {
         $this->increment('static methods');
     }
 
-    public function incrementPublicMethods()
+    public function incrementPublicMethods(): void
     {
         $this->increment('public methods');
     }
 
-    public function incrementNonPublicMethods()
+    public function incrementNonPublicMethods(): void
     {
         $this->increment('non-public methods');
     }
 
-    public function incrementNamedFunctions()
+    public function incrementNamedFunctions(): void
     {
         $this->increment('named functions');
     }
 
-    public function incrementAnonymousFunctions()
+    public function incrementAnonymousFunctions(): void
     {
         $this->increment('anonymous functions');
     }
 
-    public function incrementGlobalConstants()
+    public function incrementGlobalConstants(): void
     {
         $this->increment('global constants');
     }
 
-    public function incrementClassConstants()
+    public function incrementClassConstants(): void
     {
         $this->increment('class constants');
     }
 
-    public function incrementTestClasses()
+    public function incrementTestClasses(): void
     {
         $this->increment('test classes');
     }
 
-    public function incrementTestMethods()
+    public function incrementTestMethods(): void
     {
         $this->increment('test methods');
     }
 
-    private function addUnique($key, $name)
+    private function addUnique($key, $name): void
     {
         $this->check($key, []);
         $this->counts[$key][$name] = true;
     }
 
-    private function addToArray($key, $value)
+    private function addToArray($key, $value): void
     {
         $this->check($key, []);
         $this->counts[$key][] = $value;
     }
 
-    private function increment($key, $number = 1)
+    private function increment($key, $number = 1): void
     {
         $this->check($key, 0);
         $this->counts[$key] += $number;
     }
 
-    private function check($key, $default)
+    private function check($key, $default): void
     {
         if (!isset($this->counts[$key])) {
             $this->counts[$key] = $default;

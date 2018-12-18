@@ -7,14 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\PHPLOC\CLI;
 
 use SebastianBergmann\Version;
 use Symfony\Component\Console\Application as AbstractApplication;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\ArrayInput;
 
 /**
  * TextUI frontend for PHPLOC.
@@ -25,32 +24,6 @@ class Application extends AbstractApplication
     {
         $version = new Version('4.0.1', \dirname(\dirname(__DIR__)));
         parent::__construct('phploc', $version->getVersion());
-    }
-
-    /**
-     * Gets the name of the command based on input.
-     *
-     * @param InputInterface $input The input interface
-     *
-     * @return string The command name
-     */
-    protected function getCommandName(InputInterface $input)
-    {
-        return 'phploc';
-    }
-
-    /**
-     * Gets the default commands that should always be available.
-     *
-     * @return array An array of default Command instances
-     */
-    protected function getDefaultCommands()
-    {
-        $defaultCommands = parent::getDefaultCommands();
-
-        $defaultCommands[] = new Command;
-
-        return $defaultCommands;
     }
 
     /**
@@ -98,7 +71,33 @@ class Application extends AbstractApplication
         parent::doRun($input, $output);
     }
 
-    private function disableXdebug()
+    /**
+     * Gets the name of the command based on input.
+     *
+     * @param InputInterface $input The input interface
+     *
+     * @return string The command name
+     */
+    protected function getCommandName(InputInterface $input)
+    {
+        return 'phploc';
+    }
+
+    /**
+     * Gets the default commands that should always be available.
+     *
+     * @return array An array of default Command instances
+     */
+    protected function getDefaultCommands()
+    {
+        $defaultCommands = parent::getDefaultCommands();
+
+        $defaultCommands[] = new Command;
+
+        return $defaultCommands;
+    }
+
+    private function disableXdebug(): void
     {
         if (!\extension_loaded('xdebug')) {
             return;

@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\PHPLOC\Log;
 
 /**
@@ -64,16 +63,15 @@ class Csv
         'superGlobalVariableAccesses' => 'Super-Global Variable Accesses',
         'globalConstantAccesses'      => 'Global Constant Accesses',
         'testClasses'                 => 'Test Classes',
-        'testMethods'                 => 'Test Methods'
+        'testMethods'                 => 'Test Methods',
     ];
 
     /**
      * Prints a result set.
      *
      * @param string $filename
-     * @param array  $count
      */
-    public function printResult($filename, array $count)
+    public function printResult($filename, array $count): void
     {
         \file_put_contents(
             $filename,
@@ -82,18 +80,14 @@ class Csv
     }
 
     /**
-     * @param array $count
-     *
      * @return string
      */
     protected function getKeysLine(array $count)
     {
-        return \implode(',', \array_values($this->colmap)) . PHP_EOL;
+        return \implode(',', \array_values($this->colmap)) . \PHP_EOL;
     }
 
     /**
-     * @param array $count
-     *
      * @throws \InvalidArgumentException
      *
      * @return string
@@ -110,6 +104,6 @@ class Csv
             }
         }
 
-        return '"' . \implode('","', $values) . '"' . PHP_EOL;
+        return '"' . \implode('","', $values) . '"' . \PHP_EOL;
     }
 }

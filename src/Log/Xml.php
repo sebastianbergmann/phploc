@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\PHPLOC\Log;
 
 /**
@@ -19,9 +18,8 @@ class Xml
      * Prints a result set.
      *
      * @param string $filename
-     * @param array  $count
      */
-    public function printResult($filename, array $count)
+    public function printResult($filename, array $count): void
     {
         $document               = new \DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
@@ -39,8 +37,7 @@ class Xml
             );
         }
 
-        unset($count['directories']);
-        unset($count['files']);
+        unset($count['directories'], $count['files']);
 
         foreach ($count as $k => $v) {
             $root->appendChild(

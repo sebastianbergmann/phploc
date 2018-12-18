@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\PHPLOC\CLI;
 
 use SebastianBergmann\FinderFacade\FinderFacade;
@@ -27,15 +26,15 @@ class Command extends AbstractCommand
     /**
      * Configures the current command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('phploc')
              ->setDefinition(
                  [
-                   new InputArgument(
-                       'values',
-                       InputArgument::IS_ARRAY
-                   )
+                     new InputArgument(
+                         'values',
+                         InputArgument::IS_ARRAY
+                     ),
                  ]
              )
              ->addOption(
@@ -150,8 +149,7 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param string         $option
+     * @param string $option
      *
      * @return array
      */

@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\PHPLOC\Log;
 
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,11 +19,9 @@ class Text
     /**
      * Prints a result set.
      *
-     * @param OutputInterface $output
-     * @param array           $count
-     * @param bool            $printTests
+     * @param bool $printTests
      */
-    public function printResult(OutputInterface $output, array $count, $printTests)
+    public function printResult(OutputInterface $output, array $count, $printTests): void
     {
         if ($count['directories'] > 0) {
             $output->write(

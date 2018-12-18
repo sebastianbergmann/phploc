@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\PHPLOC\Log;
 
 /**
@@ -19,9 +18,8 @@ class Json
      * Prints a result set.
      *
      * @param string $filename
-     * @param array  $count
      */
-    public function printResult($filename, array $count)
+    public function printResult($filename, array $count): void
     {
         $directories = [];
 
@@ -32,14 +30,13 @@ class Json
             ];
         }
 
-        unset($count['directories']);
-        unset($count['files']);
+        unset($count['directories'], $count['files']);
 
         $report = \array_merge($directories, $count);
 
         \file_put_contents(
             $filename,
-            \json_encode($report, JSON_PRETTY_PRINT)
+            \json_encode($report, \JSON_PRETTY_PRINT)
         );
     }
 }
