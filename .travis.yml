@@ -15,7 +15,7 @@ sudo: false
 before_install:
   - composer self-update
   - composer clear-cache
-  - wget https://phar.phpunit.de/phpunit-7.5.phar
+  - wget https://phar.phpunit.de/phpunit-7.5.phar -O phpunit.phar
 
 install:
   - if [[ "$DEPENDENCIES" = 'high' ]]; then travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable; fi
