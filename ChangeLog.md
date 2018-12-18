@@ -2,6 +2,12 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [5.0.0] - 2018-MM-DD
+
+### Fixed
+
+* Fixed [#182](https://github.com/sebastianbergmann/phploc/pull/182): `"continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"`
+
 ## [4.0.1] - 2017-11-18
 
 ### Changed
@@ -24,6 +30,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.0] - 2016-01-13
 
+[5.0.0]: https://github.com/sebastianbergmann/phploc/compare/4.0.1...5.0.0
 [4.0.1]: https://github.com/sebastianbergmann/phploc/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/sebastianbergmann/phploc/compare/3.0...4.0.0
 [3.0.1]: https://github.com/sebastianbergmann/phploc/compare/3.0.0...3.0.1
