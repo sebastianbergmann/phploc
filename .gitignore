@@ -3,6 +3,5 @@
 /.idea
 /composer.lock
 /vendor
-/tools
 /.php_cs.cache
 /.phpunit.result.cache

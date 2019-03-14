@@ -5,24 +5,27 @@ php:
   - 7.3
   - 7.4snapshot
 
+matrix:
+  fast_finish: true
+
 env:
   matrix:
     - DEPENDENCIES="high"
     - DEPENDENCIES="low"
+  global:
+    - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
 
 sudo: false
 
 before_install:
-  - composer self-update
-  - composer clear-cache
-  - wget https://phar.phpunit.de/phpunit-7.5.phar -O phpunit.phar
+  - ./tools/composer clear-cache
 
 install:
-  - if [[ "$DEPENDENCIES" = 'high' ]]; then travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable; fi
-  - if [[ "$DEPENDENCIES" = 'low' ]]; then travis_retry composer update --no-interaction --no-ansi --no-progress --no-suggest --optimize-autoloader --prefer-stable --prefer-lowest; fi
+  - if [[ "$DEPENDENCIES" = 'high' ]]; then travis_retry ./tools/composer update $DEFAULT_COMPOSER_FLAGS; fi
+  - if [[ "$DEPENDENCIES" = 'low' ]]; then travis_retry ./tools/composer update $DEFAULT_COMPOSER_FLAGS --prefer-lowest; fi
 
 script:
-  - php phpunit.phar
+  - ./tools/phpunit
 
 notifications:
   email: false

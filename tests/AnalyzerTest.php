@@ -25,7 +25,7 @@ class AnalyserTest extends TestCase
 
     public function testWithoutTests(): void
     {
-        $this->assertEquals(
+        $this->assertEqualsWithDelta(
             [
                 'files'                       => 1,
                 'loc'                         => 75,
@@ -86,14 +86,13 @@ class AnalyserTest extends TestCase
                 [__DIR__ . '/_files/source.php'],
                 false
             ),
-            '',
             0.1
         );
     }
 
     public function testWithTests(): void
     {
-        $this->assertEquals(
+        $this->assertEqualsWithDelta(
             [
                 'files'                       => 2,
                 'loc'                         => 98,
@@ -157,7 +156,6 @@ class AnalyserTest extends TestCase
                 ],
                 true
             ),
-            '',
             0.1
         );
     }
@@ -263,9 +261,9 @@ class AnalyserTest extends TestCase
 
         $assertString = \sprintf(
             'Failed asserting that %s matches expected %s in issue_126_%d.php',
-                            $result['cloc'],
-                            $cloc,
-                            $fileNumber
+            $result['cloc'],
+            $cloc,
+            $fileNumber
         );
 
         $this->assertEquals($cloc, $result['cloc'], $assertString);

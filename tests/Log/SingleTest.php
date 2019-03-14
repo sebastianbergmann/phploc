@@ -119,11 +119,10 @@ class SingleTest extends TestCase
         $this->assertEquals(2, \count($rows), 'Printed result contained more or less than expected 2 rows');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testPrintPartialRow(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $count = $this->sample_row;
         unset($count['llocByNof']);
 
