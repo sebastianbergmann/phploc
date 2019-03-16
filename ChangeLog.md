@@ -2,7 +2,7 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [5.0.0] - 2018-MM-DD
+## [5.0.0] - 2019-03-16
 
 ### Fixed
 
