@@ -501,6 +501,7 @@ class Analyser
         if (!isset($tokens[$i][1])) {
             return 'invalid class name';
         }
+
         $className  = $tokens[$i][1];
 
         $namespaced = $className === '\\';
