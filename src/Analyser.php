@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPLOC.
  *
@@ -554,7 +554,7 @@ class Analyser
 
         // Fallback: Treat the class as a test case class if the name
         // of the parent class ends with "TestCase".
-        return \substr($this->classes[$className], -8) === 'testcase';
+        return \substr((string) $this->classes[$className], -8) === 'testcase';
     }
 
     /**
