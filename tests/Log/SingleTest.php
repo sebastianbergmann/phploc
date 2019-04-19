@@ -90,6 +90,16 @@ class SingleTest extends TestCase
         $this->assertRegExp('#"1","2".+$#is', $output, 'Printed result does not contain a value line');
     }
 
+    public function testPrintedResultContainsDataWithNoSubDirectories(): void
+    {
+        \ob_start();
+
+        $this->single->printResult('php://output', array_merge($this->sample_row, ['directories' => 0]));
+        $output = \ob_get_clean();
+
+        $this->assertRegExp('#"0","2".+$#is', $output, 'Printed result does not contain a value line');
+    }
+
     public function testPrintedResultContainsEqualNumHeadingsAndValues(): void
     {
         \ob_start();
