@@ -317,4 +317,25 @@ class AnalyserTest extends TestCase
 
         $this->assertEquals(1, $result['anonymousFunctions']);
     }
+
+    public function testDeclareIsNotLogicalLine(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/with_declare.php'], false);
+
+        $this->assertEquals(0, $result['llocGlobal']);
+    }
+
+    public function testNamespaceIsNotLogicalLine(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/with_namespace.php'], false);
+
+        $this->assertEquals(0, $result['llocGlobal']);
+    }
+
+    public function testImportIsNotLogicalLine(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/with_import.php'], false);
+
+        $this->assertEquals(0, $result['llocGlobal']);
+    }
 }
