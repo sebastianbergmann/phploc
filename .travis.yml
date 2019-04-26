@@ -15,8 +15,6 @@ env:
   global:
     - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
 
-sudo: false
-
 before_install:
   - ./tools/composer clear-cache
 
