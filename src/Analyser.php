@@ -135,7 +135,8 @@ class Analyser
         $functionName      = null;
         $testClass         = false;
         $this->collector->currentClassReset();
-        $isInMethod = false;
+        $isLogicalLine = true;
+        $isInMethod    = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (\is_string($tokens[$i])) {
@@ -152,7 +153,10 @@ class Analyser
                         $this->collector->incrementFunctionLines();
                     }
 
-                    $this->collector->incrementLogicalLines();
+                    if ($isLogicalLine) {
+                        $this->collector->incrementLogicalLines();
+                    }
+                    $isLogicalLine = true;
                 } elseif ($token == '?' && !$testClass) {
                     if ($className !== null) {
                         $this->collector->currentClassIncrementComplexity();
@@ -200,6 +204,7 @@ class Analyser
                 case \T_NAMESPACE:
                     $namespace = $this->getNamespaceName($tokens, $i);
                     $this->collector->addNamespace($namespace);
+                    $isLogicalLine = false;
 
                     break;
 
@@ -429,6 +434,12 @@ class Analyser
                     } elseif (isset($this->superGlobals[$value])) {
                         $this->collector->incrementSuperGlobalVariableAccesses();
                     }
+
+                    break;
+
+                case \T_USE:
+                case \T_DECLARE:
+                    $isLogicalLine = false;
 
                     break;
             }
