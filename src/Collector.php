@@ -200,9 +200,14 @@ class Collector
         $this->increment('global constants');
     }
 
-    public function incrementClassConstants(): void
+    public function incrementPublicClassConstants(): void
     {
-        $this->increment('class constants');
+        $this->increment('public class constants');
+    }
+
+    public function incrementNonPublicClassConstants(): void
+    {
+        $this->increment('non-public class constants');
     }
 
     public function incrementTestClasses(): void

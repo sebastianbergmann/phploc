@@ -52,6 +52,8 @@ class Csv
         'constants'                   => 'Constants',
         'globalConstants'             => 'Global Constants',
         'classConstants'              => 'Class Constants',
+        'publicClassConstants'        => 'Public Class Constants',
+        'nonPublicClassConstants'     => 'Non-Public Class Constants',
         'attributeAccesses'           => 'Attribute Accesses',
         'instanceAttributeAccesses'   => 'Non-Static Attribute Accesses',
         'staticAttributeAccesses'     => 'Static Attribute Accesses',

@@ -48,6 +48,8 @@ class SingleTest extends TestCase
         'constants'                   => 27,
         'globalConstants'             => 28,
         'classConstants'              => 29,
+        'publicClassConstants'        => 15,
+        'nonPublicClassConstants'     => 14,
         'attributeAccesses'           => 30,
         'instanceAttributeAccesses'   => 31,
         'staticAttributeAccesses'     => 32,

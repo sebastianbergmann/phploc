@@ -273,9 +273,19 @@ class Publisher
         return $this->getValue('global constants');
     }
 
+    public function getPublicClassConstants()
+    {
+        return $this->getValue('public class constants');
+    }
+
+    public function getNonPublicClassConstants()
+    {
+        return $this->getValue('non-public class constants');
+    }
+
     public function getClassConstants()
     {
-        return $this->getValue('class constants');
+        return $this->getPublicClassConstants() + $this->getNonPublicClassConstants();
     }
 
     public function getTestClasses()
@@ -315,6 +325,8 @@ class Publisher
             'staticMethods'               => $this->getStaticMethods(),
             'constants'                   => $this->getConstants(),
             'classConstants'              => $this->getClassConstants(),
+            'publicClassConstants'        => $this->getPublicClassConstants(),
+            'nonPublicClassConstants'     => $this->getNonPublicClassConstants(),
             'globalConstants'             => $this->getGlobalConstants(),
             'testClasses'                 => $this->getTestClasses(),
             'testMethods'                 => $this->getTestMethods(),

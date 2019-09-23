@@ -371,7 +371,14 @@ class Analyser
 
                     break;
                 case \T_CONST:
-                    $this->collector->incrementClassConstants();
+                    $possibleScopeToken = $tokens[$i - 2];
+                    if (is_array($possibleScopeToken)
+                        && in_array($possibleScopeToken[0], [\T_PRIVATE, \T_PROTECTED])
+                    ) {
+                        $this->collector->incrementNonPublicClassConstants();
+                    } else {
+                        $this->collector->incrementPublicClassConstants();
+                    }
 
                     break;
 
