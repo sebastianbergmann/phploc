@@ -92,6 +92,8 @@ Structure
   Constants                                 %10d
     Global Constants                        %10d (%.2f%%)
     Class Constants                         %10d (%.2f%%)
+      Public Constants                      %10d (%.2f%%)
+      Non-Public Constants                  %10d (%.2f%%)
 
 END;
 
@@ -168,7 +170,11 @@ END;
                 $count['globalConstants'],
                 $count['constants'] > 0 ? ($count['globalConstants'] / $count['constants']) * 100 : 0,
                 $count['classConstants'],
-                $count['constants'] > 0 ? ($count['classConstants'] / $count['constants']) * 100 : 0
+                $count['constants'] > 0 ? ($count['classConstants'] / $count['constants']) * 100 : 0,
+                $count['publicClassConstants'],
+                $count['classConstants'] > 0 ? ($count['publicClassConstants'] / $count['classConstants']) * 100 : 0,
+                $count['nonPublicClassConstants'],
+                $count['classConstants'] > 0 ? ($count['nonPublicClassConstants'] / $count['classConstants']) * 100 : 0
             )
         );
 

@@ -51,6 +51,8 @@ class AnalyserTest extends TestCase
                 'staticMethods'               => 1,
                 'constants'                   => 2,
                 'classConstants'              => 1,
+                'publicClassConstants'        => 1,
+                'nonPublicClassConstants'     => 0,
                 'globalConstants'             => 1,
                 'testClasses'                 => 0,
                 'testMethods'                 => 0,
@@ -117,6 +119,8 @@ class AnalyserTest extends TestCase
                 'nonStaticMethods'            => 3,
                 'staticMethods'               => 1,
                 'constants'                   => 2,
+                'publicClassConstants'        => 1,
+                'nonPublicClassConstants'     => 0,
                 'classConstants'              => 1,
                 'globalConstants'             => 1,
                 'testClasses'                 => 1,
@@ -337,5 +341,14 @@ class AnalyserTest extends TestCase
         $result = $this->analyser->countFiles([__DIR__ . '/_files/with_import.php'], false);
 
         $this->assertEquals(0, $result['llocGlobal']);
+    }
+
+    public function test_it_makes_a_distinction_between_public_and_non_public_class_constants(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/class_constants.php'], false);
+        $this->assertEquals(2, $result['publicClassConstants']);
+        $this->assertEquals(2, $result['nonPublicClassConstants']);
+        $this->assertEquals(4, $result['classConstants']);
+        $this->assertEquals(4, $result['constants']);
     }
 }
