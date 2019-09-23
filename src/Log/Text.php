@@ -79,6 +79,8 @@ Structure
   Classes                                   %10d
     Abstract Classes                        %10d (%.2f%%)
     Concrete Classes                        %10d (%.2f%%)
+      Final Classes                         %10d (%.2f%%)
+      Non-Final Classes                     %10d (%.2f%%)
   Methods                                   %10d
     Scope
       Non-Static Methods                    %10d (%.2f%%)
@@ -152,6 +154,10 @@ END;
                 $count['classes'] > 0 ? ($count['abstractClasses'] / $count['classes']) * 100 : 0,
                 $count['concreteClasses'],
                 $count['classes'] > 0 ? ($count['concreteClasses'] / $count['classes']) * 100 : 0,
+                $count['finalClasses'],
+                $count['concreteClasses'] > 0 ? ($count['finalClasses'] / $count['concreteClasses']) * 100 : 0,
+                $count['nonFinalClasses'],
+                $count['concreteClasses'] > 0 ? ($count['nonFinalClasses'] / $count['concreteClasses']) * 100 : 0,
                 $count['methods'],
                 $count['nonStaticMethods'],
                 $count['methods'] > 0 ? ($count['nonStaticMethods'] / $count['methods']) * 100 : 0,

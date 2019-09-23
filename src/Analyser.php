@@ -229,12 +229,18 @@ class Analyser
                             $testClass = true;
                             $this->collector->incrementTestClasses();
                         } else {
-                            if (isset($tokens[$i - 2]) &&
-                                \is_array($tokens[$i - 2]) &&
-                                $tokens[$i - 2][0] == \T_ABSTRACT) {
+                            $classModifierToken = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
+                            if ($classModifierToken !== false &&
+                                $tokens[$classModifierToken][0] === \T_ABSTRACT
+                            ) {
                                 $this->collector->incrementAbstractClasses();
+                            } elseif (
+                                $classModifierToken !== false &&
+                                $tokens[$classModifierToken][0] === \T_FINAL
+                            ) {
+                                $this->collector->incrementFinalClasses();
                             } else {
-                                $this->collector->incrementConcreteClasses();
+                                $this->collector->incrementNonFinalClasses();
                             }
                         }
                     }

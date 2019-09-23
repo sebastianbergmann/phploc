@@ -160,9 +160,14 @@ class Collector
         $this->increment('abstract classes');
     }
 
-    public function incrementConcreteClasses(): void
+    public function incrementNonFinalClasses(): void
     {
-        $this->increment('concrete classes');
+        $this->increment('non-final classes');
+    }
+
+    public function incrementFinalClasses(): void
+    {
+        $this->increment('final classes');
     }
 
     public function incrementNonStaticMethods(): void

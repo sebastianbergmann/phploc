@@ -34,6 +34,8 @@ class Csv
         'classes'                     => 'Classes',
         'abstractClasses'             => 'Abstract Classes',
         'concreteClasses'             => 'Concrete Classes',
+        'finalClasses'                => 'Final Classes',
+        'nonFinalClasses'             => 'Non-Final Classes',
         'llocClasses'                 => 'Classes Length (LLOC)',
         'methods'                     => 'Methods',
         'nonStaticMethods'            => 'Non-Static Methods',

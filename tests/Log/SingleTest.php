@@ -33,6 +33,8 @@ class SingleTest extends TestCase
         'classes'                     => 12,
         'abstractClasses'             => 13,
         'concreteClasses'             => 14,
+        'finalClasses'                => 8,
+        'nonFinalClasses'             => 6,
         'llocClasses'                 => 15,
         'methods'                     => 16,
         'nonStaticMethods'            => 17,
