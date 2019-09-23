@@ -220,7 +220,17 @@ class Publisher
 
     public function getConcreteClasses()
     {
-        return $this->getValue('concrete classes');
+        return $this->getFinalClasses() + $this->getNonFinalClasses();
+    }
+
+    public function getFinalClasses()
+    {
+        return $this->getValue('final classes');
+    }
+
+    public function getNonFinalClasses()
+    {
+        return $this->getValue('non-final classes');
     }
 
     public function getMethods()
@@ -315,6 +325,8 @@ class Publisher
             'classes'                     => $this->getClasses(),
             'abstractClasses'             => $this->getAbstractClasses(),
             'concreteClasses'             => $this->getConcreteClasses(),
+            'finalClasses'                => $this->getFinalClasses(),
+            'nonFinalClasses'             => $this->getNonFinalClasses(),
             'functions'                   => $this->getFunctions(),
             'namedFunctions'              => $this->getNamedFunctions(),
             'anonymousFunctions'          => $this->getAnonymousFunctions(),

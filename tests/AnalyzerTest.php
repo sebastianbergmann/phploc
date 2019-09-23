@@ -41,6 +41,8 @@ class AnalyserTest extends TestCase
                 'classes'                     => 2,
                 'abstractClasses'             => 1,
                 'concreteClasses'             => 1,
+                'nonFinalClasses'             => 1,
+                'finalClasses'                => 0,
                 'functions'                   => 2,
                 'namedFunctions'              => 1,
                 'anonymousFunctions'          => 1,
@@ -110,6 +112,8 @@ class AnalyserTest extends TestCase
                 'classes'                     => 2,
                 'abstractClasses'             => 1,
                 'concreteClasses'             => 1,
+                'nonFinalClasses'             => 1,
+                'finalClasses'                => 0,
                 'functions'                   => 2,
                 'namedFunctions'              => 1,
                 'anonymousFunctions'          => 1,
@@ -350,5 +354,14 @@ class AnalyserTest extends TestCase
         $this->assertEquals(2, $result['nonPublicClassConstants']);
         $this->assertEquals(4, $result['classConstants']);
         $this->assertEquals(4, $result['constants']);
+    }
+
+    public function test_it_collects_the_number_of_final_non_final_and_abstract_classes(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/classes.php'], false);
+        $this->assertEquals(3, $result['classes']);
+        $this->assertEquals(1, $result['finalClasses']);
+        $this->assertEquals(1, $result['nonFinalClasses']);
+        $this->assertEquals(1, $result['abstractClasses']);
     }
 }
