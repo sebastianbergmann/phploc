@@ -1,11 +1,26 @@
 <?php
 
-final class FinalClass
+final class FinalClass1
 {
 
 }
 
-class NonFinalClass
+final class FinalClass2
+{
+
+}
+
+class NonFinalClass1
+{
+
+}
+
+class NonFinalClass2
+{
+
+}
+
+class NonFinalClass3
 {
 
 }
