@@ -351,9 +351,9 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles([__DIR__ . '/_files/class_constants.php'], false);
         $this->assertEquals(2, $result['publicClassConstants']);
-        $this->assertEquals(2, $result['nonPublicClassConstants']);
-        $this->assertEquals(4, $result['classConstants']);
-        $this->assertEquals(4, $result['constants']);
+        $this->assertEquals(3, $result['nonPublicClassConstants']);
+        $this->assertEquals(5, $result['classConstants']);
+        $this->assertEquals(5, $result['constants']);
     }
 
     public function test_it_collects_the_number_of_final_non_final_and_abstract_classes(): void

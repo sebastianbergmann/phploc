@@ -377,9 +377,9 @@ class Analyser
 
                     break;
                 case \T_CONST:
-                    $possibleScopeToken = $tokens[$i - 2];
-                    if (is_array($possibleScopeToken)
-                        && in_array($possibleScopeToken[0], [\T_PRIVATE, \T_PROTECTED])
+                    $possibleScopeToken = $this->getPreviousNonWhitespaceNonCommentTokenPos($tokens, $i);
+                    if ($possibleScopeToken !== false
+                        && in_array($tokens[$possibleScopeToken][0], [\T_PRIVATE, \T_PROTECTED])
                     ) {
                         $this->collector->incrementNonPublicClassConstants();
                     } else {
@@ -617,6 +617,30 @@ class Analyser
             }
 
             return $start - 1;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param int $start
+     *
+     * @return bool
+     */
+    private function getPreviousNonWhitespaceNonCommentTokenPos(array $tokens, int $start)
+    {
+        $previousTokenIndex = $start - 1;
+        if (isset($tokens[$previousTokenIndex])) {
+            if (in_array($tokens[$previousTokenIndex][0], [
+                    \T_WHITESPACE,
+                    \T_COMMENT,
+                    \T_DOC_COMMENT
+                ])
+            ) {
+                return $this->getPreviousNonWhitespaceNonCommentTokenPos($tokens, $previousTokenIndex);
+            }
+
+            return $previousTokenIndex;
         }
 
         return false;
