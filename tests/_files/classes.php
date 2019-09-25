@@ -5,7 +5,7 @@ final class FinalClass1
 
 }
 
-final class FinalClass2
+final /* comment */ class FinalClass2
 {
 
 }
@@ -25,7 +25,22 @@ class NonFinalClass3
 
 }
 
-abstract class AbstractClass
+abstract class AbstractClass1
+{
+
+}
+
+abstract class AbstractClass2
+{
+
+}
+
+abstract class AbstractClass3
+{
+
+}
+
+abstract /* a comment */ class AbstractClass4
 {
 
 }

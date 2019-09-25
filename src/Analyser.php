@@ -229,7 +229,7 @@ class Analyser
                             $testClass = true;
                             $this->collector->incrementTestClasses();
                         } else {
-                            $classModifierToken = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
+                            $classModifierToken = $this->getPreviousNonWhitespaceNonCommentTokenPos($tokens, $i);
                             if ($classModifierToken !== false &&
                                 $tokens[$classModifierToken][0] === \T_ABSTRACT
                             ) {

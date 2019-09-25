@@ -359,9 +359,9 @@ class AnalyserTest extends TestCase
     public function test_it_collects_the_number_of_final_non_final_and_abstract_classes(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/_files/classes.php'], false);
-        $this->assertEquals(6, $result['classes']);
+        $this->assertEquals(9, $result['classes']);
         $this->assertEquals(2, $result['finalClasses']);
         $this->assertEquals(3, $result['nonFinalClasses']);
-        $this->assertEquals(1, $result['abstractClasses']);
+        $this->assertEquals(4, $result['abstractClasses']);
     }
 }
