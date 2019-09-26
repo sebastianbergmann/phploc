@@ -69,6 +69,7 @@ class SingleTest extends TestCase
         'classCcnAvg'                 => 42,
         'classLlocAvg'                => 43,
         'methodLlocAvg'               => 44,
+        'averageMethodsPerClass'      => 5
     ];
 
     protected function setUp(): void

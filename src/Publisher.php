@@ -83,6 +83,21 @@ class Publisher
         return $this->getMaximum('method lines');
     }
 
+    public function getAverageMethodsPerClass()
+    {
+        return $this->getAverage('methods per class');
+    }
+
+    public function getMinimumMethodsPerClass()
+    {
+        return $this->getMinimum('methods per class');
+    }
+
+    public function getMaximumMethodsPerClass()
+    {
+        return $this->getMaximum('methods per class');
+    }
+
     public function getFunctionLines()
     {
         return $this->getValue('function lines');
@@ -379,6 +394,9 @@ class Publisher
             'methodLlocMin'               => $this->getMinimumMethodLength(),
             'methodLlocAvg'               => $this->getAverageMethodLength(),
             'methodLlocMax'               => $this->getMaximumMethodLength(),
+            'averageMethodsPerClass'      => $this->getAverageMethodsPerClass(),
+            'minimumMethodsPerClass'      => $this->getMinimumMethodsPerClass(),
+            'maximumMethodsPerClass'      => $this->getMaximumMethodsPerClass(),
             'namespaces'                  => $this->getNamespaces(),
             'ncloc'                       => $this->getNonCommentLines(),
         ];
