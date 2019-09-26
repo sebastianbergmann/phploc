@@ -41,6 +41,8 @@ class SingleTest extends TestCase
         'staticMethods'               => 18,
         'publicMethods'               => 19,
         'nonPublicMethods'            => 20,
+        'protectedMethods'            => 14,
+        'privateMethods'              => 6,
         'methodCcnAvg'                => 21,
         'functions'                   => 22,
         'namedFunctions'              => 23,

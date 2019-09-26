@@ -325,8 +325,10 @@ class Analyser
 
                                 if ($visibility == \T_PUBLIC) {
                                     $this->collector->incrementPublicMethods();
-                                } else {
-                                    $this->collector->incrementNonPublicMethods();
+                                } elseif ($visibility == \T_PROTECTED) {
+                                    $this->collector->incrementProtectedMethods();
+                                } elseif ($visibility == \T_PRIVATE) {
+                                    $this->collector->incrementPrivateMethods();
                                 }
                             }
                         }
