@@ -66,6 +66,7 @@ class Csv
         'llocByNof'                   => 'Average Function Length (LLOC)',
         'classLlocAvg'                => 'Average Class Length',
         'methodLlocAvg'               => 'Average Method Length',
+        'averageMethodsPerClass'      => 'Average Methods per Class',
         'constants'                   => 'Constants',
         'globalConstants'             => 'Global Constants',
         'classConstants'              => 'Class Constants',

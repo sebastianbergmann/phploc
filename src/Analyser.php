@@ -190,6 +190,7 @@ class Analyser
                         } elseif ($block == $className) {
                             $className         = null;
                             $testClass         = false;
+                            $this->collector->currentClassStop();
                             $this->collector->currentClassReset();
                         }
                     }
@@ -316,6 +317,8 @@ class Analyser
                             } elseif (!$testClass) {
                                 $isInMethod = true;
                                 $this->collector->currentMethodStart();
+
+                                $this->collector->currentClassIncrementMethods();
 
                                 if (!$static) {
                                     $this->collector->incrementNonStaticMethods();

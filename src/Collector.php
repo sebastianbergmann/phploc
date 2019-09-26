@@ -21,6 +21,8 @@ class Collector
 
     private $currentMethodLines = 0;
 
+    private $currentNumberOfMethods = 0;
+
     public function getPublisher()
     {
         return new Publisher($this->counts);
@@ -55,6 +57,12 @@ class Collector
         }
         $this->currentClassComplexity = 0;
         $this->currentClassLines      = 0;
+        $this->currentNumberOfMethods = 0;
+    }
+
+    public function currentClassStop(): void
+    {
+        $this->addToArray('methods per class', $this->currentNumberOfMethods);
     }
 
     public function currentClassIncrementComplexity(): void
@@ -71,6 +79,11 @@ class Collector
     {
         $this->currentMethodComplexity = 1;
         $this->currentMethodLines      = 0;
+    }
+
+    public function currentClassIncrementMethods(): void
+    {
+        $this->currentNumberOfMethods++;
     }
 
     public function currentMethodIncrementComplexity(): void

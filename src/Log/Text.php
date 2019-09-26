@@ -47,6 +47,9 @@ Size
       Average Method Length                 %10d
         Minimum Method Length               %10d
         Maximum Method Length               %10d
+      Average Methods Per Class             %10d
+        Minimum Methods Per Class           %10d
+        Maximum Methods Per Class           %10d
     Functions                               %10d (%.2f%%)
       Average Function Length               %10d
     Not in classes or functions             %10d (%.2f%%)
@@ -118,6 +121,9 @@ END;
                 $count['methodLlocAvg'],
                 $count['methodLlocMin'],
                 $count['methodLlocMax'],
+                $count['averageMethodsPerClass'],
+                $count['minimumMethodsPerClass'],
+                $count['maximumMethodsPerClass'],
                 $count['llocFunctions'],
                 $count['lloc'] > 0 ? ($count['llocFunctions'] / $count['lloc']) * 100 : 0,
                 $count['llocByNof'],

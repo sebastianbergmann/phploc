@@ -87,6 +87,9 @@ class AnalyserTest extends TestCase
                 'methodLlocMin'               => 4,
                 'methodLlocAvg'               => 5.6,
                 'methodLlocMax'               => 7,
+                'averageMethodsPerClass'      => 1.33,
+                'minimumMethodsPerClass'      => 0,
+                'maximumMethodsPerClass'      => 4
             ],
             $this->analyser->countFiles(
                 [__DIR__ . '/_files/source.php'],
@@ -160,6 +163,9 @@ class AnalyserTest extends TestCase
                 'methodLlocMin'               => 4,
                 'methodLlocAvg'               => 5.6,
                 'methodLlocMax'               => 7,
+                'averageMethodsPerClass'      => 1,
+                'minimumMethodsPerClass'      => 0,
+                'maximumMethodsPerClass'      => 4
             ],
             $this->analyser->countFiles(
                 [
@@ -376,5 +382,13 @@ class AnalyserTest extends TestCase
         $this->assertEquals(1, $result['protectedMethods']);
         $this->assertEquals(3, $result['privateMethods']);
         $this->assertEquals(6, $result['methods']);
+    }
+
+    public function test_it_provides_average_minimum_and_maximum_number_of_methods_per_class(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/methods_per_class.php'], false);
+        $this->assertEquals(2, $result['averageMethodsPerClass']);
+        $this->assertEquals(0, $result['minimumMethodsPerClass']);
+        $this->assertEquals(4, $result['maximumMethodsPerClass']);
     }
 }
