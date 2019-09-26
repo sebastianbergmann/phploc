@@ -255,7 +255,17 @@ class Publisher
 
     public function getNonPublicMethods()
     {
-        return $this->getValue('non-public methods');
+        return $this->getProtectedMethods() + $this->getPrivateMethods();
+    }
+
+    public function getProtectedMethods()
+    {
+        return $this->getValue('protected methods');
+    }
+
+    public function getPrivateMethods()
+    {
+        return $this->getValue('private methods');
     }
 
     public function getFunctions()
@@ -333,6 +343,8 @@ class Publisher
             'methods'                     => $this->getMethods(),
             'publicMethods'               => $this->getPublicMethods(),
             'nonPublicMethods'            => $this->getNonPublicMethods(),
+            'protectedMethods'            => $this->getProtectedMethods(),
+            'privateMethods'              => $this->getPrivateMethods(),
             'nonStaticMethods'            => $this->getNonStaticMethods(),
             'staticMethods'               => $this->getStaticMethods(),
             'constants'                   => $this->getConstants(),

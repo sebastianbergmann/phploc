@@ -87,7 +87,8 @@ Structure
       Static Methods                        %10d (%.2f%%)
     Visibility
       Public Methods                        %10d (%.2f%%)
-      Non-Public Methods                    %10d (%.2f%%)
+      Protected Methods                     %10d (%.2f%%)
+      Private Methods                       %10d (%.2f%%)
   Functions                                 %10d
     Named Functions                         %10d (%.2f%%)
     Anonymous Functions                     %10d (%.2f%%)
@@ -165,8 +166,10 @@ END;
                 $count['methods'] > 0 ? ($count['staticMethods'] / $count['methods']) * 100 : 0,
                 $count['publicMethods'],
                 $count['methods'] > 0 ? ($count['publicMethods'] / $count['methods']) * 100 : 0,
-                $count['nonPublicMethods'],
-                $count['methods'] > 0 ? ($count['nonPublicMethods'] / $count['methods']) * 100 : 0,
+                $count['protectedMethods'],
+                $count['methods'] > 0 ? ($count['protectedMethods'] / $count['methods']) * 100 : 0,
+                $count['privateMethods'],
+                $count['methods'] > 0 ? ($count['privateMethods'] / $count['methods']) * 100 : 0,
                 $count['functions'],
                 $count['namedFunctions'],
                 $count['functions'] > 0 ? ($count['namedFunctions'] / $count['functions']) * 100 : 0,

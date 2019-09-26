@@ -49,6 +49,8 @@ class AnalyserTest extends TestCase
                 'methods'                     => 4,
                 'publicMethods'               => 2,
                 'nonPublicMethods'            => 2,
+                'protectedMethods'            => 1,
+                'privateMethods'              => 1,
                 'nonStaticMethods'            => 3,
                 'staticMethods'               => 1,
                 'constants'                   => 2,
@@ -120,6 +122,8 @@ class AnalyserTest extends TestCase
                 'methods'                     => 4,
                 'publicMethods'               => 2,
                 'nonPublicMethods'            => 2,
+                'protectedMethods'            => 1,
+                'privateMethods'              => 1,
                 'nonStaticMethods'            => 3,
                 'staticMethods'               => 1,
                 'constants'                   => 2,
@@ -363,5 +367,14 @@ class AnalyserTest extends TestCase
         $this->assertEquals(2, $result['finalClasses']);
         $this->assertEquals(3, $result['nonFinalClasses']);
         $this->assertEquals(4, $result['abstractClasses']);
+    }
+
+    public function test_it_makes_a_distinction_between_protected_and_private_methods(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/_files/methods.php'], false);
+        $this->assertEquals(2, $result['publicMethods']);
+        $this->assertEquals(1, $result['protectedMethods']);
+        $this->assertEquals(3, $result['privateMethods']);
+        $this->assertEquals(6, $result['methods']);
     }
 }

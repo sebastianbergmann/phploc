@@ -185,9 +185,14 @@ class Collector
         $this->increment('public methods');
     }
 
-    public function incrementNonPublicMethods(): void
+    public function incrementProtectedMethods(): void
     {
-        $this->increment('non-public methods');
+        $this->increment('protected methods');
+    }
+
+    public function incrementPrivateMethods(): void
+    {
+        $this->increment('private methods');
     }
 
     public function incrementNamedFunctions(): void
