@@ -21,22 +21,9 @@ class Json
      */
     public function printResult($filename, array $count): void
     {
-        $directories = [];
-
-        if ($count['directories'] > 0) {
-            $directories = [
-                'directories' => $count['directories'],
-                'files'       => $count['files'],
-            ];
-        }
-
-        unset($count['directories'], $count['files']);
-
-        $report = \array_merge($directories, $count);
-
         \file_put_contents(
             $filename,
-            \json_encode($report, \JSON_PRETTY_PRINT)
+            \json_encode($count, \JSON_PRETTY_PRINT)
         );
     }
 }
