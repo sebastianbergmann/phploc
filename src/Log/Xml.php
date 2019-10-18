@@ -27,18 +27,6 @@ class Xml
         $root = $document->createElement('phploc');
         $document->appendChild($root);
 
-        if ($count['directories'] > 0) {
-            $root->appendChild(
-                $document->createElement('directories', $count['directories'])
-            );
-
-            $root->appendChild(
-                $document->createElement('files', $count['files'])
-            );
-        }
-
-        unset($count['directories'], $count['files']);
-
         foreach ($count as $k => $v) {
             $root->appendChild(
                 $document->createElement($k, $v)
