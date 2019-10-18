@@ -23,18 +23,10 @@ class Text
      */
     public function printResult(OutputInterface $output, array $count, $printTests): void
     {
-        if ($count['directories'] > 0) {
-            $output->write(
-                \sprintf(
-                    "Directories                                 %10d\n" .
-                    "Files                                       %10d\n\n",
-                    $count['directories'],
-                    $count['files']
-                )
-            );
-        }
-
         $format = <<<END
+Directories                                 %10d
+Files                                       %10d
+
 Size
   Lines of Code (LOC)                       %10d
   Comment Lines of Code (CLOC)              %10d (%.2f%%)
@@ -98,6 +90,8 @@ END;
         $output->write(
             \sprintf(
                 $format,
+                $count['directories'],
+                $count['files'],
                 $count['loc'],
                 $count['cloc'],
                 $count['loc'] > 0 ? ($count['cloc'] / $count['loc']) * 100 : 0,
