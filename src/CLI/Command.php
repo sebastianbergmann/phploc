@@ -23,9 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Command extends AbstractCommand
 {
-    /**
-     * Configures the current command.
-     */
     protected function configure(): void
     {
         $this->setName('phploc')
@@ -83,15 +80,7 @@ class Command extends AbstractCommand
              );
     }
 
-    /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return null|int null or 0 if everything went fine, or an error code
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $count = $this->count(
             $input->getArgument('values'),
@@ -103,7 +92,8 @@ class Command extends AbstractCommand
 
         if (!$count) {
             $output->writeln('No files found to scan');
-            exit(0);
+
+            return 0;
         }
 
         $printer = new Text;
@@ -116,25 +106,29 @@ class Command extends AbstractCommand
 
         if ($input->getOption('log-csv')) {
             $printer = new Csv;
+
             $printer->printResult($input->getOption('log-csv'), $count);
         }
 
         if ($input->getOption('log-json')) {
             $printer = new Json;
+
             $printer->printResult($input->getOption('log-json'), $count);
         }
 
         if ($input->getOption('log-xml')) {
             $printer = new Xml;
+
             $printer->printResult($input->getOption('log-xml'), $count);
         }
+
+        return 0;
     }
 
     private function count(array $arguments, $excludes, $names, $namesExclude, $countTests)
     {
         try {
-            $finder = new FinderFacade($arguments, $excludes, $names, $namesExclude);
-            $files  = $finder->findFiles();
+            $files = (new FinderFacade($arguments, $excludes, $names, $namesExclude))->findFiles();
         } catch (\InvalidArgumentException $ex) {
             return false;
         }
@@ -143,17 +137,10 @@ class Command extends AbstractCommand
             return false;
         }
 
-        $analyser = new Analyser;
-
-        return $analyser->countFiles($files, $countTests);
+        return (new Analyser)->countFiles($files, $countTests);
     }
 
-    /**
-     * @param string $option
-     *
-     * @return array
-     */
-    private function handleCSVOption(InputInterface $input, $option)
+    private function handleCSVOption(InputInterface $input, string $option): array
     {
         $result = $input->getOption($option);
 

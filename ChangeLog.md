@@ -2,6 +2,12 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [6.0.0] - 2020-02-09
+
+### Removed
+
+* This tool is no longer supported on PHP 7.2
+
 ## [5.0.0] - 2019-03-16
 
 ### Fixed
@@ -36,6 +42,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.0] - 2016-01-13
 
+[6.0.0]: https://github.com/sebastianbergmann/phploc/compare/5.0.0...6.0.0
 [5.0.0]: https://github.com/sebastianbergmann/phploc/compare/4.0.1...5.0.0
 [4.0.1]: https://github.com/sebastianbergmann/phploc/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/sebastianbergmann/phploc/compare/3.0...4.0.0
