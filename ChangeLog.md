@@ -2,7 +2,7 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [6.0.0] - 2020-02-09
+## [6.0.0] - 2020-02-20
 
 ### Removed
 
