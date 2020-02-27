@@ -104,10 +104,10 @@ class Application extends AbstractApplication
             return;
         }
 
-        \ini_set('xdebug.scream', 0);
-        \ini_set('xdebug.max_nesting_level', 8192);
-        \ini_set('xdebug.show_exception_trace', 0);
-        \ini_set('xdebug.show_error_trace', 0);
+        \ini_set('xdebug.scream', '0');
+        \ini_set('xdebug.max_nesting_level', '8192');
+        \ini_set('xdebug.show_exception_trace', '0');
+        \ini_set('xdebug.show_error_trace', '0');
 
         \xdebug_disable();
     }
