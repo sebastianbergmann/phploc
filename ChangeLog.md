@@ -2,6 +2,12 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [6.0.2] - 2020-02-28
+
+### Fixed
+
+* Fixed [#207](https://github.com/sebastianbergmann/phploc/issues/207): `TypeError` in `DOMDocument::createElement()` calls
+
 ## [6.0.1] - 2020-02-27
 
 ### Fixed
@@ -48,6 +54,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.0] - 2016-01-13
 
+[6.0.2]: https://github.com/sebastianbergmann/phploc/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/sebastianbergmann/phploc/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sebastianbergmann/phploc/compare/5.0.0...6.0.0
 [5.0.0]: https://github.com/sebastianbergmann/phploc/compare/4.0.1...5.0.0

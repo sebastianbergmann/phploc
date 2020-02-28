@@ -29,11 +29,11 @@ class Xml
 
         if ($count['directories'] > 0) {
             $root->appendChild(
-                $document->createElement('directories', $count['directories'])
+                $document->createElement('directories', (string) $count['directories'])
             );
 
             $root->appendChild(
-                $document->createElement('files', $count['files'])
+                $document->createElement('files', (string) $count['files'])
             );
         }
 
@@ -41,7 +41,7 @@ class Xml
 
         foreach ($count as $k => $v) {
             $root->appendChild(
-                $document->createElement($k, $v)
+                $document->createElement($k, (string) $v)
             );
         }
 
