@@ -391,4 +391,11 @@ class AnalyserTest extends TestCase
         $this->assertEquals(0, $result['minimumMethodsPerClass']);
         $this->assertEquals(4, $result['maximumMethodsPerClass']);
     }
+
+    public function test_use_trait_is_not_counted_as_logical_line(): void
+    {
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/class_using_trait.php'], false);
+        $this->assertSame(1, $result['lloc']);
+        $this->assertSame(1, $result['llocClasses']);
+    }
 }
