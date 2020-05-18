@@ -4,7 +4,7 @@
 
 ## Installation
 
-The recommended way to use this tool is a [PHP Archive (PHAR)](https://php.net/phar):
+This tool is distributed as a [PHP Archive (PHAR)](https://php.net/phar):
 
 ```bash
 $ wget https://phar.phpunit.de/phploc.phar
@@ -12,9 +12,9 @@ $ wget https://phar.phpunit.de/phploc.phar
 $ php phploc.phar --version
 ```
 
-Furthermore, it is recommended to use [Phive](https://phar.io/) for installing and updating the tool dependencies of your project.
+Using [Phive](https://phar.io/) is the recommended way for managing the tool dependencies of your project.
 
-Alternatively, you may use [Composer](https://getcomposer.org/) to download and install this tool as well as its dependencies. [This is not recommended, though.](https://twitter.com/s_bergmann/status/999635212723212288)
+**[It is not recommended to use Composer to download and install this tool.](https://twitter.com/s_bergmann/status/999635212723212288)**
 
 ## Usage Examples
 
