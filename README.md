@@ -1,4 +1,6 @@
 # PHPLOC
+[![Latest Stable Version](https://img.shields.io/packagist/v/phploc/phploc.svg?style=flat-square)](https://packagist.org/packages/phploc/phploc)
+[![CI Status](https://github.com/sebastianbergmann/phploc/workflows/CI/badge.svg)](https://github.com/sebastianbergmann/phploc/actions)
 
 `phploc` is a tool for quickly measuring the size and analyzing the structure of a PHP project.
 
