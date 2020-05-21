@@ -84,7 +84,7 @@ class SingleTest extends TestCase
         $this->single->printResult('php://output', $this->sample_row);
         $output = \ob_get_clean();
 
-        $this->assertRegExp('#Directories,Files.+$#is', $output, 'Printed result does not contain a heading line');
+        $this->assertMatchesRegularExpression('#Directories,Files.+$#is', $output, 'Printed result does not contain a heading line');
     }
 
     public function testPrintedResultContainsData(): void
@@ -94,7 +94,7 @@ class SingleTest extends TestCase
         $this->single->printResult('php://output', $this->sample_row);
         $output = \ob_get_clean();
 
-        $this->assertRegExp('#"1","2".+$#is', $output, 'Printed result does not contain a value line');
+        $this->assertMatchesRegularExpression('#"1","2".+$#is', $output, 'Printed result does not contain a value line');
     }
 
     public function testPrintedResultContainsEqualNumHeadingsAndValues(): void
