@@ -15,19 +15,6 @@ namespace SebastianBergmann\PHPLOC\Log;
 class Csv
 {
     /**
-     * Prints a result set.
-     *
-     * @param string $filename
-     */
-    public function printResult($filename, array $count): void
-    {
-        \file_put_contents(
-            $filename,
-            $this->getKeysLine($count) . $this->getValuesLine($count)
-        );
-    }
-
-    /**
      * Mapping between internal and human-readable metric names
      *
      * @var array
@@ -85,6 +72,19 @@ class Csv
         'testClasses'                 => 'Test Classes',
         'testMethods'                 => 'Test Methods',
     ];
+
+    /**
+     * Prints a result set.
+     *
+     * @param string $filename
+     */
+    public function printResult($filename, array $count): void
+    {
+        \file_put_contents(
+            $filename,
+            $this->getKeysLine($count) . $this->getValuesLine($count)
+        );
+    }
 
     /**
      * @return string

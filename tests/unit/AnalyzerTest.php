@@ -89,7 +89,7 @@ class AnalyserTest extends TestCase
                 'methodLlocMax'               => 7,
                 'averageMethodsPerClass'      => 1.33,
                 'minimumMethodsPerClass'      => 0,
-                'maximumMethodsPerClass'      => 4
+                'maximumMethodsPerClass'      => 4,
             ],
             $this->analyser->countFiles(
                 [__DIR__ . '/../_files/source.php'],
@@ -165,7 +165,7 @@ class AnalyserTest extends TestCase
                 'methodLlocMax'               => 7,
                 'averageMethodsPerClass'      => 1,
                 'minimumMethodsPerClass'      => 0,
-                'maximumMethodsPerClass'      => 4
+                'maximumMethodsPerClass'      => 4,
             ],
             $this->analyser->countFiles(
                 [
