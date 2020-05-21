@@ -92,7 +92,7 @@ class AnalyserTest extends TestCase
                 'maximumMethodsPerClass'      => 4
             ],
             $this->analyser->countFiles(
-                [__DIR__ . '/_files/source.php'],
+                [__DIR__ . '/../_files/source.php'],
                 false
             ),
             0.1
@@ -169,8 +169,8 @@ class AnalyserTest extends TestCase
             ],
             $this->analyser->countFiles(
                 [
-                    __DIR__ . '/_files/source.php',
-                    __DIR__ . '/_files/tests.php',
+                    __DIR__ . '/../_files/source.php',
+                    __DIR__ . '/../_files/tests.php',
                 ],
                 true
             ),
@@ -182,7 +182,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/tests.php',
+                __DIR__ . '/../_files/tests.php',
             ],
             true
         );
@@ -194,7 +194,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/tests_old.php',
+                __DIR__ . '/../_files/tests_old.php',
             ],
             true
         );
@@ -206,7 +206,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/twoTestsThatIndirectlyExtendOldPHPUnitTestCase.php',
+                __DIR__ . '/../_files/twoTestsThatIndirectlyExtendOldPHPUnitTestCase.php',
             ],
             true
         );
@@ -218,7 +218,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php',
+                __DIR__ . '/../_files/twoTestsThatIndirectlyExtendPHPUnitTestCase.php',
             ],
             true
         );
@@ -230,7 +230,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/trait.php',
+                __DIR__ . '/../_files/trait.php',
             ],
             false
         );
@@ -245,7 +245,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/issue_62.php',
+                __DIR__ . '/../_files/issue_62.php',
             ],
             false
         );
@@ -260,7 +260,7 @@ class AnalyserTest extends TestCase
     {
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/issue_112.php',
+                __DIR__ . '/../_files/issue_112.php',
             ],
             false
         );
@@ -274,7 +274,7 @@ class AnalyserTest extends TestCase
      */
     public function testIssue126IsFixed($fileNumber, $cloc): void
     {
-        $file   = __DIR__ . '/_files/issue_126/issue_126_' . $fileNumber . '.php';
+        $file   = __DIR__ . '/../_files/issue_126/issue_126_' . $fileNumber . '.php';
         $result = $this->analyser->countFiles([$file], false);
 
         $assertString = \sprintf(
@@ -311,7 +311,7 @@ class AnalyserTest extends TestCase
 
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/issue_138.php',
+                __DIR__ . '/../_files/issue_138.php',
             ],
             false
         );
@@ -328,7 +328,7 @@ class AnalyserTest extends TestCase
 
         $result = $this->analyser->countFiles(
             [
-                __DIR__ . '/_files/issue_139.php',
+                __DIR__ . '/../_files/issue_139.php',
             ],
             false
         );
@@ -338,28 +338,28 @@ class AnalyserTest extends TestCase
 
     public function testDeclareIsNotLogicalLine(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/with_declare.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/with_declare.php'], false);
 
         $this->assertEquals(0, $result['llocGlobal']);
     }
 
     public function testNamespaceIsNotLogicalLine(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/with_namespace.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/with_namespace.php'], false);
 
         $this->assertEquals(0, $result['llocGlobal']);
     }
 
     public function testImportIsNotLogicalLine(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/with_import.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/with_import.php'], false);
 
         $this->assertEquals(0, $result['llocGlobal']);
     }
 
     public function test_it_makes_a_distinction_between_public_and_non_public_class_constants(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/class_constants.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/class_constants.php'], false);
         $this->assertEquals(2, $result['publicClassConstants']);
         $this->assertEquals(3, $result['nonPublicClassConstants']);
         $this->assertEquals(5, $result['classConstants']);
@@ -368,7 +368,7 @@ class AnalyserTest extends TestCase
 
     public function test_it_collects_the_number_of_final_non_final_and_abstract_classes(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/classes.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/classes.php'], false);
         $this->assertEquals(9, $result['classes']);
         $this->assertEquals(2, $result['finalClasses']);
         $this->assertEquals(3, $result['nonFinalClasses']);
@@ -377,7 +377,7 @@ class AnalyserTest extends TestCase
 
     public function test_it_makes_a_distinction_between_protected_and_private_methods(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/methods.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/methods.php'], false);
         $this->assertEquals(2, $result['publicMethods']);
         $this->assertEquals(1, $result['protectedMethods']);
         $this->assertEquals(3, $result['privateMethods']);
@@ -386,7 +386,7 @@ class AnalyserTest extends TestCase
 
     public function test_it_provides_average_minimum_and_maximum_number_of_methods_per_class(): void
     {
-        $result = $this->analyser->countFiles([__DIR__ . '/_files/methods_per_class.php'], false);
+        $result = $this->analyser->countFiles([__DIR__ . '/../_files/methods_per_class.php'], false);
         $this->assertEquals(2, $result['averageMethodsPerClass']);
         $this->assertEquals(0, $result['minimumMethodsPerClass']);
         $this->assertEquals(4, $result['maximumMethodsPerClass']);
