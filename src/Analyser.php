@@ -143,17 +143,17 @@ class Analyser
                 $token = \trim($tokens[$i]);
 
                 if ($token == ';') {
-                    if ($className !== null && !$testClass) {
-                        $this->collector->currentClassIncrementLines();
-
-                        if ($functionName !== null) {
-                            $this->collector->currentMethodIncrementLines();
-                        }
-                    } elseif ($functionName !== null) {
-                        $this->collector->incrementFunctionLines();
-                    }
-
                     if ($isLogicalLine) {
+                        if ($className !== null && !$testClass) {
+                            $this->collector->currentClassIncrementLines();
+
+                            if ($functionName !== null) {
+                                $this->collector->currentMethodIncrementLines();
+                            }
+                        } elseif ($functionName !== null) {
+                            $this->collector->incrementFunctionLines();
+                        }
+
                         $this->collector->incrementLogicalLines();
                     }
                     $isLogicalLine = true;
