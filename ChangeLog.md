@@ -2,7 +2,7 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [7.0.0] - 2020-MM-DD
+## [7.0.0] - 2020-08-13
 
 ### Removed
 
@@ -61,7 +61,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.0] - 2016-01-13
 
-[7.0.0]: https://github.com/sebastianbergmann/phploc/compare/6.0.2...master
+[7.0.0]: https://github.com/sebastianbergmann/phploc/compare/6.0.2...7.0.0
 [6.0.2]: https://github.com/sebastianbergmann/phploc/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/sebastianbergmann/phploc/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sebastianbergmann/phploc/compare/5.0.0...6.0.0
