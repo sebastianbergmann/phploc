@@ -12,10 +12,7 @@ namespace SebastianBergmann\PHPLOC\Log;
 use function sprintf;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * A ResultPrinter for the TextUI.
- */
-class Text
+final class Text
 {
     /**
      * Prints a result set.

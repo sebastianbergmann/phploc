@@ -14,17 +14,9 @@ use function array_merge;
 use function file_put_contents;
 use function json_encode;
 
-/**
- * An JSON ResultPrinter for the TextUI.
- */
-class Json
+final class Json
 {
-    /**
-     * Prints a result set.
-     *
-     * @param string $filename
-     */
-    public function printResult($filename, array $count): void
+    public function printResult(string $filename, array $count): void
     {
         $directories = [];
 

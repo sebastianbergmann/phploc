@@ -9,6 +9,8 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
-interface Exception
+use Throwable;
+
+interface Exception extends Throwable
 {
 }

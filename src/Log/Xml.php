@@ -12,22 +12,16 @@ namespace SebastianBergmann\PHPLOC\Log;
 use function file_put_contents;
 use DOMDocument;
 
-/**
- * An XML ResultPrinter for the TextUI.
- */
-class Xml
+final class Xml
 {
-    /**
-     * Prints a result set.
-     *
-     * @param string $filename
-     */
-    public function printResult($filename, array $count): void
+    /** @noinspection UnusedFunctionResultInspection */
+    public function printResult(string $filename, array $count): void
     {
         $document               = new DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
 
         $root = $document->createElement('phploc');
+
         $document->appendChild($root);
 
         if ($count['directories'] > 0) {

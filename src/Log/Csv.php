@@ -15,16 +15,8 @@ use function file_put_contents;
 use function implode;
 use InvalidArgumentException;
 
-/**
- * A CSV ResultPrinter for the TextUI.
- */
-class Csv
+final class Csv
 {
-    /**
-     * Mapping between internal and human-readable metric names.
-     *
-     * @var array
-     */
     private $colmap = [
         'directories'                 => 'Directories',
         'files'                       => 'Files',
@@ -79,12 +71,7 @@ class Csv
         'testMethods'                 => 'Test Methods',
     ];
 
-    /**
-     * Prints a result set.
-     *
-     * @param string $filename
-     */
-    public function printResult($filename, array $count): void
+    public function printResult(string $filename, array $count): void
     {
         file_put_contents(
             $filename,
@@ -92,20 +79,15 @@ class Csv
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function getKeysLine(array $count)
+    private function getKeysLine(array $count): string
     {
         return implode(',', array_values($this->colmap)) . PHP_EOL;
     }
 
     /**
      * @throws InvalidArgumentException
-     *
-     * @return string
      */
-    protected function getValuesLine(array $count)
+    private function getValuesLine(array $count): string
     {
         $values = [];
 
