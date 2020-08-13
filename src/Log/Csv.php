@@ -9,13 +9,19 @@
  */
 namespace SebastianBergmann\PHPLOC\Log;
 
+use const PHP_EOL;
+use function array_values;
+use function file_put_contents;
+use function implode;
+use InvalidArgumentException;
+
 /**
  * A CSV ResultPrinter for the TextUI.
  */
 class Csv
 {
     /**
-     * Mapping between internal and human-readable metric names
+     * Mapping between internal and human-readable metric names.
      *
      * @var array
      */
@@ -80,7 +86,7 @@ class Csv
      */
     public function printResult($filename, array $count): void
     {
-        \file_put_contents(
+        file_put_contents(
             $filename,
             $this->getKeysLine($count) . $this->getValuesLine($count)
         );
@@ -91,11 +97,11 @@ class Csv
      */
     protected function getKeysLine(array $count)
     {
-        return \implode(',', \array_values($this->colmap)) . \PHP_EOL;
+        return implode(',', array_values($this->colmap)) . PHP_EOL;
     }
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return string
      */
@@ -107,10 +113,10 @@ class Csv
             if (isset($count[$key])) {
                 $values[] = $count[$key];
             } else {
-                throw new \InvalidArgumentException('Attempted to print row with missing keys');
+                throw new InvalidArgumentException('Attempted to print row with missing keys');
             }
         }
 
-        return '"' . \implode('","', $values) . '"' . \PHP_EOL;
+        return '"' . implode('","', $values) . '"' . PHP_EOL;
     }
 }

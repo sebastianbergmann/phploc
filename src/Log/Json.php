@@ -9,6 +9,11 @@
  */
 namespace SebastianBergmann\PHPLOC\Log;
 
+use const JSON_PRETTY_PRINT;
+use function array_merge;
+use function file_put_contents;
+use function json_encode;
+
 /**
  * An JSON ResultPrinter for the TextUI.
  */
@@ -32,11 +37,11 @@ class Json
 
         unset($count['directories'], $count['files']);
 
-        $report = \array_merge($directories, $count);
+        $report = array_merge($directories, $count);
 
-        \file_put_contents(
+        file_put_contents(
             $filename,
-            \json_encode($report, \JSON_PRETTY_PRINT)
+            json_encode($report, JSON_PRETTY_PRINT)
         );
     }
 }

@@ -9,6 +9,8 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
+use function dirname;
+
 class Collector
 {
     private $counts = [];
@@ -31,7 +33,7 @@ class Collector
     public function addFile($filename): void
     {
         $this->increment('files');
-        $this->addUnique('directories', \dirname($filename));
+        $this->addUnique('directories', dirname($filename));
     }
 
     public function incrementLines($number): void

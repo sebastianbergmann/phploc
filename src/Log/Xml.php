@@ -9,6 +9,9 @@
  */
 namespace SebastianBergmann\PHPLOC\Log;
 
+use function file_put_contents;
+use DOMDocument;
+
 /**
  * An XML ResultPrinter for the TextUI.
  */
@@ -21,7 +24,7 @@ class Xml
      */
     public function printResult($filename, array $count): void
     {
-        $document               = new \DOMDocument('1.0', 'UTF-8');
+        $document               = new DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
 
         $root = $document->createElement('phploc');
@@ -45,6 +48,6 @@ class Xml
             );
         }
 
-        \file_put_contents($filename, $document->saveXML());
+        file_put_contents($filename, $document->saveXML());
     }
 }

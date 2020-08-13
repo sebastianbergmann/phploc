@@ -9,6 +9,9 @@
  */
 namespace SebastianBergmann\PHPLOC\CLI;
 
+use function explode;
+use function is_array;
+use InvalidArgumentException;
 use SebastianBergmann\FinderFacade\FinderFacade;
 use SebastianBergmann\PHPLOC\Analyser;
 use SebastianBergmann\PHPLOC\Log\Csv;
@@ -129,7 +132,7 @@ class Command extends AbstractCommand
     {
         try {
             $files = (new FinderFacade($arguments, $excludes, $names, $namesExclude))->findFiles();
-        } catch (\InvalidArgumentException $ex) {
+        } catch (InvalidArgumentException $ex) {
             return false;
         }
 
@@ -144,6 +147,6 @@ class Command extends AbstractCommand
     {
         $result = $input->getOption($option);
 
-        return \is_array($result) ? $result : \explode(',', $result);
+        return is_array($result) ? $result : explode(',', $result);
     }
 }

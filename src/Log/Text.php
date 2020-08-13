@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\PHPLOC\Log;
 
+use function sprintf;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -25,7 +26,7 @@ class Text
     {
         if ($count['directories'] > 0) {
             $output->write(
-                \sprintf(
+                sprintf(
                     "Directories                                 %10d\n" .
                     "Files                                       %10d\n\n",
                     $count['directories'],
@@ -34,7 +35,7 @@ class Text
             );
         }
 
-        $format = <<<END
+        $format = <<<'END'
 Size
   Lines of Code (LOC)                       %10d
   Comment Lines of Code (CLOC)              %10d (%.2f%%)
@@ -104,7 +105,7 @@ Structure
 END;
 
         $output->write(
-            \sprintf(
+            sprintf(
                 $format,
                 $count['loc'],
                 $count['cloc'],
@@ -195,7 +196,7 @@ END;
 
         if ($printTests) {
             $output->write(
-                \sprintf(
+                sprintf(
                     "\nTests\n" .
                     "  Classes                                   %10d\n" .
                     "  Methods                                   %10d\n",

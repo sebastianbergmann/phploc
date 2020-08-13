@@ -9,9 +9,19 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
+use function count;
+use function explode;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_start;
+use function trim;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-class SingleTest extends TestCase
+/**
+ * @covers \SebastianBergmann\PHPLOC\Log\Csv
+ */
+final class CsvTest extends TestCase
 {
     /**
      * @var \SebastianBergmann\PHPLOC\Log\Csv
@@ -79,65 +89,65 @@ class SingleTest extends TestCase
 
     public function testPrintedResultContainsHeadings(): void
     {
-        \ob_start();
+        ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = \ob_get_clean();
+        $output = ob_get_clean();
 
         $this->assertMatchesRegularExpression('#Directories,Files.+$#is', $output, 'Printed result does not contain a heading line');
     }
 
     public function testPrintedResultContainsData(): void
     {
-        \ob_start();
+        ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = \ob_get_clean();
+        $output = ob_get_clean();
 
         $this->assertMatchesRegularExpression('#"1","2".+$#is', $output, 'Printed result does not contain a value line');
     }
 
     public function testPrintedResultContainsEqualNumHeadingsAndValues(): void
     {
-        \ob_start();
+        ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = \ob_get_clean();
+        $output = ob_get_clean();
 
-        $rows     = \explode("\n", $output);
-        $headings = \explode(',', $rows[0]);
-        $vals     = \explode(',', $rows[1]);
+        $rows     = explode("\n", $output);
+        $headings = explode(',', $rows[0]);
+        $vals     = explode(',', $rows[1]);
 
         $this->assertEquals(
-            \count($headings),
-            \count($vals),
+            count($headings),
+            count($vals),
             'Printed result does not contain same number of headings and values'
         );
     }
 
     public function testExactlyTwoRowsArePrinted(): void
     {
-        \ob_start();
+        ob_start();
 
         $this->single->printResult('php://output', $this->sample_row);
-        $output = \ob_get_clean();
+        $output = ob_get_clean();
 
-        $rows = \explode("\n", \trim($output));
-        $this->assertEquals(2, \count($rows), 'Printed result contained more or less than expected 2 rows');
+        $rows = explode("\n", trim($output));
+        $this->assertEquals(2, count($rows), 'Printed result contained more or less than expected 2 rows');
     }
 
     public function testPrintPartialRow(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $count = $this->sample_row;
         unset($count['llocByNof']);
 
         try {
-            \ob_start();
+            ob_start();
             $this->single->printResult('php://output', $count);
         } finally {
-            \ob_end_clean();
+            ob_end_clean();
         }
 
         $this->fail('No exception was raised for malformed input var');

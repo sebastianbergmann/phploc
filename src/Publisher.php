@@ -9,6 +9,12 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
+use function array_intersect;
+use function array_sum;
+use function count;
+use function max;
+use function min;
+
 class Publisher
 {
     private $counts;
@@ -165,7 +171,7 @@ class Publisher
 
     public function getGlobalConstantAccesses()
     {
-        return \count(\array_intersect($this->getValue('possible constant accesses', []), $this->getValue('constant', [])));
+        return count(array_intersect($this->getValue('possible constant accesses', []), $this->getValue('constant', [])));
     }
 
     public function getGlobalVariableAccesses()
@@ -409,22 +415,22 @@ class Publisher
 
     private function getCount($key)
     {
-        return isset($this->counts[$key]) ? \count($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? count($this->counts[$key]) : 0;
     }
 
     private function getSum($key)
     {
-        return isset($this->counts[$key]) ? \array_sum($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? array_sum($this->counts[$key]) : 0;
     }
 
     private function getMaximum($key)
     {
-        return isset($this->counts[$key]) ? \max($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? max($this->counts[$key]) : 0;
     }
 
     private function getMinimum($key)
     {
-        return isset($this->counts[$key]) ? \min($this->counts[$key]) : 0;
+        return isset($this->counts[$key]) ? min($this->counts[$key]) : 0;
     }
 
     private function getValue($key, $default = 0)

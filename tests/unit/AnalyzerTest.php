@@ -9,9 +9,15 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
+use const E_ALL;
+use function error_reporting;
+use function sprintf;
 use PHPUnit\Framework\TestCase;
 
-class AnalyserTest extends TestCase
+/**
+ * @covers \SebastianBergmann\PHPLOC\Analyser
+ */
+final class AnalyserTest extends TestCase
 {
     /**
      * @var Analyser
@@ -187,7 +193,7 @@ class AnalyserTest extends TestCase
             true
         );
 
-        $this->assertEquals(1, $result['testClasses']);
+        $this->assertSame(1, $result['testClasses']);
     }
 
     public function testFilesThatExtendPHPUnitTestCaseAreCountedAsTests2(): void
@@ -199,7 +205,7 @@ class AnalyserTest extends TestCase
             true
         );
 
-        $this->assertEquals(1, $result['testClasses']);
+        $this->assertSame(1, $result['testClasses']);
     }
 
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests(): void
@@ -211,7 +217,7 @@ class AnalyserTest extends TestCase
             true
         );
 
-        $this->assertEquals(3, $result['testClasses']);
+        $this->assertSame(3, $result['testClasses']);
     }
 
     public function testFilesThatIndirectlyExtendPHPUnitTestCaseAreCountedAsTests2(): void
@@ -223,7 +229,7 @@ class AnalyserTest extends TestCase
             true
         );
 
-        $this->assertEquals(3, $result['testClasses']);
+        $this->assertSame(3, $result['testClasses']);
     }
 
     public function testTraitsAreCountedCorrectly(): void
@@ -235,7 +241,7 @@ class AnalyserTest extends TestCase
             false
         );
 
-        $this->assertEquals(1, $result['traits']);
+        $this->assertSame(1, $result['traits']);
     }
 
     /**
@@ -250,7 +256,7 @@ class AnalyserTest extends TestCase
             false
         );
 
-        $this->assertEquals(1, $result['cloc']);
+        $this->assertSame(1, $result['cloc']);
     }
 
     /**
@@ -265,7 +271,7 @@ class AnalyserTest extends TestCase
             false
         );
 
-        $this->assertEquals(5, $result['loc']);
+        $this->assertSame(5, $result['loc']);
     }
 
     /**
@@ -277,14 +283,14 @@ class AnalyserTest extends TestCase
         $file   = __DIR__ . '/../_files/issue_126/issue_126_' . $fileNumber . '.php';
         $result = $this->analyser->countFiles([$file], false);
 
-        $assertString = \sprintf(
+        $assertString = sprintf(
             'Failed asserting that %s matches expected %s in issue_126_%d.php',
             $result['cloc'],
             $cloc,
             $fileNumber
         );
 
-        $this->assertEquals($cloc, $result['cloc'], $assertString);
+        $this->assertSame($cloc, $result['cloc'], $assertString);
     }
 
     public function issue126Provider()
@@ -307,7 +313,7 @@ class AnalyserTest extends TestCase
      */
     public function testIssue138IsFixed(): void
     {
-        \error_reporting(\E_ALL);
+        error_reporting(E_ALL);
 
         $result = $this->analyser->countFiles(
             [
@@ -324,7 +330,7 @@ class AnalyserTest extends TestCase
      */
     public function testIssue139IsFixed(): void
     {
-        \error_reporting(\E_ALL);
+        error_reporting(E_ALL);
 
         $result = $this->analyser->countFiles(
             [
@@ -333,63 +339,63 @@ class AnalyserTest extends TestCase
             false
         );
 
-        $this->assertEquals(1, $result['anonymousFunctions']);
+        $this->assertSame(1, $result['anonymousFunctions']);
     }
 
     public function testDeclareIsNotLogicalLine(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/with_declare.php'], false);
 
-        $this->assertEquals(0, $result['llocGlobal']);
+        $this->assertSame(0, $result['llocGlobal']);
     }
 
     public function testNamespaceIsNotLogicalLine(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/with_namespace.php'], false);
 
-        $this->assertEquals(0, $result['llocGlobal']);
+        $this->assertSame(0, $result['llocGlobal']);
     }
 
     public function testImportIsNotLogicalLine(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/with_import.php'], false);
 
-        $this->assertEquals(0, $result['llocGlobal']);
+        $this->assertSame(0, $result['llocGlobal']);
     }
 
     public function test_it_makes_a_distinction_between_public_and_non_public_class_constants(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/class_constants.php'], false);
-        $this->assertEquals(2, $result['publicClassConstants']);
-        $this->assertEquals(3, $result['nonPublicClassConstants']);
-        $this->assertEquals(5, $result['classConstants']);
-        $this->assertEquals(5, $result['constants']);
+        $this->assertSame(2, $result['publicClassConstants']);
+        $this->assertSame(3, $result['nonPublicClassConstants']);
+        $this->assertSame(5, $result['classConstants']);
+        $this->assertSame(5, $result['constants']);
     }
 
     public function test_it_collects_the_number_of_final_non_final_and_abstract_classes(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/classes.php'], false);
-        $this->assertEquals(9, $result['classes']);
-        $this->assertEquals(2, $result['finalClasses']);
-        $this->assertEquals(3, $result['nonFinalClasses']);
-        $this->assertEquals(4, $result['abstractClasses']);
+        $this->assertSame(9, $result['classes']);
+        $this->assertSame(2, $result['finalClasses']);
+        $this->assertSame(3, $result['nonFinalClasses']);
+        $this->assertSame(4, $result['abstractClasses']);
     }
 
     public function test_it_makes_a_distinction_between_protected_and_private_methods(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/methods.php'], false);
-        $this->assertEquals(2, $result['publicMethods']);
-        $this->assertEquals(1, $result['protectedMethods']);
-        $this->assertEquals(3, $result['privateMethods']);
-        $this->assertEquals(6, $result['methods']);
+        $this->assertSame(2, $result['publicMethods']);
+        $this->assertSame(1, $result['protectedMethods']);
+        $this->assertSame(3, $result['privateMethods']);
+        $this->assertSame(6, $result['methods']);
     }
 
     public function test_it_provides_average_minimum_and_maximum_number_of_methods_per_class(): void
     {
         $result = $this->analyser->countFiles([__DIR__ . '/../_files/methods_per_class.php'], false);
-        $this->assertEquals(2, $result['averageMethodsPerClass']);
-        $this->assertEquals(0, $result['minimumMethodsPerClass']);
-        $this->assertEquals(4, $result['maximumMethodsPerClass']);
+        $this->assertSame(2, $result['averageMethodsPerClass']);
+        $this->assertSame(0, $result['minimumMethodsPerClass']);
+        $this->assertSame(4, $result['maximumMethodsPerClass']);
     }
 
     public function test_use_trait_is_not_counted_as_logical_line(): void
