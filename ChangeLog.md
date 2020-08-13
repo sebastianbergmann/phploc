@@ -4,6 +4,11 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [7.0.0] - 2020-MM-DD
 
+### Removed
+
+* The `--names` CLI option has been removed; use the `--suffix` CLI option instead
+* The `--names-exclude` CLI option has been removed; use the `--exclude` CLI option instead
+
 ## [6.0.2] - 2020-02-28
 
 ### Fixed

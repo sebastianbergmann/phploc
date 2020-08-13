@@ -27,5 +27,4 @@ if (!$loaded) {
     );
 }
 
-$application = new SebastianBergmann\PHPLOC\CLI\Application;
-$application->run();
+exit((new \SebastianBergmann\PHPLOC\Application)->run($_SERVER['argv']));

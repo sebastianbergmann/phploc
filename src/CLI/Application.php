@@ -7,113 +7,113 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace SebastianBergmann\PHPLOC\CLI;
+namespace SebastianBergmann\PHPLOC;
 
-use function dirname;
-use function extension_loaded;
-use function ini_set;
-use function sprintf;
-use function xdebug_disable;
+use const PHP_EOL;
+use function printf;
+use SebastianBergmann\FileIterator\Facade;
+use SebastianBergmann\PHPLOC\Log\Csv as CsvPrinter;
+use SebastianBergmann\PHPLOC\Log\Json as JsonPrinter;
+use SebastianBergmann\PHPLOC\Log\Text as TextPrinter;
+use SebastianBergmann\PHPLOC\Log\Xml as XmlPrinter;
 use SebastianBergmann\Version;
-use Symfony\Component\Console\Application as AbstractApplication;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * TextUI frontend for PHPLOC.
- */
-class Application extends AbstractApplication
+final class Application
 {
-    public function __construct()
+    private const VERSION = '7.0';
+
+    public function run(array $argv): int
     {
-        $version = new Version('7.0', dirname(__DIR__, 2));
+        $this->printVersion();
 
-        parent::__construct('phploc', $version->getVersion());
-    }
+        try {
+            $arguments = (new ArgumentsBuilder)->build($argv);
+        } catch (Exception $e) {
+            print PHP_EOL . $e->getMessage() . PHP_EOL;
 
-    /**
-     * Overridden so that the application doesn't expect the command
-     * name to be the first argument.
-     */
-    public function getDefinition()
-    {
-        $inputDefinition = parent::getDefinition();
-        $inputDefinition->setArguments();
-
-        return $inputDefinition;
-    }
-
-    /**
-     * Runs the current application.
-     *
-     * @param InputInterface  $input  An Input instance
-     * @param OutputInterface $output An Output instance
-     *
-     * @return int 0 if everything went fine, or an error code
-     */
-    public function doRun(InputInterface $input, OutputInterface $output)
-    {
-        $this->disableXdebug();
-
-        if (!$input->hasParameterOption('--quiet')) {
-            $output->write(
-                sprintf(
-                    "phploc %s by Sebastian Bergmann.\n\n",
-                    $this->getVersion()
-                )
-            );
+            return 1;
         }
 
-        if ($input->hasParameterOption('--version') ||
-            $input->hasParameterOption('-V')) {
-            exit;
+        if ($arguments->version()) {
+            return 0;
         }
 
-        if (!$input->getFirstArgument()) {
-            $input = new ArrayInput(['--help']);
+        print PHP_EOL;
+
+        if ($arguments->help()) {
+            $this->help();
+
+            return 0;
         }
 
-        parent::doRun($input, $output);
-    }
+        $files = (new Facade)->getFilesAsArray(
+            $arguments->directories(),
+            $arguments->suffixes(),
+            $arguments->exclude()
+        );
 
-    /**
-     * Gets the name of the command based on input.
-     *
-     * @param InputInterface $input The input interface
-     *
-     * @return string The command name
-     */
-    protected function getCommandName(InputInterface $input)
-    {
-        return 'phploc';
-    }
+        if (empty($files)) {
+            print 'No files found to scan' . PHP_EOL;
 
-    /**
-     * Gets the default commands that should always be available.
-     *
-     * @return array An array of default Command instances
-     */
-    protected function getDefaultCommands()
-    {
-        $defaultCommands = parent::getDefaultCommands();
-
-        $defaultCommands[] = new Command;
-
-        return $defaultCommands;
-    }
-
-    private function disableXdebug(): void
-    {
-        if (!extension_loaded('xdebug')) {
-            return;
+            return 1;
         }
 
-        ini_set('xdebug.scream', '0');
-        ini_set('xdebug.max_nesting_level', '8192');
-        ini_set('xdebug.show_exception_trace', '0');
-        ini_set('xdebug.show_error_trace', '0');
+        $result = (new Analyser)->countFiles($files, $arguments->countTests());
 
-        xdebug_disable();
+        (new TextPrinter)->printResult($result, $arguments->countTests());
+
+        if ($arguments->csvLogfile()) {
+            $printer = new CsvPrinter;
+
+            $printer->printResult($arguments->csvLogfile(), $result);
+        }
+
+        if ($arguments->jsonLogfile()) {
+            $printer = new JsonPrinter;
+
+            $printer->printResult($arguments->jsonLogfile(), $result);
+        }
+
+        if ($arguments->xmlLogfile()) {
+            $printer = new XmlPrinter;
+
+            $printer->printResult($arguments->xmlLogfile(), $result);
+        }
+
+        return 0;
+    }
+
+    private function printVersion(): void
+    {
+        printf(
+            'phploc %s by Sebastian Bergmann.' . PHP_EOL,
+            (new Version(self::VERSION, dirname(__DIR__)))->getVersion()
+        );
+    }
+
+    private function help(): void
+    {
+        print <<<'EOT'
+Usage:
+  phploc [options] <directory>
+
+Options for selecting files:
+
+  --suffix <suffix> Include files with names ending in <suffix> in the analysis
+                    (default: .php; can be given multiple times)
+  --exclude <path>  Exclude files with <path> in their path from the analysis
+                    (can be given multiple times)
+
+Options for analysing files:
+
+  --count-tests     Count PHPUnit test case classes and test methods
+
+Options for report generation:
+
+  --log-csv <file>  Write results in CSV format to <file>
+  --log-json <file> Write results in JSON format to <file>
+  --log-xml <file>  Write results in XML format to <file>
+
+EOT;
     }
 }

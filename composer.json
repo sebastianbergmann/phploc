@@ -24,9 +24,9 @@
         "php": "^7.3",
         "ext-dom": "*",
         "ext-json": "*",
-        "sebastian/finder-facade": "^2.0",
+        "sebastian/cli-parser": "^1.0",
         "sebastian/version": "^3.0",
-        "symfony/console": "^4.0 || ^5.0"
+        "phpunit/php-file-iterator": "^3.0"
     },
     "autoload": {
         "classmap": [
