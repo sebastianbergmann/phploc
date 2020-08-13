@@ -72,29 +72,25 @@
             </fileset>
         </copy>
 
-        <copy todir="${basedir}/build/phar/finder-facade">
-            <fileset dir="${basedir}/vendor/sebastian/finder-facade/src">
+        <copy file="${basedir}/vendor/sebastian/cli-parser/LICENSE" tofile="${basedir}/build/phar/sebastian-cli-parser/LICENSE"/>
+        <copy todir="${basedir}/build/phar/sebastian-cli-parser">
+            <fileset dir="${basedir}/vendor/sebastian/cli-parser/src">
                 <include name="**/*.php" />
-                <exclude name="**/autoload.php" />
             </fileset>
         </copy>
 
-        <copy todir="${basedir}/build/phar/version">
+        <copy file="${basedir}/vendor/sebastian/version/LICENSE" tofile="${basedir}/build/phar/sebastian-version/LICENSE"/>
+        <copy todir="${basedir}/build/phar/sebastian-version">
             <fileset dir="${basedir}/vendor/sebastian/version/src">
                 <include name="**/*.php" />
-                <exclude name="**/autoload.php" />
             </fileset>
         </copy>
 
-        <copy todir="${basedir}/build/phar/symfony">
-            <fileset dir="${basedir}/vendor/symfony">
+        <copy file="${basedir}/vendor/phpunit/php-file-iterator/LICENSE" tofile="${basedir}/build/phar/phpunit-php-file-iterator/LICENSE"/>
+        <copy todir="${basedir}/build/phar/phpunit-php-file-iterator">
+            <fileset dir="${basedir}/vendor/phpunit/php-file-iterator/src">
                 <include name="**/*.php" />
-                <exclude name="**/Tests/**" />
             </fileset>
-        </copy>
-
-        <copy todir="${basedir}/build/phar/fdomdocument">
-            <fileset dir="${basedir}/vendor/theseer/fdomdocument/src"/>
         </copy>
 
         <exec executable="${basedir}/build/phar-manifest.php" output="${basedir}/build/phar/manifest.txt"/>
