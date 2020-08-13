@@ -13,13 +13,13 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ### Fixed
 
-* Fixed [#207](https://github.com/sebastianbergmann/phploc/issues/207): `TypeError` in `DOMDocument::createElement()` calls
+* [#207](https://github.com/sebastianbergmann/phploc/issues/207): `TypeError` in `DOMDocument::createElement()` calls
 
 ## [6.0.1] - 2020-02-27
 
 ### Fixed
 
-* Fixed [#205](https://github.com/sebastianbergmann/phploc/pull/205): `TypeError` in `ini_set()` calls
+* [#205](https://github.com/sebastianbergmann/phploc/pull/205): `TypeError` in `ini_set()` calls
 
 ## [6.0.0] - 2020-02-20
 
@@ -31,7 +31,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ### Fixed
 
-* Fixed [#182](https://github.com/sebastianbergmann/phploc/pull/182): `"continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"`
+* [#182](https://github.com/sebastianbergmann/phploc/pull/182): `"continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"`
 
 ### Removed
 
@@ -54,8 +54,8 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ### Fixed
 
-* Fixed [#139](https://github.com/sebastianbergmann/phploc/issues/139): Introduction of `T_USE` in `Analyser.php` gives `PHP Notice: Undefined index: ccn`
-* Fixed [#141](https://github.com/sebastianbergmann/phploc/issues/141): `Undefined index: ccn in phar:///usr/local/bin/phploc/src/Analyser.php on line 507`
+* [#139](https://github.com/sebastianbergmann/phploc/issues/139): Introduction of `T_USE` in `Analyser.php` gives `PHP Notice: Undefined index: ccn`
+* [#141](https://github.com/sebastianbergmann/phploc/issues/141): `Undefined index: ccn in phar:///usr/local/bin/phploc/src/Analyser.php on line 507`
 
 ### Fixed
 
