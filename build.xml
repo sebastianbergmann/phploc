@@ -15,7 +15,7 @@
     </target>
 
     <target name="install-dependencies" unless="dependencies-installed" depends="-dependencies-installed" description="Install dependencies with Composer">
-        <exec executable="composer" taskname="composer">
+        <exec executable="${basedir}/tools/composer" taskname="composer">
             <arg value="update"/>
             <arg value="--no-interaction"/>
             <arg value="--no-progress"/>
