@@ -22,7 +22,7 @@ Using [Phive](https://phar.io/) is the recommended way for managing the tool dep
 
 ```
 $ php phploc.phar src
-phploc 4.0.0 by Sebastian Bergmann.
+phploc 7.0.0 by Sebastian Bergmann.
 
 Directories                                          3
 Files                                               10
