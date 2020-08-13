@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.11.4@58e1d8e68e5098bf4fbfdfb420c38d563f882549">
+<files psalm-version="3.13.1@afd8874a9e4562eac42a02de90e42e430c3a1db1">
   <file src="src/Analyser.php">
     <FalsableReturnStatement occurrences="1">
       <code>false</code>
@@ -20,6 +20,9 @@
       <code>$next</code>
       <code>$n</code>
     </InvalidScalarArgument>
+    <MissingReturnType occurrences="1">
+      <code>countFiles</code>
+    </MissingReturnType>
     <MixedArgument occurrences="4">
       <code>$file</code>
       <code>$className</code>
@@ -49,8 +52,7 @@
       <code>$parent</code>
       <code>$parent</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>array</code>
+    <MixedInferredReturnType occurrences="1">
       <code>string</code>
     </MixedInferredReturnType>
     <MixedMethodCall occurrences="1">
@@ -62,8 +64,7 @@
       <code>$className</code>
       <code>$className</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;collector-&gt;getPublisher()-&gt;toArray()</code>
+    <MixedReturnStatement occurrences="1">
       <code>$namespace</code>
     </MixedReturnStatement>
     <PossiblyFalseArgument occurrences="3">
@@ -72,48 +73,56 @@
       <code>$namespace</code>
     </PossiblyFalseArgument>
     <RedundantCondition occurrences="1">
-      <code>$visibility == \T_PRIVATE</code>
+      <code>$visibility === T_PRIVATE</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType occurrences="2">
       <code>$namespace !== false</code>
+      <code>!$namespaced &amp;&amp; $namespace !== false</code>
     </RedundantConditionGivenDocblockType>
+    <TypeDoesNotContainType occurrences="2">
+      <code>$block === $functionName</code>
+      <code>$block === $className</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/CLI/Application.php">
-    <InvalidReturnType occurrences="1">
-      <code>int</code>
-    </InvalidReturnType>
-    <LessSpecificImplementedReturnType occurrences="1">
-      <code>array</code>
-    </LessSpecificImplementedReturnType>
-  </file>
-  <file src="src/CLI/Command.php">
-    <MissingParamType occurrences="4">
-      <code>$excludes</code>
-      <code>$names</code>
-      <code>$namesExclude</code>
-      <code>$countTests</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="1">
-      <code>count</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="5">
-      <code>$count</code>
-      <code>$excludes</code>
-      <code>$names</code>
-      <code>$namesExclude</code>
-      <code>$countTests</code>
+    <MixedArgument occurrences="1">
+      <code>$result</code>
     </MixedArgument>
     <MixedAssignment occurrences="1">
-      <code>$count</code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument occurrences="6">
-      <code>$input-&gt;getArgument('values')</code>
-      <code>$input-&gt;getOption('count-tests')</code>
-      <code>$input-&gt;getOption('log-csv')</code>
-      <code>$input-&gt;getOption('log-json')</code>
-      <code>$input-&gt;getOption('log-xml')</code>
       <code>$result</code>
-    </PossiblyInvalidArgument>
+    </MixedAssignment>
+  </file>
+  <file src="src/CLI/Arguments.php">
+    <MixedPropertyTypeCoercion occurrences="3">
+      <code>$directories</code>
+      <code>$suffixes</code>
+      <code>$exclude</code>
+    </MixedPropertyTypeCoercion>
+  </file>
+  <file src="src/CLI/ArgumentsBuilder.php">
+    <MixedArgument occurrences="4">
+      <code>$directories</code>
+      <code>$csvLogfile</code>
+      <code>$jsonLogfile</code>
+      <code>$xmlLogfile</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="6">
+      <code>$option[0]</code>
+      <code>$option[1]</code>
+      <code>$option[1]</code>
+      <code>$option[1]</code>
+      <code>$option[1]</code>
+      <code>$option[1]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="7">
+      <code>$directories</code>
+      <code>$option</code>
+      <code>$suffixes[]</code>
+      <code>$exclude[]</code>
+      <code>$csvLogfile</code>
+      <code>$jsonLogfile</code>
+      <code>$xmlLogfile</code>
+    </MixedAssignment>
   </file>
   <file src="src/Collector.php">
     <MissingParamType occurrences="14">
@@ -152,7 +161,14 @@
       <code>$this-&gt;counts[$key]</code>
       <code>$this-&gt;counts[$key]</code>
     </MixedArrayAccess>
-    <MixedArrayOffset occurrences="4">
+    <MixedArrayAssignment occurrences="4">
+      <code>$this-&gt;counts[$key]</code>
+      <code>$this-&gt;counts[$key]</code>
+      <code>$this-&gt;counts[$key]</code>
+      <code>$this-&gt;counts[$key]</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="5">
+      <code>$this-&gt;counts[$key]</code>
       <code>$this-&gt;counts[$key]</code>
       <code>$this-&gt;counts[$key]</code>
       <code>$this-&gt;counts[$key]</code>
@@ -168,6 +184,15 @@
     </MixedOperand>
   </file>
   <file src="src/Log/Csv.php">
+    <MissingPropertyType occurrences="1">
+      <code>$colmap</code>
+    </MissingPropertyType>
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;colmap</code>
+    </MixedArgument>
+    <MixedArrayOffset occurrences="1">
+      <code>$count[$key]</code>
+    </MixedArrayOffset>
     <MixedAssignment occurrences="2">
       <code>$name</code>
       <code>$values[]</code>
