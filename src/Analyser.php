@@ -547,7 +547,7 @@ final class Analyser
 
         $namespaced = $className === '\\';
 
-        while (is_array($tokens[$i + 1]) && $tokens[$i + 1][0] !== T_WHITESPACE) {
+        while (isset($tokens[$i + 1]) && is_array($tokens[$i + 1]) && $tokens[$i + 1][0] !== T_WHITESPACE) {
             $className .= $tokens[++$i][1];
         }
 
