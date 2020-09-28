@@ -106,6 +106,9 @@
       <code>$jsonLogfile</code>
       <code>$xmlLogfile</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$argv</code>
+    </MixedArgumentTypeCoercion>
     <MixedArrayAccess occurrences="6">
       <code>$option[0]</code>
       <code>$option[1]</code>
