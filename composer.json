@@ -21,7 +21,7 @@
         "sort-packages": true
     },
     "require": {
-        "php": "^7.3",
+        "php": ">=7.3",
         "ext-dom": "*",
         "ext-json": "*",
         "sebastian/cli-parser": "^1.0",
