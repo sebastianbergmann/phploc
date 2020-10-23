@@ -22,7 +22,7 @@ final class ArgumentsBuilder
         try {
             $options = (new CliParser)->parse(
                 $argv,
-                'hv',
+                'hqv',
                 [
                     'suffix=',
                     'exclude=',
@@ -31,6 +31,7 @@ final class ArgumentsBuilder
                     'log-json=',
                     'log-xml=',
                     'help',
+                    'quiet',
                     'version',
                 ]
             );
@@ -50,6 +51,7 @@ final class ArgumentsBuilder
         $jsonLogfile = null;
         $xmlLogfile  = null;
         $help        = false;
+        $quiet       = false;
         $version     = false;
 
         foreach ($options[0] as $option) {
@@ -90,6 +92,12 @@ final class ArgumentsBuilder
 
                     break;
 
+                case 'q':
+                case '--quiet':
+                    $quiet = true;
+
+                    break;
+
                 case 'v':
                 case '--version':
                     $version = true;
@@ -113,6 +121,7 @@ final class ArgumentsBuilder
             $jsonLogfile,
             $xmlLogfile,
             $help,
+            $quiet,
             $version,
         );
     }
