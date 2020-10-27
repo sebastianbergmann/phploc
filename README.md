@@ -13,23 +13,21 @@ $ php phploc.phar --version
 ```
 
 Using [Phive](https://phar.io/) is the recommended way for managing the tool dependencies of your project:
+
 ```bash
 $ phive install phploc
+
+$ ./tools/phploc --version
 ```
 
 **[It is not recommended to use Composer to download and install this tool.](https://twitter.com/s_bergmann/status/999635212723212288)**
 
 ## Usage Examples
 
-```bash
+### Analyse a directory and print the result
+
+```
 $ php phploc.phar src
-```
-or
-```bash
-$ php tools/phploc src
-```
-### Example Output
-```
 phploc 7.0.0 by Sebastian Bergmann.
 
 Directories                                          3
