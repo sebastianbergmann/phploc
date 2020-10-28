@@ -435,7 +435,7 @@ class Publisher
 
     private function getValue($key, $default = 0)
     {
-        return isset($this->counts[$key]) ? $this->counts[$key] : $default;
+        return $this->counts[$key] ?? $default;
     }
 
     private function divide($x, $y)
