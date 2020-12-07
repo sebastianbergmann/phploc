@@ -2,6 +2,12 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [7.0.2] - 2020-12-07
+
+### Changed
+
+* Changed PHP version constraint in `composer.json` from `^7.3` to `>=7.3`
+
 ## [7.0.1] - 2020-08-18
 
 ### Fixed
@@ -67,6 +73,7 @@ All notable changes in PHPLOC are documented in this file using the [Keep a CHAN
 
 ## [3.0.0] - 2016-01-13
 
+[7.0.2]: https://github.com/sebastianbergmann/phploc/compare/7.0.1...7.0.2
 [7.0.1]: https://github.com/sebastianbergmann/phploc/compare/7.0.0...7.0.1
 [7.0.0]: https://github.com/sebastianbergmann/phploc/compare/6.0.2...7.0.0
 [6.0.2]: https://github.com/sebastianbergmann/phploc/compare/6.0.1...6.0.2
