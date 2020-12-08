@@ -113,7 +113,7 @@ final class ArgumentsBuilder
             $jsonLogfile,
             $xmlLogfile,
             $help,
-            $version,
+            $version
         );
     }
 }
