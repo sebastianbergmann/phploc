@@ -54,9 +54,14 @@ final class Arguments
     /**
      * @var bool
      */
+    private $quiet;
+
+    /**
+     * @var bool
+     */
     private $version;
 
-    public function __construct(array $directories, array $suffixes, array $exclude, bool $countTests, ?string $csvLogfile, ?string $jsonLogfile, ?string $xmlLogfile, bool $help, bool $version)
+    public function __construct(array $directories, array $suffixes, array $exclude, bool $countTests, ?string $csvLogfile, ?string $jsonLogfile, ?string $xmlLogfile, bool $help, bool $quiet, bool $version)
     {
         $this->directories = $directories;
         $this->suffixes    = $suffixes;
@@ -66,6 +71,7 @@ final class Arguments
         $this->jsonLogfile = $jsonLogfile;
         $this->xmlLogfile  = $xmlLogfile;
         $this->help        = $help;
+        $this->quiet       = $quiet;
         $this->version     = $version;
     }
 
@@ -116,6 +122,11 @@ final class Arguments
     public function help(): bool
     {
         return $this->help;
+    }
+
+    public function quiet(): bool
+    {
+        return $this->quiet;
     }
 
     public function version(): bool

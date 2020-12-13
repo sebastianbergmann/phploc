@@ -61,7 +61,9 @@ final class Application
 
         $result = (new Analyser)->countFiles($files, $arguments->countTests());
 
-        (new TextPrinter)->printResult($result, $arguments->countTests());
+        if (!$arguments->quiet()) {
+            (new TextPrinter)->printResult($result, $arguments->countTests());
+        }
 
         if ($arguments->csvLogfile()) {
             $printer = new CsvPrinter;
