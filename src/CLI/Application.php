@@ -109,6 +109,8 @@ class Application extends AbstractApplication
         \ini_set('xdebug.show_exception_trace', 0);
         \ini_set('xdebug.show_error_trace', 0);
 
-        \xdebug_disable();
+        if (\function_exists('xdebug_disable')) {
+            \xdebug_disable();
+        }
     }
 }
