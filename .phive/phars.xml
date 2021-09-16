@@ -4,5 +4,5 @@
   <phar name="phpunit" version="^9.1" installed="9.5.9" location="./tools/phpunit" copy="true"/>
   <phar name="php-cs-fixer" version="^2.16" installed="2.19.2" location="./tools/php-cs-fixer" copy="true"/>
   <phar name="psalm" version="^3.11.4" installed="3.18.2" location="./tools/psalm" copy="true"/>
-  <phar name="composer" version="^2.0.3" installed="2.1.6" location="./tools/composer" copy="true"/>
+  <phar name="composer" version="^2.0.3" installed="2.1.8" location="./tools/composer" copy="true"/>
 </phive>
