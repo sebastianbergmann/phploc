@@ -3,5 +3,6 @@
 /.idea
 /composer.lock
 /vendor
-/.php_cs.cache
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
 /.phpunit.cache
