@@ -299,7 +299,7 @@ final class Analyser
 
                     $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
 
-                    if (!is_array($tokens[$next]) && $tokens[$next] === '&') {
+                    if ($tokens[$next] === '&' || (is_array($tokens[$next]) && $tokens[$next][1] === '&')) {
                         $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
                     }
 
