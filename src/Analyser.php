@@ -204,9 +204,9 @@ final class Analyser
 
                     $this->collector->incrementComplexity();
                 } elseif ($token === '{') {
-                    if ($currentBlock == T_CLASS) {
+                    if ($currentBlock === T_CLASS) {
                         $block = $className;
-                    } elseif ($currentBlock == T_FUNCTION) {
+                    } elseif ($currentBlock === T_FUNCTION) {
                         $block = $functionName;
                     } else {
                         $block = false;
