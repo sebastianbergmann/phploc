@@ -130,18 +130,18 @@ final class Analyser
                         break;
                     }
 
-                $className = $this->getClassName($namespace, $tokens, $i);
+                    $className = $this->getClassName($namespace, $tokens, $i);
 
-                if (isset($tokens[$i + 4]) && is_array($tokens[$i + 4]) &&
-                    $tokens[$i + 4][0] === T_EXTENDS) {
-                    $parent = $this->getClassName($namespace, $tokens, $i + 4);
-                } else {
-                    $parent = null;
-                }
+                    if (isset($tokens[$i + 4]) && is_array($tokens[$i + 4]) &&
+                        $tokens[$i + 4][0] === T_EXTENDS) {
+                        $parent = $this->getClassName($namespace, $tokens, $i + 4);
+                    } else {
+                        $parent = null;
+                    }
 
-                $this->classes[$className] = $parent;
+                    $this->classes[$className] = $parent;
 
-                break;
+                    break;
             }
         }
     }
@@ -255,38 +255,38 @@ final class Analyser
                         break;
                     }
 
-                $this->collector->currentClassReset();
-                $this->collector->currentClassIncrementComplexity();
-                $className    = $this->getClassName($namespace, $tokens, $i);
-                $currentBlock = T_CLASS;
+                    $this->collector->currentClassReset();
+                    $this->collector->currentClassIncrementComplexity();
+                    $className    = $this->getClassName($namespace, $tokens, $i);
+                    $currentBlock = T_CLASS;
 
-                if ($token === T_TRAIT) {
-                    $this->collector->incrementTraits();
-                } elseif ($token === T_INTERFACE) {
-                    $this->collector->incrementInterfaces();
-                } else {
-                    if ($countTests && $this->isTestClass($className)) {
-                        $testClass = true;
-                        $this->collector->incrementTestClasses();
+                    if ($token === T_TRAIT) {
+                        $this->collector->incrementTraits();
+                    } elseif ($token === T_INTERFACE) {
+                        $this->collector->incrementInterfaces();
                     } else {
-                        $classModifierToken = $this->getPreviousNonWhitespaceNonCommentTokenPos($tokens, $i);
-
-                        if ($classModifierToken !== false &&
-                            $tokens[$classModifierToken][0] === T_ABSTRACT
-                        ) {
-                            $this->collector->incrementAbstractClasses();
-                        } elseif (
-                            $classModifierToken !== false &&
-                            $tokens[$classModifierToken][0] === T_FINAL
-                        ) {
-                            $this->collector->incrementFinalClasses();
+                        if ($countTests && $this->isTestClass($className)) {
+                            $testClass = true;
+                            $this->collector->incrementTestClasses();
                         } else {
-                            $this->collector->incrementNonFinalClasses();
+                            $classModifierToken = $this->getPreviousNonWhitespaceNonCommentTokenPos($tokens, $i);
+
+                            if ($classModifierToken !== false &&
+                                $tokens[$classModifierToken][0] === T_ABSTRACT
+                            ) {
+                                $this->collector->incrementAbstractClasses();
+                            } elseif (
+                                $classModifierToken !== false &&
+                                $tokens[$classModifierToken][0] === T_FINAL
+                            ) {
+                                $this->collector->incrementFinalClasses();
+                            } else {
+                                $this->collector->incrementNonFinalClasses();
+                            }
                         }
                     }
-                }
 
-                break;
+                    break;
 
                 case T_FUNCTION:
                     $prev = $this->getPreviousNonWhitespaceTokenPos($tokens, $i);
@@ -295,89 +295,89 @@ final class Analyser
                         break;
                     }
 
-                $currentBlock = T_FUNCTION;
+                    $currentBlock = T_FUNCTION;
 
-                $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
+                    $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
 
-                if ($tokens[$next] === '&' || (is_array($tokens[$next]) && $tokens[$next][1] === '&')) {
-                    $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
-                }
+                    if ($tokens[$next] === '&' || (is_array($tokens[$next]) && $tokens[$next][1] === '&')) {
+                        $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
+                    }
 
-                if (is_array($tokens[$next]) &&
-                    $tokens[$next][0] === T_STRING) {
-                    $functionName = $tokens[$next][1];
-                } else {
-                    $currentBlock = 'anonymous function';
-                    $functionName = 'anonymous function';
-                    $this->collector->incrementAnonymousFunctions();
-                }
-
-                if ($currentBlock === T_FUNCTION) {
-                    if ($className === null &&
-                        $functionName !== 'anonymous function') {
-                        $this->collector->incrementNamedFunctions();
+                    if (is_array($tokens[$next]) &&
+                        $tokens[$next][0] === T_STRING) {
+                        $functionName = $tokens[$next][1];
                     } else {
-                        $static     = false;
-                        $visibility = T_PUBLIC;
+                        $currentBlock = 'anonymous function';
+                        $functionName = 'anonymous function';
+                        $this->collector->incrementAnonymousFunctions();
+                    }
 
-                        for ($j = $i; $j > 0; $j--) {
-                            if (is_string($tokens[$j])) {
-                                if ($tokens[$j] === '{' ||
-                                    $tokens[$j] === '}' ||
-                                    $tokens[$j] === ';') {
-                                    break;
+                    if ($currentBlock === T_FUNCTION) {
+                        if ($className === null &&
+                            $functionName !== 'anonymous function') {
+                            $this->collector->incrementNamedFunctions();
+                        } else {
+                            $static     = false;
+                            $visibility = T_PUBLIC;
+
+                            for ($j = $i; $j > 0; $j--) {
+                                if (is_string($tokens[$j])) {
+                                    if ($tokens[$j] === '{' ||
+                                        $tokens[$j] === '}' ||
+                                        $tokens[$j] === ';') {
+                                        break;
+                                    }
+
+                                    continue;
                                 }
 
-                                continue;
-                            }
+                                if (isset($tokens[$j][0])) {
+                                    switch ($tokens[$j][0]) {
+                                        case T_PRIVATE:
+                                            $visibility = T_PRIVATE;
 
-                            if (isset($tokens[$j][0])) {
-                                switch ($tokens[$j][0]) {
-                                    case T_PRIVATE:
-                                        $visibility = T_PRIVATE;
+                                            break;
 
-                                        break;
+                                        case T_PROTECTED:
+                                            $visibility = T_PROTECTED;
 
-                                    case T_PROTECTED:
-                                        $visibility = T_PROTECTED;
+                                            break;
 
-                                        break;
+                                        case T_STATIC:
+                                            $static = true;
 
-                                    case T_STATIC:
-                                        $static = true;
-
-                                        break;
+                                            break;
+                                    }
                                 }
                             }
-                        }
 
-                        if ($testClass &&
-                            $this->isTestMethod($functionName, $visibility, $static, $tokens, $i)) {
-                            $this->collector->incrementTestMethods();
-                        } elseif (!$testClass) {
-                            $isInMethod = true;
-                            $this->collector->currentMethodStart();
+                            if ($testClass &&
+                                $this->isTestMethod($functionName, $visibility, $static, $tokens, $i)) {
+                                $this->collector->incrementTestMethods();
+                            } elseif (!$testClass) {
+                                $isInMethod = true;
+                                $this->collector->currentMethodStart();
 
-                            $this->collector->currentClassIncrementMethods();
+                                $this->collector->currentClassIncrementMethods();
 
-                            if (!$static) {
-                                $this->collector->incrementNonStaticMethods();
-                            } else {
-                                $this->collector->incrementStaticMethods();
-                            }
+                                if (!$static) {
+                                    $this->collector->incrementNonStaticMethods();
+                                } else {
+                                    $this->collector->incrementStaticMethods();
+                                }
 
-                            if ($visibility === T_PUBLIC) {
-                                $this->collector->incrementPublicMethods();
-                            } elseif ($visibility === T_PROTECTED) {
-                                $this->collector->incrementProtectedMethods();
-                            } elseif ($visibility === T_PRIVATE) {
-                                $this->collector->incrementPrivateMethods();
+                                if ($visibility === T_PUBLIC) {
+                                    $this->collector->incrementPublicMethods();
+                                } elseif ($visibility === T_PROTECTED) {
+                                    $this->collector->incrementProtectedMethods();
+                                } elseif ($visibility === T_PRIVATE) {
+                                    $this->collector->incrementPrivateMethods();
+                                }
                             }
                         }
                     }
-                }
 
-                break;
+                    break;
 
                 case T_CURLY_OPEN:
                     $currentBlock = T_CURLY_OPEN;
@@ -411,7 +411,7 @@ final class Analyser
                         $this->collector->incrementComplexity();
                     }
 
-                break;
+                    break;
 
                 case T_COMMENT:
                 case T_DOC_COMMENT:
@@ -432,7 +432,7 @@ final class Analyser
                         $this->collector->incrementPublicClassConstants();
                     }
 
-                break;
+                    break;
 
                 case T_STRING:
                     if ($value === 'define') {
@@ -454,7 +454,7 @@ final class Analyser
                         $this->collector->addPossibleConstantAccesses($value);
                     }
 
-                break;
+                    break;
 
                 case T_DOUBLE_COLON:
                 case T_OBJECT_OPERATOR:
@@ -480,7 +480,7 @@ final class Analyser
                         }
                     }
 
-                break;
+                    break;
 
                 case T_GLOBAL:
                     $this->collector->incrementGlobalVariableAccesses();
@@ -494,7 +494,7 @@ final class Analyser
                         $this->collector->incrementSuperGlobalVariableAccesses();
                     }
 
-                break;
+                    break;
 
                 case T_USE:
                 case T_DECLARE:
