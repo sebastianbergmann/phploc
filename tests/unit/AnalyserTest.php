@@ -276,6 +276,7 @@ final class AnalyserTest extends TestCase
 
     /**
      * @ticket 126
+     *
      * @dataProvider issue126Provider
      */
     public function testIssue126IsFixed($fileNumber, $cloc): void
@@ -309,6 +310,7 @@ final class AnalyserTest extends TestCase
 
     /**
      * @requires PHP 7
+     *
      * @ticket 138
      */
     public function testIssue138IsFixed(): void
