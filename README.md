@@ -1,3 +1,5 @@
+**This project is no longer maintained and its repository is only kept for archival purposes.**
+
 # PHPLOC
 
 `phploc` is a tool for quickly measuring the size and analyzing the structure of a PHP project.
