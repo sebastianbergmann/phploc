@@ -10,18 +10,18 @@
 namespace SebastianBergmann\PHPLOC;
 
 use const PHP_EOL;
+use function dirname;
 use function printf;
 use SebastianBergmann\FileIterator\Facade;
-use SebastianBergmann\PHPLOC\Log\Csv as CsvPrinter;
-use SebastianBergmann\PHPLOC\Log\Json as JsonPrinter;
-use SebastianBergmann\PHPLOC\Log\Text as TextPrinter;
-use SebastianBergmann\PHPLOC\Log\Xml as XmlPrinter;
 use SebastianBergmann\Version;
 
 final class Application
 {
-    private const VERSION = '7.0.2';
+    private const VERSION = '8.0';
 
+    /**
+     * @psalm-param list<non-empty-string> $argv
+     */
     public function run(array $argv): int
     {
         $this->printVersion();
@@ -50,7 +50,7 @@ final class Application
             $arguments->directories(),
             $arguments->suffixes(),
             '',
-            $arguments->exclude()
+            $arguments->exclude(),
         );
 
         if (empty($files)) {
@@ -59,27 +59,9 @@ final class Application
             return 1;
         }
 
-        $result = (new Analyser)->countFiles($files, $arguments->countTests());
+        $result = (new Analyser)->analyse($files);
 
-        (new TextPrinter)->printResult($result, $arguments->countTests());
-
-        if ($arguments->csvLogfile()) {
-            $printer = new CsvPrinter;
-
-            $printer->printResult($arguments->csvLogfile(), $result);
-        }
-
-        if ($arguments->jsonLogfile()) {
-            $printer = new JsonPrinter;
-
-            $printer->printResult($arguments->jsonLogfile(), $result);
-        }
-
-        if ($arguments->xmlLogfile()) {
-            $printer = new XmlPrinter;
-
-            $printer->printResult($arguments->xmlLogfile(), $result);
-        }
+        print (new TextResultFormatter)->format($result);
 
         return 0;
     }
@@ -88,7 +70,7 @@ final class Application
     {
         printf(
             'phploc %s by Sebastian Bergmann.' . PHP_EOL,
-            (new Version(self::VERSION, dirname(__DIR__)))->getVersion()
+            (new Version(self::VERSION, dirname(__DIR__)))->asString(),
         );
     }
 
@@ -104,16 +86,6 @@ Options for selecting files:
                     (default: .php; can be given multiple times)
   --exclude <path>  Exclude files with <path> in their path from the analysis
                     (can be given multiple times)
-
-Options for analysing files:
-
-  --count-tests     Count PHPUnit test case classes and test methods
-
-Options for report generation:
-
-  --log-csv <file>  Write results in CSV format to <file>
-  --log-json <file> Write results in JSON format to <file>
-  --log-xml <file>  Write results in XML format to <file>
 
 EOT;
     }

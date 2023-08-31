@@ -6,3 +6,4 @@
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 /.phpunit.cache
+/.psalm/cache

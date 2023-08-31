@@ -12,65 +12,38 @@ namespace SebastianBergmann\PHPLOC;
 final class Arguments
 {
     /**
-     * @psalm-var list<string>
+     * @psalm-var list<non-empty-string>
      */
-    private $directories;
+    private array $directories;
 
     /**
-     * @psalm-var list<string>
+     * @psalm-var list<non-empty-string>
      */
-    private $suffixes;
+    private array $suffixes;
 
     /**
-     * @psalm-var list<string>
+     * @psalm-var list<non-empty-string>
      */
-    private $exclude;
+    private array $exclude;
+    private bool $help;
+    private bool $version;
 
     /**
-     * @var bool
+     * @psalm-param list<non-empty-string> $directories
+     * @psalm-param list<non-empty-string> $suffixes
+     * @psalm-param list<non-empty-string> $exclude
      */
-    private $countTests;
-
-    /**
-     * @var ?string
-     */
-    private $csvLogfile;
-
-    /**
-     * @var ?string
-     */
-    private $jsonLogfile;
-
-    /**
-     * @var ?string
-     */
-    private $xmlLogfile;
-
-    /**
-     * @var bool
-     */
-    private $help;
-
-    /**
-     * @var bool
-     */
-    private $version;
-
-    public function __construct(array $directories, array $suffixes, array $exclude, bool $countTests, ?string $csvLogfile, ?string $jsonLogfile, ?string $xmlLogfile, bool $help, bool $version)
+    public function __construct(array $directories, array $suffixes, array $exclude, bool $help, bool $version)
     {
         $this->directories = $directories;
         $this->suffixes    = $suffixes;
         $this->exclude     = $exclude;
-        $this->countTests  = $countTests;
-        $this->csvLogfile  = $csvLogfile;
-        $this->jsonLogfile = $jsonLogfile;
-        $this->xmlLogfile  = $xmlLogfile;
         $this->help        = $help;
         $this->version     = $version;
     }
 
     /**
-     * @psalm-return list<string>
+     * @psalm-return list<non-empty-string>
      */
     public function directories(): array
     {
@@ -78,7 +51,7 @@ final class Arguments
     }
 
     /**
-     * @psalm-return list<string>
+     * @psalm-return list<non-empty-string>
      */
     public function suffixes(): array
     {
@@ -86,31 +59,11 @@ final class Arguments
     }
 
     /**
-     * @psalm-return list<string>
+     * @psalm-return list<non-empty-string>
      */
     public function exclude(): array
     {
         return $this->exclude;
-    }
-
-    public function countTests(): bool
-    {
-        return $this->countTests;
-    }
-
-    public function csvLogfile(): ?string
-    {
-        return $this->csvLogfile;
-    }
-
-    public function jsonLogfile(): ?string
-    {
-        return $this->jsonLogfile;
-    }
-
-    public function xmlLogfile(): ?string
-    {
-        return $this->xmlLogfile;
     }
 
     public function help(): bool

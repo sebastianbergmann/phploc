@@ -9,12 +9,15 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
+use function array_values;
 use SebastianBergmann\CliParser\Exception as CliParserException;
 use SebastianBergmann\CliParser\Parser as CliParser;
 
 final class ArgumentsBuilder
 {
     /**
+     * @psalm-param list<non-empty-string> $argv
+     *
      * @throws ArgumentsBuilderException
      */
     public function build(array $argv): Arguments
@@ -26,29 +29,21 @@ final class ArgumentsBuilder
                 [
                     'suffix=',
                     'exclude=',
-                    'count-tests',
-                    'log-csv=',
-                    'log-json=',
-                    'log-xml=',
                     'help',
                     'version',
-                ]
+                ],
             );
         } catch (CliParserException $e) {
             throw new ArgumentsBuilderException(
                 $e->getMessage(),
-                (int) $e->getCode(),
-                $e
+                $e->getCode(),
+                $e,
             );
         }
 
         $directories = $options[1];
         $exclude     = [];
         $suffixes    = ['.php'];
-        $countTests  = false;
-        $csvLogfile  = null;
-        $jsonLogfile = null;
-        $xmlLogfile  = null;
         $help        = false;
         $version     = false;
 
@@ -61,26 +56,6 @@ final class ArgumentsBuilder
 
                 case '--exclude':
                     $exclude[] = $option[1];
-
-                    break;
-
-                case '--count-tests':
-                    $countTests = true;
-
-                    break;
-
-                case '--log-csv':
-                    $csvLogfile = $option[1];
-
-                    break;
-
-                case '--log-json':
-                    $jsonLogfile = $option[1];
-
-                    break;
-
-                case '--log-xml':
-                    $xmlLogfile = $option[1];
 
                     break;
 
@@ -98,20 +73,16 @@ final class ArgumentsBuilder
             }
         }
 
-        if (empty($options[1]) && !$help && !$version) {
+        if (empty($directories) && !$help && !$version) {
             throw new ArgumentsBuilderException(
-                'No directory specified'
+                'No directory specified',
             );
         }
 
         return new Arguments(
-            $directories,
+            array_values($directories),
             $suffixes,
             $exclude,
-            $countTests,
-            $csvLogfile,
-            $jsonLogfile,
-            $xmlLogfile,
             $help,
             $version,
         );

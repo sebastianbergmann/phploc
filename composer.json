@@ -1,6 +1,6 @@
 {
     "name": "phploc/phploc",
-    "description": "A tool for quickly measuring the size of a PHP project.",
+    "description": "A tool for quickly measuring the size of a PHP project",
     "homepage": "https://github.com/sebastianbergmann/phploc",
     "license": "BSD-3-Clause",
     "authors": [
@@ -15,18 +15,21 @@
     },
     "config": {
         "platform": {
-            "php": "7.3.0"
+            "php": "8.2.0"
         },
         "optimize-autoloader": true,
         "sort-packages": true
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": ">=7.3",
-        "ext-dom": "*",
-        "ext-json": "*",
-        "sebastian/cli-parser": "^1.0",
-        "sebastian/version": "^3.0",
-        "phpunit/php-file-iterator": "^3.0"
+        "php": ">=8.2",
+        "nikic/php-parser": "^4.17",
+        "phpunit/php-file-iterator": "^4.1",
+        "sebastian/cli-parser": "^2.0",
+        "sebastian/complexity": "^3.1",
+        "sebastian/lines-of-code": "^2.0",
+        "sebastian/version": "^4.0"
     },
     "autoload": {
         "classmap": [
@@ -38,7 +41,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "7.0-dev"
+            "dev-main": "8.0-dev"
         }
     }
 }

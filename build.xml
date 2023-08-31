@@ -67,9 +67,30 @@
             </fileset>
         </copy>
 
+        <copy file="${basedir}/vendor/nikic/php-parser/LICENSE" tofile="${basedir}/build/phar/nikic-php-parser/LICENSE"/>
+        <copy todir="${basedir}/build/phar/nikic-php-parser">
+            <fileset dir="${basedir}/vendor/nikic/php-parser/lib">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
         <copy file="${basedir}/vendor/sebastian/cli-parser/LICENSE" tofile="${basedir}/build/phar/sebastian-cli-parser/LICENSE"/>
         <copy todir="${basedir}/build/phar/sebastian-cli-parser">
             <fileset dir="${basedir}/vendor/sebastian/cli-parser/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
+        <copy file="${basedir}/vendor/sebastian/complexity/LICENSE" tofile="${basedir}/build/phar/sebastian-complexity/LICENSE"/>
+        <copy todir="${basedir}/build/phar/sebastian-complexity">
+            <fileset dir="${basedir}/vendor/sebastian/complexity/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
+        <copy file="${basedir}/vendor/sebastian/lines-of-code/LICENSE" tofile="${basedir}/build/phar/sebastian-lines-of-code/LICENSE"/>
+        <copy todir="${basedir}/build/phar/sebastian-lines-of-code">
+            <fileset dir="${basedir}/vendor/sebastian/lines-of-code/src">
                 <include name="**/*.php" />
             </fileset>
         </copy>
