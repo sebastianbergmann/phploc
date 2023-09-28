@@ -122,7 +122,7 @@ final class Analyser
         assert($lines >= 0);
 
         try {
-            $nodes = $parser->parse(file_get_contents($file));
+            $nodes = $parser->parse($source);
 
             assert($nodes !== null);
 
