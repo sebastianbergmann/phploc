@@ -19,3 +19,5 @@ Options for selecting files:
                     (default: .php; can be given multiple times)
   --exclude <path>  Exclude files with <path> in their path from the analysis
                     (can be given multiple times)
+
+  --debug           Print debugging information

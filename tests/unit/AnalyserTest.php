@@ -28,6 +28,7 @@ final class AnalyserTest extends TestCase
                 __DIR__ . '/../_fixture/ExampleInterface.php',
                 __DIR__ . '/../_fixture/ExampleTrait.php',
             ],
+            false,
         );
 
         $this->assertFalse($result->hasErrors());

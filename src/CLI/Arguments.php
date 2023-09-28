@@ -25,6 +25,7 @@ final class Arguments
      * @psalm-var list<non-empty-string>
      */
     private array $exclude;
+    private bool $debug;
     private bool $help;
     private bool $version;
 
@@ -33,11 +34,12 @@ final class Arguments
      * @psalm-param list<non-empty-string> $suffixes
      * @psalm-param list<non-empty-string> $exclude
      */
-    public function __construct(array $directories, array $suffixes, array $exclude, bool $help, bool $version)
+    public function __construct(array $directories, array $suffixes, array $exclude, bool $debug, bool $help, bool $version)
     {
         $this->directories = $directories;
         $this->suffixes    = $suffixes;
         $this->exclude     = $exclude;
+        $this->debug       = $debug;
         $this->help        = $help;
         $this->version     = $version;
     }
@@ -64,6 +66,11 @@ final class Arguments
     public function exclude(): array
     {
         return $this->exclude;
+    }
+
+    public function debug(): bool
+    {
+        return $this->debug;
     }
 
     public function help(): bool

@@ -59,7 +59,7 @@ final class Application
             return 1;
         }
 
-        $result = (new Analyser)->analyse($files);
+        $result = (new Analyser)->analyse($files, $arguments->debug());
 
         print (new TextResultFormatter)->format($result);
 
@@ -86,6 +86,8 @@ Options for selecting files:
                     (default: .php; can be given multiple times)
   --exclude <path>  Exclude files with <path> in their path from the analysis
                     (can be given multiple times)
+
+  --debug           Print debugging information
 
 EOT;
     }

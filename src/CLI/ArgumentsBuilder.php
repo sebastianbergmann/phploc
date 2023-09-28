@@ -29,6 +29,7 @@ final class ArgumentsBuilder
                 [
                     'suffix=',
                     'exclude=',
+                    'debug',
                     'help',
                     'version',
                 ],
@@ -44,6 +45,7 @@ final class ArgumentsBuilder
         $directories = $options[1];
         $exclude     = [];
         $suffixes    = ['.php'];
+        $debug       = false;
         $help        = false;
         $version     = false;
 
@@ -56,6 +58,11 @@ final class ArgumentsBuilder
 
                 case '--exclude':
                     $exclude[] = $option[1];
+
+                    break;
+
+                case '--debug':
+                    $debug = true;
 
                     break;
 
@@ -83,6 +90,7 @@ final class ArgumentsBuilder
             array_values($directories),
             $suffixes,
             $exclude,
+            $debug,
             $help,
             $version,
         );
