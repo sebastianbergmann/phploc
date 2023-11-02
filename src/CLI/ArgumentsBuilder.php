@@ -9,7 +9,9 @@
  */
 namespace SebastianBergmann\PHPLOC;
 
-use function array_values;
+use function assert;
+use function is_array;
+use function is_string;
 use SebastianBergmann\CliParser\Exception as CliParserException;
 use SebastianBergmann\CliParser\Parser as CliParser;
 
@@ -42,21 +44,33 @@ final class ArgumentsBuilder
             );
         }
 
-        $directories = $options[1];
+        $directories = [];
         $exclude     = [];
         $suffixes    = ['.php'];
         $debug       = false;
         $help        = false;
         $version     = false;
 
+        foreach ($options[1] as $directory) {
+            assert(is_string($directory) && !empty($directory));
+
+            $directories[] = $directory;
+        }
+
         foreach ($options[0] as $option) {
+            assert(is_array($option));
+
             switch ($option[0]) {
                 case '--suffix':
+                    assert(is_string($option[1]) && !empty($option[1]));
+
                     $suffixes[] = $option[1];
 
                     break;
 
                 case '--exclude':
+                    assert(is_string($option[1]) && !empty($option[1]));
+
                     $exclude[] = $option[1];
 
                     break;
@@ -87,7 +101,7 @@ final class ArgumentsBuilder
         }
 
         return new Arguments(
-            array_values($directories),
+            $directories,
             $suffixes,
             $exclude,
             $debug,
