@@ -42,5 +42,8 @@
         "branch-alias": {
             "dev-main": "8.0-dev"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "10.*"
     }
 }

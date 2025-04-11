@@ -2,7 +2,8 @@
 
 All notable changes in PHPLOC are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [8.0.0] - 202Y-MM-DD
+## [8.0.0] - 2025-04-11
+* **[2025-04-11 13:02:04 CDT]** Added support for PHPUnit v10.
 
 ### Removed
 

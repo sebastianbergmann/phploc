@@ -2,6 +2,12 @@
 
 `phploc` is a tool for quickly measuring the size of a PHP project.
 
+## Forked Changes
+
+## Version 8.0.0
+* **[2025-04-11 13:02:04 CDT]** Added support for PHPUnit v10.
+
+
 ## Installation
 
 This tool is distributed as a [PHP Archive (PHAR)](https://php.net/phar):

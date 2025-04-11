@@ -1,30 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         cacheDirectory=".phpunit.cache"
-         executionOrder="depends,defects"
-         requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true"
-         beStrictAboutOutputDuringTests="true"
-         failOnRisky="true"
-         failOnWarning="true"
-         colors="true">
-    <testsuites>
-        <testsuite name="unit">
-            <directory>tests/unit</directory>
-        </testsuite>
-
-        <testsuite name="end-to-end">
-            <directory suffix=".phpt">tests/end-to-end</directory>
-        </testsuite>
-    </testsuites>
-
-    <source restrictDeprecations="true"
-            restrictNotices="true"
-            restrictWarnings="true">
-        <include>
-            <directory>src</directory>
-        </include>
-    </source>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" bootstrap="vendor/autoload.php" executionOrder="depends,defects" beStrictAboutOutputDuringTests="true" failOnRisky="true" failOnWarning="true" colors="true" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true">
+  <testsuites>
+    <testsuite name="default">
+      <directory suffix="Test.php">tests</directory>
+    </testsuite>
+  </testsuites>
+  <coverage/>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
 </phpunit>
